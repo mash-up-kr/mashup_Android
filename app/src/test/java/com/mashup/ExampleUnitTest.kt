@@ -1,4 +1,4 @@
-package click.mashup
+package com.mashup
 
 import org.junit.Test
 

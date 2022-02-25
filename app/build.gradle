@@ -7,7 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "click.mashup"
+        applicationId "com.mashup"
         minSdk 21
         targetSdk 31
         versionCode 1

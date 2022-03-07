@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdkVersion compileVersion
 
     defaultConfig {
         applicationId "com.mashup"
-        minSdk 23
-        targetSdk 31
+        minSdkVersion minVersion
+        targetSdkVersion targetVersion
         versionCode 1
         versionName "1.0.0"
 

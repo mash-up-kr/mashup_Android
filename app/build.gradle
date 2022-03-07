@@ -1,17 +1,19 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
 
 android {
-    compileSdk compileSdk
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.mashup"
-        minSdk minSdk
-        targetSdk targetSdk
+        minSdk 23
+        targetSdk 31
         versionCode 1
         versionName "1.0.0"
 

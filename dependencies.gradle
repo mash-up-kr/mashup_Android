@@ -2,6 +2,10 @@ ext {
     // Android
     androidBuildToolsVersion = "7.0.2"
 
+    minVersion = 23
+    targetVersion = 31
+    compileVersion = 31
+
     // androidx
     appcompatVersion = "1.4.1"
     coreKtxVersion = "1.7.0"

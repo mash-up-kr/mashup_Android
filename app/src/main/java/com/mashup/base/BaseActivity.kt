@@ -3,24 +3,27 @@ package com.mashup.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-abstract class BaseActivity<V : ViewBinding>(
-    private val bindingFactory: (LayoutInflater) -> V
-) : AppCompatActivity() {
+abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
+    abstract val layoutId: Int
 
     protected val viewBinding: V by lazy {
-        bindingFactory.invoke(LayoutInflater.from(this))
+        DataBindingUtil.inflate(
+            LayoutInflater.from(this), layoutId, null, false
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewBinding.lifecycleOwner = this
         setContentView(viewBinding.root)
     }
 

@@ -8,5 +8,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
 
+    companion object {
+        fun newInstance() = ScheduleFragment()
+    }
+
     override val layoutId: Int = R.layout.fragment_schedule
 }

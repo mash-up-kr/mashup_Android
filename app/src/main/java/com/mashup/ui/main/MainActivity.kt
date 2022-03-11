@@ -34,9 +34,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         override fun createFragment(position: Int): Fragment {
             return when (mainPagerList[position]) {
-                MainType.QRCODE -> QRCodeFragment()
-                MainType.SCHEDULE -> ScheduleFragment()
-                MainType.MY_PAGE -> MyPageFragment()
+                MainType.QRCODE -> QRCodeFragment.newInstance()
+                MainType.SCHEDULE -> ScheduleFragment.newInstance()
+                MainType.MY_PAGE -> MyPageFragment.newInstance()
             }
         }
     }

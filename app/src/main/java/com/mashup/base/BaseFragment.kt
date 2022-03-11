@@ -33,6 +33,20 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         return viewBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        initObserves()
+    }
+
+    open fun initViews() {
+        /* explicitly empty */
+    }
+
+    open fun initObserves() {
+        /* explicitly empty */
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null

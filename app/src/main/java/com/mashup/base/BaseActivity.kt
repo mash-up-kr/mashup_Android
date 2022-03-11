@@ -25,6 +25,16 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding.lifecycleOwner = this
         setContentView(viewBinding.root)
+        initViews()
+        initObserves()
+    }
+
+    open fun initViews() {
+        /* explicitly empty */
+    }
+
+    open fun initObserves() {
+        /* explicitly empty */
     }
 
     protected fun activityLifecycleScope(

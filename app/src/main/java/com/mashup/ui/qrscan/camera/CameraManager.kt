@@ -1,4 +1,4 @@
-package com.mashup.ui.qrcode.camera
+package com.mashup.ui.qrscan.camera
 
 import android.content.Context
 import android.util.DisplayMetrics

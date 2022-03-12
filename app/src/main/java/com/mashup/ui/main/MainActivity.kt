@@ -8,7 +8,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.ui.mypage.MyPageFragment
-import com.mashup.ui.qrcode.QRCodeFragment
+import com.mashup.ui.qrscan.QRScanFragment
 import com.mashup.ui.schedule.ScheduleFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         override fun createFragment(position: Int): Fragment {
             return when (mainPagerList[position]) {
-                MainType.QRCODE -> QRCodeFragment.newInstance()
+                MainType.QRCODE -> QRScanFragment.newInstance()
                 MainType.SCHEDULE -> ScheduleFragment.newInstance()
                 MainType.MY_PAGE -> MyPageFragment.newInstance()
             }

@@ -1,4 +1,4 @@
-package com.mashup.ui.qrcode
+package com.mashup.ui.qrscan
 
 import android.graphics.Rect
 import android.util.Log
@@ -7,7 +7,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.mashup.ui.qrcode.camera.BaseImageAnalyzer
+import com.mashup.ui.qrscan.camera.BaseImageAnalyzer
 import java.io.IOException
 
 class QRCodeAnalyzer(

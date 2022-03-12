@@ -1,3 +1,3 @@
-package com.mashup.ui.qrcode
+package com.mashup.ui.qrscan
 
 data class QRCode(val recognizedCode: String)

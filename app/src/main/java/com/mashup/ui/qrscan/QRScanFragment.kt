@@ -1,4 +1,4 @@
-package com.mashup.ui.qrcode
+package com.mashup.ui.qrscan
 
 import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
@@ -6,13 +6,13 @@ import androidx.core.content.ContextCompat
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseFragment
-import com.mashup.databinding.FragmentQrCodeBinding
+import com.mashup.databinding.FragmentQrScanBinding
 import com.mashup.extensions.showToast
-import com.mashup.ui.qrcode.camera.CameraManager
+import com.mashup.ui.qrscan.camera.CameraManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class QRCodeFragment : BaseFragment<FragmentQrCodeBinding>() {
+class QRScanFragment : BaseFragment<FragmentQrScanBinding>() {
 
     private lateinit var qrCodeAnalyzer: QRCodeAnalyzer
     private lateinit var cameraManager: CameraManager<List<Barcode>>
@@ -29,7 +29,7 @@ class QRCodeFragment : BaseFragment<FragmentQrCodeBinding>() {
         }
 
     companion object {
-        fun newInstance() = QRCodeFragment()
+        fun newInstance() = QRScanFragment()
         private const val CAMERA_PERMISSION = android.Manifest.permission.CAMERA
     }
 
@@ -90,5 +90,5 @@ class QRCodeFragment : BaseFragment<FragmentQrCodeBinding>() {
             CAMERA_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED
 
-    override val layoutId: Int = R.layout.fragment_qr_code
+    override val layoutId: Int = R.layout.fragment_qr_scan
 }

@@ -74,6 +74,16 @@ class QRCodeFragment : BaseFragment<FragmentQrCodeBinding>() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        cameraManager.startCamera()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cameraManager.stopCamera()
+    }
+
     private fun isCameraPermissionGranted() =
         ContextCompat.checkSelfPermission(
             requireContext(),

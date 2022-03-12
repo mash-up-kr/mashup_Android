@@ -17,8 +17,9 @@ class QRCodeAnalyzer(
 
     companion object {
         private val TAG = QRCodeAnalyzer::class.java.name
+        private const val MAX_RECOGNIZE_QRCODE = 1
 
-        private const val EXCEPTION_DUPLICATED_QRCODE_MESSAGE =
+        private const val EXCEPTION_RECOGNIZED_OVER_FLOW_QRCODE_MESSAGE =
             "하나의 QR 코드만 화면에 인식시켜주세요"
         private const val EXCEPTION_RETRY_QRCODE_MESSAGE =
             "잘못된 QR 코드 인식을 시도하셨습니다. 다시 시도해주세요"
@@ -35,22 +36,22 @@ class QRCodeAnalyzer(
     }
 
     override fun onSuccess(results: List<Barcode>, rect: Rect) {
-        if (results.size > 1) {
+        if (results.size > MAX_RECOGNIZE_QRCODE) {
             onCardRecognitionFailure(
-                IllegalStateException(EXCEPTION_DUPLICATED_QRCODE_MESSAGE)
+                IllegalStateException(EXCEPTION_RECOGNIZED_OVER_FLOW_QRCODE_MESSAGE)
             )
             return
         }
 
-        val recognizedCodeQrcode = results[0].rawValue
-
-        if (recognizedCodeQrcode == null) {
-            onCardRecognitionFailure(
-                IllegalArgumentException(EXCEPTION_RETRY_QRCODE_MESSAGE)
-            )
-            return
-        } else {
-            onCardRecognitionSuccess(QRCode(recognizedCodeQrcode))
+        for (qrcode in results) {
+            val recognizedCode = qrcode.rawValue
+            if (recognizedCode == null) {
+                onCardRecognitionFailure(
+                    IllegalArgumentException(EXCEPTION_RETRY_QRCODE_MESSAGE)
+                )
+            } else {
+                onCardRecognitionSuccess(QRCode(recognizedCode))
+            }
         }
     }
 

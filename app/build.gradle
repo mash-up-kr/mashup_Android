@@ -27,9 +27,11 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            buildConfigField "Boolean", "DEBUG_MODE", "true"
         }
         release {
             minifyEnabled true
+            buildConfigField "Boolean", "DEBUG_MODE", "false"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -76,6 +78,7 @@ dependencies {
 
     // serialization
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
     // image

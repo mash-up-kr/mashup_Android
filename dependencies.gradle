@@ -33,6 +33,8 @@ ext {
 
     // network
     retrofitVersion = "2.9.0"
+    // OkHttp
+    okhttpInterceptorVerison = "4.9.3"
 
     // serialization
     moshiVersion = "1.12.0"

@@ -33,6 +33,7 @@ ext {
 
     // network
     retrofitVersion = "2.9.0"
+
     // OkHttp
     okhttpInterceptorVerison = "4.9.3"
 

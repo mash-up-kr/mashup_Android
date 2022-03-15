@@ -16,6 +16,12 @@ ext {
     recyclerViewVersion = "1.2.1"
     viewPagerVersion = "1.0.0"
 
+    // MLKit
+    barcodeSacnnerVersion = "17.0.2"
+
+    // Camera
+    cameraVersion = "1.1.0-beta02"
+
     //google firebase
     gmsVersion = "4.3.10"
     firebaseVersion = "29.1.0"

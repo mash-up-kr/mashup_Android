@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    QR Scan-->
+    <dimen name="margin_qr_scan_rect_horizontal">33dp</dimen>
+    <dimen name="margin_qr_scan_rect_top">90dp</dimen>
+</resources>

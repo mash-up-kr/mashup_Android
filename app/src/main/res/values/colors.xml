@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    QR Scan-->
+    <color name="default_bg_qr_scan">#80000000</color>
+    <color name="default_corner_qr_scan">#ffffff</color>
 </resources>

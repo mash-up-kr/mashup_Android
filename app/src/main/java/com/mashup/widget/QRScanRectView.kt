@@ -1,6 +1,5 @@
 package com.mashup.widget
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -14,15 +13,25 @@ class QRScanRectView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val bitmap = Bitmap.createBitmap(
-        width, height, Bitmap.Config.ARGB_8888
-    )
+    private val backgroundRectangle by lazy {
+        RectF(0f, 0f, width.toFloat(), height.toFloat())
+    }
+
+    private val qrScanRectRectangle by lazy {
+        Rect(
+            scanRectLeft,
+            scanRectTop,
+            scanRectRight,
+            scanRectBottom
+        )
+    }
 
     private val transparentPaint = Paint().apply {
         color = Color.TRANSPARENT
         isAntiAlias = true
         xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OUT)
     }
+
 
     private val bgPaint = Paint().apply {
         color = ContextCompat.getColor(context, R.color.default_bg_qr_scan)
@@ -60,28 +69,18 @@ class QRScanRectView @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         scanRectLeft = (left.toFloat() + scanRectHorizontalMargin).toInt()
-        scanRectRight = (right.toFloat() - scanRectHorizontalMargin).toInt()
         scanRectTop = scanRectTopMargin
+        scanRectRight = (right.toFloat() - scanRectHorizontalMargin).toInt()
         scanRectBottom = (scanRectTop + scanRectHeight)
+
+        qrScanRectRectangle.set(
+            scanRectLeft, scanRectTop, scanRectRight, scanRectBottom
+        )
     }
 
-    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val osCanvas = Canvas(bitmap)
-
-        val outerRectangle =
-            RectF(0f, 0f, width.toFloat(), height.toFloat())
-        osCanvas.drawRect(outerRectangle, bgPaint)
-
-        osCanvas.drawRect(
-            RectF(
-                scanRectLeft.toFloat(),
-                scanRectTop.toFloat(),
-                scanRectRight.toFloat(),
-                scanRectBottom.toFloat()
-            ),
-            transparentPaint
-        )
+        canvas.drawRect(backgroundRectangle, bgPaint)
+        canvas.drawRect(qrScanRectRectangle, transparentPaint)
     }
 }  

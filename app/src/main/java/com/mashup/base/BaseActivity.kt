@@ -37,7 +37,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         /* explicitly empty */
     }
 
-    protected fun activityLifecycleScope(
+    protected fun flowLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
         block: suspend CoroutineScope.() -> Unit
     ) {

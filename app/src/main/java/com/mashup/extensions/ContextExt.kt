@@ -1,12 +1,8 @@
 package com.mashup.extensions
 
 import android.content.Context
-import android.util.TypedValue
+import android.widget.Toast
 
-fun Int.dp(context: Context): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(),
-        context.resources.displayMetrics
-    ).toInt()
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

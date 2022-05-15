@@ -42,6 +42,7 @@ class ToolbarView @JvmOverloads constructor(
     }
 
     companion object {
+
         @BindingAdapter(
             value = ["toolbar_back_button_visible", "toolbar_close_button_visible"],
             requireAll = false

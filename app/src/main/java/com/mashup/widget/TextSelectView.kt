@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.EditText
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -13,7 +12,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mashup.R
 import com.mashup.databinding.ViewTextLayoutBinding
 
-class TextFieldView @JvmOverloads constructor(
+class TextSelectView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -62,32 +61,31 @@ class TextFieldView @JvmOverloads constructor(
     }
 
     private fun initEditText() {
-        viewBinding.etText.setOnFocusChangeListener { editText, hasFocus ->
-            when {
-                hasFocus && (editText as? EditText)?.text?.isEmpty() == true -> {
-                    startExpendAnimationHintLabel()
-                }
-                !hasFocus && (editText as? EditText)?.text?.isEmpty() == false -> {
-                    startCollapseAnimationHintLabel()
-                }
-            }
-            setBackgroundStrokeColor(
-                if (hasFocus) R.color.primary else R.color.gray300
-            )
-        }
+        // set read-only edittext
+        viewBinding.etText.keyListener = null
+    }
+
+    private fun setBackgroundStrokeColor(@ColorRes colorRes: Int) {
+        viewBinding.layoutTextField.backgroundTintList =
+            ContextCompat.getColorStateList(context, colorRes)
     }
 
     fun setHintText(hint: String) {
         viewBinding.tvHintLabel.text = hint
     }
 
-    fun setDescriptionText(description: String) {
-        viewBinding.tvDescription.text = description
+    fun setText(text: String) {
+        if (text.isEmpty()) {
+            startCollapseAnimationHintLabel()
+            setBackgroundStrokeColor(R.color.gray300)
+        } else {
+            startExpendAnimationHintLabel()
+            setBackgroundStrokeColor(R.color.primary)
+        }
     }
 
-    fun setBackgroundStrokeColor(@ColorRes colorRes: Int) {
-        viewBinding.layoutTextField.backgroundTintList =
-            ContextCompat.getColorStateList(context, colorRes)
+    fun setDescriptionText(description: String) {
+        viewBinding.tvDescription.text = description
     }
 
     private fun startCollapseAnimationHintLabel() {
@@ -110,10 +108,16 @@ class TextFieldView @JvmOverloads constructor(
         private const val SIZE_TEXT_COLLAPSE = 20
         private const val SIZE_TEXT_EXPEND = 13
 
-        @BindingAdapter(value = ["text_field_hint", "text_field_description"], requireAll = false)
-        fun TextFieldView.setTitleText(hint: String?, description: String?) {
+        @BindingAdapter(
+            value = ["text_select_hint", "text_select_text", "text_select_description"],
+            requireAll = false
+        )
+        fun TextSelectView.setTitleText(hint: String?, text: String?, description: String?) {
             hint?.run {
                 setHintText(this)
+            }
+            text?.run {
+                setText(this)
             }
             description?.run {
                 setDescriptionText(this)

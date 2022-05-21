@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Mashup" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/gray800</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="TextAppearance.Mashup.Bold">
+        <item name="fontFamily">@font/pretendard_bold</item>
+    </style>
+    <style name="TextAppearance.Mashup.SemiBold">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <style name="TextAppearance.Mashup.Medium">
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+</resources>

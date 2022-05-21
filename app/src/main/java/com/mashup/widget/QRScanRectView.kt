@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.mashup.R
+import com.mashup.extensions.dp
 
 class QRScanRectView @JvmOverloads constructor(
     context: Context,
@@ -82,5 +83,19 @@ class QRScanRectView @JvmOverloads constructor(
         super.onDraw(canvas)
         canvas.drawRect(backgroundRectangle, bgPaint)
         canvas.drawRect(qrScanRectRectangle, transparentPaint)
+
+        ContextCompat.getDrawable(context, R.drawable.bg_qrcode_sacn_boundray)?.run {
+            setBounds(
+                qrScanRectRectangle.left - DP_QRCODE_SCANNER_BOUNDARY.dp(context),
+                qrScanRectRectangle.top - DP_QRCODE_SCANNER_BOUNDARY.dp(context),
+                qrScanRectRectangle.right + DP_QRCODE_SCANNER_BOUNDARY.dp(context),
+                qrScanRectRectangle.bottom + DP_QRCODE_SCANNER_BOUNDARY.dp(context)
+            )
+            draw(canvas)
+        }
+    }
+
+    companion object {
+        private const val DP_QRCODE_SCANNER_BOUNDARY = 4
     }
 }  

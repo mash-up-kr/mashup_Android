@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewOutlineProvider
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -78,6 +79,7 @@ class TextFieldView @JvmOverloads constructor(
     }
 
     fun setDescriptionText(description: String) {
+        viewBinding.tvDescription.visibility = View.VISIBLE
         viewBinding.tvDescription.text = description
     }
 

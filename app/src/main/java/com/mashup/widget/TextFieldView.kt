@@ -4,10 +4,9 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.ViewOutlineProvider
 import android.widget.EditText
-import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mashup.R
@@ -58,7 +57,6 @@ class TextFieldView @JvmOverloads constructor(
 
     private fun initViews() {
         initEditText()
-        setBackgroundStrokeColor(R.color.gray300)
     }
 
     private fun initEditText() {
@@ -67,13 +65,11 @@ class TextFieldView @JvmOverloads constructor(
                 hasFocus && (editText as? EditText)?.text?.isEmpty() == true -> {
                     startExpendAnimationHintLabel()
                 }
-                !hasFocus && (editText as? EditText)?.text?.isEmpty() == false -> {
+                !hasFocus && (editText as? EditText)?.text?.isEmpty() == true -> {
                     startCollapseAnimationHintLabel()
                 }
             }
-            setBackgroundStrokeColor(
-                if (hasFocus) R.color.primary else R.color.gray300
-            )
+            setBackgroundStrokeColorWithFocus(hasFocus)
         }
     }
 
@@ -85,9 +81,10 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.tvDescription.text = description
     }
 
-    fun setBackgroundStrokeColor(@ColorRes colorRes: Int) {
-        viewBinding.layoutTextField.backgroundTintList =
-            ContextCompat.getColorStateList(context, colorRes)
+    fun setBackgroundStrokeColorWithFocus(isFocus: Boolean) {
+        viewBinding.layoutTextField.setBackgroundResource(
+            if (isFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line
+        )
     }
 
     private fun startCollapseAnimationHintLabel() {
@@ -110,6 +107,7 @@ class TextFieldView @JvmOverloads constructor(
         private const val SIZE_TEXT_COLLAPSE = 20
         private const val SIZE_TEXT_EXPEND = 13
 
+        @JvmStatic
         @BindingAdapter(value = ["text_field_hint", "text_field_description"], requireAll = false)
         fun TextFieldView.setTitleText(hint: String?, description: String?) {
             hint?.run {

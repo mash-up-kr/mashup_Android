@@ -31,7 +31,7 @@ ext {
     hiltVersion = "2.39.1"
 
     // kotlin & coroutine
-    kotlinVersion = "1.5.30"
+    kotlinVersion = "1.6.10"
     coroutineVersion = "1.5.2"
 
     // material

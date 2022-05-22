@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     private val _exceptionMessage = MutableSharedFlow<String>()
     val exceptionMessage: SharedFlow<String>
@@ -32,7 +32,7 @@ class BaseViewModel : ViewModel() {
         start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> Unit
     ) {
-        viewModelScope.launch(context, start) {
+        viewModelScope.launch(context + exceptionHandler, start) {
             block.invoke(this)
         }
     }

@@ -1,4 +1,4 @@
-package com.mashup.network.interceptor
+package com.mashup.data.network.interceptor
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

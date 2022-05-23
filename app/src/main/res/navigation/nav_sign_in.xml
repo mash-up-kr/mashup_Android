@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_sign_in"
+    app:startDestination="@id/signInMemberInfoFragment">
+
+    <fragment
+        android:id="@+id/signInMemberInfoFragment"
+        android:name="com.mashup.ui.register.ui.signin.fragment.SignInMemberInfoFragment"
+        android:label="SignInMemberInfoFragment" />
+</navigation>

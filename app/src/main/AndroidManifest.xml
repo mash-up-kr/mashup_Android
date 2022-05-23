@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MashUp"
         tools:ignore="AllowBackup">
+
+        <activity
+            android:name=".ui.register.SignInActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">

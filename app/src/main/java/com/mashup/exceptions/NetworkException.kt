@@ -1,6 +1,6 @@
 package com.mashup.exceptions
 
-sealed class NetworkException(open val code: Int, open val message: String)
+sealed class NetworkException(open val code: Int, override val message: String) : Throwable()
 
 data class ClientNetworkException(
     override val code: Int, override val message: String

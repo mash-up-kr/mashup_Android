@@ -1,7 +1,7 @@
 package com.mashup.di
 
 import com.mashup.BuildConfig.DEBUG_MODE
-import com.mashup.network.interceptor.AuthInterceptor
+import com.mashup.data.network.interceptor.AuthInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import dagger.Module

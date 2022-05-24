@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mashup">
 
-
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -14,13 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MashUp"
         tools:ignore="AllowBackup">
-
         <activity
-            android:name="com.mashup.ui.qrscan.QRScanActivity"
-            android:exported="true"/>
-
-        <activity
-            android:name="com.mashup.ui.main.MainActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.qrscan.QRScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

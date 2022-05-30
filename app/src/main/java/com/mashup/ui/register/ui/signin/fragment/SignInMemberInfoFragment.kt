@@ -17,6 +17,7 @@ class SignInMemberInfoFragment : BaseFragment<FragmentSignInMemberInfoBinding>()
 
     override fun initViews() {
         initTextField()
+        initButton()
     }
 
     private fun initTextField() {
@@ -38,6 +39,12 @@ class SignInMemberInfoFragment : BaseFragment<FragmentSignInMemberInfoBinding>()
                     setFailedUiOfTextField()
                 }
             }
+        }
+    }
+
+    private fun initButton() {
+        viewBinding.btnSignIn.setOnButtonClickListener {
+
         }
     }
 }

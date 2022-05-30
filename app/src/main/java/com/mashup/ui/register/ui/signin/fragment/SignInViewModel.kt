@@ -1,7 +1,10 @@
 package com.mashup.ui.register.ui.signin.fragment
 
-import androidx.lifecycle.ViewModel
+import com.mashup.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignInViewModel : ViewModel() {
+@HiltViewModel
+class SignInViewModel @Inject constructor() : BaseViewModel() {
     // TODO: Implement the ViewModel
 }

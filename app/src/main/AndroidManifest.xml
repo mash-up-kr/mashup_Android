@@ -16,7 +16,8 @@
 
         <activity
             android:name=".ui.register.SignInActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing"/>
 
         <activity
             android:name=".ui.login.LoginActivity"

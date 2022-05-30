@@ -15,6 +15,16 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         navHostFragment.navController
     }
 
+    override fun initViews() {
+        viewBinding.toolbar.setOnBackButtonClickListener {
+            if (navController.backQueue.size > 1) {
+                navController.popBackStack()
+            } else {
+                finish()
+            }
+        }
+    }
+
     override val layoutId: Int
         get() = R.layout.activity_sign_in
 }

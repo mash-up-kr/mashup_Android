@@ -120,7 +120,7 @@ class TextFieldView @JvmOverloads constructor(
         expendValueAnimator.start()
     }
 
-    private fun addOnTextChangedListener(onTextChanged: (String) -> Unit) {
+    fun addOnTextChangedListener(onTextChanged: (String) -> Unit) {
         viewBinding.etText.addTextChangedListener {
             onTextChanged(it.toString())
         }

@@ -46,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_register"
+            android:id="@+id/tv_sign_in"
             android:textAppearance="@style/TextAppearance.Mashup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

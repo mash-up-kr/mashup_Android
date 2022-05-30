@@ -5,9 +5,10 @@ import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel(
+class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
     private val userDataSource: UserDataSource
 ) : BaseViewModel() {

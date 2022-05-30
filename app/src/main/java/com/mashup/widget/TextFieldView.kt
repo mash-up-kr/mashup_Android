@@ -5,9 +5,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.widget.EditText
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mashup.R
@@ -70,7 +73,9 @@ class TextFieldView @JvmOverloads constructor(
                     startCollapseAnimationHintLabel()
                 }
             }
-            setBackgroundStrokeColorWithFocus(hasFocus)
+            setStrokeBackground(
+                if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
+            )
         }
     }
 
@@ -78,15 +83,25 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.tvHintLabel.text = hint
     }
 
+    fun setHintTextColor(@ColorRes colorRes: Int) {
+        viewBinding.tvHintLabel.setTextColor(ContextCompat.getColor(context, colorRes))
+    }
+
     fun setDescriptionText(description: String) {
         viewBinding.tvDescription.visibility = View.VISIBLE
         viewBinding.tvDescription.text = description
     }
 
-    fun setBackgroundStrokeColorWithFocus(isFocus: Boolean) {
-        viewBinding.layoutTextField.setBackgroundResource(
-            if (isFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line
-        )
+    fun setDescriptionTextColor(@ColorRes colorRes: Int) {
+        viewBinding.tvDescription.setTextColor(ContextCompat.getColor(context, colorRes))
+    }
+
+    fun setTrailingImageIcon(@DrawableRes drawableRes: Int) {
+        viewBinding.imgIcon.setImageResource(drawableRes)
+    }
+
+    fun setStrokeBackground(@DrawableRes drawableRes: Int) {
+        viewBinding.layoutTextField.setBackgroundResource(drawableRes)
     }
 
     private fun startCollapseAnimationHintLabel() {
@@ -103,6 +118,12 @@ class TextFieldView @JvmOverloads constructor(
         }
         collapseValueAnimator.cancel()
         expendValueAnimator.start()
+    }
+
+    private fun addOnTextChangedListener(onTextChanged: (String) -> Unit) {
+        viewBinding.etText.addTextChangedListener {
+            onTextChanged(it.toString())
+        }
     }
 
     companion object {

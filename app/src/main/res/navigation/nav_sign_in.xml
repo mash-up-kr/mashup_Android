@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/signInMemberInfoFragment"
         android:name="com.mashup.ui.signin.fragment.SignInMemberInfoFragment"
-        android:label="SignInMemberInfoFragment" />
+        android:label="SignInMemberInfoFragment" >
+        <action
+            android:id="@+id/action_signInMemberInfoFragment_to_signInCodeFragment"
+            app:destination="@id/signInCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInCodeFragment"
+        android:name="com.mashup.ui.signin.fragment.SignInCodeFragment"
+        android:label="SignInCodeFragment" />
 </navigation>

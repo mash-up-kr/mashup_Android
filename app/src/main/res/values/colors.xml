@@ -19,8 +19,9 @@
     <color name="yellow">#FFBE16</color>
     
     <!--    gray color system-->
-    <color name="gray800">#2C3037</color>
-    <color name="gray700">#383E4C</color>
+    <color name="gray900">#2C3037</color>
+    <color name="gray800">#383E4C</color>
+    <color name="gray700">#4D535E</color>
     <color name="gray600">#686F7E</color>
     <color name="gray500">#959CAC</color>
     <color name="gray400">#ABB2C1</color>

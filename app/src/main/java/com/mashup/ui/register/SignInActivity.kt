@@ -4,6 +4,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivitySignInBinding
+import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,10 +18,20 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     override fun initViews() {
         viewBinding.toolbar.setOnBackButtonClickListener {
-            if (navController.backQueue.size > 1) {
-                navController.popBackStack()
-            } else {
-                finish()
+            onBackPressed()
+        }
+    }
+
+    override fun onBackPressed() {
+        if (!navController.popBackStack()) {
+            CommonDialog(this).apply {
+                setTitle(text = "회원가입을 그만두시겠어요?")
+                setMessage(text = "입력한 전체 내용이 삭제됩니다.")
+                setNegativeButton()
+                setPositiveButton {
+                    finish()
+                }
+                show()
             }
         }
     }

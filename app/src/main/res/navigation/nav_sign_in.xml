@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/signInMemberInfoFragment"
-        android:name="com.mashup.ui.register.ui.signin.fragment.SignInMemberInfoFragment"
+        android:name="com.mashup.ui.signin.fragment.SignInMemberInfoFragment"
         android:label="SignInMemberInfoFragment" />
 </navigation>

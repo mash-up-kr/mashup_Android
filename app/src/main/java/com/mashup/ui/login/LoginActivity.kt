@@ -6,7 +6,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.ui.main.MainActivity
-import com.mashup.ui.register.SignInActivity
+import com.mashup.ui.signin.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

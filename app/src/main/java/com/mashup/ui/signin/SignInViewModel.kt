@@ -1,4 +1,4 @@
-package com.mashup.ui.register.ui.signin.fragment
+package com.mashup.ui.signin
 
 import com.mashup.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,10 +1,11 @@
-package com.mashup.ui.register.ui.signin.fragment
+package com.mashup.ui.signin.fragment
 
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignInMemberInfoBinding
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
+import com.mashup.ui.signin.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

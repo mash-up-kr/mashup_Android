@@ -1,4 +1,4 @@
-package com.mashup.ui.register
+package com.mashup.ui.signin
 
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R

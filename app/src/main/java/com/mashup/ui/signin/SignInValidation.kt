@@ -1,4 +1,4 @@
-package com.mashup.ui.register.ui.signin.fragment
+package com.mashup.ui.signin.fragment
 
 fun validationId(id: String): Boolean {
     return "[a-zA-Z]{1,15}".toRegex().matches(id)

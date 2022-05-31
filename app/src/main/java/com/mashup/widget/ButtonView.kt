@@ -23,7 +23,7 @@ class ButtonView @JvmOverloads constructor(
 
     fun setOnButtonClickListener(clickListener: () -> Unit) {
         setOnClickListener {
-            clickListener()
+            clickListener.invoke()
         }
     }
 

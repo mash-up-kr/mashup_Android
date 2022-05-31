@@ -79,5 +79,13 @@ class ButtonView @JvmOverloads constructor(
                 setButtonText(this)
             }
         }
+
+        @JvmStatic
+        @BindingAdapter(value = ["style_button"], requireAll = false)
+        fun ButtonView.bindStyle(buttonStyle: ButtonStyle?) {
+            buttonStyle?.run {
+                setButtonStyle(this)
+            }
+        }
     }
 }

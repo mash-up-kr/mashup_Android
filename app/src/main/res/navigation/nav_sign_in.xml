@@ -11,9 +11,16 @@
         <action
             android:id="@+id/action_signInMemberInfoFragment_to_signInCodeFragment"
             app:destination="@id/signInCodeFragment" />
+        <action
+            android:id="@+id/action_signInMemberInfoFragment_to_platFormSelectionDialog"
+            app:destination="@id/platFormSelectionDialog" />
     </fragment>
     <fragment
         android:id="@+id/signInCodeFragment"
         android:name="com.mashup.ui.signin.fragment.SignInCodeFragment"
         android:label="SignInCodeFragment" />
+    <dialog
+        android:id="@+id/platFormSelectionDialog"
+        android:name="com.mashup.ui.signin.dialog.PlatFormSelectionDialog"
+        android:label="PlatFormSelectionDialog" />
 </navigation>

@@ -2,6 +2,8 @@ package com.mashup.widget
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -123,6 +125,45 @@ class TextFieldView @JvmOverloads constructor(
     fun addOnTextChangedListener(onTextChanged: (String) -> Unit) {
         viewBinding.etText.addTextChangedListener {
             onTextChanged(it.toString())
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return super.onSaveInstanceState().run {
+            TextFieldSaveState(this).apply {
+                etText = viewBinding.etText.text.toString()
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val textFieldSaveState = state as? TextFieldSaveState ?: return
+        super.onRestoreInstanceState(textFieldSaveState.superState)
+        viewBinding.etText.setText(textFieldSaveState.etText)
+    }
+
+    class TextFieldSaveState : BaseSavedState {
+        var etText: String? = ""
+
+        constructor(superState: Parcelable?) : super(superState) {}
+
+        constructor(source: Parcel) : super(source) {
+            etText = source.readString()
+        }
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            super.writeToParcel(parcel, flags)
+            parcel.writeString(etText)
+        }
+
+        companion object CREATOR : Parcelable.Creator<TextFieldSaveState> {
+            override fun createFromParcel(parcel: Parcel): TextFieldSaveState {
+                return TextFieldSaveState(parcel)
+            }
+
+            override fun newArray(size: Int): Array<TextFieldSaveState?> {
+                return arrayOfNulls(size)
+            }
         }
     }
 

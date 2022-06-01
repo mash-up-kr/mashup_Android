@@ -1,7 +1,7 @@
 package com.mashup
 
-import com.mashup.ui.signin.fragment.validationId
-import com.mashup.ui.signin.fragment.validationPwd
+import com.mashup.ui.signin.validationId
+import com.mashup.ui.signin.validationPwd
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 

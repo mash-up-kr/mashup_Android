@@ -1,9 +1,11 @@
 package com.mashup.widget
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -100,8 +102,10 @@ class TextSelectionView @JvmOverloads constructor(
         viewBinding.tvDescription.text = description
     }
 
-    fun setClickListener(clickListener: (View) -> Unit) {
-        viewBinding.root.setOnClickListener(clickListener)
+    fun setSelectionClickListener(clickListener: () -> Unit) {
+        viewBinding.viewTouch.setOnClickListener {
+            clickListener()
+        }
     }
 
     fun setDescriptionTextColor(@ColorRes colorRes: Int) {

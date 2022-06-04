@@ -81,17 +81,19 @@ class TextFieldView @JvmOverloads constructor(
         }
     }
 
-    fun setHintText(hint: String) {
-        viewBinding.tvHintLabel.text = hint
+    fun setHintText(hint: String) = with(viewBinding.tvHintLabel) {
+        if (text == hint) return@with
+        text = hint
     }
 
     fun setHintTextColor(@ColorRes colorRes: Int) {
         viewBinding.tvHintLabel.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setDescriptionText(description: String) {
-        viewBinding.tvDescription.visibility = View.VISIBLE
-        viewBinding.tvDescription.text = description
+    fun setDescriptionText(description: String) = with(viewBinding.tvDescription) {
+        if (text.toString() == description) return@with
+        visibility = View.VISIBLE
+        text = description
     }
 
     fun setDescriptionTextColor(@ColorRes colorRes: Int) {
@@ -120,6 +122,10 @@ class TextFieldView @JvmOverloads constructor(
         }
         collapseValueAnimator.cancel()
         expendValueAnimator.start()
+    }
+
+    fun clearTextFieldFocus() {
+        viewBinding.etText.clearFocus()
     }
 
     fun addOnTextChangedListener(onTextChanged: (String) -> Unit) {

@@ -36,7 +36,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
     }
 
     private fun initButton() {
-        viewBinding.btnSignIn.setOnButtonClickListener {
+        viewBinding.btnSignUp.setOnButtonClickListener {
 
         }
     }

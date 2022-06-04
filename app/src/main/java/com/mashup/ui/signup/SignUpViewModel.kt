@@ -8,11 +8,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor() : BaseViewModel() {
+    private val userName = MutableStateFlow("")
+
     private val _platform = MutableStateFlow("")
     val platform: StateFlow<String>
         get() = _platform
 
+
     fun setPlatform(platform: String) {
         _platform.value = platform
+    }
+
+    fun setUserName(userName: String) {
+        this.userName.value = userName
     }
 }

@@ -1,14 +1,14 @@
-package com.mashup.ui.signin
+package com.mashup.ui.signup
 
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.databinding.ActivitySignInBinding
+import com.mashup.databinding.ActivitySignUpBinding
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInActivity : BaseActivity<ActivitySignInBinding>() {
+class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     private val navController by lazy {
         val navHostFragment =
@@ -37,5 +37,5 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     }
 
     override val layoutId: Int
-        get() = R.layout.activity_sign_in
+        get() = R.layout.activity_sign_up
 }

@@ -1,4 +1,4 @@
-package com.mashup.ui.signin
+package com.mashup.ui.signup
 
 fun validationId(id: String): Boolean {
     if (id.isEmpty()) return true

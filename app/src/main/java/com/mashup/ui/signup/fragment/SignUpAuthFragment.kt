@@ -1,24 +1,24 @@
-package com.mashup.ui.signin.fragment
+package com.mashup.ui.signup.fragment
 
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
-import com.mashup.databinding.FragmentSignInMemberInfoBinding
+import com.mashup.databinding.FragmentSignUpMemberBinding
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
-import com.mashup.ui.signin.SignInViewModel
-import com.mashup.ui.signin.validationId
-import com.mashup.ui.signin.validationPwd
+import com.mashup.ui.signup.SignUpViewModel
+import com.mashup.ui.signup.validationId
+import com.mashup.ui.signup.validationPwd
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInMemberInfoFragment : BaseFragment<FragmentSignInMemberInfoBinding>() {
+class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
 
-    private val viewModel: SignInViewModel by activityViewModels()
+    private val viewModel: SignUpViewModel by activityViewModels()
 
     override val layoutId: Int
-        get() = R.layout.fragment_sign_in_member_info
+        get() = R.layout.fragment_sign_up_member
 
     override fun initViews() {
         initTextField()

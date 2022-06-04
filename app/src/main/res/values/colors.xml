@@ -11,13 +11,13 @@
     <!--    QR Scan-->
     <color name="default_bg_qr_scan">#80000000</color>
     <color name="default_corner_qr_scan">#ffffff</color>
-    
+
     <!--    color system-->
     <color name="primary">#6A36FF</color>
     <color name="green">#21CF9B</color>
     <color name="red">#DD4863</color>
     <color name="yellow">#FFBE16</color>
-    
+
     <!--    gray color system-->
     <color name="gray900">#2C3037</color>
     <color name="gray800">#383E4C</color>

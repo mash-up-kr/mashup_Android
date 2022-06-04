@@ -1,8 +1,5 @@
 package com.mashup.extensions
 
-import android.content.Context
-import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope

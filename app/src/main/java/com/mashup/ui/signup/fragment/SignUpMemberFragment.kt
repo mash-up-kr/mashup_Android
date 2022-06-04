@@ -1,7 +1,6 @@
 package com.mashup.ui.signup.fragment
 
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment

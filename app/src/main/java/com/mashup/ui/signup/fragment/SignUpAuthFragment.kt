@@ -19,7 +19,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private val viewModel: SignUpViewModel by activityViewModels()
 
     override val layoutId: Int
-        get() = R.layout.fragment_sign_up_member
+        get() = R.layout.fragment_sign_up_auth
 
     override fun initViews() {
         initTextField()

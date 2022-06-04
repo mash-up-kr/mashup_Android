@@ -1,11 +1,13 @@
 package com.mashup.ui.signup.fragment
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpMemberBinding
 import com.mashup.ui.signup.SignUpViewModel
+import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -24,8 +26,8 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
 
     override fun initObserves() = with(viewModel) {
         flowLifecycleScope {
-            platform.collectLatest {
-                viewBinding.textFieldPlatform.setText(it)
+            memberState.collectLatest { memberState ->
+                setUiOfMemberState(memberState)
             }
         }
     }
@@ -36,8 +38,14 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
         }
 
         viewBinding.textFieldPlatform.setSelectionClickListener {
+            viewBinding.textFieldName.clearTextFieldFocus()
             findNavController().navigate(R.id.action_signUpMemberFragment_to_platFormSelectionDialog)
         }
+    }
+
+    private fun setUiOfMemberState(memberState: MemberState) = with(viewBinding) {
+        textFieldPlatform.setText(memberState.platform)
+        btnSignUp.setButtonEnabled(memberState.isValidationState)
     }
 
     private fun initButton() {

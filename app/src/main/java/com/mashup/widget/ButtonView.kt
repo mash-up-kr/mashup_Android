@@ -56,6 +56,11 @@ class ButtonView @JvmOverloads constructor(
         setTextAppearance(R.style.TextAppearance_Mashup_Medium)
     }
 
+    fun setButtonEnabled(isEnabled: Boolean) {
+        this.isEnabled = isEnabled
+        this.alpha = if (isEnabled) 1.0f else 0.5f
+    }
+
     private fun setButtonText(text: String) {
         this.text = text
     }

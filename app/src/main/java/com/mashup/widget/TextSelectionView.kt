@@ -1,11 +1,9 @@
 package com.mashup.widget
 
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -57,6 +55,8 @@ class TextSelectionView @JvmOverloads constructor(
         }
     }
 
+    private var isExpend: Boolean = false
+
     init {
         initViews()
     }
@@ -89,8 +89,9 @@ class TextSelectionView @JvmOverloads constructor(
         }
     }
 
-    fun setHintText(hint: String) {
-        viewBinding.tvHintLabel.text = hint
+    fun setHintText(hint: String) = with(viewBinding.tvHintLabel) {
+        if (text == hint) return@with
+        text = hint
     }
 
     fun setHintTextColor(@ColorRes colorRes: Int) {
@@ -112,8 +113,9 @@ class TextSelectionView @JvmOverloads constructor(
         viewBinding.tvDescription.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setText(text: String) {
-        viewBinding.etText.setText(text)
+    fun setText(text: String) = with(viewBinding.etText) {
+        if (this.text.toString() == text) return
+        setText(text)
     }
 
     fun setStrokeBackground(@DrawableRes drawableRes: Int) {
@@ -121,17 +123,19 @@ class TextSelectionView @JvmOverloads constructor(
     }
 
     private fun startCollapseAnimationHintLabel() {
-        if (collapseValueAnimator.isRunning) {
+        if (collapseValueAnimator.isRunning || !isExpend) {
             return
         }
+        isExpend = false
         expendValueAnimator.cancel()
         collapseValueAnimator.start()
     }
 
     private fun startExpendAnimationHintLabel() {
-        if (expendValueAnimator.isRunning) {
+        if (expendValueAnimator.isRunning || isExpend) {
             return
         }
+        isExpend = true
         collapseValueAnimator.cancel()
         expendValueAnimator.start()
     }

@@ -4,6 +4,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.databinding.FragmentSignUpAuthBinding
 import com.mashup.databinding.FragmentSignUpMemberBinding
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
@@ -13,7 +14,7 @@ import com.mashup.ui.signup.validationPwd
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
+class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
 
     private val viewModel: SignUpViewModel by activityViewModels()
 
@@ -45,15 +46,11 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
                 }
             }
         }
-
-        viewBinding.textFieldPlatform.setSelectionClickListener {
-            findNavController().navigate(R.id.action_signInMemberInfoFragment_to_platFormSelectionDialog)
-        }
     }
 
     private fun initButton() {
-        viewBinding.btnSignIn.setOnButtonClickListener {
-            findNavController().navigate(R.id.action_signInMemberInfoFragment_to_signInCodeFragment)
+        viewBinding.btnSignUp.setOnButtonClickListener {
+            findNavController().navigate(R.id.action_signUpAuthFragment_to_signUpMemberFragment)
         }
     }
 }

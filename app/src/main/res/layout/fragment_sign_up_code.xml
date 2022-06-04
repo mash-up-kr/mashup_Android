@@ -8,7 +8,7 @@
         android:layout_height="match_parent">
 
         <com.mashup.widget.ButtonView
-            android:id="@+id/btn_sign_in"
+            android:id="@+id/btn_sign_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:text_button='@{"완료"}'
@@ -21,7 +21,7 @@
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_sign_in"
+            app:layout_constraintBottom_toTopOf="@id/btn_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

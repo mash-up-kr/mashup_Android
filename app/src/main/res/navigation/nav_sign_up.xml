@@ -2,25 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_sign_in"
-    app:startDestination="@id/signInMemberInfoFragment">
+    app:startDestination="@id/signUpAuthFragment">
 
-    <fragment
-        android:id="@+id/signInMemberInfoFragment"
-        android:name="com.mashup.ui.signup.fragment.SignUpMemberFragment"
-        android:label="SignInMemberInfoFragment" >
-        <action
-            android:id="@+id/action_signInMemberInfoFragment_to_signInCodeFragment"
-            app:destination="@id/signInCodeFragment" />
-        <action
-            android:id="@+id/action_signInMemberInfoFragment_to_platFormSelectionDialog"
-            app:destination="@id/platFormSelectionDialog" />
-    </fragment>
-    <fragment
-        android:id="@+id/signInCodeFragment"
-        android:name="com.mashup.ui.signup.fragment.SignUpCodeFragment"
-        android:label="SignInCodeFragment" />
     <dialog
         android:id="@+id/platFormSelectionDialog"
         android:name="com.mashup.ui.signup.dialog.PlatFormSelectionDialog"
         android:label="PlatFormSelectionDialog" />
+    <fragment
+        android:id="@+id/signUpAuthFragment"
+        android:name="com.mashup.ui.signup.fragment.SignUpAuthFragment"
+        android:label="SignUpAuthFragment" >
+        <action
+            android:id="@+id/action_signUpAuthFragment_to_signUpMemberFragment"
+            app:destination="@id/signUpMemberFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpMemberFragment"
+        android:name="com.mashup.ui.signup.fragment.SignUpMemberFragment"
+        android:label="SignUpMemberFragment" >
+        <action
+            android:id="@+id/action_signUpMemberFragment_to_signUpCodeFragment"
+            app:destination="@id/signUpCodeFragment" />
+        <action
+            android:id="@+id/action_signUpMemberFragment_to_platFormSelectionDialog"
+            app:destination="@id/platFormSelectionDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCodeFragment"
+        android:name="com.mashup.ui.signup.fragment.SignUpCodeFragment"
+        android:label="SignUpCodeFragment" />
 </navigation>

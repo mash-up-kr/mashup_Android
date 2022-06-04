@@ -11,3 +11,11 @@ fun validationPwd(pwd: String): Boolean {
   ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$
         """.trimIndent().toRegex().matches(pwd)
 }
+
+fun validationName(name: String): Boolean {
+    return name.isNotBlank()
+}
+
+fun validationPlatform(platform: String): Boolean {
+    return platform.isNotBlank()
+}

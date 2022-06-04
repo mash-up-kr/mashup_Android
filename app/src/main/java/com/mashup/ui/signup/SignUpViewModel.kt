@@ -1,6 +1,7 @@
 package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
+import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,6 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     private val userName = MutableStateFlow("")
     private val platform = MutableStateFlow("")
-
     val memberState = userName.combine(platform) { name, platform ->
         MemberState(
             name = name,
@@ -22,10 +22,19 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
         )
     }.map { memberState ->
         memberState.copy(
-            isValidationState = memberState.name.isNotBlank()
-                && memberState.platform.isNotBlank()
+            isValidationState = validationName(memberState.name)
+                && validationPlatform(memberState.platform)
         )
     }
+
+    private val signUpCode = MutableStateFlow("")
+    val codeState = signUpCode
+        .map {
+            CodeState(
+                code = it,
+                isValidationState = true // TODO: validation to api
+            )
+        }
 
 
     fun setPlatform(platform: String) {
@@ -34,5 +43,9 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     fun setUserName(userName: String) {
         this.userName.value = userName
+    }
+
+    fun setCode(code: String) {
+        signUpCode.value = code
     }
 }

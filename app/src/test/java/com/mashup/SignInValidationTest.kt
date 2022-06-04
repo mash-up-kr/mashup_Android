@@ -1,6 +1,8 @@
 package com.mashup
 
 import com.mashup.ui.signup.validationId
+import com.mashup.ui.signup.validationName
+import com.mashup.ui.signup.validationPlatform
 import com.mashup.ui.signup.validationPwd
 import junit.framework.Assert.assertEquals
 import org.junit.Test
@@ -41,5 +43,29 @@ class SignInValidationTest {
     fun validation_pwd_number_or_character_great_than_8() {
         val id = "abce"
         assertEquals(validationId(id), true)
+    }
+
+    @Test
+    fun validation_name_empty() {
+        val name = ""
+        assertEquals(validationName(name), false)
+    }
+
+    @Test
+    fun validation_name_not_empty() {
+        val name = "name"
+        assertEquals(validationName(name), true)
+    }
+
+    @Test
+    fun validation_name_platform() {
+        val platform = ""
+        assertEquals(validationPlatform(platform), false)
+    }
+
+    @Test
+    fun validation_name_not_platform() {
+        val platform = "platform"
+        assertEquals(validationPlatform(platform), true)
     }
 }

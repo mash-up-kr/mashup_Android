@@ -1,7 +1,9 @@
 package com.mashup.ui.signup.state
 
+import com.mashup.ui.model.Validation
+
 data class CodeState(
     val code: String = "",
-    val isWrongCode: Boolean = false,
+    val validationCode: Validation = Validation.EMPTY,
     val isValidationState: Boolean = false
 )

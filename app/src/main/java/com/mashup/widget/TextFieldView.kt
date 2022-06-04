@@ -124,6 +124,8 @@ class TextFieldView @JvmOverloads constructor(
         expendValueAnimator.start()
     }
 
+    fun isFocus() = viewBinding.etText.hasFocus()
+
     fun clearTextFieldFocus() {
         viewBinding.etText.clearFocus()
     }

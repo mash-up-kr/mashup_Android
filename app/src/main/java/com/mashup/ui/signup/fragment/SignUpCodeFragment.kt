@@ -4,8 +4,10 @@ import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpCodeBinding
+import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
+import com.mashup.ui.model.Validation
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.validationId
@@ -36,11 +38,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
     private fun initTextField() {
         viewBinding.textFieldCode.run {
             addOnTextChangedListener { text ->
-                if (validationId(text)) {
-                    setSuccessUiOfTextField()
-                } else {
-                    setFailedUiOfTextField()
-                }
+                viewModel.setCode(text)
             }
         }
     }
@@ -53,12 +51,19 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
 
     private fun setUiOfCodeState(codeState: CodeState) {
         with(viewBinding.textFieldCode) {
-            if (codeState.isWrongCode) {
-                setDescriptionText("가입코드가 일치하지 않아요")
-                setFailedUiOfTextField()
-            } else {
-                setDescriptionText("")
-                setSuccessUiOfTextField()
+            when (codeState.validationCode) {
+                Validation.SUCCESS -> {
+                    setDescriptionText("")
+                    setSuccessUiOfTextField()
+                }
+                Validation.FAILED -> {
+                    setDescriptionText("가입코드가 일치하지 않아요")
+                    setFailedUiOfTextField()
+                }
+                Validation.EMPTY -> {
+                    setDescriptionText("")
+                    setEmptyUIOfTextField()
+                }
             }
         }
         viewBinding.btnSignUp.setButtonEnabled(codeState.isValidationState)

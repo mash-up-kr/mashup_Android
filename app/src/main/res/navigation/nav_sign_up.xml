@@ -11,7 +11,7 @@
     <fragment
         android:id="@+id/signUpAuthFragment"
         android:name="com.mashup.ui.signup.fragment.SignUpAuthFragment"
-        android:label="SignUpAuthFragment" >
+        android:label="SignUpAuthFragment">
         <action
             android:id="@+id/action_signUpAuthFragment_to_signUpMemberFragment"
             app:destination="@id/signUpMemberFragment" />
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/signUpMemberFragment"
         android:name="com.mashup.ui.signup.fragment.SignUpMemberFragment"
-        android:label="SignUpMemberFragment" >
+        android:label="SignUpMemberFragment">
         <action
             android:id="@+id/action_signUpMemberFragment_to_signUpCodeFragment"
             app:destination="@id/signUpCodeFragment" />

@@ -10,7 +10,6 @@ import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.model.Validation
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
-import com.mashup.ui.signup.validationId
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

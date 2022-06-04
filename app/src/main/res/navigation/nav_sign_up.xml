@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/signInMemberInfoFragment"
-        android:name="com.mashup.ui.signin.fragment.SignInMemberInfoFragment"
+        android:name="com.mashup.ui.signup.fragment.SignUpMemberFragment"
         android:label="SignInMemberInfoFragment" >
         <action
             android:id="@+id/action_signInMemberInfoFragment_to_signInCodeFragment"
@@ -17,10 +17,10 @@
     </fragment>
     <fragment
         android:id="@+id/signInCodeFragment"
-        android:name="com.mashup.ui.signin.fragment.SignInCodeFragment"
+        android:name="com.mashup.ui.signup.fragment.SignUpCodeFragment"
         android:label="SignInCodeFragment" />
     <dialog
         android:id="@+id/platFormSelectionDialog"
-        android:name="com.mashup.ui.signin.dialog.PlatFormSelectionDialog"
+        android:name="com.mashup.ui.signup.dialog.PlatFormSelectionDialog"
         android:label="PlatFormSelectionDialog" />
 </navigation>

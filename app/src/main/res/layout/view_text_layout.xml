@@ -51,6 +51,7 @@
                 android:paddingStart="20dp"
                 android:paddingTop="36dp"
                 android:paddingEnd="52dp"
+                android:saveEnabled="false"
                 android:paddingBottom="20dp"
                 android:textAppearance="@style/TextAppearance.Mashup.Medium"
                 android:textColor="@color/gray700"

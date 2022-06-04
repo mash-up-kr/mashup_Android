@@ -1,4 +1,4 @@
-package com.mashup.ui.signin.dialog
+package com.mashup.ui.signup.dialog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,13 +8,13 @@ import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogPlatformSelectionBinding
 import com.mashup.databinding.ItemPlatformBinding
-import com.mashup.ui.signin.SignInViewModel
+import com.mashup.ui.signup.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PlatFormSelectionDialog : BaseBottomSheetDialogFragment<DialogPlatformSelectionBinding>() {
 
-    private val viewModel: SignInViewModel by activityViewModels()
+    private val viewModel: SignUpViewModel by activityViewModels()
     private val adapter: PlatformAdapter = PlatformAdapter(platformList) { platform ->
         viewModel.setPlatform(platform)
         dismiss()

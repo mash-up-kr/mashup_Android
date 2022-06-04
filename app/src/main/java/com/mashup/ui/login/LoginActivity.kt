@@ -6,7 +6,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.ui.main.MainActivity
-import com.mashup.ui.signin.SignInActivity
+import com.mashup.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -42,7 +42,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun initRegisterButton() {
         viewBinding.tvSignIn.setOnClickListener {
             startActivity(
-                Intent(this, SignInActivity::class.java)
+                Intent(this, SignUpActivity::class.java)
             )
         }
     }

@@ -15,7 +15,7 @@
         tools:ignore="AllowBackup">
 
         <activity
-            android:name=".ui.signin.SignInActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing"/>
 

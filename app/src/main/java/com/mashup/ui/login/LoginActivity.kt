@@ -6,12 +6,17 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.ui.main.MainActivity
+import com.mashup.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
+
+    override fun initViews() {
+        initRegisterButton()
+    }
 
     override fun initObserves() {
         viewModel.run {
@@ -32,6 +37,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             Intent(this, MainActivity::class.java)
         )
         finish()
+    }
+
+    private fun initRegisterButton() {
+        viewBinding.tvSignIn.setOnClickListener {
+            startActivity(
+                Intent(this, SignUpActivity::class.java)
+            )
+        }
     }
 
     override val layoutId: Int

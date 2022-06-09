@@ -51,4 +51,15 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         super.onDestroyView()
         _viewBinding = null
     }
+
+    protected fun flowLifecycleScope(
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(state) {
+                block.invoke(this)
+            }
+        }
+    }
 }

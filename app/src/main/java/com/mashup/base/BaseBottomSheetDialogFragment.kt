@@ -8,11 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.databinding.DialogBaseBottomSheetBinding
 
 abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetDialogFragment() {
-    private var _viewBinding: V? = null
+    private var _rootViewBinding: DialogBaseBottomSheetBinding? = null
+    private val rootViewBinding: DialogBaseBottomSheetBinding
+        get() = _rootViewBinding!!
+
+    private var _childViewBinding: V? = null
     protected val viewBinding: V
-        get() = _viewBinding!!
+        get() = _childViewBinding!!
 
     abstract val layoutId: Int
 
@@ -30,12 +35,15 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _viewBinding =
-            DataBindingUtil.inflate(
-                LayoutInflater.from(requireContext()), layoutId, null, false
+        _rootViewBinding = DialogBaseBottomSheetBinding.inflate(
+            LayoutInflater.from(context), null, false
+        )
+        _childViewBinding =
+            DataBindingUtil.inflate<V>(
+                LayoutInflater.from(requireContext()), layoutId, rootViewBinding.content, true
             )
-        viewBinding.lifecycleOwner = viewLifecycleOwner
-        return viewBinding.root
+        rootViewBinding.lifecycleOwner = this
+        return rootViewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,7 +81,12 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _viewBinding = null
+        _rootViewBinding = null
+        _childViewBinding = null
+    }
+
+    protected fun setTitle(title: String) {
+        rootViewBinding.title.text = title
     }
 
     protected fun expendBottomSheet() {

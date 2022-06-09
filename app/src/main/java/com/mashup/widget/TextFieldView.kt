@@ -2,12 +2,17 @@ package com.mashup.widget
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.widget.EditText
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mashup.R
@@ -70,23 +75,37 @@ class TextFieldView @JvmOverloads constructor(
                     startCollapseAnimationHintLabel()
                 }
             }
-            setBackgroundStrokeColorWithFocus(hasFocus)
+            setStrokeBackground(
+                if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
+            )
         }
     }
 
-    fun setHintText(hint: String) {
-        viewBinding.tvHintLabel.text = hint
+    fun setHintText(hint: String) = with(viewBinding.tvHintLabel) {
+        if (text == hint) return@with
+        text = hint
     }
 
-    fun setDescriptionText(description: String) {
-        viewBinding.tvDescription.visibility = View.VISIBLE
-        viewBinding.tvDescription.text = description
+    fun setHintTextColor(@ColorRes colorRes: Int) {
+        viewBinding.tvHintLabel.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setBackgroundStrokeColorWithFocus(isFocus: Boolean) {
-        viewBinding.layoutTextField.setBackgroundResource(
-            if (isFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line
-        )
+    fun setDescriptionText(description: String) = with(viewBinding.tvDescription) {
+        if (text.toString() == description) return@with
+        visibility = View.VISIBLE
+        text = description
+    }
+
+    fun setDescriptionTextColor(@ColorRes colorRes: Int) {
+        viewBinding.tvDescription.setTextColor(ContextCompat.getColor(context, colorRes))
+    }
+
+    fun setTrailingImageIcon(@DrawableRes drawableRes: Int) {
+        viewBinding.imgIcon.setImageResource(drawableRes)
+    }
+
+    fun setStrokeBackground(@DrawableRes drawableRes: Int) {
+        viewBinding.layoutTextField.setBackgroundResource(drawableRes)
     }
 
     private fun startCollapseAnimationHintLabel() {
@@ -103,6 +122,57 @@ class TextFieldView @JvmOverloads constructor(
         }
         collapseValueAnimator.cancel()
         expendValueAnimator.start()
+    }
+
+    fun isFocus() = viewBinding.etText.hasFocus()
+
+    fun clearTextFieldFocus() {
+        viewBinding.etText.clearFocus()
+    }
+
+    fun addOnTextChangedListener(onTextChanged: (String) -> Unit) {
+        viewBinding.etText.addTextChangedListener {
+            onTextChanged(it.toString())
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return super.onSaveInstanceState().run {
+            TextFieldSaveState(this).apply {
+                etText = viewBinding.etText.text.toString()
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val textFieldSaveState = state as? TextFieldSaveState ?: return
+        super.onRestoreInstanceState(textFieldSaveState.superState)
+        viewBinding.etText.setText(textFieldSaveState.etText)
+    }
+
+    class TextFieldSaveState : BaseSavedState {
+        var etText: String? = ""
+
+        constructor(superState: Parcelable?) : super(superState) {}
+
+        constructor(source: Parcel) : super(source) {
+            etText = source.readString()
+        }
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            super.writeToParcel(parcel, flags)
+            parcel.writeString(etText)
+        }
+
+        companion object CREATOR : Parcelable.Creator<TextFieldSaveState> {
+            override fun createFromParcel(parcel: Parcel): TextFieldSaveState {
+                return TextFieldSaveState(parcel)
+            }
+
+            override fun newArray(size: Int): Array<TextFieldSaveState?> {
+                return arrayOfNulls(size)
+            }
+        }
     }
 
     companion object {

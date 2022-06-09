@@ -12,7 +12,7 @@
             android:id="@+id/layout_text_field"
             android:layout_width="0dp"
             android:layout_height="84dp"
-            android:background="@drawable/bg_text_field_out_line"
+            android:background="@drawable/bg_text_field_out_line_idle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,16 +45,17 @@
                 android:id="@+id/et_text"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:inputType="text"
                 android:paddingStart="20dp"
                 android:paddingTop="36dp"
                 android:paddingEnd="52dp"
+                android:saveEnabled="false"
                 android:paddingBottom="20dp"
-                android:background="@null"
-                android:inputType="text"
-                android:textCursorDrawable="@drawable/cursor_text_field"
-                android:cursorVisible="true"
                 android:textAppearance="@style/TextAppearance.Mashup.Medium"
                 android:textColor="@color/gray700"
+                android:textCursorDrawable="@drawable/cursor_text_field"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +73,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="ContentDescription" />
+
+            <View
+                android:id="@+id/view_touch"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

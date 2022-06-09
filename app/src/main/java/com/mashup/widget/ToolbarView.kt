@@ -43,6 +43,7 @@ class ToolbarView @JvmOverloads constructor(
 
     companion object {
 
+        @JvmStatic
         @BindingAdapter(
             value = ["toolbar_back_button_visible", "toolbar_close_button_visible"],
             requireAll = false
@@ -55,10 +56,11 @@ class ToolbarView @JvmOverloads constructor(
             setVisibleCloseButton(closeButtonVisible)
         }
 
+        @JvmStatic
         @BindingAdapter("toolbar_title")
         fun ToolbarView.setTitleText(title: String?) {
             title?.run {
-                setTitleText(this)
+                setTitle(this)
             }
         }
     }

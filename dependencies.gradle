@@ -51,4 +51,7 @@ ext {
 
     // DataSource
     dataSourceVersion = "1.0.0"
+
+    // Navigation
+    navVersion = "2.4.2"
 }

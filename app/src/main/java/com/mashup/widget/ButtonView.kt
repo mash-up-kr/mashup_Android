@@ -23,7 +23,7 @@ class ButtonView @JvmOverloads constructor(
 
     fun setOnButtonClickListener(clickListener: () -> Unit) {
         setOnClickListener {
-            clickListener()
+            clickListener.invoke()
         }
     }
 
@@ -56,6 +56,11 @@ class ButtonView @JvmOverloads constructor(
         setTextAppearance(R.style.TextAppearance_Mashup_Medium)
     }
 
+    fun setButtonEnabled(isEnabled: Boolean) {
+        this.isEnabled = isEnabled
+        this.alpha = if (isEnabled) 1.0f else 0.5f
+    }
+
     private fun setButtonText(text: String) {
         this.text = text
     }
@@ -77,6 +82,14 @@ class ButtonView @JvmOverloads constructor(
         fun ButtonView.bindText(text: String?) {
             text?.run {
                 setButtonText(this)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter(value = ["style_button"], requireAll = false)
+        fun ButtonView.bindStyle(buttonStyle: ButtonStyle?) {
+            buttonStyle?.run {
+                setButtonStyle(this)
             }
         }
     }

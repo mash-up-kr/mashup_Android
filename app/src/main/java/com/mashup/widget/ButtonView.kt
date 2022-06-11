@@ -66,7 +66,7 @@ class ButtonView @JvmOverloads constructor(
     }
 
     enum class ButtonStyle(@ColorRes val backgroundColorRes: Int, @ColorRes val textColorRes: Int) {
-        PRIMARY(backgroundColorRes = R.color.primary, textColorRes = R.color.white),
+        PRIMARY(backgroundColorRes = R.color.primary500, textColorRes = R.color.white),
         DEFAULT(backgroundColorRes = R.color.gray100, textColorRes = R.color.gray600)
     }
 

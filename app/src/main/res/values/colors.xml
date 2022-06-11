@@ -12,18 +12,32 @@
     <color name="default_bg_qr_scan">#80000000</color>
     <color name="default_corner_qr_scan">#ffffff</color>
 
-    <!--    color system-->
-    <color name="primary">#6A36FF</color>
-    <color name="green">#21CF9B</color>
-    <color name="red">#DD4863</color>
-    <color name="yellow">#FFBE16</color>
+    <!--    primary color system-->
+    <color name="primary600">#5421E6</color>
+    <color name="primary500">#6A36FF</color>
+    <color name="primary100">#F5F1FF</color>
+
+    <!--    semantic color system-->
+    <color name="red600">#C83C55</color>
+    <color name="red500">#DD4863</color>
+    <color name="red100">#FFEBEE</color>
+
+    <color name="yellow600">#FFA800</color>
+    <color name="yellow500">#FFB800</color>
+    <color name="yellow100">#FFF6DF</color>
+
+    <color name="green600">#00A674</color>
+    <color name="green500">#04C088</color>
+    <color name="green100">#D8FFF3</color>
+
+    <color name="blue500">#2B8AF9</color>
 
     <!--    gray color system-->
     <color name="gray900">#2C3037</color>
     <color name="gray800">#383E4C</color>
     <color name="gray700">#4D535E</color>
-    <color name="gray600">#686F7E</color>
-    <color name="gray500">#959CAC</color>
+    <color name="gray600">#959CAC</color>
+    <color name="gray500">#5421E6</color>
     <color name="gray400">#ABB2C1</color>
     <color name="gray300">#C7CDDB</color>
     <color name="gray200">#D6DBE8</color>

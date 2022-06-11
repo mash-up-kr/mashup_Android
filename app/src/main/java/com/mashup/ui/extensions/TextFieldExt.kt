@@ -1,5 +1,6 @@
 package com.mashup.ui.extensions
 
+import android.graphics.Color.red
 import com.mashup.R
 import com.mashup.ui.model.Validation
 import com.mashup.widget.TextFieldView
@@ -19,8 +20,8 @@ fun TextFieldView.setValidation(validation: Validation) {
 }
 
 fun TextFieldView.setFailedUiOfTextField() {
-    setHintTextColor(R.color.red)
-    setDescriptionTextColor(R.color.red)
+    setHintTextColor(R.color.red500)
+    setDescriptionTextColor(R.color.red500)
     setTrailingImageIcon(R.drawable.ic_question_mark)
     setStrokeBackground(R.drawable.bg_text_field_out_line_error)
 }

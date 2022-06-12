@@ -7,6 +7,7 @@ import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -38,8 +39,10 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
         )
     }
 
+    private val _platform = MutableStateFlow("")
+    val platform: StateFlow<String> = _platform
+
     private val userName = MutableStateFlow("")
-    private val platform = MutableStateFlow("")
     val memberState = userName.combine(platform) { name, platform ->
         MemberState(
             name = name,
@@ -74,7 +77,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun setPlatform(platform: String) {
-        this.platform.value = platform
+        _platform.value = platform
     }
 
     fun setUserName(userName: String) {

@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.databinding.DialogBaseBottomSheetBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetDialogFragment() {
     private var _rootViewBinding: DialogBaseBottomSheetBinding? = null
@@ -95,5 +100,16 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
 
     protected fun hideBottomSheet() {
         behavior?.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    protected fun flowLifecycleScope(
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(state) {
+                block.invoke(this)
+            }
+        }
     }
 }

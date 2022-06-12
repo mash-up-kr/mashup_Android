@@ -6,7 +6,7 @@
 
     <dialog
         android:id="@+id/platFormSelectionDialog"
-        android:name="com.mashup.ui.signup.dialog.PlatFormSelectionDialog"
+        android:name="com.mashup.ui.signup.dialog.platform.PlatformDialog"
         android:label="PlatFormSelectionDialog" />
     <fragment
         android:id="@+id/signUpAuthFragment"

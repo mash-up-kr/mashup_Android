@@ -101,15 +101,4 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
     protected fun hideBottomSheet() {
         behavior?.state = BottomSheetBehavior.STATE_HIDDEN
     }
-
-    protected fun flowLifecycleScope(
-        state: Lifecycle.State = Lifecycle.State.STARTED,
-        block: suspend CoroutineScope.() -> Unit
-    ) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(state) {
-                block.invoke(this)
-            }
-        }
-    }
 }

@@ -12,6 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -75,7 +76,7 @@ class TextFieldView @JvmOverloads constructor(
                     startCollapseAnimationHintLabel()
                 }
             }
-            setStrokeBackground(
+            setStrokeForegroundDrawable(
                 if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
             )
         }
@@ -104,7 +105,12 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.imgIcon.setImageResource(drawableRes)
     }
 
-    fun setStrokeBackground(@DrawableRes drawableRes: Int) {
+    fun setStrokeForegroundDrawable(@DrawableRes drawableRes: Int) {
+        viewBinding.layoutTextField.foreground =
+            ResourcesCompat.getDrawable(context.resources, drawableRes, null)
+    }
+
+    fun setBackgroundDrawable(@DrawableRes drawableRes: Int) {
         viewBinding.layoutTextField.setBackgroundResource(drawableRes)
     }
 
@@ -125,6 +131,13 @@ class TextFieldView @JvmOverloads constructor(
     }
 
     fun isFocus() = viewBinding.etText.hasFocus()
+
+    fun setEnabledTextField(enabled: Boolean) {
+        viewBinding.etText.isEnabled = enabled
+        setBackgroundDrawable(
+            if (enabled) R.drawable.bg_text_field_enabled else R.drawable.bg_text_field_not_enabled
+        )
+    }
 
     fun clearTextFieldFocus() {
         viewBinding.etText.clearFocus()

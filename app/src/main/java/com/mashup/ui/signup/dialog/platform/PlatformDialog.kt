@@ -4,6 +4,7 @@ import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogPlatformBinding
+import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.signup.SignUpViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -21,7 +22,7 @@ class PlatformDialog : BaseBottomSheetDialogFragment<DialogPlatformBinding>() {
     }
 
     override fun initObserves() {
-        flowLifecycleScope {
+        flowViewLifecycleScope {
             viewModel.platform.collectLatest {
                 adapter.updateSelectedPlatform(it)
             }

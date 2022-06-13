@@ -166,7 +166,7 @@ class TextFieldView @JvmOverloads constructor(
     class TextFieldSaveState : BaseSavedState {
         var etText: String? = ""
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
 
         constructor(source: Parcel) : super(source) {
             etText = source.readString()

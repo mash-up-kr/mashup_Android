@@ -26,9 +26,20 @@
         <action
             android:id="@+id/action_signUpMemberFragment_to_platFormSelectionDialog"
             app:destination="@id/platFormSelectionDialog" />
+        <action
+            android:id="@+id/action_signUpMemberFragment_to_termsAgreementDialog"
+            app:destination="@id/termsAgreementDialog" />
     </fragment>
     <fragment
         android:id="@+id/signUpCodeFragment"
         android:name="com.mashup.ui.signup.fragment.SignUpCodeFragment"
         android:label="SignUpCodeFragment" />
+    <dialog
+        android:id="@+id/termsAgreementDialog"
+        android:name="com.mashup.ui.signup.dialog.term.TermsAgreementDialog"
+        android:label="TermsAgreementDialog" >
+        <action
+            android:id="@+id/action_termsAgreementDialog_to_signUpCodeFragment"
+            app:destination="@id/signUpCodeFragment" />
+    </dialog>
 </navigation>

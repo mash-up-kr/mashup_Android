@@ -1,6 +1,7 @@
 package com.mashup.ui.signup.fragment
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpCodeBinding
@@ -45,7 +46,6 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
 
     private fun initButton() {
         viewBinding.btnSignUp.setOnButtonClickListener {
-
         }
     }
 

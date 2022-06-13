@@ -161,6 +161,9 @@ class TextFieldView @JvmOverloads constructor(
         val textFieldSaveState = state as? TextFieldSaveState ?: return
         super.onRestoreInstanceState(textFieldSaveState.superState)
         viewBinding.etText.setText(textFieldSaveState.etText)
+        if (!textFieldSaveState.etText.isNullOrEmpty()) {
+            startExpendAnimationHintLabel()
+        }
     }
 
     class TextFieldSaveState : BaseSavedState {

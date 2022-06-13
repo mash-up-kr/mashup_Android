@@ -42,6 +42,9 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     private val _platform = MutableStateFlow("")
     val platform: StateFlow<String> = _platform
 
+    private val _isCheckedTerm = MutableStateFlow(false)
+    val isCheckedTerm: StateFlow<Boolean> = _isCheckedTerm
+
     private val userName = MutableStateFlow("")
     val memberState = userName.combine(platform) { name, platform ->
         MemberState(
@@ -86,5 +89,9 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     fun setCode(code: String) {
         signUpCode.value = code
+    }
+
+    fun updatedTerm() {
+        _isCheckedTerm.value = !isCheckedTerm.value
     }
 }

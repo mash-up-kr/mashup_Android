@@ -50,7 +50,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
 
     private fun initButton() {
         viewBinding.btnSignUp.setOnButtonClickListener {
-            findNavController().navigate(R.id.action_signUpMemberFragment_to_signUpCodeFragment)
+            findNavController().navigate(R.id.action_signUpMemberFragment_to_termsAgreementDialog)
         }
     }
 }

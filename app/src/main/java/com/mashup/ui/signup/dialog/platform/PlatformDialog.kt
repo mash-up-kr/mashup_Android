@@ -17,6 +17,7 @@ class PlatformDialog : BaseBottomSheetDialogFragment<DialogPlatformBinding>() {
     }
 
     override fun initViews() {
+        super.initViews()
         setTitle("플랫폼 선택")
         initPlatFormRecyclerView()
     }

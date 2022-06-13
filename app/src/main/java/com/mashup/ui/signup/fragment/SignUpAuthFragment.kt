@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpAuthBinding
+import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
@@ -29,7 +30,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     }
 
     override fun initObserves() = with(viewModel) {
-        flowLifecycleScope {
+        flowViewLifecycleScope {
             authState.collectLatest {
                 setUiOfAuthState(it)
             }
@@ -65,6 +66,8 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfAuthState(authState: AuthState) = with(viewBinding) {
         textFieldId.setValidation(authState.validationId)
         textFieldPwd.setValidation(authState.validationPwd)
+
+        textFieldPwdCheck.setEnabledTextField(authState.validationPwd == Validation.SUCCESS)
         when (authState.validationPwdCheck) {
             Validation.SUCCESS -> {
                 textFieldPwdCheck.setDescriptionText("")

@@ -4,6 +4,9 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.InputType
+import android.text.InputType.TYPE_CLASS_TEXT
+import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -130,6 +133,17 @@ class TextFieldView @JvmOverloads constructor(
         expendValueAnimator.start()
     }
 
+    fun setInputType(inputType: TextFieldInputType) {
+        viewBinding.etText.inputType = when (inputType) {
+            TextFieldInputType.PASSWORD -> {
+                TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
+            }
+            else -> {
+                TYPE_CLASS_TEXT
+            }
+        }
+    }
+
     fun isFocus() = viewBinding.etText.hasFocus()
 
     fun setEnabledTextField(enabled: Boolean) {
@@ -197,7 +211,7 @@ class TextFieldView @JvmOverloads constructor(
 
         @JvmStatic
         @BindingAdapter(value = ["text_field_hint", "text_field_description"], requireAll = false)
-        fun TextFieldView.setTitleText(hint: String?, description: String?) {
+        fun TextFieldView.bindText(hint: String?, description: String?) {
             hint?.run {
                 setHintText(this)
             }
@@ -205,5 +219,15 @@ class TextFieldView @JvmOverloads constructor(
                 setDescriptionText(this)
             }
         }
+
+        @JvmStatic
+        @BindingAdapter("text_field_input_type")
+        fun TextFieldView.bindInputType(inputType: TextFieldInputType) {
+            setInputType(inputType)
+        }
+    }
+
+    enum class TextFieldInputType {
+        PASSWORD, TEXT
     }
 }

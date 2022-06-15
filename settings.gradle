@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MashUp"
 include ':app'
+include ':compose'
+include ':common'

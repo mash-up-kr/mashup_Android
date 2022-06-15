@@ -13,12 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MashUp"
         tools:ignore="AllowBackup">
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.MashUp" />
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">

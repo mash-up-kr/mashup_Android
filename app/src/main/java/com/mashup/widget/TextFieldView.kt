@@ -31,6 +31,9 @@ class TextFieldView @JvmOverloads constructor(
     private val viewBinding: ViewTextLayoutBinding =
         ViewTextLayoutBinding.inflate(LayoutInflater.from(context), this, true)
 
+    val inputtedText: String
+        get() = viewBinding.etText.text.toString()
+
     private val collapseValueAnimator: ValueAnimator by lazy {
         ValueAnimator.ofFloat(1f, 0f).apply {
             duration = 300

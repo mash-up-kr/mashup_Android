@@ -1,5 +1,6 @@
 package com.mashup.ui.mypage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.mashup.R
 import com.mashup.databinding.*
 import com.mashup.ui.model.AttendanceModel
 
-class MyPageAttendanceListAdapter :
+class AttendanceListAdapter :
     ListAdapter<AttendanceModel, RecyclerView.ViewHolder>(AttendanceComparator) {
 
     private val VIEW_TYPE_TITLE = 0
@@ -35,31 +36,36 @@ class MyPageAttendanceListAdapter :
             VIEW_TYPE_LIST_ITEM -> {
                 MyPageListItemViewHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_history_list, parent, false)
+                        R.layout.item_mypage_attendance_history_list, parent, false
+                    )
                 )
             }
             VIEW_TYPE_LIST_LEVEL -> {
                 MyPageListLevelViewHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_history_level, parent, false)
+                        R.layout.item_mypage_attendance_history_level, parent, false
+                    )
                 )
             }
             VIEW_TYPE_TITLE -> {
                 MyPageTitleViewHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_title, parent, false)
+                        R.layout.item_mypage_attendance_title, parent, false
+                    )
                 )
             }
             VIEW_TYPE_SCORE -> {
                 MyPageScoreViewHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_score, parent, false)
+                        R.layout.item_mypage_attendance_score, parent, false
+                    )
                 )
             }
             else -> {
                 MyPageListNoneViewHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_history_placeholder_empthy, parent, false)
+                        R.layout.item_mypage_attendance_history_placeholder_empthy, parent, false
+                    )
                 )
             }
         }
@@ -67,6 +73,18 @@ class MyPageAttendanceListAdapter :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MyPageListItemViewHolder) {
+            holder.bind(getItem(position))
+        }
+        if (holder is MyPageListLevelViewHolder) {
+            holder.bind(getItem(position))
+        }
+        if (holder is MyPageListNoneViewHolder) {
+            holder.bind(getItem(position))
+        }
+        if (holder is MyPageScoreViewHolder) {
+            holder.bind(getItem(position))
+        }
+        if (holder is MyPageTitleViewHolder) {
             holder.bind(getItem(position))
         }
     }
@@ -103,7 +121,12 @@ class MyPageAttendanceListAdapter :
             androidx.databinding.DataBindingUtil.bind(itemView)
 
         fun bind(item: AttendanceModel) {
-            binding?.model = item
+            binding?.let {
+                it.model = item
+                it.layoutTotalAttendance.setOnClickListener {
+                    mListener?.onTotalAttendanceClick()
+                }
+            }
         }
     }
 
@@ -118,7 +141,7 @@ class MyPageAttendanceListAdapter :
 
 
     interface OnItemEventListener {
-        fun onItemClick(id: AttendanceModel)
+        fun onTotalAttendanceClick()
     }
 
     private var mListener: OnItemEventListener? = null

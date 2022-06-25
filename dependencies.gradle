@@ -1,10 +1,13 @@
 ext {
     // Android
-    androidBuildToolsVersion = "7.0.2"
+    androidBuildToolsVersion = "7.2.1"
 
     minVersion = 23
-    targetVersion = 31
-    compileVersion = 31
+    targetVersion = 32
+    compileVersion = 32
+
+    // kotlin
+    kotlinVersion = "1.6.10"
 
     // androidx
     appcompatVersion = "1.4.1"

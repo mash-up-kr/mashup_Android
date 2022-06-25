@@ -10,7 +10,6 @@ import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
 import com.mashup.ui.main.MainActivity
-import com.mashup.ui.model.AttendanceModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -18,11 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     private val viewModel: MyPageViewModel by viewModels()
+    private lateinit var bottomSheetDialog: BottomSheetDialog
 
     private val attendanceAdapter by lazy {
-        MyPageAttendanceListAdapter().apply {
-            setOnItemClickListener(object : MyPageAttendanceListAdapter.OnItemEventListener {
-                override fun onItemClick(id: AttendanceModel) {
+        AttendanceListAdapter().apply {
+            setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {
+                override fun onTotalAttendanceClick() {
+                    bottomSheetDialog.show()
                 }
             })
         }
@@ -30,19 +31,16 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
 
     override val layoutId: Int = R.layout.fragment_my_page
-
     override fun initViews() {
         super.initViews()
-        val bottomSheetView =
-            layoutInflater.inflate(R.layout.fragment_my_page_attendance_info, null)
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_attendance_info, null)
         context?.let {
-            val bottomSheetDialog = BottomSheetDialog(it)
-            bottomSheetDialog.setContentView(bottomSheetView)
-            bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            bottomSheetDialog.show()
-//            bottomSheetDialog.dismiss()
+            bottomSheetDialog = BottomSheetDialog(it)
+            bottomSheetDialog.apply {
+                setContentView(bottomSheetView)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
-
         viewBinding.rvMypage.apply {
             adapter = attendanceAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {

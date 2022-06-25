@@ -15,6 +15,7 @@
 
 	<string name="what_attendance_plus">점수 획득 Case</string>
 	<string name="what_attendance_plus_content">전체 세미나 발표 +1\n - 프로젝트팀 팀장/부팀장 +2\n - 해커톤 준비 위원회 +1\n- 프로젝트 배포 성공 +1\n - 기술 블로그 작성 +1\n - Mash-Up 콘텐츠 글 작성 +0.5\n - 13기 회장/부회장 +999999999999999999999…</string>
+	<string name="total_attendance">총 출석점수</string>
 
     <string name="title_activity_main">MainActivity</string>
 </resources>

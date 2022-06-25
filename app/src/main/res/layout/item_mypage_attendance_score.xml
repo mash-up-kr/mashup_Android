@@ -46,7 +46,7 @@
 			app:layout_constraintTop_toTopOf="parent">
 
 			<androidx.appcompat.widget.LinearLayoutCompat
-				android:id="@+id/layout_detail"
+				android:id="@+id/layout_total_attendance"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
@@ -54,16 +54,16 @@
 				android:padding="8dp">
 
 				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/tv_name"
+					android:id="@+id/total_attendance"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_gravity="center"
-					android:text="총 출석점수"
+					android:text="@string/total_attendance"
 					android:textAppearance="@style/TextAppearance.Mashup.Header3_14_B"
 					android:textColor="#A2ACC2" />
 
 				<androidx.appcompat.widget.AppCompatImageView
-					android:id="@+id/btn_setting"
+					android:id="@+id/btn_detail"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginStart="2dp"

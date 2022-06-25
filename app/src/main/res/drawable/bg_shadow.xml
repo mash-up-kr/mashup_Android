@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#035A5A5A" />
+		</shape>
+	</item>
+	<item>
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+			android:shape="rectangle">
+			<corners android:radius="20dp" />
+			<padding
+				android:bottom="1dp"
+				android:left="1dp"
+				android:right="1dp"
+				android:top="1dp" />
+			<solid android:color="#00000000" />
+		</shape>
+	</item>
+
+
+</layer-list>

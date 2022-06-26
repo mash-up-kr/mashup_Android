@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <androidx.camera.view.PreviewView
             android:id="@+id/viewFinder"
@@ -40,11 +41,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:layout_marginBottom="120dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="QR 코드를  스캔하세요"/>
+            android:text="QR 코드를  스캔하세요"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_invalid_message"
+            style="@style/TextAppearance.Mashup.Medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="13dp"
+            android:textSize="14sp"
+            android:background="@drawable/bg_qrcode_invalied_message"
+            android:textColor="@color/white"
+            tools:text="올바르지 않은 QR 코드입니다"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

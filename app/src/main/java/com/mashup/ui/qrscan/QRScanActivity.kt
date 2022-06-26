@@ -3,19 +3,25 @@ package com.mashup.ui.qrscan
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityQrScanBinding
 import com.mashup.extensions.showToast
+import com.mashup.ui.extensions.gone
+import com.mashup.ui.extensions.visible
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.utils.PermissionHelper
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
+class
+QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
+
+    private val viewModel: QRScanViewModel by viewModels()
 
     private lateinit var qrCodeAnalyzer: QRCodeAnalyzer
     private lateinit var cameraManager: CameraManager<List<Barcode>>
@@ -23,20 +29,24 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         PermissionHelper(this)
     }
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                cameraManager.startCamera()
-            } else {
-                showToast(getString(R.string.denied_camera_permission))
-            }
-        }
-
     override fun initViews() {
         initButtons()
         initCamera()
+    }
+
+    override fun initObserves() {
+        flowLifecycleScope {
+            viewModel.qrcodeState.collectLatest { qrcodeState ->
+                when (qrcodeState) {
+                    QRCodeState.SuccessAttendance -> {
+
+                    }
+                    is QRCodeState.InValidQRCode -> {
+                        showInvalidMessage(qrcodeState.message)
+                    }
+                }
+            }
+        }
     }
 
     private fun initButtons() {
@@ -54,10 +64,21 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         }
     }
 
+    private fun showInvalidMessage(message: String) {
+        viewBinding.tvInvalidMessage.run {
+            visible()
+            text = message
+            postDelayed({
+                gone()
+            }, 3000L)
+        }
+    }
+
     private fun createCardAnalyzer() {
         qrCodeAnalyzer = QRCodeAnalyzer(
-            onQRCodeRecognitionSuccess = { qrcodeInfo ->
+            onQRCodeRecognitionSuccess = { qrcode ->
                 cameraManager.stopCamera()
+                viewModel.requestAttendance(qrcode)
             },
             onQRCodeRecognitionFailure = { throwable ->
                 throwable?.message?.let { message ->

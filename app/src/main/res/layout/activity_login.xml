@@ -7,58 +7,64 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.login.LoginActivity">
+        android:layout_height="wrap_content">
 
-        <com.mashup.widget.TextFieldView
-            android:id="@+id/text_field_id"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="40dp"
-            app:text_field_hint='@{"아이디"}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:context=".ui.login.LoginActivity">
 
-        <com.mashup.widget.TextFieldView
-            android:id="@+id/text_field_pwd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
-            app:text_field_hint='@{"비밀번호"}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_field_id" />
+            <com.mashup.widget.TextFieldView
+                android:id="@+id/text_field_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:text_field_hint='@{"아이디"}' />
 
-        <com.mashup.widget.ButtonView
-            android:id="@+id/btn_login"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:text_button='@{"로그인"}'
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintTop_toBottomOf="@id/text_field_pwd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <com.mashup.widget.TextFieldView
+                android:id="@+id/text_field_pwd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_field_id"
+                app:text_field_hint='@{"비밀번호"}' />
 
-        <TextView
-            android:id="@+id/tv_sign_in"
-            android:textAppearance="@style/TextAppearance.Mashup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="16sp"
-            android:textColor="#686F7E"
-            android:layout_marginTop="20dp"
-            android:text="회원가입 하러가기"
-            app:drawableEndCompat="@drawable/ic_next"
-            tools:ignore="HardcodedText" />
+            <com.mashup.widget.ButtonView
+                android:id="@+id/btn_login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_field_pwd"
+                app:text_button='@{"로그인"}' />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="회원가입 하러가기"
+                android:textAppearance="@style/TextAppearance.Mashup"
+                android:textColor="#686F7E"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_login"
+                tools:ignore="HardcodedText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

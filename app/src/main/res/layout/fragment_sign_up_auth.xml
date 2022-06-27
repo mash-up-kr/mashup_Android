@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.mashup.widget.TextFieldView.TextFieldInputType"/>
+
+        <import type="com.mashup.widget.TextFieldView.TextFieldInputType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,22 +16,28 @@
             android:id="@+id/btn_sign_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:text_button='@{"다음"}'
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
+            android:elevation="6dp"
+            android:outlineProvider="none"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:text_button='@{"다음"}' />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toTopOf="@id/btn_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

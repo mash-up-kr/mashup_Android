@@ -1,11 +1,15 @@
 package com.mashup.ui.signup.fragment
 
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpAuthBinding
+import com.mashup.extensions.dp
 import com.mashup.extensions.flowViewLifecycleScope
+import com.mashup.extensions.scrollToTarget
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
@@ -13,6 +17,7 @@ import com.mashup.ui.extensions.setValidation
 import com.mashup.ui.model.Validation
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.AuthState
+import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -42,22 +47,56 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
             addOnTextChangedListener { text ->
                 viewModel.setId(text)
             }
+            setOnFocusChangedListener { hasFocus ->
+                if (hasFocus) {
+                    post {
+                        viewBinding.scrollView.scrollToTarget(
+                            viewBinding.layoutContent, this
+                        )
+                    }
+                }
+            }
         }
 
         viewBinding.textFieldPwd.run {
             addOnTextChangedListener { text ->
                 viewModel.setPwd(text)
             }
+            setOnFocusChangedListener { hasFocus ->
+                if (hasFocus) {
+                    post {
+                        viewBinding.scrollView.scrollToTarget(
+                            viewBinding.layoutContent, this
+                        )
+                    }
+                }
+            }
         }
-
         viewBinding.textFieldPwdCheck.run {
             addOnTextChangedListener { text ->
                 viewModel.setPwdCheck(text)
+            }
+            setOnFocusChangedListener { hasFocus ->
+                if (hasFocus) {
+                    post {
+                        viewBinding.scrollView.scrollToTarget(
+                            viewBinding.layoutContent, this
+                        )
+                    }
+                }
             }
         }
     }
 
     private fun initButton() {
+        ViewCompat.setWindowInsetsAnimationCallback(
+            viewBinding.btnSignUp,
+            TranslateDeferringInsetsAnimationCallback(
+                view = viewBinding.btnSignUp,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+        )
         viewBinding.btnSignUp.setOnButtonClickListener {
             findNavController().navigate(R.id.action_signUpAuthFragment_to_signUpMemberFragment)
         }

@@ -46,6 +46,8 @@ class TextFieldView @JvmOverloads constructor(
         }
     }
 
+    private var focusChangedListener: ((Boolean) -> Unit)? = null
+
     private val expendValueAnimator: ValueAnimator by lazy {
         ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 300
@@ -82,6 +84,7 @@ class TextFieldView @JvmOverloads constructor(
             setStrokeForegroundDrawable(
                 if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
             )
+            focusChangedListener?.invoke(hasFocus)
         }
     }
 
@@ -161,6 +164,10 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.etText.addTextChangedListener {
             onTextChanged(it.toString())
         }
+    }
+
+    fun setOnFocusChangedListener(onFocusChanged: (Boolean) -> Unit) {
+        focusChangedListener = onFocusChanged
     }
 
     override fun onSaveInstanceState(): Parcelable {

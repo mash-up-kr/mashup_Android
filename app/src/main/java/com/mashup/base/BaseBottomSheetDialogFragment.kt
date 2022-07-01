@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -64,7 +65,9 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
     }
 
     open fun initViews() {
-        /* explicitly empty */
+        rootViewBinding.icClose.setOnClickListener {
+            dismiss()
+        }
     }
 
     open fun initObserves() {
@@ -87,6 +90,10 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
 
     protected fun setTitle(title: String) {
         rootViewBinding.title.text = title
+    }
+
+    protected fun setVisibleCloseButton(isVisible: Boolean) {
+        rootViewBinding.icClose.isVisible = isVisible
     }
 
     protected fun expendBottomSheet() {

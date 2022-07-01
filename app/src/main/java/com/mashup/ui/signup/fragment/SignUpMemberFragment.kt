@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpMemberBinding
+import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +25,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     }
 
     override fun initObserves() = with(viewModel) {
-        flowLifecycleScope {
+        flowViewLifecycleScope {
             memberState.collectLatest { memberState ->
                 setUiOfMemberState(memberState)
             }
@@ -49,7 +50,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
 
     private fun initButton() {
         viewBinding.btnSignUp.setOnButtonClickListener {
-            findNavController().navigate(R.id.action_signUpMemberFragment_to_signUpCodeFragment)
+            findNavController().navigate(R.id.action_signUpMemberFragment_to_termsAgreementDialog)
         }
     }
 }

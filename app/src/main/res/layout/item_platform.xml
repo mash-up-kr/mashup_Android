@@ -22,5 +22,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Android" />
 
+        <ImageView
+            android:id="@+id/imgChecked"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_checked"
+            app:tint="@color/primary500"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

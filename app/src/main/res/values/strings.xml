@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MashUp</string>
 
     <string name="denied_camera_permission">출석 체크를 위해 카메라 권한이 필요합니다</string>

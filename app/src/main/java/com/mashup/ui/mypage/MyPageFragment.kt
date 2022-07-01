@@ -1,5 +1,6 @@
 package com.mashup.ui.mypage
 
+import android.graphics.Color
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,10 +53,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItemPosition == 0) {
                         viewBinding.layoutTitle.visibility = View.GONE
-                        (activity as MainActivity).updateStatusBarColor("#F8F7FC")
+                        (activity as MainActivity).updateStatusBarColor(context.getColor(R.color.gray50))
+
                     } else {
                         viewBinding.layoutTitle.visibility = View.VISIBLE
-                        (activity as MainActivity).updateStatusBarColor("#FFFFFF")
+                        (activity as MainActivity).updateStatusBarColor(Color.WHITE)
                     }
                     /*
                     수동 다음 아이템 당겨오기

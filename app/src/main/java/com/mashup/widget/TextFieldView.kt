@@ -107,8 +107,16 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.tvDescription.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setTrailingImageIcon(@DrawableRes drawableRes: Int) {
-        viewBinding.imgIcon.setImageResource(drawableRes)
+    fun setTrailingImageIcon(
+        @DrawableRes drawableRes: Int,
+        @ColorRes colorTintRes: Int = R.color.black
+    ) {
+        viewBinding.imgIcon.run {
+            setImageResource(drawableRes)
+            imageTintList = ContextCompat.getColorStateList(
+                context, colorTintRes
+            )
+        }
     }
 
     fun setStrokeForegroundDrawable(@DrawableRes drawableRes: Int) {

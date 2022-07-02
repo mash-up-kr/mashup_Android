@@ -90,9 +90,9 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
 
     private fun initButton() {
         ViewCompat.setWindowInsetsAnimationCallback(
-            viewBinding.btnSignUp,
+            viewBinding.layoutButton,
             TranslateDeferringInsetsAnimationCallback(
-                view = viewBinding.btnSignUp,
+                view = viewBinding.layoutButton,
                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )

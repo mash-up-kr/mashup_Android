@@ -21,14 +21,14 @@ fun TextFieldView.setValidation(validation: Validation) {
 fun TextFieldView.setFailedUiOfTextField() {
     setHintTextColor(R.color.red500)
     setDescriptionTextColor(R.color.red500)
-    setTrailingImageIcon(R.drawable.ic_question_mark)
+    setTrailingImageIcon(R.drawable.ic_question_mark, R.color.red500)
     setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_error)
 }
 
 fun TextFieldView.setSuccessUiOfTextField() {
     setHintTextColor(R.color.gray600)
     setDescriptionTextColor(R.color.gray600)
-    setTrailingImageIcon(R.drawable.ic_checked)
+    setTrailingImageIcon(R.drawable.ic_check, R.color.green500)
     if (isFocus()) {
         setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_primary)
     } else {

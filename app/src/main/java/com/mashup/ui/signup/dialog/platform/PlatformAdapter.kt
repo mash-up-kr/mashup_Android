@@ -64,8 +64,8 @@ class PlatformViewHolder(
     }
 
     private fun onBindSelectedContent() = with(binding) {
-        root.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.primary100))
-        tvPlatform.setTextColor(ContextCompat.getColor(itemView.context, R.color.primary600))
+        root.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.brand100))
+        tvPlatform.setTextColor(ContextCompat.getColor(itemView.context, R.color.brand600))
         imgChecked.isVisible = true
     }
 

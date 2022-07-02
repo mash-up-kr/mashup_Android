@@ -12,26 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.mashup.widget.ButtonView
-            android:id="@+id/btn_sign_up"
+        <FrameLayout
+            android:id="@+id/layout_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="20dp"
+            android:background="@color/gray50"
+            android:padding="20dp"
             android:elevation="6dp"
             android:outlineProvider="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:text_button='@{"다음"}' />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.mashup.widget.ButtonView
+                android:id="@+id/btn_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:text_button='@{"다음"}' />
+
+        </FrameLayout>
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
             android:overScrollMode="never"
-            app:layout_constraintBottom_toTopOf="@id/btn_sign_up"
+            app:layout_constraintBottom_toTopOf="@id/layout_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

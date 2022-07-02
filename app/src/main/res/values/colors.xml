@@ -12,10 +12,19 @@
     <color name="default_bg_qr_scan">#80000000</color>
     <color name="default_corner_qr_scan">#ffffff</color>
 
-    <!--    primary color system-->
-    <color name="primary600">#5421E6</color>
-    <color name="primary500">#6A36FF</color>
-    <color name="primary100">#F5F1FF</color>
+    <!--    team color-->
+    <color name="product_design_color">#8176FB</color>
+    <color name="web_color">#5A88FF</color>
+    <color name="android_color">#58AE56</color>
+    <color name="spring_color">#259688</color>
+    <color name="ios_color">#D35C5C</color>
+    <color name="node_color">#6B6B80</color>
+
+    <!--    brand color system-->
+    <color name="brand600">#5421E6</color>
+    <color name="brand500">#6A36FF</color>
+    <color name="brand300">#CDBFF6</color>
+    <color name="brand100">#F5F1FF</color>
 
     <!--    semantic color system-->
     <color name="red600">#C83C55</color>

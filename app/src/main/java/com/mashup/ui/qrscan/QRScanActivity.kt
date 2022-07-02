@@ -39,12 +39,14 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
             viewModel.qrcodeState.collectLatest { qrcodeState ->
                 when (qrcodeState) {
                     QRCodeState.SuccessAttendance -> {
-
+                        setResult(RESULT_OK)
+                        finish()
                     }
                     is QRCodeState.InValidQRCode -> {
                         showInvalidMessage(qrcodeState.message)
                     }
                 }
+                cameraManager.startCamera()
             }
         }
     }

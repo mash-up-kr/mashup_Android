@@ -1,4 +1,4 @@
-package com.mashup.ui.attendance
+package com.mashup.ui.attendance.platform
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -20,16 +20,21 @@ import com.mashup.R
 import com.mashup.compose.colors.*
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.*
+import com.mashup.ui.attendance.model.PlatformAttendance
+import com.mashup.ui.model.Platform
 
 @Composable
-fun PlatformListItem(modifier: Modifier = Modifier) {
+fun PlatformListItem(
+    modifier: Modifier = Modifier,
+    platformAttendance: PlatformAttendance
+) {
     Card(modifier = Modifier.shadow(elevation = 2.dp)) {
         Row(
             modifier = modifier,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             PlatformInfo(
-                platformName = "Android",
+                platformName = platformAttendance.platform.platform,
                 modifier = Modifier
                     .padding(start = 18.dp)
                     .padding(vertical = 20.dp)
@@ -37,7 +42,9 @@ fun PlatformListItem(modifier: Modifier = Modifier) {
             PlatformStatus(
                 modifier = Modifier
                     .padding(end = 18.dp)
-                    .padding(vertical = 20.dp)
+                    .padding(vertical = 20.dp),
+                currentAttendanceCrew = platformAttendance.currentAttendanceCrew,
+                maxAttendanceCrew = platformAttendance.maxAttendanceCrew
             )
         }
     }
@@ -144,6 +151,13 @@ fun PlatformStatuePrev() {
 @Composable
 fun PlatformListItemPrev() {
     MashUpTheme {
-        PlatformListItem(modifier = Modifier.fillMaxWidth())
+        PlatformListItem(
+            modifier = Modifier.fillMaxWidth(),
+            platformAttendance = PlatformAttendance(
+                platform = Platform.Android,
+                currentAttendanceCrew = 13,
+                maxAttendanceCrew = 20
+            )
+        )
     }
 }

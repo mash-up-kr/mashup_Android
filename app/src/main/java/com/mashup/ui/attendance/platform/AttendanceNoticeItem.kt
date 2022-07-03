@@ -1,4 +1,4 @@
-package com.mashup.ui.attendance
+package com.mashup.ui.attendance.platform
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row

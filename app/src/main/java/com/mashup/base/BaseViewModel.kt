@@ -20,7 +20,6 @@ abstract class BaseViewModel : ViewModel() {
     private val exceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
             when (throwable) {
-
             }
         }
 

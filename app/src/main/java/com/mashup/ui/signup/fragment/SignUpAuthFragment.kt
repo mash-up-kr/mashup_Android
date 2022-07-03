@@ -7,13 +7,12 @@ import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpAuthBinding
-import com.mashup.extensions.dp
 import com.mashup.extensions.scrollToTarget
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.extensions.setValidation
-import com.mashup.ui.model.Validation
+import com.mashup.ui.signup.model.Validation
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.AuthState
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback

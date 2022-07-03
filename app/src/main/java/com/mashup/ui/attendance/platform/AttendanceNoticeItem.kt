@@ -2,11 +2,16 @@ package com.mashup.ui.attendance.platform
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,8 +27,15 @@ fun AttendanceNoticeItem(
     notice: String,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = Modifier.shadow(elevation = 2.dp)) {
-        Row(modifier = modifier) {
+    Card(
+        modifier = modifier,
+        elevation = 2.dp,
+        shape = RoundedCornerShape(corner = CornerSize(8.dp))
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = CenterVertically
+        ) {
             Image(
                 modifier = Modifier
                     .padding(start = 10.dp)
@@ -33,9 +45,8 @@ fun AttendanceNoticeItem(
             )
 
             MashTextView(
-                modifier = modifier
-                    .padding(start = 6.dp, end = 18.dp)
-                    .align(CenterVertically),
+                modifier = Modifier
+                    .padding(start = 6.dp, top = 9.dp, bottom = 9.dp, end = 18.dp),
                 text = notice,
                 style = Body3,
                 color = Gray800

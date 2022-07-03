@@ -1,5 +1,7 @@
 package com.mashup.ui.attendance.platform
 
+import android.content.Context
+import android.content.Intent
 import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -25,4 +27,8 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
 
     override val layoutId: Int
         get() = R.layout.activity_platform_attendance
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, PlatformAttendanceActivity::class.java)
+    }
 }

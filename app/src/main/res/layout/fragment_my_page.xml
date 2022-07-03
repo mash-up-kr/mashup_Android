@@ -1,13 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
-    </data>
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/rv_mypage"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			tools:listitem="@layout/item_mypage_attendance_history_list" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/layout_title"
+			android:layout_width="match_parent"
+			android:layout_height="74dp"
+			android:background="@color/white"
+			android:visibility="gone"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/tv_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="20dp"
+				android:layout_marginTop="7dp"
+				android:text="김매시업"
+				android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
+				android:textColor="@color/gray900"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+
+			<androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/tv_total_count"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginTop="10dp"
+				android:text="총 출석점수"
+				android:textAppearance="@style/TextAppearance.Mashup.Header3_14_B"
+				android:textColor="#A2ACC2"
+				app:layout_constraintStart_toStartOf="@id/tv_name"
+				app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+			<androidx.appcompat.widget.AppCompatImageView
+				android:id="@+id/btn_setting"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="4dp"
+				android:src="@drawable/ic_questions"
+				app:layout_constraintBottom_toBottomOf="@id/tv_total_count"
+				app:layout_constraintStart_toEndOf="@id/tv_total_count"
+				app:layout_constraintTop_toTopOf="@id/tv_total_count" />
+
+			<androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/tv_platform"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="24dp"
+				android:gravity="end"
+				android:text="2점"
+				android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
+				android:textColor="@color/gray700"
+				app:layout_constraintBottom_toBottomOf="@id/tv_total_count"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="@id/tv_total_count" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

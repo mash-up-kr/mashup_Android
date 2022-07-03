@@ -1,7 +1,7 @@
 package com.mashup.ui.extensions
 
 import com.mashup.R
-import com.mashup.ui.model.Validation
+import com.mashup.ui.signup.model.Validation
 import com.mashup.widget.TextFieldView
 
 fun TextFieldView.setValidation(validation: Validation) {

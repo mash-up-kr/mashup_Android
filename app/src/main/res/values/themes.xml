@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="android:windowBackground">@color/gray50</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/gray50</item>
+        <item name="android:statusBarColor" >@color/gray50</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>

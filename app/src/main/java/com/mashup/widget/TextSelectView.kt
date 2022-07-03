@@ -80,7 +80,7 @@ class TextSelectView @JvmOverloads constructor(
             setBackgroundStrokeColor(R.color.gray300)
         } else {
             startExpendAnimationHintLabel()
-            setBackgroundStrokeColor(R.color.primary500)
+            setBackgroundStrokeColor(R.color.brand500)
         }
     }
 

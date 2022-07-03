@@ -2,6 +2,7 @@ package com.mashup.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewOutlineProvider
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -58,7 +59,9 @@ class ButtonView @JvmOverloads constructor(
 
     fun setButtonEnabled(isEnabled: Boolean) {
         this.isEnabled = isEnabled
-        this.alpha = if (isEnabled) 1.0f else 0.5f
+        setButtonStyle(
+            if (isEnabled) ButtonStyle.PRIMARY else ButtonStyle.DISABLE
+        )
     }
 
     private fun setButtonText(text: String) {
@@ -66,7 +69,8 @@ class ButtonView @JvmOverloads constructor(
     }
 
     enum class ButtonStyle(@ColorRes val backgroundColorRes: Int, @ColorRes val textColorRes: Int) {
-        PRIMARY(backgroundColorRes = R.color.primary500, textColorRes = R.color.white),
+        PRIMARY(backgroundColorRes = R.color.brand500, textColorRes = R.color.white),
+        DISABLE(backgroundColorRes = R.color.brand300, textColorRes = R.color.white),
         DEFAULT(backgroundColorRes = R.color.gray100, textColorRes = R.color.gray600)
     }
 

@@ -4,6 +4,9 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.InputType
+import android.text.InputType.TYPE_CLASS_TEXT
+import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -41,6 +45,8 @@ class TextFieldView @JvmOverloads constructor(
             }
         }
     }
+
+    private var focusChangedListener: ((Boolean) -> Unit)? = null
 
     private val expendValueAnimator: ValueAnimator by lazy {
         ValueAnimator.ofFloat(0f, 1f).apply {
@@ -75,9 +81,10 @@ class TextFieldView @JvmOverloads constructor(
                     startCollapseAnimationHintLabel()
                 }
             }
-            setStrokeBackground(
+            setStrokeForegroundDrawable(
                 if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
             )
+            focusChangedListener?.invoke(hasFocus)
         }
     }
 
@@ -100,11 +107,24 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.tvDescription.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setTrailingImageIcon(@DrawableRes drawableRes: Int) {
-        viewBinding.imgIcon.setImageResource(drawableRes)
+    fun setTrailingImageIcon(
+        @DrawableRes drawableRes: Int,
+        @ColorRes colorTintRes: Int = R.color.black
+    ) {
+        viewBinding.imgIcon.run {
+            setImageResource(drawableRes)
+            imageTintList = ContextCompat.getColorStateList(
+                context, colorTintRes
+            )
+        }
     }
 
-    fun setStrokeBackground(@DrawableRes drawableRes: Int) {
+    fun setStrokeForegroundDrawable(@DrawableRes drawableRes: Int) {
+        viewBinding.layoutTextField.foreground =
+            ResourcesCompat.getDrawable(context.resources, drawableRes, null)
+    }
+
+    fun setBackgroundDrawable(@DrawableRes drawableRes: Int) {
         viewBinding.layoutTextField.setBackgroundResource(drawableRes)
     }
 
@@ -124,7 +144,25 @@ class TextFieldView @JvmOverloads constructor(
         expendValueAnimator.start()
     }
 
+    fun setInputType(inputType: TextFieldInputType) {
+        viewBinding.etText.inputType = when (inputType) {
+            TextFieldInputType.PASSWORD -> {
+                TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
+            }
+            else -> {
+                TYPE_CLASS_TEXT
+            }
+        }
+    }
+
     fun isFocus() = viewBinding.etText.hasFocus()
+
+    fun setEnabledTextField(enabled: Boolean) {
+        viewBinding.etText.isEnabled = enabled
+        setBackgroundDrawable(
+            if (enabled) R.drawable.bg_text_field_enabled else R.drawable.bg_text_field_not_enabled
+        )
+    }
 
     fun clearTextFieldFocus() {
         viewBinding.etText.clearFocus()
@@ -134,6 +172,10 @@ class TextFieldView @JvmOverloads constructor(
         viewBinding.etText.addTextChangedListener {
             onTextChanged(it.toString())
         }
+    }
+
+    fun setOnFocusChangedListener(onFocusChanged: (Boolean) -> Unit) {
+        focusChangedListener = onFocusChanged
     }
 
     override fun onSaveInstanceState(): Parcelable {
@@ -148,12 +190,15 @@ class TextFieldView @JvmOverloads constructor(
         val textFieldSaveState = state as? TextFieldSaveState ?: return
         super.onRestoreInstanceState(textFieldSaveState.superState)
         viewBinding.etText.setText(textFieldSaveState.etText)
+        if (!textFieldSaveState.etText.isNullOrEmpty()) {
+            startExpendAnimationHintLabel()
+        }
     }
 
     class TextFieldSaveState : BaseSavedState {
         var etText: String? = ""
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
 
         constructor(source: Parcel) : super(source) {
             etText = source.readString()
@@ -181,7 +226,7 @@ class TextFieldView @JvmOverloads constructor(
 
         @JvmStatic
         @BindingAdapter(value = ["text_field_hint", "text_field_description"], requireAll = false)
-        fun TextFieldView.setTitleText(hint: String?, description: String?) {
+        fun TextFieldView.bindText(hint: String?, description: String?) {
             hint?.run {
                 setHintText(this)
             }
@@ -189,5 +234,15 @@ class TextFieldView @JvmOverloads constructor(
                 setDescriptionText(this)
             }
         }
+
+        @JvmStatic
+        @BindingAdapter("text_field_input_type")
+        fun TextFieldView.bindInputType(inputType: TextFieldInputType) {
+            setInputType(inputType)
+        }
+    }
+
+    enum class TextFieldInputType {
+        PASSWORD, TEXT
     }
 }

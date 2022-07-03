@@ -3,30 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.mashup.widget.TextFieldView.TextFieldInputType" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.mashup.widget.ButtonView
-            android:id="@+id/btn_sign_up"
+        <FrameLayout
+            android:id="@+id/layout_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:text_button='@{"다음"}'
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="20dp"
+            android:background="@color/gray50"
+            android:padding="20dp"
+            android:elevation="6dp"
+            android:outlineProvider="none"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.mashup.widget.ButtonView
+                android:id="@+id/btn_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:text_button='@{"다음"}' />
+
+        </FrameLayout>
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_sign_up"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/layout_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -59,6 +76,7 @@
                     android:id="@+id/text_field_pwd"
                     text_field_description='@{"영문, 숫자를 조합하여 8자 이상으로 입력해 주세요."}'
                     text_field_hint='@{"비밀번호"}'
+                    text_field_input_type="@{TextFieldInputType.PASSWORD}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
@@ -70,6 +88,7 @@
                 <com.mashup.widget.TextFieldView
                     android:id="@+id/text_field_pwd_check"
                     text_field_hint='@{"비밀번호 확인"}'
+                    text_field_input_type="@{TextFieldInputType.PASSWORD}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

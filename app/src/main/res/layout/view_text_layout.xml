@@ -12,7 +12,8 @@
             android:id="@+id/layout_text_field"
             android:layout_width="0dp"
             android:layout_height="84dp"
-            android:background="@drawable/bg_text_field_out_line_idle"
+            android:foreground="@drawable/bg_text_field_out_line_idle"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -68,6 +69,7 @@
                 android:id="@+id/img_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:scaleType="fitXY"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"

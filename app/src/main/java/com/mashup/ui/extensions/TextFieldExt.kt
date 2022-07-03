@@ -1,6 +1,5 @@
 package com.mashup.ui.extensions
 
-import android.graphics.Color.red
 import com.mashup.R
 import com.mashup.ui.model.Validation
 import com.mashup.widget.TextFieldView
@@ -22,18 +21,18 @@ fun TextFieldView.setValidation(validation: Validation) {
 fun TextFieldView.setFailedUiOfTextField() {
     setHintTextColor(R.color.red500)
     setDescriptionTextColor(R.color.red500)
-    setTrailingImageIcon(R.drawable.ic_question_mark)
-    setStrokeBackground(R.drawable.bg_text_field_out_line_error)
+    setTrailingImageIcon(R.drawable.ic_question_mark, R.color.red500)
+    setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_error)
 }
 
 fun TextFieldView.setSuccessUiOfTextField() {
     setHintTextColor(R.color.gray600)
     setDescriptionTextColor(R.color.gray600)
-    setTrailingImageIcon(R.drawable.ic_checked_success)
+    setTrailingImageIcon(R.drawable.ic_check, R.color.green500)
     if (isFocus()) {
-        setStrokeBackground(R.drawable.bg_text_field_out_line_primary)
+        setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_primary)
     } else {
-        setStrokeBackground(R.drawable.bg_text_field_out_line_idle)
+        setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_idle)
     }
 }
 
@@ -42,8 +41,8 @@ fun TextFieldView.setEmptyUIOfTextField() {
     setDescriptionTextColor(R.color.gray600)
     setTrailingImageIcon(0)
     if (isFocus()) {
-        setStrokeBackground(R.drawable.bg_text_field_out_line_primary)
+        setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_primary)
     } else {
-        setStrokeBackground(R.drawable.bg_text_field_out_line_idle)
+        setStrokeForegroundDrawable(R.drawable.bg_text_field_out_line_idle)
     }
 }

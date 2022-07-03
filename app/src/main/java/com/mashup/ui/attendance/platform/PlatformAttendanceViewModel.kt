@@ -17,6 +17,11 @@ class PlatformAttendanceViewModel @Inject constructor(
 
     val platformList = mutableStateOf<List<PlatformAttendance>>(emptyList())
 
+    init {
+        getAttendanceNotice()
+        getPlatformAttendanceList()
+    }
+
     fun getPlatformAttendanceList() = mashUpScope {
         platformList.value = attendanceRepository.getPlatformList()
     }

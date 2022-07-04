@@ -13,23 +13,27 @@ class AttendanceRepository @Inject constructor() {
         return listOf(
             PlatformAttendance(
                 platform = Platform.Design,
-                currentAttendanceCrew = 7,
-                maxAttendanceCrew = 10
+                numberOfAttend = 7,
+                numberOfAbsence = 10,
+                numberOfLateness = 0
             ),
             PlatformAttendance(
                 platform = Platform.Android,
-                currentAttendanceCrew = 3,
-                maxAttendanceCrew = 18
+                numberOfAttend = 3,
+                numberOfAbsence = 18,
+                numberOfLateness = 0
             ),
             PlatformAttendance(
                 platform = Platform.Web,
-                currentAttendanceCrew = 10,
-                maxAttendanceCrew = 20
+                numberOfAttend = 10,
+                numberOfAbsence = 20,
+                numberOfLateness = 0
             ),
             PlatformAttendance(
                 platform = Platform.iOS,
-                currentAttendanceCrew = 9,
-                maxAttendanceCrew = 10
+                numberOfAttend = 9,
+                numberOfAbsence = 10,
+                numberOfLateness = 0
             )
         )
     }

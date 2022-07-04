@@ -4,6 +4,7 @@ import com.mashup.ui.model.Platform
 
 data class PlatformAttendance(
     val platform: Platform,
-    val currentAttendanceCrew: Int,
-    val maxAttendanceCrew: Int
+    val numberOfAttend: Int,
+    val numberOfLateness: Int,
+    val numberOfAbsence: Int
 )

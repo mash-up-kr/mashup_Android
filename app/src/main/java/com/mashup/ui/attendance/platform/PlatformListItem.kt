@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
 import com.mashup.compose.colors.*
+import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.*
 import com.mashup.ui.attendance.model.PlatformAttendance
@@ -36,7 +37,7 @@ fun PlatformListItem(
     Card(
         modifier = modifier,
         elevation = 2.dp,
-        shape = RoundedCornerShape(corner = CornerSize(8.dp))
+        shape = CardListShape
     ) {
         Column(
             modifier = Modifier

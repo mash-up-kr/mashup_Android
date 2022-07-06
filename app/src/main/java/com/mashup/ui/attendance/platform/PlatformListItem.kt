@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -33,9 +34,12 @@ fun PlatformListItem(
     modifier: Modifier = Modifier,
     isAttendingEvent: Boolean = true,
     platformAttendance: PlatformAttendance,
+    onClickPlatform: (PlatformAttendance) -> Unit
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.clickable {
+            onClickPlatform(platformAttendance)
+        },
         elevation = 2.dp,
         shape = CardListShape
     ) {
@@ -273,7 +277,8 @@ fun PlatformListItemPrev() {
                 numberOfAttend = 13,
                 numberOfLateness = 0,
                 numberOfAbsence = 7
-            )
+            ),
+            onClickPlatform = {}
         )
     }
 }
@@ -290,7 +295,8 @@ fun EndedPlatformListItemPrev() {
                 numberOfAttend = 13,
                 numberOfLateness = 0,
                 numberOfAbsence = 7
-            )
+            ),
+            onClickPlatform = {}
         )
     }
 }

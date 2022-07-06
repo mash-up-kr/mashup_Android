@@ -14,7 +14,8 @@ import com.mashup.ui.attendance.model.PlatformAttendance
 fun PlatformList(
     modifier: Modifier = Modifier,
     notice: String,
-    platformAttendanceList: List<PlatformAttendance> = emptyList()
+    platformAttendanceList: List<PlatformAttendance> = emptyList(),
+    onClickPlatform: (PlatformAttendance) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.padding(horizontal = 20.dp),
@@ -31,7 +32,8 @@ fun PlatformList(
             }
             PlatformListItem(
                 modifier = Modifier.fillMaxWidth(),
-                platformAttendance = platform
+                platformAttendance = platform,
+                onClickPlatform = onClickPlatform
             )
         }
     }

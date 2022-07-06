@@ -1,5 +1,6 @@
 package com.mashup.data.repository
 
+import com.mashup.ui.attendance.model.CrewAttendance
 import com.mashup.ui.attendance.model.PlatformAttendance
 import com.mashup.ui.model.Platform
 import javax.inject.Inject
@@ -7,6 +8,10 @@ import javax.inject.Inject
 class AttendanceRepository @Inject constructor() {
     suspend fun getNotice(): String {
         return "공지사항입니다."
+    }
+
+    suspend fun getCrewAttendanceList(): List<CrewAttendance> {
+        return emptyList()
     }
 
     suspend fun getPlatformList(): List<PlatformAttendance> {

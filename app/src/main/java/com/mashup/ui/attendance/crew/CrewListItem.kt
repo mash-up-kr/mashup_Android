@@ -1,4 +1,4 @@
-package com.mashup.ui.attendance.platform
+package com.mashup.ui.attendance.crew
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -20,6 +20,7 @@ import com.mashup.compose.typography.MashTextView
 import com.mashup.compose.typography.SubTitle1
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.attendance.model.CrewAttendance
+import com.mashup.ui.attendance.platform.AttendanceSeminarItem
 
 @Composable
 fun CrewListItem(

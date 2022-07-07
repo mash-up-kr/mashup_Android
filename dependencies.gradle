@@ -19,6 +19,9 @@ ext {
     recyclerViewVersion = "1.2.1"
     viewPagerVersion = "1.0.0"
 
+    // Splash
+    splashVersion = "1.0.0-rc01"
+
     // MLKit
     barcodeSacnnerVersion = "17.0.2"
 

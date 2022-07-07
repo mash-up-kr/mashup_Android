@@ -1,4 +1,4 @@
-package com.mashup.data.network.errorcode
+package com.mashup.network.errorcode
 
 /**
  * 회원을 찾을 수 없습니다.

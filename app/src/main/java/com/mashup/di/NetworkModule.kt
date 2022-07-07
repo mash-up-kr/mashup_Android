@@ -1,8 +1,8 @@
 package com.mashup.di
 
 import com.mashup.BuildConfig.DEBUG_MODE
-import com.mashup.data.network.API_HOST
-import com.mashup.data.network.interceptor.AuthInterceptor
+import com.mashup.network.API_HOST
+import com.mashup.network.TIME_OUT_REQUEST_API
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import dagger.Module
@@ -14,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -27,15 +28,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        authInterceptor: AuthInterceptor
-    ): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
         if (DEBUG_MODE) {
             okHttpClient.addInterceptor(HttpLoggingInterceptor())
         }
         return okHttpClient
-            .addInterceptor(authInterceptor)
+            .readTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
+            .writeTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
+            .callTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
             .build()
     }
 
@@ -50,8 +51,4 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-
-    @Provides
-    @Singleton
-    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
 }

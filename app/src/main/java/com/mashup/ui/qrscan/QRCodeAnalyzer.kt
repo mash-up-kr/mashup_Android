@@ -11,8 +11,8 @@ import com.mashup.ui.qrscan.camera.BaseImageAnalyzer
 import java.io.IOException
 
 class QRCodeAnalyzer(
-    private val onCardRecognitionSuccess: (QRCode) -> Unit,
-    private val onCardRecognitionFailure: (Throwable?) -> Unit
+    private val onQRCodeRecognitionSuccess: (QRCode) -> Unit,
+    private val onQRCodeRecognitionFailure: (Throwable?) -> Unit
 ) : BaseImageAnalyzer<List<Barcode>>() {
 
     companion object {
@@ -37,7 +37,7 @@ class QRCodeAnalyzer(
 
     override fun onSuccess(results: List<Barcode>, rect: Rect) {
         if (results.size > MAX_RECOGNIZE_QRCODE) {
-            onCardRecognitionFailure(
+            onQRCodeRecognitionFailure(
                 IllegalStateException(EXCEPTION_RECOGNIZED_OVER_FLOW_QRCODE_MESSAGE)
             )
             return
@@ -46,17 +46,17 @@ class QRCodeAnalyzer(
         for (qrcode in results) {
             val recognizedCode = qrcode.rawValue
             if (recognizedCode == null) {
-                onCardRecognitionFailure(
+                onQRCodeRecognitionFailure(
                     IllegalArgumentException(EXCEPTION_RETRY_QRCODE_MESSAGE)
                 )
             } else {
-                onCardRecognitionSuccess(QRCode(recognizedCode))
+                onQRCodeRecognitionSuccess(QRCode(recognizedCode))
             }
         }
     }
 
     override fun onFailure(e: Exception) {
-        onCardRecognitionFailure(e)
+        onQRCodeRecognitionFailure(e)
     }
 
     override fun stop() {

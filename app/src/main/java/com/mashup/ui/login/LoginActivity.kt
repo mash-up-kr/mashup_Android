@@ -15,7 +15,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
 
     override fun initViews() {
-        initRegisterButton()
+        initButtons()
     }
 
     override fun initObserves() {
@@ -39,7 +39,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         finish()
     }
 
-    private fun initRegisterButton() {
+    private fun initButtons() {
+        viewBinding.btnLogin.setOnButtonClickListener {
+            viewModel.login(
+                id = viewBinding.textFieldId.inputtedText,
+                pwd = viewBinding.textFieldPwd.inputtedText
+            )
+        }
+
         viewBinding.tvSignIn.setOnClickListener {
             startActivity(
                 Intent(this, SignUpActivity::class.java)

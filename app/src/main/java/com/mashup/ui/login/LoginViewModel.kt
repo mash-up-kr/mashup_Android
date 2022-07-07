@@ -24,8 +24,8 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun login(id: String, pwd: String) {
-
+    fun login(id: String, pwd: String) = mashUpScope {
+        loginUiState.emit(LoginUiState.LoginSuccess)
     }
 }
 

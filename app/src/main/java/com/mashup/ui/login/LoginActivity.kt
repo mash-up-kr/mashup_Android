@@ -1,7 +1,9 @@
 package com.mashup.ui.login
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityLoginBinding
@@ -13,6 +15,11 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initViews() {
         initButtons()

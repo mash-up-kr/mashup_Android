@@ -1,6 +1,7 @@
 package com.mashup.di
 
 import com.mashup.BuildConfig.DEBUG_MODE
+import com.mashup.data.network.API_HOST
 import com.mashup.data.network.interceptor.AuthInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
@@ -18,9 +19,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-    //TODO: replace base Url
-    private const val BASE_URL = "https://sample.com"
-
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
@@ -48,7 +46,7 @@ object NetworkModule {
         moshi: Moshi
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(API_HOST)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

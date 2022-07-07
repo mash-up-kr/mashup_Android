@@ -54,7 +54,7 @@ fun PlatformListItem(
                 verticalAlignment = CenterVertically
             ) {
                 PlatformInfo(
-                    platformName = platformAttendance.platform.platform,
+                    platformName = platformAttendance.platform.detailName,
                     modifier = Modifier
                         .padding(start = 18.dp)
                 )
@@ -273,7 +273,7 @@ fun PlatformListItemPrev() {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
             platformAttendance = PlatformAttendance(
-                platform = Platform.Android,
+                platform = Platform.ANDROID,
                 numberOfAttend = 13,
                 numberOfLateness = 0,
                 numberOfAbsence = 7
@@ -291,7 +291,7 @@ fun EndedPlatformListItemPrev() {
             modifier = Modifier.fillMaxWidth(),
             isAttendingEvent = false,
             platformAttendance = PlatformAttendance(
-                platform = Platform.Android,
+                platform = Platform.ANDROID,
                 numberOfAttend = 13,
                 numberOfLateness = 0,
                 numberOfAbsence = 7

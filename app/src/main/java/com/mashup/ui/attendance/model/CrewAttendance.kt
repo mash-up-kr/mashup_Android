@@ -14,7 +14,8 @@ data class CrewAttendance(
                 && secondSeminarAttendance == AttendanceStatus.ATTEND -> {
                 AttendanceStatus.ATTEND
             }
-            secondSeminarAttendance == AttendanceStatus.ABSENCE -> {
+            firstSeminarAttendance == AttendanceStatus.ABSENCE
+                || secondSeminarAttendance == AttendanceStatus.ABSENCE -> {
                 AttendanceStatus.ABSENCE
             }
             else -> {

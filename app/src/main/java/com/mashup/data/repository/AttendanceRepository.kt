@@ -17,25 +17,25 @@ class AttendanceRepository @Inject constructor() {
     suspend fun getPlatformList(): List<PlatformAttendance> {
         return listOf(
             PlatformAttendance(
-                platform = Platform.Design,
+                platform = Platform.DESIGN,
                 numberOfAttend = 7,
                 numberOfAbsence = 10,
                 numberOfLateness = 0
             ),
             PlatformAttendance(
-                platform = Platform.Android,
+                platform = Platform.ANDROID,
                 numberOfAttend = 3,
                 numberOfAbsence = 18,
                 numberOfLateness = 0
             ),
             PlatformAttendance(
-                platform = Platform.Web,
+                platform = Platform.WEB,
                 numberOfAttend = 10,
                 numberOfAbsence = 20,
                 numberOfLateness = 0
             ),
             PlatformAttendance(
-                platform = Platform.iOS,
+                platform = Platform.IOS,
                 numberOfAttend = 9,
                 numberOfAbsence = 10,
                 numberOfLateness = 0

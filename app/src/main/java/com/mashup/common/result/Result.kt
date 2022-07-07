@@ -1,11 +1,12 @@
 package com.mashup.common.result
 
 import android.util.Log
+import com.mashup.network.errorcode.RETRY_REQUEST
 import kotlinx.coroutines.CancellationException
 
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
-    data class Error(val exception: Throwable? = null) : Result<Nothing>
+    data class Error(val code: String, val exception: Throwable? = null) : Result<Nothing>
     object Loading : Result<Nothing>
 }
 
@@ -19,5 +20,5 @@ suspend fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
         "Failed to evaluate a suspendRunCatchingBlock. Returning failure Result",
         exception
     )
-    Result.Error(exception)
+    Result.Error(RETRY_REQUEST, exception)
 }

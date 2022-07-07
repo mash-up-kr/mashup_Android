@@ -1,9 +1,14 @@
-package com.mashup.data.network.errorcode
+package com.mashup.network.errorcode
 
 /**
  * 요청에 오류가 있습니다.
  */
 const val BAD_REQUEST = "BAD_REQUEST"
+
+/**
+ * 잠시 후 다시 시도해주세요.
+ */
+const val RETRY_REQUEST = "RETRY_REQUEST"
 
 /**
  * 인증이 필요한 요청입니다.

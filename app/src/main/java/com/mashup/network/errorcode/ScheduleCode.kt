@@ -1,4 +1,4 @@
-package com.mashup.data.network.errorcode
+package com.mashup.network.errorcode
 
 /**
  * 일정이 존재하지 않습니다.

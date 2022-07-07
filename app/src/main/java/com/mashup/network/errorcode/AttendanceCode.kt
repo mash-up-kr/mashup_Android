@@ -1,4 +1,4 @@
-package com.mashup.data.network.errorcode
+package com.mashup.network.errorcode
 
 /**
  * 이미 사용된 코드입니다.

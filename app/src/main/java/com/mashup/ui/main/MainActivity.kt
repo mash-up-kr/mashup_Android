@@ -2,6 +2,7 @@ package com.mashup.ui.main
 
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -58,6 +59,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         supportFragmentManager.beginTransaction().apply {
             add(R.id.main_container, fragment)
         }.commit()
+    }
+
+    override fun onNetworkConnected() {
+        Toast.makeText(this, "연결 성공", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNetworkDisConnected() {
+        Toast.makeText(this, "연결 해제", Toast.LENGTH_SHORT).show()
     }
 
     fun updateStatusBarColor(color: Int) {

@@ -36,4 +36,5 @@
 	<string name="sign_out_msg">매시업을 잊지말아죠...</string>
 	<string name="sign_out_msg_detail">탈퇴하시면 Admin에 저장된 모든 관련정보는 탈퇴일자 기준으로 3년간 보관된 후 삭제됩니다. 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.</string>
 	<string name="attendance_history">출석 히스토리</string>
+
 </resources>

@@ -7,6 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.mashup.network.NetworkStatusState
+import com.mashup.network.data.NetworkStatusDetector
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
     private var _viewBinding: V? = null
@@ -14,6 +22,16 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         get() = _viewBinding!!
 
     abstract val layoutId: Int
+
+    private val networkStateDetector: NetworkStatusDetector by lazy {
+        NetworkStatusDetector(
+            context = requireContext(),
+            coroutineScope = lifecycleScope
+        )
+    }
+
+    val isConnectedNetwork: Boolean
+        get() = networkStateDetector.hasNetworkConnection()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,11 +57,39 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
     }
 
     open fun initObserves() {
-        /* explicitly empty */
+        flowViewLifecycleScope {
+            networkStateDetector.state.collectLatest { networkState ->
+                when (networkState) {
+                    is NetworkStatusState.NetworkConnected -> {
+                        onNetworkConnected()
+                    }
+                    is NetworkStatusState.NetworkDisconnected -> {
+                        onNetworkDisConnected()
+                    }
+                }
+            }
+        }
+    }
+
+    open fun onNetworkConnected() {
+    }
+
+    open fun onNetworkDisConnected() {
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
+    }
+
+    protected fun flowViewLifecycleScope(
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(state) {
+                block.invoke(this)
+            }
+        }
     }
 }

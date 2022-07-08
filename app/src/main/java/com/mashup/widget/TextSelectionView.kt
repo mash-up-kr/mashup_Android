@@ -72,7 +72,8 @@ class TextSelectionView @JvmOverloads constructor(
                 topToTop = LayoutParams.PARENT_ID
                 bottomMargin = 0
             }
-            setBackgroundResource(R.drawable.ic_chevron_down)
+            setImageResource(R.drawable.ic_chevron_down)
+            imageTintList = ContextCompat.getColorStateList(context, R.color.gray400)
         }
     }
 

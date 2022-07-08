@@ -1,5 +1,7 @@
 package com.mashup.ui.signup.fragment
 
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
@@ -8,6 +10,7 @@ import com.mashup.databinding.FragmentSignUpMemberBinding
 import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.MemberState
+import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -49,6 +52,14 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     }
 
     private fun initButton() {
+        ViewCompat.setWindowInsetsAnimationCallback(
+            viewBinding.layoutButton,
+            TranslateDeferringInsetsAnimationCallback(
+                view = viewBinding.layoutButton,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+        )
         viewBinding.btnSignUp.setOnButtonClickListener {
             findNavController().navigate(R.id.action_signUpMemberFragment_to_termsAgreementDialog)
         }

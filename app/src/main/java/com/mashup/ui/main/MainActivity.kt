@@ -61,14 +61,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }.commit()
     }
 
-    override fun onNetworkConnected() {
-        Toast.makeText(this, "연결 성공", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onNetworkDisConnected() {
-        Toast.makeText(this, "연결 해제", Toast.LENGTH_SHORT).show()
-    }
-
     fun updateStatusBarColor(color: Int) {
         val window: Window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

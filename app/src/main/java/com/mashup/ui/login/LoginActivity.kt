@@ -1,9 +1,11 @@
 package com.mashup.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.viewModels
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityLoginBinding
@@ -16,13 +18,9 @@ import kotlinx.coroutines.flow.collect
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initViews() {
         initButtons()
+        initSplashPreDraw()
     }
 
     override fun initObserves() {
@@ -61,6 +59,24 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
+    private fun initSplashPreDraw() {
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    content.viewTreeObserver.removeOnPreDrawListener(this)
+                    return true
+                }
+            }
+        )
+    }
+
     override val layoutId: Int
         get() = R.layout.activity_login
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
+    }
 }

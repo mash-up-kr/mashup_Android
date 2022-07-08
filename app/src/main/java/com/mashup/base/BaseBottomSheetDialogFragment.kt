@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.FrameLayout
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.R
 import com.mashup.databinding.DialogBaseBottomSheetBinding
+import com.mashup.extensions.dp
 
 abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetDialogFragment() {
     private var _rootViewBinding: DialogBaseBottomSheetBinding? = null
@@ -52,6 +59,8 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
         initViews()
         initObserves()
 
+        addGlobalLayoutListener()
+
         behavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 onStateChangedBottomSheet(bottomSheet, newState)
@@ -62,6 +71,18 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
             }
         }
         )
+    }
+
+    private fun addGlobalLayoutListener() {
+        rootViewBinding.root.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val parent = rootViewBinding.root
+                parent.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior?.peekHeight = viewBinding.root.height
+            }
+        })
     }
 
     open fun initViews() {

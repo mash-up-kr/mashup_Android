@@ -5,19 +5,22 @@ import android.view.ViewGroup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 
 fun View.onDebouncedClick(
     viewLifecycleScope: CoroutineScope,
+    duration: Long = 300L,
     clickListener: () -> Unit
 ) = callbackFlow {
     setOnClickListener {
         trySend(Unit)
     }
     awaitClose { setOnClickListener(null) }
-}.onEach { clickListener() }
+}.debounce(duration)
+    .onEach { clickListener() }
     .launchIn(viewLifecycleScope)
 
 fun View.findYPositionInView(targetView: View, yCumulative: Int): Int {

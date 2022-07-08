@@ -30,7 +30,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         setContentView(viewBinding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        initKeyboardScroll()
+        initWindowInset()
         initViews()
         initObserves()
     }
@@ -43,7 +43,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         /* explicitly empty */
     }
 
-    open fun initKeyboardScroll() {
+    open fun initWindowInset() {
         val deferringInsetsListener = RootViewDeferringInsetsCallback(
             persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
             deferredInsetTypes = WindowInsetsCompat.Type.ime()

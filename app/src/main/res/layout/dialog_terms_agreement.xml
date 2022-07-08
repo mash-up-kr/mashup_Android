@@ -8,7 +8,7 @@
         android:layout_height="wrap_content">
 
         <View
-            android:id="@+id/view_clickable_space"
+            android:id="@+id/term_clickable_space"
             android:layout_width="0dp"
             android:layout_height="56dp"
             app:layout_constraintStart_toStartOf="parent"

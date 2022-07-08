@@ -1,12 +1,15 @@
 package com.mashup.ui.signup.dialog.term
 
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogTermsAgreementBinding
 import com.mashup.extensions.flowViewLifecycleScope
+import com.mashup.extensions.onDebouncedClick
 import com.mashup.extensions.setUnderLine
 import com.mashup.ui.signup.SignUpViewModel
+import com.mashup.ui.webview.WebViewActivity
 import kotlinx.coroutines.flow.collectLatest
 
 class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementBinding>() {
@@ -18,10 +21,26 @@ class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementB
         setTitle("필수약관동의")
         setVisibleCloseButton(true)
 
-        viewBinding.viewClickableSpace.setOnClickListener {
+        initThermItem()
+        initDetailTextView()
+    }
+
+    private fun initThermItem() {
+        viewBinding.termClickableSpace.setOnClickListener {
             viewModel.updatedTerm()
         }
-        initDetailTextView()
+        viewBinding.tvDetail.onDebouncedClick(viewLifecycleOwner.lifecycleScope) {
+            context?.run {
+                startActivity(
+                    WebViewActivity.newIntent(
+                        context = this,
+                        title = "개인정보방침",
+                        url = "https://www.naver.com"
+                    )
+                )
+                viewModel.updatedTerm(true)
+            }
+        }
     }
 
     private fun initDetailTextView() {

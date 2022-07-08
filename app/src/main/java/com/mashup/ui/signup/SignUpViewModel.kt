@@ -91,7 +91,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
         signUpCode.value = code
     }
 
-    fun updatedTerm() {
-        _isCheckedTerm.value = !isCheckedTerm.value
+    fun updatedTerm(value: Boolean? = null) {
+        _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
 }

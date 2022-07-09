@@ -2,6 +2,12 @@ package com.mashup.ui.main
 
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.mashup.R
+import com.mashup.base.BaseActivity
+import com.mashup.databinding.ActivityMainBinding
+import com.mashup.ui.mypage.MyPageFragment
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat

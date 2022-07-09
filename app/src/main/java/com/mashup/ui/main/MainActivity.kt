@@ -2,26 +2,32 @@ package com.mashup.ui.main
 
 import android.view.Window
 import android.view.WindowManager
-import androidx.fragment.app.Fragment
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityMainBinding
-import com.mashup.ui.mypage.MyPageFragment
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.mashup.extensions.onDebouncedClick
+import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
 import dagger.hilt.android.AndroidEntryPoint
-
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutId = R.layout.activity_main
-    val myPage = MyPageFragment.newInstance()
 
     private val viewModel: MainViewModel by viewModels()
+
+    private val navController by lazy {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
+        navHostFragment.navController
+    }
 
     private val qrcodeLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -35,7 +41,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.initViews()
         initComposeView()
         initTabButtons()
-        addFragment(myPage)
     }
 
     private fun initComposeView() {
@@ -47,17 +52,63 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun initTabButtons() = with(viewBinding) {
-        btnQRScan.onDebouncedClick(lifecycleScope) {
+        layoutMainTab.btnQrcode.onDebouncedClick(lifecycleScope) {
             qrcodeLauncher.launch(
                 QRScanActivity.newIntent(this@MainActivity)
             )
         }
+        layoutMainTab.sectionSeminar.onDebouncedClick(lifecycleScope) {
+            viewModel.setMainTab(MainTab.SEMINAR)
+        }
+        layoutMainTab.sectionMyPage.onDebouncedClick(lifecycleScope) {
+            viewModel.setMainTab(MainTab.MY_PAGE)
+        }
     }
 
-    private fun addFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.main_container, fragment)
-        }.commit()
+    override fun initObserves() {
+        super.initObserves()
+        flowLifecycleScope {
+            viewModel.mainTab.collectLatest { tab ->
+                navigationTab(tab)
+                setUIOfTab(tab)
+            }
+        }
+    }
+
+    private fun navigationTab(toDestination: MainTab) {
+        navController.navigate(
+            when (toDestination) {
+                MainTab.SEMINAR -> {
+                    R.id.seminarFragment
+                }
+                MainTab.MY_PAGE -> {
+                    R.id.myPageFragment
+                }
+            }
+        )
+    }
+
+    private fun setUIOfTab(tab: MainTab) = with(viewBinding.layoutMainTab) {
+        val selectedColor = ContextCompat.getColor(this@MainActivity, R.color.gray800)
+        val selectedColorList = ContextCompat.getColorStateList(this@MainActivity, R.color.gray800)
+        val unSelectedColor = ContextCompat.getColor(this@MainActivity, R.color.gray500)
+        val unSelectedColorList =
+            ContextCompat.getColorStateList(this@MainActivity, R.color.gray500)
+
+        when (tab) {
+            MainTab.SEMINAR -> {
+                tvSeminar.setTextColor(selectedColor)
+                imgSeminar.imageTintList = selectedColorList
+                tvMyPage.setTextColor(unSelectedColor)
+                imgMyPage.imageTintList = unSelectedColorList
+            }
+            MainTab.MY_PAGE -> {
+                tvSeminar.setTextColor(unSelectedColor)
+                imgSeminar.imageTintList = unSelectedColorList
+                tvMyPage.setTextColor(selectedColor)
+                imgMyPage.imageTintList = selectedColorList
+            }
+        }
     }
 
     fun updateStatusBarColor(color: Int) {

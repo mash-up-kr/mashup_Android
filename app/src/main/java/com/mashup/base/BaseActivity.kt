@@ -11,12 +11,26 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.mashup.network.NetworkStatusState
+import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutId: Int
+
+
+    private val networkStateDetector: NetworkStatusDetector by lazy {
+        NetworkStatusDetector(
+            context = this,
+            coroutineScope = lifecycleScope
+        )
+    }
+
+    val isConnectedNetwork: Boolean
+        get() = networkStateDetector.hasNetworkConnection()
 
     protected val viewBinding: V by lazy {
         DataBindingUtil.inflate(
@@ -40,7 +54,24 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     }
 
     open fun initObserves() {
-        /* explicitly empty */
+        flowLifecycleScope {
+            networkStateDetector.state.collectLatest { networkState ->
+                when (networkState) {
+                    is NetworkStatusState.NetworkConnected -> {
+                        onNetworkConnected()
+                    }
+                    is NetworkStatusState.NetworkDisconnected -> {
+                        onNetworkDisConnected()
+                    }
+                }
+            }
+        }
+    }
+
+    open fun onNetworkConnected() {
+    }
+
+    open fun onNetworkDisConnected() {
     }
 
     open fun initWindowInset() {

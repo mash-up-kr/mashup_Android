@@ -3,6 +3,7 @@ package com.mashup.di
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.network.API_HOST
 import com.mashup.network.TIME_OUT_REQUEST_API
+import com.mashup.network.interceptor.AuthInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import dagger.Module
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object NetworkModule {
+class NetworkModule {
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
@@ -28,8 +29,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+
         if (DEBUG_MODE) {
             okHttpClient.addInterceptor(HttpLoggingInterceptor())
         }

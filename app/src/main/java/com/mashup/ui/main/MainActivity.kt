@@ -2,20 +2,14 @@ package com.mashup.ui.main
 
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityMainBinding
-import com.mashup.ui.mypage.MyPageFragment
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import com.mashup.R
-import com.mashup.base.BaseActivity
-import com.mashup.databinding.ActivityMainBinding
 import com.mashup.extensions.onDebouncedClick
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
@@ -63,8 +57,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 QRScanActivity.newIntent(this@MainActivity)
             )
         }
-        layoutMainTab.sectionSeminar.onDebouncedClick(lifecycleScope) {
-            viewModel.setMainTab(MainTab.SEMINAR)
+        layoutMainTab.sectionEvent.onDebouncedClick(lifecycleScope) {
+            viewModel.setMainTab(MainTab.EVENT)
         }
         layoutMainTab.sectionMyPage.onDebouncedClick(lifecycleScope) {
             viewModel.setMainTab(MainTab.MY_PAGE)
@@ -84,8 +78,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun navigationTab(toDestination: MainTab) {
         navController.navigate(
             when (toDestination) {
-                MainTab.SEMINAR -> {
-                    R.id.seminarFragment
+                MainTab.EVENT -> {
+                    R.id.eventFragment
                 }
                 MainTab.MY_PAGE -> {
                     R.id.myPageFragment
@@ -102,15 +96,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             ContextCompat.getColorStateList(this@MainActivity, R.color.gray500)
 
         when (tab) {
-            MainTab.SEMINAR -> {
-                tvSeminar.setTextColor(selectedColor)
-                imgSeminar.imageTintList = selectedColorList
+            MainTab.EVENT -> {
+                tvEvent.setTextColor(selectedColor)
+                imgEvent.imageTintList = selectedColorList
                 tvMyPage.setTextColor(unSelectedColor)
                 imgMyPage.imageTintList = unSelectedColorList
             }
             MainTab.MY_PAGE -> {
-                tvSeminar.setTextColor(unSelectedColor)
-                imgSeminar.imageTintList = unSelectedColorList
+                tvEvent.setTextColor(unSelectedColor)
+                imgEvent.imageTintList = unSelectedColorList
                 tvMyPage.setTextColor(selectedColor)
                 imgMyPage.imageTintList = selectedColorList
             }

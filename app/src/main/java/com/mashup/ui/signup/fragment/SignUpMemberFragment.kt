@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpMemberBinding
-import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.MemberState
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback

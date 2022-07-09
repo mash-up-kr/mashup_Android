@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<data>
+		<variable
+			name="model"
+			type="com.mashup.ui.model.AttendanceModel" />
+	</data>
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="26dp">
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:text="1부"
+			android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
+			android:textColor="@color/brand500" />
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:background="@drawable/icon_circle"
+			android:backgroundTint="@color/brand100"
+			android:drawableLeft="@drawable/ic_clock"
+			android:drawablePadding="5dp"
+			android:gravity="center"
+			android:paddingStart="8dp"
+			android:paddingEnd="8dp"
+			android:text="AM 11:00 - PM 2:00"
+			android:textAppearance="@style/TextAppearance.Mashup.Caption1_13_M"
+			android:textColor="@color/brand500" />
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

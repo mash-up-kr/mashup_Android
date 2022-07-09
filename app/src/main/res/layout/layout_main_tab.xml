@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/section_seminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_qrcode"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_seminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_seminar"
+                tools:ignore="ContentDescription" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_seminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="세미나"
+                android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_M"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_qrcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:src="@drawable/ic_qr"
+            app:tint="@color/white"
+            app:backgroundTint="@color/brand500"
+            app:fabCustomSize="48dp"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/section_my_page"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/section_seminar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="24dp"
+            tools:ignore="ContentDescription" />
+
+
+        <LinearLayout
+            android:id="@+id/section_my_page"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/btn_qrcode"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_my_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_user"
+                tools:ignore="ContentDescription" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="마이페이지"
+                android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_M"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

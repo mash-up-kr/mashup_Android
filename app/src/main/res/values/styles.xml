@@ -1,157 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TextAppearance.Mashup" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/gray800</item>
-        <item name="fontFamily">@font/pretendard_regular</item>
-    </style>
+	<style name="TextAppearance.Mashup" parent="TextAppearance.AppCompat">
+		<item name="android:textColor">@color/gray800</item>
+		<item name="fontFamily">@font/pretendard_regular</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Bold">
-        <item name="fontFamily">@font/pretendard_bold</item>
-    </style>
+	<style name="TextAppearance.Mashup.Bold">
+		<item name="fontFamily">@font/pretendard_bold</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.ExtraBold">
-        <item name="fontFamily">@font/pretendard_bold</item>
-    </style>
+	<style name="TextAppearance.Mashup.ExtraBold">
+		<item name="fontFamily">@font/pretendard_bold</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.SemiBold">
-        <item name="fontFamily">@font/pretendard_semibold</item>
-    </style>
+	<style name="TextAppearance.Mashup.SemiBold">
+		<item name="fontFamily">@font/pretendard_semibold</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Medium">
-        <item name="fontFamily">@font/pretendard_medium</item>
-    </style>
+	<style name="TextAppearance.Mashup.Medium">
+		<item name="fontFamily">@font/pretendard_medium</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Header1_24_EB" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_extrabold</item>
-        <item name="android:textSize">24dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Header1_24_EB" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_extrabold</item>
+		<item name="android:textSize">24dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Header1_24_B" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_bold</item>
-        <item name="android:textSize">24dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Header1_24_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">24dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Header2_20_B" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_bold</item>
-        <item name="android:textSize">20dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Header2_20_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">20dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Header3_14_B" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_bold</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Header3_14_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">14dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Title1_20_SB" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_semibold</item>
-        <item name="android:textSize">20dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Title1_20_SB" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_semibold</item>
+		<item name="android:textSize">20dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Title2_20_M" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">20dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Title2_20_M" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_medium</item>
+		<item name="android:textSize">20dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Subtitle1_16_B" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_bold</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Subtitle1_16_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">16dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Subtitle2_16_SB" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_semibold</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Subtitle2_16_SB" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_semibold</item>
+		<item name="android:textSize">16dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Body1_16_M" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Body1_16_M" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_medium</item>
+		<item name="android:textSize">16dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Body1_16_R" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_regular</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Body1_16_R" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_regular</item>
+		<item name="android:textSize">16dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Body3_14_M" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Body3_14_M" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_medium</item>
+		<item name="android:textSize">14dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Body3_14_R" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_regular</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Body3_14_R" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_regular</item>
+		<item name="android:textSize">14dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Caption1_13_M" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">13dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Caption1_13_M" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_medium</item>
+		<item name="android:textSize">13dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Caption1_12_M" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">12dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Caption1_12_M" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_medium</item>
+		<item name="android:textSize">12dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="TextAppearance.Mashup.Caption1_12_R" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_regular</item>
-        <item name="android:textSize">12dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Caption1_12_R" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_regular</item>
+		<item name="android:textSize">12dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="AttendanceInfoImage" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
-        <item name="android:adjustViewBounds">true</item>
-        <item name="android:src">@drawable/ic_mashong_stare</item>
-    </style>
+	<style name="AttendanceInfoImage" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">12dp</item>
+		<item name="android:layout_marginBottom">12dp</item>
+		<item name="android:adjustViewBounds">true</item>
+		<item name="android:src">@drawable/ic_mashong_stare</item>
+	</style>
 
-    <style name="AttendanceInfoTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle1_16_B</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="AttendanceInfoTitle" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">12dp</item>
+		<item name="android:layout_marginBottom">12dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle1_16_B</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
-    <style name="AttendanceInfoContent" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">17dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
-    </style>
+	<style name="AttendanceInfoContent" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:minHeight">17dp</item>
+		<item name="android:layout_marginTop">4dp</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
+	</style>
+
+	<style name="SettingBtn" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">74dp</item>
+		<item name="android:layout_margin">4dp</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:background">@drawable/bg_white_half_round_12</item>
+		<item name="android:drawableTop">@drawable/ic_facebook</item>
+		<item name="android:drawablePadding">5dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+		<item name="android:gravity">center</item>
+		<item name="android:textColor">@color/gray700</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_M</item>
+	</style>
+
+	<style name="SettingTextBtn" parent="Widget.AppCompat.Button">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">56dp</item>
+		<item name="android:background">@drawable/border_bottom</item>
+		<item name="android:paddingLeft">20dp</item>
+		<item name="android:paddingEnd">20dp</item>
+		<item name="android:stateListAnimator">@null</item>
+		<item name="android:gravity">center|start</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle2_16_SB</item>
+		<item name="android:textColor">@color/gray700</item>
+	</style>
 
 </resources>

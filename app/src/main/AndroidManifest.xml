@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.mashup">
+	xmlns:tools="http://schemas.android.com/tools"
+	package="com.mashup">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -32,13 +32,12 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.qrscan.QRScanActivity"
-            android:exported="false" />
-    </application>
+
+		<activity
+			android:name=".ui.qrscan.QRScanActivity"
+			android:exported="false" />
+	</application>
 
 </manifest>

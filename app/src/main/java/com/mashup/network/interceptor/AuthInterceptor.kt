@@ -14,8 +14,9 @@ class AuthInterceptor @Inject constructor(
             .newBuilder()
             .apply {
                 runBlocking(Dispatchers.IO) {
-                    val token = userDataSource.token
-                    header(AUTHORIZATION_KEY, "Bearer $token")
+                    userDataSource.token?.let { token ->
+                        header(AUTHORIZATION_KEY, "Bearer $token")
+                    }
                 }
             }
             .build()

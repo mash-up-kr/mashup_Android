@@ -2,6 +2,7 @@ package com.mashup.ui.main
 
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.mashup.R
 import com.mashup.base.BaseActivity

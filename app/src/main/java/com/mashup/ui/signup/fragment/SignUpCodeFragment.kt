@@ -4,7 +4,6 @@ import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpCodeBinding
-import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField

@@ -1,6 +1,5 @@
 package com.mashup.ui.mypage
 
-import android.graphics.Color
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +40,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                 setContentView(bottomSheetView)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
+            (activity as MainActivity).updateStatusBarColor(it.getColor(R.color.gray900))
         }
         viewBinding.rvMypage.apply {
             adapter = attendanceAdapter
@@ -53,11 +53,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItemPosition == 0) {
                         viewBinding.layoutTitle.visibility = View.GONE
-                        (activity as MainActivity).updateStatusBarColor(context.getColor(R.color.gray50))
 
                     } else {
                         viewBinding.layoutTitle.visibility = View.VISIBLE
-                        (activity as MainActivity).updateStatusBarColor(Color.WHITE)
+                        viewBinding.layoutTitle.setOnClickListener {
+                            bottomSheetDialog.show()
+                        }
                     }
                     /*
                     수동 다음 아이템 당겨오기
@@ -82,5 +83,4 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     companion object {
         fun newInstance() = MyPageFragment()
     }
-
 }

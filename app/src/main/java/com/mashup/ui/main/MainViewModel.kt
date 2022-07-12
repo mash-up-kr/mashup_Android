@@ -16,7 +16,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     val isShowCongratsAttendanceScreen: State<Boolean>
         get() = _isShowCongratsAttendanceScreen
 
-    private val _mainTab = MutableStateFlow(MainTab.SEMINAR)
+    private val _mainTab = MutableStateFlow(MainTab.EVENT)
     val mainTab: StateFlow<MainTab> = _mainTab
 
     fun successAttendance() = mashUpScope {

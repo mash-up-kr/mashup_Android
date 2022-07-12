@@ -3,6 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<data>
+
 		<variable
 			name="model"
 			type="com.mashup.ui.model.AttendanceModel" />
@@ -10,7 +11,7 @@
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="64dp">
+		android:layout_height="68dp">
 
 
 		<androidx.appcompat.widget.AppCompatImageView
@@ -26,7 +27,7 @@
 		<androidx.appcompat.widget.LinearLayoutCompat
 			android:layout_width="wrap_content"
 			android:layout_height="0dp"
-			android:layout_marginStart="10dp"
+			android:layout_marginStart="12dp"
 			android:orientation="vertical"
 			app:layout_constraintBottom_toBottomOf="@id/iv_attendance_list"
 			app:layout_constraintStart_toEndOf="@id/iv_attendance_list"
@@ -45,6 +46,7 @@
 				android:id="@+id/tv_name"
 				android:layout_width="wrap_content"
 				android:layout_height="match_parent"
+				android:layout_marginTop="4dp"
 				android:gravity="bottom"
 				android:text="2022.02.03 | 3차 전체 세미나"
 				android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_R"
@@ -73,6 +75,7 @@
 				android:id="@+id/tv_seminar_attendance_total_count"
 				android:layout_width="wrap_content"
 				android:layout_height="match_parent"
+				android:layout_marginTop="4dp"
 				android:gravity="bottom"
 				android:text="1 점"
 				android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_R"

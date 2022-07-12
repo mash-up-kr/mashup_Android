@@ -8,7 +8,6 @@ import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentSignUpAuthBinding
 import com.mashup.extensions.dp
-import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.extensions.scrollToTarget
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField

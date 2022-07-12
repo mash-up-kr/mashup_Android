@@ -4,7 +4,6 @@ import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogPlatformBinding
-import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.ui.signup.SignUpViewModel
 import kotlinx.coroutines.flow.collectLatest
 

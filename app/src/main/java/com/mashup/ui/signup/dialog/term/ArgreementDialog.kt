@@ -5,7 +5,6 @@ import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogTermsAgreementBinding
-import com.mashup.extensions.flowViewLifecycleScope
 import com.mashup.extensions.onDebouncedClick
 import com.mashup.extensions.setUnderLine
 import com.mashup.ui.signup.SignUpViewModel

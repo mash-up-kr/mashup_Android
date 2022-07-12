@@ -13,7 +13,7 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:id="@+id/section_seminar"
+            android:id="@+id/section_event"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="12dp"
@@ -27,14 +27,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/img_seminar"
+                android:id="@+id/img_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_seminar"
                 tools:ignore="ContentDescription" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_seminar"
+                android:id="@+id/tv_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -57,7 +57,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/section_my_page"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/section_seminar"
+            app:layout_constraintStart_toEndOf="@id/section_event"
             app:layout_constraintTop_toTopOf="parent"
             app:maxImageSize="24dp"
             tools:ignore="ContentDescription" />

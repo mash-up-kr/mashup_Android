@@ -122,7 +122,7 @@ class AttendanceListAdapter :
         fun bind(item: AttendanceModel) {
             binding?.let {
                 it.model = item
-                it.layoutTotalAttendance.setOnClickListener {
+                it.btnDetail.setOnClickListener {
                     listener?.onTotalAttendanceClick()
                 }
             }

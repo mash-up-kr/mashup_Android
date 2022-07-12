@@ -1,8 +1,7 @@
 package com.mashup.di
 
 import com.mashup.BuildConfig.DEBUG_MODE
-import com.mashup.network.API_HOST
-import com.mashup.network.TIME_OUT_REQUEST_API
+import com.mashup.data.network.API_HOST
 import com.mashup.network.interceptor.AuthInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
@@ -39,9 +38,9 @@ class NetworkModule {
             okHttpClient.addInterceptor(HttpLoggingInterceptor())
         }
         return okHttpClient
-            .readTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
-            .writeTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
-            .callTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
+            .readTimeout(10L, TimeUnit.SECONDS)
+            .writeTimeout(10L, TimeUnit.SECONDS)
+            .callTimeout(10L, TimeUnit.SECONDS)
             .build()
     }
 

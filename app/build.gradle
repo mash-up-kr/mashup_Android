@@ -23,6 +23,17 @@ android {
         }
     }
 
+    sourceSets {
+        release {
+            java.srcDirs = ['src/main/java', 'src/release/java']
+        }
+
+        debug {
+            java.srcDirs = ['src/main/java', 'src/debug/java']
+        }
+
+    }
+
     buildFeatures {
         dataBinding true
         compose true

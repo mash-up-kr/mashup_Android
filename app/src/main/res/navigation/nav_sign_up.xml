@@ -21,9 +21,6 @@
         android:name="com.mashup.ui.signup.fragment.SignUpMemberFragment"
         android:label="SignUpMemberFragment">
         <action
-            android:id="@+id/action_signUpMemberFragment_to_signUpCodeFragment"
-            app:destination="@id/signUpCodeFragment" />
-        <action
             android:id="@+id/action_signUpMemberFragment_to_platFormSelectionDialog"
             app:destination="@id/platFormSelectionDialog" />
         <action

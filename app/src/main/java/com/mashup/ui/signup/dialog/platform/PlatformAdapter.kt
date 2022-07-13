@@ -8,13 +8,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
 import com.mashup.databinding.ItemPlatformBinding
+import com.mashup.ui.model.Platform
 
 class PlatformAdapter(
-    private val platformList: List<String>,
-    private val clickListener: (String) -> Unit
+    private val platformList: List<Platform>,
+    private val clickListener: (Platform) -> Unit
 ) : RecyclerView.Adapter<PlatformViewHolder>() {
 
-    private var selectedPlatform: String? = null
+    private var selectedPlatform: Platform? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlatformViewHolder {
         return PlatformViewHolder(
@@ -28,7 +29,7 @@ class PlatformAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateSelectedPlatform(platform: String) {
+    fun updateSelectedPlatform(platform: Platform) {
         selectedPlatform = platform
         notifyDataSetChanged()
     }
@@ -38,9 +39,9 @@ class PlatformAdapter(
 
 class PlatformViewHolder(
     private val binding: ItemPlatformBinding,
-    private val clickListener: (String) -> Unit
+    private val clickListener: (Platform) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var platform: String? = null
+    private var platform: Platform? = null
 
     init {
         binding.root.setOnClickListener {
@@ -51,10 +52,10 @@ class PlatformViewHolder(
     }
 
     fun onBindContent(
-        platform: String, selectedPlatform: String?
+        platform: Platform, selectedPlatform: Platform?
     ) = with(binding) {
         this@PlatformViewHolder.platform = platform
-        tvPlatform.text = platform
+        tvPlatform.text = platform.detailName
 
         if (platform == selectedPlatform) {
             onBindSelectedContent()

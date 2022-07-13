@@ -2,11 +2,13 @@ package com.mashup.ui.signup.dialog.term
 
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogTermsAgreementBinding
 import com.mashup.extensions.onDebouncedClick
 import com.mashup.extensions.setUnderLine
+import com.mashup.ui.constant.POLICY_URL
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.webview.WebViewActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -34,10 +36,17 @@ class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementB
                     WebViewActivity.newIntent(
                         context = this,
                         title = "개인정보방침",
-                        url = "https://www.naver.com"
+                        url = POLICY_URL
                     )
                 )
                 viewModel.updatedTerm(true)
+            }
+        }
+        viewBinding.btnConfirm.setOnButtonClickListener {
+            if (viewModel.isCheckedTerm.value) {
+                findNavController().navigate(
+                    R.id.action_termsAgreementDialog_to_signUpCodeFragment
+                )
             }
         }
     }

@@ -19,13 +19,16 @@
             android:name=".ui.webview.WebViewActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.event.EventDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.MashUp" >
+            android:theme="@style/Theme.MashUp">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity

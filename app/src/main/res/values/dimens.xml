@@ -3,4 +3,7 @@
     <!--    QR Scan-->
     <dimen name="margin_qr_scan_rect_horizontal">33dp</dimen>
     <dimen name="margin_qr_scan_rect_top">90dp</dimen>
+    <dimen name="pageMargin">12dp</dimen>
+    <dimen name="pagerWidth">60dp</dimen>
+    <dimen name="pagerHeight">470dp</dimen>
 </resources>

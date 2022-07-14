@@ -1,6 +1,8 @@
 package com.mashup.ui.signup.fragment
 
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
@@ -14,6 +16,7 @@ import com.mashup.ui.model.Validation
 import com.mashup.ui.signup.SignUpState
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
+import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -54,7 +57,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                             setDescriptionText("")
                             setEmptyUIOfTextField()
                         }
-                        handleSignUpErrorCode(state.code)
+                        handleSignUpErrorCode(state)
                     }
                     else -> {
                         viewBinding.textFieldCode.run {
@@ -76,13 +79,21 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
     }
 
     private fun initButton() {
+        ViewCompat.setWindowInsetsAnimationCallback(
+            viewBinding.layoutButton,
+            TranslateDeferringInsetsAnimationCallback(
+                view = viewBinding.layoutButton,
+                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+        )
         viewBinding.btnSignUp.setOnButtonDebounceClickListener(this) {
             viewModel.requestInvalidSignUpCode()
         }
     }
 
-    private fun handleSignUpErrorCode(code: String) {
-        val toastMessage = when (code) {
+    private fun handleSignUpErrorCode(error: SignUpState.Error) {
+        val codeMessage = when (error.code) {
             MEMBER_INVALID_INVITE -> {
                 "초대 코드를 다시 확인해주세요."
             }
@@ -93,7 +104,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), error.message ?: codeMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun setUiOfCodeState(codeState: CodeState) {

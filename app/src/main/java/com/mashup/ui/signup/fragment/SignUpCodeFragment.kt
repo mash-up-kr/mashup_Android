@@ -1,5 +1,6 @@
 package com.mashup.ui.signup.fragment
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,6 +13,7 @@ import com.mashup.network.errorcode.MEMBER_INVALID_INVITE
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
+import com.mashup.ui.main.MainActivity
 import com.mashup.ui.model.Validation
 import com.mashup.ui.signup.SignUpState
 import com.mashup.ui.signup.SignUpViewModel
@@ -50,7 +52,15 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                         }
                     }
                     SignUpState.SUCCESS -> {
-                        requireActivity().finish()
+                        requireActivity().run {
+                            startActivity(
+                                Intent(requireContext(), MainActivity::class.java).apply {
+                                    flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                }
+                            )
+                            finish()
+                        }
                     }
                     is SignUpState.Error -> {
                         viewBinding.textFieldCode.run {
@@ -58,12 +68,6 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                             setEmptyUIOfTextField()
                         }
                         handleSignUpErrorCode(state)
-                    }
-                    else -> {
-                        viewBinding.textFieldCode.run {
-                            setDescriptionText("")
-                            setEmptyUIOfTextField()
-                        }
                     }
                 }
             }

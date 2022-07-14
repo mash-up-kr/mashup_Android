@@ -2,10 +2,12 @@ package com.mashup.data.dto
 
 import com.mashup.data.model.PlatformInfo
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class TotalAttendanceResponse(
-    @Json(name = "isEnd")
+    @field:Json(name = "isEnd")
     val isEnd: Boolean,
-    @Json(name = "platformInfos")
+    @field:Json(name = "platformInfos")
     val platformInfos: List<PlatformInfo>,
 )

@@ -47,7 +47,7 @@ ext {
     okhttpInterceptorVerison = "4.9.3"
 
     // serialization
-    moshiVersion = "1.12.0"
+    moshiVersion = "1.13.0"
 
     // image
     glideVersion = "4.12.0"

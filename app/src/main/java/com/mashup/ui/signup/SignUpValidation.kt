@@ -49,3 +49,12 @@ fun validationPlatform(platform: String): Validation {
         Validation.FAILED
     }
 }
+
+fun validationCode(code: String): Validation {
+    if (code.isEmpty()) return Validation.EMPTY
+    return if ("[a-zA-Z]{6}".toRegex().matches(code)) {
+        Validation.SUCCESS
+    } else {
+        Validation.FAILED
+    }
+}

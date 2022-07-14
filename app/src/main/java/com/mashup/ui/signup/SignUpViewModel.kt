@@ -63,10 +63,10 @@ class SignUpViewModel @Inject constructor(
 
     private val signUpCode = MutableStateFlow("")
     val codeState = signUpCode
-        .map {
+        .map { code ->
             CodeState(
-                code = it,
-                isValidationState = it.length == 6
+                code = code,
+                isValidationState = validationCode(code) == Validation.SUCCESS
             )
         }
 

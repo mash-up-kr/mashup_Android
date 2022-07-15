@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val dataSource: UserDataSource
+    private val userDataSource: UserDataSource
 ) : BaseViewModel() {
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
@@ -88,7 +88,7 @@ class SignUpViewModel @Inject constructor(
             return@mashUpScope
         }
 
-        dataSource.token = response.data?.token
+        userDataSource.token = response.data?.token
         _signUpState.emit(SignUpState.SUCCESS)
     }
 

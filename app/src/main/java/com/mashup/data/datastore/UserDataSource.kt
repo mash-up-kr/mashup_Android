@@ -30,13 +30,13 @@ class UserDataSource @Inject constructor(
         }
 
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {
-        context.userDataStore.data.map {
+        userDataStore.data.map {
             it[key] ?: default
         }.first()
     }
 
     private fun <T> write(key: Preferences.Key<T>, value: T?) = runBlocking {
-        context.userDataStore.edit { preference ->
+        userDataStore.edit { preference ->
             value?.let {
                 preference[key] = value
             }

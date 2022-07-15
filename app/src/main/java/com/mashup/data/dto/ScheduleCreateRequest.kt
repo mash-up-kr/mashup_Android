@@ -1,14 +1,16 @@
 package com.mashup.data.dto
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class ScheduleCreateRequest(
-    @Json(name = "generationId")
+    @field:Json(name = "generationId")
     val generationId: Int,
-    @Json(name = "name")
+    @field:Json(name = "name")
     val name: String,
-    @Json(name = "startedAt")
+    @field:Json(name = "startedAt")
     val startedAt: String,
-    @Json(name = "endedAt")
+    @field:Json(name = "endedAt")
     val endedAt: String,
 )

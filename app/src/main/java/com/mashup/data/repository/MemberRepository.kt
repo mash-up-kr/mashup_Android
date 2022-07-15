@@ -15,17 +15,12 @@ class MemberRepository @Inject constructor(
         identification: String,
         password: String
     ): Response<TokenResponse> {
-        return Response(
-            code = "SUCCESS",
-            data = TokenResponse("test"),
-            message = null
+        return memberDao.postLogin(
+            LoginRequest(
+                identification = identification,
+                password = password
+            )
         )
-//        return memberDao.postLogin(
-//            LoginRequest(
-//                identification = identification,
-//                password = password
-//            )
-//        )
     }
 
     suspend fun signup(

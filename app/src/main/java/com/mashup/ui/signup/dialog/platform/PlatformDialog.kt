@@ -4,16 +4,20 @@ import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogPlatformBinding
+import com.mashup.ui.model.Platform
 import com.mashup.ui.signup.SignUpViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 class PlatformDialog : BaseBottomSheetDialogFragment<DialogPlatformBinding>() {
 
     private val viewModel: SignUpViewModel by activityViewModels()
-    private val adapter: PlatformAdapter = PlatformAdapter(platformList) { platform ->
-        viewModel.setPlatform(platform)
-        dismiss()
-    }
+    private val adapter: PlatformAdapter =
+        PlatformAdapter(
+            Platform.values().filter { it != Platform.NONE }.toList()
+        ) { platform ->
+            viewModel.setPlatform(platform)
+            dismiss()
+        }
 
     override fun initViews() {
         super.initViews()
@@ -35,10 +39,4 @@ class PlatformDialog : BaseBottomSheetDialogFragment<DialogPlatformBinding>() {
 
     override val layoutId: Int
         get() = R.layout.dialog_platform
-
-    companion object {
-        private val platformList = listOf(
-            "Product Design", "Android", "iOS", "Web", "Spring", "Node"
-        )
-    }
 }

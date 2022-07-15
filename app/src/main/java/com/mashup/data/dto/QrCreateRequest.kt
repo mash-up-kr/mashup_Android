@@ -1,14 +1,16 @@
 package com.mashup.data.dto
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class QrCreateRequest(
-    @Json(name = "eventId")
+    @field:Json(name = "eventId")
     val eventId: Int,
-    @Json(name = "code")
+    @field:Json(name = "code")
     val code: String,
-    @Json(name = "start")
+    @field:Json(name = "start")
     val start: String,
-    @Json(name = "end")
+    @field:Json(name = "end")
     val end: String,
 )

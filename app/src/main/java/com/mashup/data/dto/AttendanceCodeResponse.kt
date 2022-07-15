@@ -1,16 +1,18 @@
 package com.mashup.data.dto
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class AttendanceCodeResponse(
-    @Json(name = "id")
+    @field:Json(name = "id")
     val id: Int,
-    @Json(name = "eventId")
+    @field:Json(name = "eventId")
     val eventId: Int,
-    @Json(name = "code")
+    @field:Json(name = "code")
     val code: String,
-    @Json(name = "startedAt")
+    @field:Json(name = "startedAt")
     val startedAt: String,
-    @Json(name = "endedAt")
+    @field:Json(name = "endedAt")
     val endedAt: String,
 )

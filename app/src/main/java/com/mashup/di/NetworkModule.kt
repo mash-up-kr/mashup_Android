@@ -1,9 +1,10 @@
 package com.mashup.di
 
 import com.mashup.BuildConfig.DEBUG_MODE
-import com.mashup.network.API_HOST
-import com.mashup.network.TIME_OUT_REQUEST_API
+import com.mashup.data.network.API_HOST
+import com.mashup.network.dao.MemberDao
 import com.mashup.network.interceptor.AuthInterceptor
+import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import dagger.Module
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -30,18 +32,20 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        baseInterceptor: BaseInterceptor
     ): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
+            .addInterceptor(baseInterceptor)
 
         if (DEBUG_MODE) {
             okHttpClient.addInterceptor(HttpLoggingInterceptor())
         }
         return okHttpClient
-            .readTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
-            .writeTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
-            .callTimeout(TIME_OUT_REQUEST_API, TimeUnit.SECONDS)
+            .readTimeout(10L, TimeUnit.SECONDS)
+            .writeTimeout(10L, TimeUnit.SECONDS)
+            .callTimeout(10L, TimeUnit.SECONDS)
             .build()
     }
 
@@ -56,4 +60,13 @@ class NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+
+
+    @Provides
+    @Singleton
+    fun provideMemberDao(
+        retrofit: Retrofit
+    ): MemberDao {
+        return retrofit.create()
+    }
 }

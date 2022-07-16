@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import com.mashup.compose.R
 import com.mashup.compose.colors.White
 
@@ -28,6 +29,97 @@ private val mashupFontFamily = FontFamily(
     Font(R.font.pretendard_medium, FontWeight.Medium),
     Font(R.font.pretendard_semibold, FontWeight.SemiBold),
     Font(R.font.pretendard_bold, FontWeight.Bold)
+)
+
+val Header1 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 24.sp,
+    letterSpacing = (-1).sp
+)
+
+val Header2 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+    letterSpacing = (-1).sp
+)
+
+val Title1 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 20.sp,
+    letterSpacing = (-1).sp
+)
+
+val Title2 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 20.sp,
+    letterSpacing = (-1).sp
+)
+
+val SubTitle1 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 16.sp,
+    letterSpacing = (-1).sp
+)
+
+val SubTitle2 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 16.sp,
+    letterSpacing = (-1).sp
+)
+
+val Body1 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 16.sp,
+    letterSpacing = (-1).sp
+)
+
+val Body2 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+    letterSpacing = (-1).sp
+)
+
+val Body3 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 14.sp,
+    letterSpacing = (-1).sp
+)
+
+val Body4 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp,
+    letterSpacing = (-1).sp
+)
+
+val Caption1 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 13.sp,
+    letterSpacing = (-1).sp
+)
+
+val Caption2 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 12.sp,
+    letterSpacing = (-1).sp
+)
+
+val Caption3 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 12.sp,
+    letterSpacing = (-1).sp
 )
 
 @Composable

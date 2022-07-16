@@ -1,6 +1,6 @@
 package com.mashup.ui.signup
 
-import com.mashup.ui.model.Validation
+import com.mashup.ui.signup.model.Validation
 
 fun validationId(id: String): Validation {
     if (id.isEmpty()) return Validation.EMPTY

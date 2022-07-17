@@ -2,6 +2,7 @@ package com.mashup.di
 
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
+import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
@@ -67,6 +68,15 @@ class NetworkModule {
     fun provideMemberDao(
         retrofit: Retrofit
     ): MemberDao {
+        return retrofit.create()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAttendanceDao(
+        retrofit: Retrofit
+    ): AttendanceDao {
         return retrofit.create()
     }
 }

@@ -39,8 +39,11 @@ class QRScanViewModel @Inject constructor(
         if (!response.isSuccess()) {
             _qrcodeState.emit(QRCodeState.Error(response.code, response.message))
             return@mashUpScope
+        } else {
+            if (response.data?.isAttendance() == true) {
+                _qrcodeState.emit(QRCodeState.SuccessAttendance)
+            }
         }
-        _qrcodeState.emit(QRCodeState.SuccessAttendance)
     }
 }
 

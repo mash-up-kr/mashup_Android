@@ -1,19 +1,22 @@
 package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
-import com.mashup.ui.model.Validation
+import com.mashup.data.datastore.UserDataSource
+import com.mashup.data.repository.MemberRepository
+import com.mashup.ui.model.Platform
+import com.mashup.ui.signup.model.Validation
 import com.mashup.ui.signup.state.AuthState
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : BaseViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val memberRepository: MemberRepository,
+    private val userDataSource: UserDataSource
+) : BaseViewModel() {
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
     private val pwdCheck = MutableStateFlow("")
@@ -39,8 +42,8 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
         )
     }
 
-    private val _platform = MutableStateFlow("")
-    val platform: StateFlow<String> = _platform
+    private val _platform = MutableStateFlow(Platform.NONE)
+    val platform: StateFlow<Platform> = _platform
 
     private val _isCheckedTerm = MutableStateFlow(false)
     val isCheckedTerm: StateFlow<Boolean> = _isCheckedTerm
@@ -49,7 +52,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     val memberState = userName.combine(platform) { name, platform ->
         MemberState(
             name = name,
-            platform = platform
+            platform = platform.detailName
         )
     }.map { memberState ->
         memberState.copy(
@@ -60,12 +63,48 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     private val signUpCode = MutableStateFlow("")
     val codeState = signUpCode
-        .map {
+        .map { code ->
             CodeState(
-                code = it,
-                isValidationState = true // TODO: validation to api
+                code = code,
+                isValidationState = validationCode(code) == Validation.SUCCESS
             )
         }
+
+    private val _signUpState = MutableSharedFlow<SignUpState>()
+    val signUpState: SharedFlow<SignUpState> = _signUpState
+
+    private fun requestSignup() = mashUpScope {
+        val response = memberRepository.signup(
+            identification = id.value,
+            inviteCode = signUpCode.value,
+            name = userName.value,
+            password = pwd.value,
+            platform = platform.value.name,
+            privatePolicyAgreed = isCheckedTerm.value
+        )
+
+        if (!response.isSuccess()) {
+            handleSignUpError(response.code, response.message)
+            return@mashUpScope
+        }
+
+        userDataSource.token = response.data?.token
+        _signUpState.emit(SignUpState.SUCCESS)
+    }
+
+    fun requestInvalidSignUpCode() = mashUpScope {
+        val response = memberRepository.validateSignUpCode(
+            inviteCode = signUpCode.value,
+            platform = platform.value.name
+        )
+
+        if (!response.isSuccess()) {
+            _signUpState.emit(SignUpState.InvalidCode)
+            return@mashUpScope
+        }
+
+        requestSignup()
+    }
 
     fun setId(id: String) {
         this.id.value = id
@@ -79,7 +118,7 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
         this.pwdCheck.value = pwdCheck
     }
 
-    fun setPlatform(platform: String) {
+    fun setPlatform(platform: Platform) {
         _platform.value = platform
     }
 
@@ -94,4 +133,14 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     fun updatedTerm(value: Boolean? = null) {
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
+
+    private fun handleSignUpError(errorCode: String, message: String?) = mashUpScope {
+        _signUpState.emit(SignUpState.Error(errorCode, message))
+    }
+}
+
+sealed interface SignUpState {
+    object SUCCESS : SignUpState
+    object InvalidCode : SignUpState
+    data class Error(val code: String, val message: String?) : SignUpState
 }

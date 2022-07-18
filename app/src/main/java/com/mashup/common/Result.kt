@@ -1,4 +1,4 @@
-package com.mashup.common.result
+package com.mashup.common
 
 import android.util.Log
 import com.mashup.network.errorcode.RETRY_REQUEST

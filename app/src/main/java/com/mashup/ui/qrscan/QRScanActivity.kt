@@ -9,6 +9,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityQrScanBinding
 import com.mashup.extensions.showToast
+import com.mashup.network.errorcode.*
 import com.mashup.ui.extensions.gone
 import com.mashup.ui.extensions.visible
 import com.mashup.ui.qrscan.camera.CameraManager
@@ -42,8 +43,8 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                         setResult(RESULT_OK)
                         finish()
                     }
-                    is QRCodeState.InValidQRCode -> {
-                        showInvalidMessage(qrcodeState.message)
+                    is QRCodeState.Error -> {
+                        handleAttendanceErrorCode(qrcodeState)
                     }
                 }
                 cameraManager.startCamera()
@@ -102,6 +103,32 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     override fun onResume() {
         super.onResume()
         cameraManager.startCamera()
+    }
+
+    private fun handleAttendanceErrorCode(error: QRCodeState.Error) {
+        val codeMessage = when (error.code) {
+            UNAUTHORIZED -> {
+                "로그아웃 후 재로그인해주세요."
+            }
+            ATTENDANCE_CODE_NOT_FOUND -> {
+                "출석 코드가 존재하지 않습니다."
+            }
+            ATTENDANCE_ALREADY_CHECKED -> {
+                "이미 출석 체크를 했습니다."
+            }
+            ATTENDANCE_CODE_DUPLICATED -> {
+                "이미 사용된 코드입니다"
+            }
+            ATTENDANCE_TIME_OVER -> {
+                "출석 체크 시간이 지났습니다."
+            }
+            else -> {
+                "잠시 후 다시 시도해주세요."
+            }
+        }
+        showInvalidMessage(
+            error.message ?: codeMessage
+        )
     }
 
     override fun onPause() {

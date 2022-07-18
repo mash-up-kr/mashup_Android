@@ -1,6 +1,6 @@
 package com.mashup.ui.signup.state
 
-import com.mashup.ui.model.Validation
+import com.mashup.ui.signup.model.Validation
 
 data class AuthState(
     val id: String = "",

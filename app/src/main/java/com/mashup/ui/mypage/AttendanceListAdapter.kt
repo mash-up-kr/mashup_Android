@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
 import com.mashup.databinding.*
 import com.mashup.ui.model.AttendanceModel
+import com.mashup.ui.setting.SettingActivity
 
 class AttendanceListAdapter :
     ListAdapter<AttendanceModel, RecyclerView.ViewHolder>(AttendanceComparator) {
@@ -46,7 +47,8 @@ class AttendanceListAdapter :
                 MyPageTitleViewHolder(
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.item_mypage_attendance_title, parent, false
-                    )
+                    ),
+                    mListener
                 )
             }
             VIEW_TYPE_SCORE -> {
@@ -129,12 +131,20 @@ class AttendanceListAdapter :
         }
     }
 
-    class MyPageTitleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyPageTitleViewHolder(view: View, val listener: OnItemEventListener?) :
+        RecyclerView.ViewHolder(view) {
         private val binding: ItemMypageAttendanceTitleBinding? =
             androidx.databinding.DataBindingUtil.bind(itemView)
 
         fun bind(item: AttendanceModel) {
+            binding?.let {
+                it.model = item
+                it.btnSetting.setOnClickListener {
+                    SettingActivity.start(it.context)
+                }
+            }
             binding?.model = item
+
         }
     }
 

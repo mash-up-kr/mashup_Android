@@ -19,6 +19,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     private val viewModel: MyPageViewModel by viewModels()
     private lateinit var bottomSheetDialog: BottomSheetDialog
 
+
     private val attendanceAdapter by lazy {
         AttendanceListAdapter().apply {
             setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {

@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<data>
+    <data>
 
-		<variable
-			name="model"
-			type="com.mashup.ui.model.AttendanceModel" />
-	</data>
+        <variable
+            name="model"
+            type="com.mashup.ui.model.EventDetail" />
+    </data>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="26dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_number"
-			android:layout_width="20dp"
-			android:layout_height="20dp"
-			android:background="@drawable/icon_circle"
-			android:backgroundTint="@color/brand100"
-			android:gravity="center"
-			android:text="1"
-			android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_SB"
-			android:textColor="@color/gray600"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_number"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/icon_circle"
+            android:backgroundTint="@color/brand100"
+            android:gravity="center"
+            android:text="1"
+            android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_SB"
+            android:textColor="@color/gray600"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_title"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:textAppearance="@style/TextAppearance.Mashup.Subtitle2_16_SB"
-			android:textColor="@color/gray700"
-			app:layout_constraintStart_toEndOf="@id/tv_number"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:text="안드로이드 팀 세미나" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="안드로이드 팀 세미나"
+            android:textAppearance="@style/TextAppearance.Mashup.Subtitle2_16_SB"
+            android:textColor="@color/gray700"
+            app:layout_constraintStart_toEndOf="@id/tv_number"
+            app:layout_constraintTop_toTopOf="parent" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_sub_title"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="4dp"
-			android:textAppearance="@style/TextAppearance.Mashup.Body3_14_R"
-			android:textColor="@color/gray600"
-			app:layout_constraintStart_toStartOf="@id/tv_title"
-			app:layout_constraintTop_toBottomOf="@id/tv_title"
-			tools:text="안드로이드 팀 세미나" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="안드로이드 팀 세미나"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_R"
+            android:textColor="@color/gray600"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_time"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="@style/TextAppearance.Mashup.Caption1_13_M"
-			android:textColor="@color/gray400"
-			app:layout_constraintBottom_toBottomOf="@id/tv_title"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="@id/tv_title"
-			tools:text="AM 11:00" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AM 11:00"
+            android:textAppearance="@style/TextAppearance.Mashup.Caption1_13_M"
+            android:textColor="@color/gray400"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

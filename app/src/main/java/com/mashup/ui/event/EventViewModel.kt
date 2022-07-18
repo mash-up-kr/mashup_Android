@@ -9,4 +9,5 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val userDataSource: UserDataSource
 ) : BaseViewModel() {
+
 }

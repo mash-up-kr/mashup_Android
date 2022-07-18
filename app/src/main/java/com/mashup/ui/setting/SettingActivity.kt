@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivitySettingBinding
+import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,13 +17,28 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     private val viewModel: SettingViewModel by viewModels()
 
     override fun initViews() {
+        initDataBinding()
         initButton()
         window.setSoftInputMode(SOFT_INPUT_ADJUST_NOTHING);
+    }
+
+    private fun initDataBinding() {
+        viewBinding.viewModel = viewModel
     }
 
     private fun initButton() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             onBackPressed()
+        }
+        viewBinding.btnLogout.setOnClickListener {
+            CommonDialog(this).apply {
+                setTitle(text = "로그아웃 하시겠습니까?")
+                setNegativeButton()
+                setPositiveButton {
+                    //sign out
+                }
+                show()
+            }
         }
         viewBinding.btnWithdrawal.setOnClickListener {
             changeOutContainerFragment(WithdrawalFragment.newInstance())

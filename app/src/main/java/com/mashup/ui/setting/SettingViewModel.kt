@@ -1,5 +1,8 @@
 package com.mashup.ui.setting
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.mashup.base.BaseViewModel
 import com.mashup.ui.model.Validation
 import com.mashup.ui.signup.state.CodeState
@@ -29,5 +32,9 @@ class SettingViewModel @Inject constructor() : BaseViewModel() {
 
     fun setCode(code: String) {
         withdrawalCode.value = code
+    }
+
+    fun onClickSNS(context: Context?, link: String) {
+        context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
     }
 }

@@ -1,6 +1,6 @@
 package com.mashup.ui.signup
 
-import com.mashup.ui.model.Validation
+import com.mashup.ui.signup.model.Validation
 
 fun validationId(id: String): Validation {
     if (id.isEmpty()) return Validation.EMPTY
@@ -44,6 +44,15 @@ fun validationName(name: String): Validation {
 fun validationPlatform(platform: String): Validation {
     if (platform.isEmpty()) return Validation.EMPTY
     return if (platform.isNotBlank()) {
+        Validation.SUCCESS
+    } else {
+        Validation.FAILED
+    }
+}
+
+fun validationCode(code: String): Validation {
+    if (code.isEmpty()) return Validation.EMPTY
+    return if ("[a-zA-Z]{6}".toRegex().matches(code)) {
         Validation.SUCCESS
     } else {
         Validation.FAILED

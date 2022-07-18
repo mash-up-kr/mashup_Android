@@ -6,9 +6,13 @@ import android.view.ViewOutlineProvider
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.mashup.R
 import com.mashup.extensions.dp
+import com.mashup.extensions.onDebouncedClick
 
 class ButtonView @JvmOverloads constructor(
     context: Context,
@@ -24,6 +28,15 @@ class ButtonView @JvmOverloads constructor(
 
     fun setOnButtonClickListener(clickListener: () -> Unit) {
         setOnClickListener {
+            clickListener.invoke()
+        }
+    }
+
+    fun setOnButtonDebounceClickListener(
+        lifecycleOwner: LifecycleOwner,
+        clickListener: () -> Unit
+    ) {
+        onDebouncedClick(lifecycleOwner.lifecycleScope) {
             clickListener.invoke()
         }
     }

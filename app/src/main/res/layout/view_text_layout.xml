@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="84dp"
             android:foreground="@drawable/bg_text_field_out_line_idle"
-            android:background="@color/white"
+            android:background="@drawable/bg_text_field_enabled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

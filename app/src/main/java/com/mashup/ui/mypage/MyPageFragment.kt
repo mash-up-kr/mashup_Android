@@ -19,7 +19,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     private val viewModel: MyPageViewModel by viewModels()
     private lateinit var bottomSheetDialog: BottomSheetDialog
 
-
     private val attendanceAdapter by lazy {
         AttendanceListAdapter().apply {
             setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {
@@ -30,8 +29,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
         }
     }
 
-
-    override val layoutId: Int = R.layout.fragment_my_page
     override fun initViews() {
         super.initViews()
         val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_attendance_info, null)
@@ -84,4 +81,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     companion object {
         fun newInstance() = MyPageFragment()
     }
+
+    override val layoutId: Int = R.layout.fragment_my_page
 }

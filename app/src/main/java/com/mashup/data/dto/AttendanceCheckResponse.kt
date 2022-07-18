@@ -7,4 +7,6 @@ import com.squareup.moshi.JsonClass
 class AttendanceCheckResponse(
     @field:Json(name = "status")
     val status: String,
-)
+) {
+    fun isAttendance() = status.uppercase() == "ATTENDANCE"
+}

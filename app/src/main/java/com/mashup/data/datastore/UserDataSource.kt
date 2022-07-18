@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,12 +22,20 @@ class UserDataSource @Inject constructor(
 
     companion object {
         private val KEY_TOKEN = stringPreferencesKey("accessToken")
+        private val KEY_MEMBER_ID = stringPreferencesKey("memberId")
     }
 
     var token: String?
         get() = read(KEY_TOKEN, null)
         set(value) {
             write(KEY_TOKEN, value)
+        }
+
+
+    var memberId: Int?
+        get() = read(KEY_TOKEN, null)?.toIntOrNull()
+        set(value) {
+            write(KEY_TOKEN, value.toString())
         }
 
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {

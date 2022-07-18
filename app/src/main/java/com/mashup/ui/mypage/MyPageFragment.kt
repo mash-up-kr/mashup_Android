@@ -1,5 +1,6 @@
 package com.mashup.ui.mypage
 
+import android.content.Intent
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
 import com.mashup.ui.main.MainActivity
+import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,6 +26,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
             setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {
                 override fun onTotalAttendanceClick() {
                     bottomSheetDialog.show()
+                }
+
+                override fun onStartSettingActivity() {
+                    startActivity(Intent(context, SettingActivity::class.java))
                 }
             })
         }

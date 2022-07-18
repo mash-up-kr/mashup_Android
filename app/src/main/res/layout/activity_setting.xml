@@ -1,101 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<data></data>
+    <data>
 
-	<androidx.appcompat.widget.LinearLayoutCompat
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
+        <import type="com.mashup.WebConstants.URL" />
 
-		<com.mashup.widget.ToolbarView
-			android:id="@+id/toolbar"
-			android:layout_width="0dp"
-			android:layout_height="56dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:toolbar_back_button_visible="@{true}"
-			app:toolbar_title='@{"회원가입"}' />
+        <variable
+            name="viewModel"
+            type="com.mashup.ui.setting.SettingViewModel" />
+    </data>
 
-		<androidx.appcompat.widget.AppCompatButton
-			android:id="@+id/btn_logout"
-			style="@style/SettingTextBtn"
-			android:text="@string/logout" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-		<androidx.appcompat.widget.AppCompatButton
-			android:id="@+id/btn_sign_out"
-			style="@style/SettingTextBtn"
-			android:drawableEnd="@drawable/ic_chevron_right"
-			android:text="@string/sign_out"
-			android:textColor="@color/red500" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-		<LinearLayout
-			android:gravity="bottom"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_margin="12dp"
-			android:orientation="vertical">
+            <com.mashup.widget.ToolbarView
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:toolbar_back_button_visible="@{true}"
+                app:toolbar_title='@{"회원가입"}' />
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_logout"
+                style="@style/SettingTextBtn"
+                android:text="@string/logout" />
 
-				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/btn_facebook"
-					style="@style/SettingBtn"
-					android:drawableTop="@drawable/ic_facebook"
-					android:text="@string/facebook" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_withdrawal"
+                style="@style/SettingTextBtn"
+                android:drawableEnd="@drawable/ic_chevron_right"
+                android:text="@string/sign_out"
+                android:textColor="@color/red500" />
 
-				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/btn_instgram"
-					style="@style/SettingBtn"
-					android:drawableTop="@drawable/ic_instagram"
-					android:text="@string/instagram" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-			</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btn_facebook"
+                        style="@style/SettingBtn"
+                        android:drawableTop="@drawable/ic_facebook"
+                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.FACEBOOK)}"
+                        android:text="@string/facebook" />
 
-				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/btn_tistory"
-					style="@style/SettingBtn"
-					android:drawableTop="@drawable/ic_tistory"
-					android:text="@string/tistory" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btn_instgram"
+                        style="@style/SettingBtn"
+                        android:drawableTop="@drawable/ic_instagram"
+                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.INSTAGRAM)}"
+                        android:text="@string/instagram" />
 
-				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/btn_youtube"
-					style="@style/SettingBtn"
-					android:drawableTop="@drawable/ic_youtube"
-					android:text="@string/youtube" />
+                </LinearLayout>
 
-			</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btn_tistory"
+                        style="@style/SettingBtn"
+                        android:drawableTop="@drawable/ic_tistory"
+                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.TISTORY)}"
+                        android:text="@string/tistory" />
 
-				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/btn_m_home"
-					style="@style/SettingBtn"
-					android:drawableTop="@drawable/ic_mashup_dark"
-					android:text="@string/mHome" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btn_youtube"
+                        style="@style/SettingBtn"
+                        android:drawableTop="@drawable/ic_youtube"
+                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.YOUTUBE)}"
+                        android:text="@string/youtube" />
 
-				<androidx.appcompat.widget.AppCompatTextView
-					android:id="@+id/btn_m_recruit"
-					style="@style/SettingBtn"
-					android:drawableTop="@drawable/ic_mashup"
-					android:text="@string/mRecruit" />
-			</LinearLayout>
-		</LinearLayout>
-	</androidx.appcompat.widget.LinearLayoutCompat>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btn_m_home"
+                        style="@style/SettingBtn"
+                        android:drawableTop="@drawable/ic_mashup_dark"
+                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.MASHUP_UP_HOME)}"
+                        android:text="@string/mHome" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btn_m_recruit"
+                        style="@style/SettingBtn"
+                        android:drawableTop="@drawable/ic_mashup"
+                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.MASHUP_UP_RECRUIT)}"
+                        android:text="@string/mRecruit" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 </layout>

@@ -1,22 +1,29 @@
 <resources>
-    <string name="app_name">MashUp</string>
+	<string name="app_name">MashUp</string>
 
-    <string name="denied_camera_permission">출석 체크를 위해 카메라 권한이 필요합니다</string>
+	<string name="denied_camera_permission">출석 체크를 위해 카메라 권한이 필요합니다</string>
 
-    <string name="what_attendance_title">매시업 출석 점수 제도</string>
+	<string name="what_attendance_title">매시업 출석 점수 제도</string>
 
-    <string name="what_attendance_out_count">Outcount란?</string>
-    <string name="what_attendance_out_count_content">출원활하고 재밌는 Mash-Up 활동을 위해 만들어진 출석제도입니다.
-        출석체크는 Mash-Up 전체모임(3점)과 플랫폼 모임(3점)으로 시작 및 실행됩니다.\n\n출석 Outcount 기본 3점으로 시작해서 하나의 모임에서라도
-        0점으로 기수 끝날 시 해당 기수 수료와 다음 기수 참여가 불가해집니다.</string>
+	<string name="what_attendance_out_count">Outcount란?</string>
+	<string name="what_attendance_out_count_content">출원활하고 재밌는 Mash-Up 활동을 위해 만들어진 출석제도입니다. 출석체크는 Mash-Up <font fgcolor="#2B8AF9"><b>전체모임(3점)과 플랫폼 모임(3점)</b></font>으로 시작 및 실행됩니다.\n\n출석 Outcount 기본 3점으로 시작해서 <font fgcolor="#DD4863"><b>하나의 모임에서라도 0점으로 기수 끝날 시 해당 기수 수료와 다음 기수 참여가 불가</b></font>해집니다.</string>
 
-    <string name="what_attendance_minus">점수 차감 Case</string>
-    <string name="what_attendance_minus_content"> - 결석 -1\n - 지각 -0.5\n - 프로젝트 배포 실패 -0.5</string>
+	<string name="what_attendance_minus">점수 차감 Case</string>
+	<string name="what_attendance_minus_content1">결석 -1</string>
+	<string name="what_attendance_minus_content2">지각 -0.5</string>
+	<string name="what_attendance_minus_content3">프로젝트 배포 실패 -0.5</string>
 
-    <string name="what_attendance_plus">점수 획득 Case</string>
-    <string name="what_attendance_plus_content">전체 세미나 발표 +1\n - 프로젝트팀 팀장/부팀장 +2\n - 해커톤 준비 위원회 +1\n- 프로젝트 배포 성공 +1\n - 기술 블로그 작성 +1\n - Mash-Up 콘텐츠 글 작성 +0.5\n - 13기 회장/부회장 +999999999999999999999…</string>
-    <string name="total_attendance">총 출석점수</string>
+	<string name="what_attendance_plus">점수 획득 Case</string>
+	<string name="what_attendance_plus_content1">전체 세미나 발표 +1</string>
+	<string name="what_attendance_plus_content2">프로젝트팀 팀장/부팀장 +2</string>
+	<string name="what_attendance_plus_content3">해커톤 준비 위원회 +1</string>
+	<string name="what_attendance_plus_content4">프로젝트 배포 성공 +1</string>
+	<string name="what_attendance_plus_content5">기술 블로그 작성 +1</string>
+	<string name="what_attendance_plus_content6">Mash-Up 콘텐츠 글 작성 +0.5</string>
+	<string name="what_attendance_plus_content7">13기 회장/부회장 +100</string>
+	<string name="what_attendance_plus_content8">스태프 +99</string>
 
+	<string name="total_attendance">총 출석점수</string>
 	<string name="event_list_title">다음 세미나 일정까지\n <font fgcolor="#6A36FF">%s</font>일 남았습니다!</string>
 	<string name="event_refresh">일정 새로고침</string>
 	<string name="event_list_card_title"><font fgcolor="#383E4C"><b>%s</b></font>님의 현재 출석현황이에요</string>

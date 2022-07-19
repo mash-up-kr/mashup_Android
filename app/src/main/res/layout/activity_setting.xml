@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.mashup.WebConstants.URL" />
+        <import type="com.mashup.URL" />
 
         <variable
             name="viewModel"

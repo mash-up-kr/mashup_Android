@@ -4,15 +4,20 @@ package com.mashup.ui.model
 data class AttendanceModel(
     val id: Int,
     val type: Int,
-    val profile: Profile?
+    val profile: Profile?,
+    val generationNum: Int?
 ) {
     companion object {
         val EMPTY = AttendanceModel(
             id = 0,
             type = 0,
-            profile = Profile.EMPTY
+            profile = Profile.EMPTY,
+            generationNum = 12,
         )
     }
+
+    fun getGeneration() = "${generationNum}기"
+
 }
 
 data class Profile(

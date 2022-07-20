@@ -38,17 +38,17 @@
 				android:id="@+id/tv_platform"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="13dp"
 				android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
 				android:textColor="@color/white"
 				tools:text="총 출석점수"
+				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toStartOf="@id/tv_name"
 				app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
 			<androidx.appcompat.widget.AppCompatImageView
 				android:id="@+id/btn_detail"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="18dp"
+				android:layout_height="18dp"
 				android:layout_marginStart="2dp"
 				android:src="@drawable/ic_info"
 				app:layout_constraintBottom_toBottomOf="@id/tv_platform"
@@ -59,10 +59,10 @@
 				android:id="@+id/tv_num"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="13dp"
+				android:layout_marginBottom="19dp"
 				android:textAppearance="@style/TextAppearance.Mashup.Header2_20_B"
 				android:textColor="@color/white"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:text="1점" />
 

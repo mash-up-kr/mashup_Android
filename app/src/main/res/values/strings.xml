@@ -44,4 +44,5 @@
 	<string name="activity_history">활동 히스토리</string>
 
     <string name="title_activity_main">MainActivity</string>
+	<string name="total_attendance_score">총 출석점수</string>
 </resources>

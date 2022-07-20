@@ -71,17 +71,16 @@
                 android:layout_gravity="end"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
                 app:attendanceScore="@{model.activityHistory.attendanceType}"
-                tools:text="+20" />
+                tools:text="+20222" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_seminar_attendance_total_count"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:gravity="bottom"
+                android:gravity="bottom|end"
                 android:text="@{model.activityHistory.totalScoreText}"
                 android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_R"
-
                 android:textColor="@color/gray500"
                 tools:text="307.5점" />
         </androidx.appcompat.widget.LinearLayoutCompat>

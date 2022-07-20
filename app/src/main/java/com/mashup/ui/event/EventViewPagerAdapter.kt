@@ -1,10 +1,13 @@
 package com.mashup.ui.event
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
+import com.mashup.databinding.ItemEventBinding
+import com.mashup.databinding.ItemEventTimelineHeaderBinding
 import com.mashup.ui.model.Event
 
 class EventViewPagerAdapter(idolList: ArrayList<Event>) :
@@ -12,7 +15,7 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
     var item = idolList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        PagerViewHolder((parent))
+        PagerViewHolder(parent,mListener)
 
     override fun getItemCount(): Int = item.size
 
@@ -21,20 +24,22 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
         viewHolder.onBind(item[position])
     }
 
-    class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder
-        (
-        LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
-    ) {
-        val title: TextView = itemView.findViewById(R.id.tv_title)
-        val btnAttendance: TextView = itemView.findViewById(R.id.btn_attendance_list)
+    class PagerViewHolder(parent: ViewGroup, val listener: OnItemClickListener?) :
+        RecyclerView.ViewHolder(
+            ItemEventBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ).root
+        ) {
+        private val binding: ItemEventBinding? = androidx.databinding.DataBindingUtil.bind(itemView)
 
-        var data: Event? = null
         fun onBind(data: Event) {
-            this.data = data
-            title.text = (data.title)
-            btnAttendance.setOnClickListener {
-                EventDetailActivity.start(it.context)
+            binding?.let {
+                it.tvTitle.text = (data.title)
+                it.btnAttendanceList.setOnClickListener {
+                    listener?.onClickAttendanceList()
+                }
             }
+
         }
     }
 

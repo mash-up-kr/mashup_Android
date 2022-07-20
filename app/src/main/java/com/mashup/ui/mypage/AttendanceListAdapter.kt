@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
 import com.mashup.databinding.*
 import com.mashup.ui.model.AttendanceModel
-import com.mashup.ui.setting.SettingActivity
 
 class AttendanceListAdapter :
     ListAdapter<AttendanceModel, RecyclerView.ViewHolder>(AttendanceComparator) {
@@ -140,7 +139,7 @@ class AttendanceListAdapter :
             binding?.let {
                 it.model = item
                 it.btnSetting.setOnClickListener {
-                    SettingActivity.start(it.context)
+                    listener?.onStartSettingActivity()
                 }
             }
             binding?.model = item
@@ -151,6 +150,7 @@ class AttendanceListAdapter :
 
     interface OnItemEventListener {
         fun onTotalAttendanceClick()
+        fun onStartSettingActivity()
     }
 
     private var mListener: OnItemEventListener? = null

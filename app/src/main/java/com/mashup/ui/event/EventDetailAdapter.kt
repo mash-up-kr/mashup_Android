@@ -1,12 +1,11 @@
 package com.mashup.ui.event
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mashup.R
 import com.mashup.databinding.ItemEventTimelineContentBinding
 import com.mashup.databinding.ItemEventTimelineHeaderBinding
 import com.mashup.ui.model.EventDetail
@@ -27,18 +26,10 @@ class EventDetailAdapter :
         return when (viewType) {
 
             VIEW_TYPE_TITLE -> {
-                TitleViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_event_timeline_header, parent, false
-                    )
-                )
+                TitleViewHolder(parent)
             }
             else -> {
-                ContentViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_event_timeline_content, parent, false
-                    )
-                )
+                ContentViewHolder(parent)
             }
         }
     }
@@ -54,18 +45,25 @@ class EventDetailAdapter :
         }
     }
 
-    class TitleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding: ItemEventTimelineHeaderBinding? =
-            androidx.databinding.DataBindingUtil.bind(itemView)
+    class TitleViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+        ItemEventTimelineHeaderBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ).root
+    ) {
+        private val binding: ItemEventTimelineHeaderBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(item: EventDetail) {
             binding?.model = item
         }
     }
 
-    class ContentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ContentViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+        ItemEventTimelineContentBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ).root
+    ) {
         private val binding: ItemEventTimelineContentBinding? =
-            androidx.databinding.DataBindingUtil.bind(itemView)
+            DataBindingUtil.bind(itemView)
 
         fun bind(item: EventDetail) {
             binding?.model = item

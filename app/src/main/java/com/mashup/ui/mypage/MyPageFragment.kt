@@ -1,5 +1,6 @@
 package com.mashup.ui.mypage
 
+import android.content.Intent
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
 import com.mashup.ui.main.MainActivity
+import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -19,19 +21,20 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     private val viewModel: MyPageViewModel by viewModels()
     private lateinit var bottomSheetDialog: BottomSheetDialog
 
-
     private val attendanceAdapter by lazy {
         AttendanceListAdapter().apply {
             setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {
                 override fun onTotalAttendanceClick() {
                     bottomSheetDialog.show()
                 }
+
+                override fun onStartSettingActivity() {
+                    startActivity(Intent(context, SettingActivity::class.java))
+                }
             })
         }
     }
 
-
-    override val layoutId: Int = R.layout.fragment_my_page
     override fun initViews() {
         super.initViews()
         val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_attendance_info, null)
@@ -84,4 +87,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     companion object {
         fun newInstance() = MyPageFragment()
     }
+
+    override val layoutId: Int = R.layout.fragment_my_page
 }

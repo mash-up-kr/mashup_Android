@@ -1,5 +1,6 @@
 package com.mashup.ui.event
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
@@ -30,6 +31,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>() {
             adapter = EventViewPagerAdapter(list).apply {
                 setOnItemClickListener(object : EventViewPagerAdapter.OnItemClickListener {
                     override fun onClickAttendanceList() {
+                        startActivity(Intent(context, EventDetailActivity::class.java))
                     }
                 })
             }

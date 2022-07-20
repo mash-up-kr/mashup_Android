@@ -18,7 +18,7 @@
 			android:id="@+id/layout_title"
 			android:layout_width="match_parent"
 			android:layout_height="74dp"
-			android:background="@color/gray900"
+			android:background="@color/gray950"
 			android:paddingStart="20dp"
 			android:paddingEnd="20dp"
 			app:layout_constraintTop_toTopOf="parent">

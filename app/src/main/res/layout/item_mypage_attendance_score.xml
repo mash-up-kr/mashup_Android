@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<data>
+	<data
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
 
 		<variable
 			name="model"
@@ -17,7 +19,7 @@
 			android:id="@+id/bg_top"
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
-			android:background="@color/gray900"
+			android:background="@color/gray950"
 			app:layout_constraintBottom_toTopOf="@id/bg_bottom"
 			app:layout_constraintTop_toTopOf="parent" />
 

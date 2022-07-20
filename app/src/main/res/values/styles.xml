@@ -22,6 +22,13 @@
 		<item name="fontFamily">@font/pretendard_medium</item>
 	</style>
 
+	<style name="TextAppearance.Mashup.Header_32_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">32dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
+
 	<style name="TextAppearance.Mashup.Header1_24_EB" parent="Widget.AppCompat.TextView">
 		<item name="android:fontFamily">@font/pretendard_extrabold</item>
 		<item name="android:textSize">24dp</item>

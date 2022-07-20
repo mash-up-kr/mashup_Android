@@ -40,7 +40,7 @@
 				android:layout_height="wrap_content"
 				android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
 				android:textColor="@color/white"
-				tools:text="총 출석점수"
+				android:text="@string/total_attendance_score"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintStart_toStartOf="@id/tv_name"
 				app:layout_constraintTop_toBottomOf="@id/tv_name" />

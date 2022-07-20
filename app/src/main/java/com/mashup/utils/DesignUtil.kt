@@ -49,6 +49,7 @@ object DesignUtil {
     @JvmStatic
     @BindingAdapter("textPlatformColor")
     fun AppCompatTextView.setTextPlatformColor(platform: Platform?) {
+        text = platform?.detailName
         when (platform) {
             Platform.ANDROID -> {
                 setTextColor(ContextCompat.getColor(context, R.color.teamAndroid200))
@@ -102,7 +103,7 @@ object DesignUtil {
                     "+${score}점"
                 } else {
                     setTextColor(ContextCompat.getColor(context, R.color.red500))
-                    "-${score}점"
+                    "${score}점"
                 }
             }
         }

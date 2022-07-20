@@ -1,6 +1,7 @@
 package com.mashup.data.model
 
 import com.squareup.moshi.Json
+import java.io.Serializable
 
 data class PlatformInfo(
     @Json(name = "attendanceCount")
@@ -11,4 +12,4 @@ data class PlatformInfo(
     val totalCount: Int,
     @Json(name = "platform")
     val platform: Platform,
-)
+) : Serializable

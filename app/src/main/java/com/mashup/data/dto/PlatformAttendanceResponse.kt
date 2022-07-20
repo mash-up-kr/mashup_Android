@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class PlatformAttendanceResponse(
     @field:Json(name = "members")
-    val members: MemberInfo,
+    val members: List<MemberInfo>,
     @field:Json(name = "platform")
     val platform: Platform
 )

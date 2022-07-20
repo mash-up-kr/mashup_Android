@@ -53,4 +53,18 @@
     <color name="gray200">#D6DBE8</color>
     <color name="gray100">#EBEFF9</color>
     <color name="gray50">#F8F7FC</color>
+
+    <color name="teamProductDesign">#8176FB</color>
+    <color name="teamProductDesign200">#BAB5FF</color>
+    <color name="teamAndroid">#58AE56</color>
+    <color name="teamAndroid200">#A9DBA8</color>
+    <color name="teamWeb">#5A88FF</color>
+    <color name="teamWeb200">#AFC5FF</color>
+    <color name="teamNode">#FFCD4C</color>
+    <color name="teamNode200">#FFE6A7</color>
+    <color name="teamSpring">#259688</color>
+    <color name="teamSpring200">#92D9D0</color>
+    <color name="teamIos">#D35C5C</color>
+    <color name="teamIos200">#FFB2B2</color>
+
 </resources>

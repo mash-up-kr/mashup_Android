@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.mashup.base.BaseViewModel
-import com.mashup.ui.model.Validation
+import com.mashup.ui.signup.model.Validation
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

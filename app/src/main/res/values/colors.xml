@@ -43,6 +43,7 @@
     <color name="blue500">#2B8AF9</color>
 
     <!--    gray color system-->
+    <color name="gray950">#25272E</color>
     <color name="gray900">#2C3037</color>
     <color name="gray800">#383E4C</color>
     <color name="gray700">#4D535E</color>

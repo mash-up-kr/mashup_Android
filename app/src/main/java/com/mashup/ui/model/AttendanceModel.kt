@@ -35,8 +35,8 @@ data class ActivityHistory(
         val EMPTY = ActivityHistory(
             attendanceType = AttendanceType.PLACEHOLDER_HISTORY,
             totalScore = 103,
-            detail = "",
-            date = "",
+            detail = "3차 전체 세미나",
+            date = "2022.02.03",
         )
     }
 

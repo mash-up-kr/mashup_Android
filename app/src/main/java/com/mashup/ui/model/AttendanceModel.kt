@@ -18,11 +18,15 @@ data class AttendanceModel(
 data class Profile(
     val platform: Platform,
     val name: String,
+    val score: Int,
 ) {
     companion object {
         val EMPTY = Profile(
             platform = Platform.NODE,
-            name = "test"
+            name = "test",
+            score = 2
         )
     }
+
+    fun getAttendanceScore() = "${score}점"
 }

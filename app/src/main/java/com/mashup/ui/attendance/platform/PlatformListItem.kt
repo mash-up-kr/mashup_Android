@@ -3,17 +3,13 @@ package com.mashup.ui.attendance.platform
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterEnd
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
@@ -54,7 +50,7 @@ fun PlatformListItem(
                 verticalAlignment = CenterVertically
             ) {
                 PlatformInfo(
-                    platformName = platformAttendance.platform.detailName,
+                    platform = platformAttendance.platform,
                     modifier = Modifier
                         .padding(start = 18.dp)
                 )
@@ -87,36 +83,47 @@ fun PlatformListItem(
 
 
 @Composable
-fun PlatformIcon() {
-    Box(modifier = Modifier.size(width = 48.dp, height = 26.dp)) {
-        Image(
-            modifier = Modifier
-                .size(26.dp)
-                .padding(2.dp)
-                .align(Alignment.CenterStart),
-            painter = painterResource(id = R.drawable.ic_android_1),
-            contentDescription = null
-        )
-        Image(
-            modifier = Modifier
-                .align(CenterEnd)
-                .size(26.dp)
-                .border(width = 2.dp, color = White, shape = CircleShape)
-                .padding(start = 2.dp, top = 2.dp, end = 2.dp, bottom = 2.dp),
-            painter = painterResource(id = R.drawable.ic_android_2),
-            contentDescription = null
-        )
-    }
+fun PlatformIcon(@DrawableRes platformImageRes: Int) {
+    Image(
+        painter = painterResource(id = platformImageRes),
+        contentDescription = null
+    )
 }
 
 @Composable
-fun PlatformInfo(platformName: String, modifier: Modifier = Modifier) {
+fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
+    val platformImage = remember(platform) {
+        when (platform) {
+            Platform.DESIGN -> {
+                R.drawable.img_statusprofile_design
+            }
+            Platform.ANDROID -> {
+                R.drawable.img_statusprofile_android
+            }
+            Platform.WEB -> {
+                R.drawable.img_statusprofile_web
+            }
+            Platform.IOS -> {
+                R.drawable.img_statusprofile_ios
+            }
+            Platform.SPRING -> {
+                R.drawable.img_statusprofile_spring
+            }
+            Platform.NODE -> {
+                R.drawable.img_statusprofile_node
+            }
+            else -> {
+                R.drawable.ic_img_placeholder_sleeping
+            }
+        }
+    }
+
     Column(modifier = modifier) {
-        PlatformIcon()
+        PlatformIcon(platformImage)
 
         MashTextView(
-            modifier = Modifier.padding(top = 2.dp, start = 2.dp),
-            text = platformName,
+            modifier = Modifier.padding(start = 2.dp),
+            text = platform.detailName,
             style = Header2,
             color = Gray800
         )
@@ -254,7 +261,7 @@ fun PlatformAttendanceStatusItem(
 @Composable
 fun PlatformInfoPrev() {
     MashUpTheme {
-        PlatformInfo("Android")
+        PlatformInfo(Platform.ANDROID)
     }
 }
 

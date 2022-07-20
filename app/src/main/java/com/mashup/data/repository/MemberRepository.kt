@@ -4,7 +4,6 @@ import com.mashup.common.Response
 import com.mashup.data.dto.AccessResponse
 import com.mashup.data.dto.LoginRequest
 import com.mashup.data.dto.SignUpRequest
-import com.mashup.data.dto.TokenResponse
 import com.mashup.data.model.Platform
 import com.mashup.network.dao.MemberDao
 import javax.inject.Inject
@@ -31,7 +30,7 @@ class MemberRepository @Inject constructor(
         password: String,
         platform: String,
         privatePolicyAgreed: Boolean
-    ): Response<TokenResponse> {
+    ): Response<AccessResponse> {
         return memberDao.postSignUp(
             SignUpRequest(
                 identification = identification,

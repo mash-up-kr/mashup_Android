@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.mashup.R
 import com.mashup.ui.model.Platform
+import com.mashup.ui.mypage.AttendanceType
 
 object DesignUtil {
     @JvmStatic
@@ -85,5 +86,37 @@ object DesignUtil {
                     ColorStateList.valueOf(ContextCompat.getColor(context, R.color.black))
             }
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("attendanceScore")
+    fun AppCompatTextView.setAttendanceScore(attendanceType: AttendanceType) {
+        attendanceType.score.let {
+            text = if (it == 0.0) {
+                setTextColor(ContextCompat.getColor(context, R.color.gray500))
+                "0 점"
+            } else {
+                val score = if (it % 1 == 0.0) it.toInt() else it
+                if (it > 0) {
+                    setTextColor(ContextCompat.getColor(context, R.color.blue500))
+                    "+${score}점"
+                } else {
+                    setTextColor(ContextCompat.getColor(context, R.color.red500))
+                    "-${score}점"
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("attendanceTitle")
+    fun AppCompatTextView.setAttendanceTitle(attendanceType: AttendanceType) {
+        text = attendanceType.title
+    }
+
+    @JvmStatic
+    @BindingAdapter("attendanceIcon")
+    fun ImageView.setAttendanceIcon(attendanceType: AttendanceType) {
+        setImageDrawable(ContextCompat.getDrawable(context,attendanceType.resourceId))
     }
 }

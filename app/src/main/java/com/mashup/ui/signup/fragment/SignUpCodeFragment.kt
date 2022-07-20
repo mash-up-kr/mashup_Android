@@ -51,7 +51,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                             setFailedUiOfTextField()
                         }
                     }
-                    SignUpState.SUCCESS -> {
+                    SignUpState.Success -> {
                         requireActivity().run {
                             startActivity(
                                 Intent(requireContext(), MainActivity::class.java).apply {

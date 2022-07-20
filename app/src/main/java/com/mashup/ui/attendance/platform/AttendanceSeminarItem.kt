@@ -24,23 +24,24 @@ import com.mashup.R
 @Composable
 fun AttendanceSeminarItem(
     modifier: Modifier = Modifier,
-    timeStamp: String,
-    attendanceStatus: AttendanceStatus,
+    index: Int,
+    timeStamp: String?,
+    attendanceStatus: String,
     @DrawableRes iconRes: Int,
     iconSize: Int,
 ) {
-    val attendanceColor = when (attendanceStatus) {
-        AttendanceStatus.ATTEND -> {
-            Green500
+    val (attendanceColor, label) = when (attendanceStatus) {
+        AttendanceStatus.ATTEND.name -> {
+            Green500 to "출석"
         }
-        AttendanceStatus.ABSENCE -> {
-            Red500
+        AttendanceStatus.ABSENCE.name -> {
+            Red500 to "결석"
         }
-        AttendanceStatus.LATENESS -> {
-            Yellow500
+        AttendanceStatus.LATENESS.name -> {
+            Yellow500 to "지각"
         }
-        AttendanceStatus.NONE -> {
-            Gray200
+        else -> {
+            Gray200 to if (index == 2) "최종" else "${index + 1}부"
         }
     }
 
@@ -65,13 +66,13 @@ fun AttendanceSeminarItem(
         }
         MashTextView(
             modifier = Modifier.padding(top = 4.dp),
-            text = attendanceStatus.label,
+            text = label,
             style = Caption1,
             color = Gray600
         )
         MashTextView(
             modifier = Modifier.defaultMinSize(minWidth = 40.dp),
-            text = timeStamp,
+            text = timeStamp ?: "-",
             textAlign = TextAlign.Center,
             style = Caption3,
             color = Gray500
@@ -85,7 +86,8 @@ fun AttendanceSeminarPrev() {
     MashUpTheme {
         AttendanceSeminarItem(
             timeStamp = "13:30",
-            attendanceStatus = AttendanceStatus.ATTEND,
+            index = 1,
+            attendanceStatus = AttendanceStatus.ATTEND.name,
             iconRes = R.drawable.ic_circle,
             iconSize = 8
         )

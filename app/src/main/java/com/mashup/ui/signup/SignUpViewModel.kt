@@ -89,7 +89,7 @@ class SignUpViewModel @Inject constructor(
         }
 
         userDataSource.token = response.data?.token
-        _signUpState.emit(SignUpState.SUCCESS)
+        _signUpState.emit(SignUpState.Success)
     }
 
     fun requestInvalidSignUpCode() = mashUpScope {
@@ -140,7 +140,7 @@ class SignUpViewModel @Inject constructor(
 }
 
 sealed interface SignUpState {
-    object SUCCESS : SignUpState
+    object Success : SignUpState
     object InvalidCode : SignUpState
     data class Error(val code: String, val message: String?) : SignUpState
 }

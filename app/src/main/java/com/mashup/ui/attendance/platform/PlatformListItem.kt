@@ -22,19 +22,27 @@ import com.mashup.compose.colors.*
 import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.*
-import com.mashup.ui.attendance.model.PlatformAttendance
-import com.mashup.ui.model.Platform
+import com.mashup.data.model.Platform
+import com.mashup.data.model.PlatformInfo
+import kotlin.math.max
 
 @Composable
 fun PlatformListItem(
     modifier: Modifier = Modifier,
     isAttendingEvent: Boolean = true,
-    platformAttendance: PlatformAttendance,
-    onClickPlatform: (PlatformAttendance) -> Unit
+    platformInfo: PlatformInfo,
+    onClickPlatform: (PlatformInfo) -> Unit
 ) {
+    val attendCount = remember(platformInfo) {
+        max(
+            0,
+            platformInfo.totalCount - (platformInfo.attendanceCount + platformInfo.lateCount)
+        )
+    }
+
     Card(
         modifier = modifier.clickable {
-            onClickPlatform(platformAttendance)
+            onClickPlatform(platformInfo)
         },
         elevation = 2.dp,
         shape = CardListShape
@@ -50,7 +58,7 @@ fun PlatformListItem(
                 verticalAlignment = CenterVertically
             ) {
                 PlatformInfo(
-                    platform = platformAttendance.platform,
+                    platform = platformInfo.platform,
                     modifier = Modifier
                         .padding(start = 18.dp)
                 )
@@ -59,10 +67,8 @@ fun PlatformListItem(
                     PlatformStatus(
                         modifier = Modifier
                             .padding(end = 18.dp),
-                        numberOfAttend = platformAttendance.numberOfAttend,
-                        numberOfMaxAttend = platformAttendance.numberOfAttend
-                            + platformAttendance.numberOfLateness
-                            + platformAttendance.numberOfAbsence
+                        numberOfAttend = platformInfo.attendanceCount,
+                        numberOfMaxAttend = platformInfo.totalCount
                     )
                 }
             }
@@ -72,9 +78,9 @@ fun PlatformListItem(
                         .fillMaxWidth()
                         .padding(top = 14.dp)
                         .padding(horizontal = 20.dp),
-                    numberOfAttend = platformAttendance.numberOfAttend,
-                    numberOfLateness = platformAttendance.numberOfLateness,
-                    numberOfAbsence = platformAttendance.numberOfAbsence
+                    numberOfAttend = platformInfo.attendanceCount,
+                    numberOfLateness = platformInfo.lateCount,
+                    numberOfAbsence = attendCount
                 )
             }
         }
@@ -123,7 +129,7 @@ fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
 
         MashTextView(
             modifier = Modifier.padding(start = 2.dp),
-            text = platform.detailName,
+            text = platform.getName(),
             style = Header2,
             color = Gray800
         )
@@ -279,11 +285,11 @@ fun PlatformListItemPrev() {
     MashUpTheme {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
-            platformAttendance = PlatformAttendance(
-                platform = Platform.ANDROID,
-                numberOfAttend = 13,
-                numberOfLateness = 0,
-                numberOfAbsence = 7
+            platformInfo = PlatformInfo(
+                platform = com.mashup.data.model.Platform.ANDROID,
+                totalCount = 13,
+                attendanceCount = 0,
+                lateCount = 7
             ),
             onClickPlatform = {}
         )
@@ -297,11 +303,11 @@ fun EndedPlatformListItemPrev() {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
             isAttendingEvent = false,
-            platformAttendance = PlatformAttendance(
-                platform = Platform.ANDROID,
-                numberOfAttend = 13,
-                numberOfLateness = 0,
-                numberOfAbsence = 7
+            platformInfo = PlatformInfo(
+                platform = com.mashup.data.model.Platform.ANDROID,
+                totalCount = 13,
+                attendanceCount = 0,
+                lateCount = 7
             ),
             onClickPlatform = {}
         )
@@ -325,9 +331,35 @@ fun PlatformAttendanceStatusItemPrev() {
     }
 }
 
-@Preview
+@Preview(widthDp = 200)
 @Composable
-fun PlatformAttendanceStatusPrev() {
+fun PlatformAttendanceStatusWidth200Prev() {
+    MashUpTheme {
+        PlatformAttendanceStatus(
+            modifier = Modifier.fillMaxWidth(),
+            numberOfAttend = 10,
+            numberOfLateness = 1,
+            numberOfAbsence = 2
+        )
+    }
+}
+
+@Preview(widthDp = 400)
+@Composable
+fun PlatformAttendanceStatusWidth400Prev() {
+    MashUpTheme {
+        PlatformAttendanceStatus(
+            modifier = Modifier.fillMaxWidth(),
+            numberOfAttend = 10,
+            numberOfLateness = 1,
+            numberOfAbsence = 2
+        )
+    }
+}
+
+@Preview(widthDp = 800)
+@Composable
+fun PlatformAttendanceStatusWidth800Prev() {
     MashUpTheme {
         PlatformAttendanceStatus(
             modifier = Modifier.fillMaxWidth(),

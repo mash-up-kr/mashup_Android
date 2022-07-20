@@ -15,7 +15,7 @@ import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState
-import com.mashup.ui.signup.model.Validation
+import com.mashup.common.Validation
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback

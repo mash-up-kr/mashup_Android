@@ -38,6 +38,21 @@ class PlatformAttendanceViewModel @Inject constructor(
         }
 
         response.data?.run {
+            _notice.value = when {
+                eventNum == 1 && !isEnd -> {
+                    "출석체크가 실시간으로 진행되고 있어요"
+                }
+                eventNum == 2 && !isEnd -> {
+                    "중간 집계 중이에요"
+                }
+                eventNum == 2 && isEnd -> {
+                    "출석체크가 완료되었어요"
+                }
+                else -> {
+                    "서버에서 이상한 일이 발생했어요 ㅜ"
+                }
+            }
+
             _platformAttendanceState.value =
                 PlatformAttendanceState.Success(response.data)
         }

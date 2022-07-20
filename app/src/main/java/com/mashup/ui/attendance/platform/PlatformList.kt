@@ -14,6 +14,7 @@ import com.mashup.data.model.PlatformInfo
 @Composable
 fun PlatformList(
     modifier: Modifier = Modifier,
+    notice: String,
     totalAttendanceResponse: TotalAttendanceResponse,
     onClickPlatform: (PlatformInfo) -> Unit
 ) {
@@ -24,12 +25,14 @@ fun PlatformList(
         itemsIndexed(
             totalAttendanceResponse.platformInfos,
             key = { _, item -> item.platform }) { index, platform ->
-//                    if (index == 0 && notice.isNotBlank()) {
-//                        AttendanceNoticeItem(
-//                            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-//                            notice = notice
-//                        )
-//                    }
+            if (index == 0 && notice.isNotBlank()) {
+                AttendanceNoticeItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
+                    notice = notice
+                )
+            }
             PlatformListItem(
                 modifier = Modifier.fillMaxWidth(),
                 platformInfo = platform,

@@ -24,6 +24,7 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                 when (val state = viewModel.platformAttendanceState.value) {
                     is PlatformAttendanceState.Success -> {
                         PlatformList(
+                            notice = viewModel.notice.value,
                             totalAttendanceResponse = state.data,
                             onClickPlatform = ::moveToCrewAttendance
                         )

@@ -1,12 +1,10 @@
 package com.mashup.ui.mypage
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mashup.R
 import com.mashup.databinding.*
 import com.mashup.ui.model.AttendanceModel
 
@@ -29,41 +27,19 @@ class AttendanceListAdapter :
         return when (viewType) {
 
             VIEW_TYPE_LIST_ITEM -> {
-                MyPageListItemViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_history_list, parent, false
-                    )
-                )
+                MyPageListItemViewHolder(parent)
             }
             VIEW_TYPE_LIST_LEVEL -> {
-                MyPageListLevelViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_history_level, parent, false
-                    )
-                )
+                MyPageListLevelViewHolder(parent)
             }
             VIEW_TYPE_TITLE -> {
-                MyPageTitleViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_title, parent, false
-                    ),
-                    mListener
-                )
+                MyPageTitleViewHolder(parent, mListener)
             }
             VIEW_TYPE_SCORE -> {
-                MyPageScoreViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_score, parent, false
-                    ),
-                    mListener
-                )
+                MyPageScoreViewHolder(parent, mListener)
             }
             else -> {
-                MyPageListNoneViewHolder(
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_mypage_attendance_history_placeholder_empthy, parent, false
-                    )
-                )
+                MyPageListNoneViewHolder(parent)
             }
         }
     }
@@ -88,7 +64,11 @@ class AttendanceListAdapter :
         }
     }
 
-    class MyPageListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyPageListItemViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(
+        ItemMypageAttendanceHistoryListBinding.inflate(
+            LayoutInflater.from(view.context), view, false
+        ).root
+    ) {
         private val binding: ItemMypageAttendanceHistoryListBinding? =
             androidx.databinding.DataBindingUtil.bind(itemView)
 
@@ -97,7 +77,11 @@ class AttendanceListAdapter :
         }
     }
 
-    class MyPageListLevelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyPageListLevelViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(
+        ItemMypageAttendanceHistoryLevelBinding.inflate(
+            LayoutInflater.from(view.context), view, false
+        ).root
+    ) {
         private val binding: ItemMypageAttendanceHistoryLevelBinding? =
             androidx.databinding.DataBindingUtil.bind(itemView)
 
@@ -106,7 +90,11 @@ class AttendanceListAdapter :
         }
     }
 
-    class MyPageListNoneViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyPageListNoneViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(
+        ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(
+            LayoutInflater.from(view.context), view, false
+        ).root
+    ) {
         private val binding: ItemMypageAttendanceHistoryPlaceholderEmpthyBinding? =
             androidx.databinding.DataBindingUtil.bind(itemView)
 
@@ -115,8 +103,12 @@ class AttendanceListAdapter :
         }
     }
 
-    class MyPageScoreViewHolder(view: View, val listener: OnItemEventListener?) :
-        RecyclerView.ViewHolder(view) {
+    class MyPageScoreViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
+        RecyclerView.ViewHolder(
+            ItemMypageAttendanceScoreBinding.inflate(
+                LayoutInflater.from(view.context), view, false
+            ).root
+        ) {
         private val binding: ItemMypageAttendanceScoreBinding? =
             androidx.databinding.DataBindingUtil.bind(itemView)
 
@@ -130,8 +122,12 @@ class AttendanceListAdapter :
         }
     }
 
-    class MyPageTitleViewHolder(view: View, val listener: OnItemEventListener?) :
-        RecyclerView.ViewHolder(view) {
+    class MyPageTitleViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
+        RecyclerView.ViewHolder(
+            ItemMypageAttendanceTitleBinding.inflate(
+                LayoutInflater.from(view.context), view, false
+            ).root
+        ) {
         private val binding: ItemMypageAttendanceTitleBinding? =
             androidx.databinding.DataBindingUtil.bind(itemView)
 

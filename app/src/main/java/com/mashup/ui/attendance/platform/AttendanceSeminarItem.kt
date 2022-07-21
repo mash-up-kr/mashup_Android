@@ -1,5 +1,6 @@
 package com.mashup.ui.attendance.platform
 
+import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,12 +21,15 @@ import com.mashup.compose.typography.Caption3
 import com.mashup.compose.typography.MashTextView
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.R
+import java.text.SimpleDateFormat
+import java.util.*
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun AttendanceSeminarItem(
     modifier: Modifier = Modifier,
     index: Int,
-    timeStamp: String?,
+    timeStamp: Date?,
     attendanceStatus: String,
     @DrawableRes iconRes: Int,
     iconSize: Int,
@@ -43,6 +47,16 @@ fun AttendanceSeminarItem(
         else -> {
             Gray200 to if (index == 2) "최종" else "${index + 1}부"
         }
+    }
+
+    val timeString = if (timeStamp != null) {
+        try {
+            SimpleDateFormat("hh:mm").format(timeStamp)
+        } catch (ignore: Exception) {
+            "-"
+        }
+    } else {
+        "-"
     }
 
     Column(
@@ -72,7 +86,7 @@ fun AttendanceSeminarItem(
         )
         MashTextView(
             modifier = Modifier.defaultMinSize(minWidth = 40.dp),
-            text = timeStamp ?: "-",
+            text = timeString,
             textAlign = TextAlign.Center,
             style = Caption3,
             color = Gray500
@@ -85,7 +99,7 @@ fun AttendanceSeminarItem(
 fun AttendanceSeminarPrev() {
     MashUpTheme {
         AttendanceSeminarItem(
-            timeStamp = "13:30",
+            timeStamp = Date(),
             index = 1,
             attendanceStatus = AttendanceStatus.ATTEND.name,
             iconRes = R.drawable.ic_circle,

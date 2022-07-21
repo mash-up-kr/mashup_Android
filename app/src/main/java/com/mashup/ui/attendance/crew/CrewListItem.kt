@@ -23,6 +23,7 @@ import com.mashup.data.model.MemberInfo
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
 import com.squareup.moshi.Json
+import java.util.*
 
 @Composable
 fun CrewListItem(
@@ -135,11 +136,11 @@ fun SeminarItemsPrev() {
                 attendanceInfos = listOf(
                     AttendanceInfo(
                         status = "ATTEND",
-                        attendanceAt = "16:30"
+                        attendanceAt = Date()
                     ),
                     AttendanceInfo(
                         status = "ATTEND",
-                        attendanceAt = "17:30"
+                        attendanceAt = Date()
                     )
                 )
             )
@@ -158,11 +159,11 @@ fun CrewListItemPrev() {
                 attendanceInfos = listOf(
                     AttendanceInfo(
                         status = "ATTEND",
-                        attendanceAt = "16:30"
+                        attendanceAt = Date()
                     ),
                     AttendanceInfo(
                         status = "ATTEND",
-                        attendanceAt = "17:30"
+                        attendanceAt = Date()
                     )
                 )
             )

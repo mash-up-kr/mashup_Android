@@ -1,6 +1,6 @@
 package com.mashup
 
-import com.mashup.ui.signup.model.Validation
+import com.mashup.common.Validation
 import com.mashup.ui.signup.validationId
 import com.mashup.ui.signup.validationName
 import com.mashup.ui.signup.validationPlatform

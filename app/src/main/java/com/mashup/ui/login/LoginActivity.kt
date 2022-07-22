@@ -11,14 +11,17 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.Validation
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.extensions.onDebouncedClick
+import com.mashup.extensions.scrollToTarget
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
@@ -30,6 +33,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun initViews() {
+        initTextField()
         initSplash()
         initButtons()
         initSplashPreDraw()
@@ -65,6 +69,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     }
                 }
             }
+
+            flowLifecycleScope {
+                loginValidation.collectLatest {
+                    viewBinding.btnLogin.setButtonEnabled(it == Validation.SUCCESS)
+                }
+            }
         }
     }
 
@@ -73,6 +83,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             Intent(this, MainActivity::class.java)
         )
         finish()
+    }
+
+    private fun initTextField() {
+        viewBinding.textFieldId.run {
+            addOnTextChangedListener { text ->
+                viewModel.setId(text)
+            }
+        }
+
+        viewBinding.textFieldPwd.run {
+            addOnTextChangedListener { text ->
+                viewModel.setPwd(text)
+            }
+        }
     }
 
     private fun initButtons() {

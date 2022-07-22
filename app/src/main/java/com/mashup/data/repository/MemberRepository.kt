@@ -1,6 +1,7 @@
 package com.mashup.data.repository
 
 import com.mashup.common.Response
+import com.mashup.data.dto.AccessResponse
 import com.mashup.data.dto.LoginRequest
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
@@ -14,7 +15,7 @@ class MemberRepository @Inject constructor(
     suspend fun login(
         identification: String,
         password: String
-    ): Response<TokenResponse> {
+    ): Response<AccessResponse> {
         return memberDao.postLogin(
             LoginRequest(
                 identification = identification,

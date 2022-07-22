@@ -7,6 +7,7 @@ import com.mashup.databinding.FragmentWithdrawalBinding
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
+import com.mashup.ui.signup.model.Validation
 import com.mashup.ui.signup.state.CodeState
 import kotlinx.coroutines.flow.collectLatest
 
@@ -44,14 +45,14 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>() {
     private fun setUiOfCodeState(codeState: CodeState) {
         with(viewBinding.textFieldCode) {
             when (codeState.validationCode) {
-                com.mashup.ui.model.Validation.SUCCESS -> {
+                Validation.SUCCESS -> {
                     setSuccessUiOfTextField()
                 }
-                com.mashup.ui.model.Validation.FAILED -> {
+                Validation.FAILED -> {
                     setDescriptionText("문구가 동일하지 않아요")
                     setFailedUiOfTextField()
                 }
-                com.mashup.ui.model.Validation.EMPTY -> {
+                Validation.EMPTY -> {
                     setEmptyUIOfTextField()
                 }
             }

@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
+    <data>
 
-		<variable
-			name="model"
-			type="com.mashup.ui.model.AttendanceModel" />
-	</data>
+        <variable
+            name="model"
+            type="com.mashup.ui.model.AttendanceModel" />
+    </data>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/layout_history_level"
-		android:layout_width="wrap_content"
-		android:layout_height="49dp"
-		android:layout_marginStart="8dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_history_level"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_marginStart="8dp">
 
-		<androidx.appcompat.widget.AppCompatImageView
-			android:id="@+id/bg_gradient"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			android:layout_margin="8dp"
-			android:background="@drawable/bg_shadow"
-			android:padding="8dp"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bg_gradient"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_shadow"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_level"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="12dp"
-			android:background="@drawable/bg_common_dialog_4"
-			android:paddingStart="6dp"
-			android:paddingTop="4dp"
-			android:paddingEnd="6dp"
-			android:paddingBottom="4dp"
-			android:text="13기"
-			android:textAppearance="@style/TextAppearance.Mashup.Header3_14_B"
-			android:textColor="@color/gray500"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
-	</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/bg_common_dialog_4"
+            android:gravity="center"
+            android:paddingHorizontal="6dp"
+            android:text="@{model.getGeneration()}"
+            android:textAppearance="@style/TextAppearance.Mashup.Header3_14_B"
+            android:textColor="@color/gray500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="13기" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

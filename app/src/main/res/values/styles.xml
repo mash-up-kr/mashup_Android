@@ -22,6 +22,13 @@
 		<item name="fontFamily">@font/pretendard_medium</item>
 	</style>
 
+	<style name="TextAppearance.Mashup.Header_32_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">32dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
+
 	<style name="TextAppearance.Mashup.Header1_24_EB" parent="Widget.AppCompat.TextView">
 		<item name="android:fontFamily">@font/pretendard_extrabold</item>
 		<item name="android:textSize">24dp</item>
@@ -146,8 +153,9 @@
 	<style name="AttendanceInfoTitle" parent="Widget.AppCompat.TextView">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
+		<item name="android:paddingTop">12dp</item>
+		<item name="android:paddingBottom">12dp</item>
 		<item name="android:layout_marginTop">12dp</item>
-		<item name="android:layout_marginBottom">12dp</item>
 		<item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle1_16_B</item>
 		<item name="android:textColor">@color/gray900</item>
 	</style>
@@ -157,6 +165,15 @@
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:minHeight">17dp</item>
 		<item name="android:layout_marginTop">4dp</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
+	</style>
+
+	<style name="AttendanceInfoList" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:drawableLeft">@drawable/ic_dot</item>
+		<item name="android:drawablePadding">8dp</item>
 		<item name="android:layout_marginBottom">4dp</item>
 		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
 	</style>

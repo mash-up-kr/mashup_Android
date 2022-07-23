@@ -4,6 +4,7 @@ import com.mashup.common.Response
 import com.mashup.data.dto.AccessResponse
 import com.mashup.data.dto.LoginRequest
 import com.mashup.data.dto.SignUpRequest
+import com.mashup.data.dto.ValidResponse
 import com.mashup.data.model.Platform
 import retrofit2.http.*
 
@@ -24,4 +25,9 @@ interface MemberDao {
         @Query("inviteCode") inviteCode: String,
         @Query("platform") platform: Platform
     ): Response<Any>
+
+    @GET("api/v1/members/{id}")
+    suspend fun getValidId(
+        @Path("id") id: String
+    ): Response<ValidResponse>
 }

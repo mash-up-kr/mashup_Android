@@ -5,7 +5,6 @@ import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform
 import com.mashup.common.Validation
-import com.mashup.ui.signup.state.AuthState
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,27 +19,6 @@ class SignUpViewModel @Inject constructor(
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
     private val pwdCheck = MutableStateFlow("")
-
-    val authState = combine(id, pwd, pwdCheck) { id, pwd, pwdCheck ->
-        AuthState(
-            id = id,
-            pwd = pwd,
-            pwdCheck = pwdCheck
-        )
-    }.map { authState ->
-        val validationId = validationId(authState.id)
-        val validationPwd = validationPwd(authState.pwd)
-        val validationPwdCheck = validationPwdCheck(authState.pwd, authState.pwdCheck)
-
-        authState.copy(
-            validationId = validationId,
-            validationPwd = validationPwd,
-            validationPwdCheck = validationPwdCheck,
-            isValidationState = validationId == Validation.SUCCESS
-                && validationPwd == Validation.SUCCESS
-                && validationPwdCheck == Validation.SUCCESS
-        )
-    }
 
     private val _platform = MutableStateFlow(Platform.NONE)
     val platform: StateFlow<Platform> = _platform

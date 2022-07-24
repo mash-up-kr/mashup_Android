@@ -1,5 +1,6 @@
 package com.mashup.widget
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.mashup.extensions.dp
 import com.mashup.extensions.onDebouncedClick
 import com.mashup.ui.extensions.gone
 import com.mashup.ui.extensions.visible
+
 
 class ButtonView @JvmOverloads constructor(
     context: Context,
@@ -63,7 +65,7 @@ class ButtonView @JvmOverloads constructor(
     }
 
     private fun initButtonViewLayout() {
-        updateLayoutParams {
+        viewBinding.root.updateLayoutParams {
             height = HEIGHT_BUTTON.dp(context)
             setPadding(
                 paddingStart,
@@ -72,6 +74,7 @@ class ButtonView @JvmOverloads constructor(
                 PADDING_VERTICAL.dp(context)
             )
         }
+        (viewBinding.root as? ConstraintLayout)?.layoutTransition = LayoutTransition()
         setBackgroundResource(R.drawable.bg_button)
     }
 
@@ -82,7 +85,7 @@ class ButtonView @JvmOverloads constructor(
         )
     }
 
-    private fun setButtonText(text: String) {
+    fun setButtonText(text: String) {
         viewBinding.tvButton.text = text
     }
 

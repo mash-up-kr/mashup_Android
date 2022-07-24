@@ -51,7 +51,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
 
                 if (validId) {
                     setUiOfPwdState(authScreenState.pwdState)
-                    setUiOfPwdCheckState(authScreenState.pwdCheckState)
+                    setUiOfPwdCheckState(authScreenState.pwdState, authScreenState.pwdCheckState)
                 }
             }
         }
@@ -164,35 +164,36 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfPwdState(pwdState: SignUpPwdState) = with(viewBinding) {
         when (pwdState) {
             SignUpPwdState.Success -> {
-                textFieldPwdCheck.setDescriptionText("")
-                textFieldPwdCheck.setSuccessUiOfTextField()
+                textFieldPwd.setDescriptionText("")
+                textFieldPwd.setSuccessUiOfTextField()
             }
             SignUpPwdState.Error -> {
-                textFieldPwdCheck.setDescriptionText("영문, 숫자를 조합하여 8자 이상으로 입력해주세요.")
-                textFieldPwdCheck.setFailedUiOfTextField()
+                textFieldPwd.setDescriptionText("영문, 숫자를 조합하여 8자 이상으로 입력해주세요.")
+                textFieldPwd.setFailedUiOfTextField()
             }
             SignUpPwdState.Empty -> {
-                textFieldPwdCheck.setDescriptionText("")
-                textFieldPwdCheck.setEmptyUIOfTextField()
+                textFieldPwd.setDescriptionText("")
+                textFieldPwd.setEmptyUIOfTextField()
             }
         }
     }
 
-    private fun setUiOfPwdCheckState(pwdCheckState: SignUpPwdCheckState) = with(viewBinding) {
-        textFieldPwdCheck.setEnabledTextField(pwdCheckState == SignUpPwdCheckState.Success)
-        when (pwdCheckState) {
-            SignUpPwdCheckState.Success -> {
-                textFieldPwdCheck.setDescriptionText("")
-                textFieldPwdCheck.setSuccessUiOfTextField()
-            }
-            SignUpPwdCheckState.Error -> {
-                textFieldPwdCheck.setDescriptionText("비밀번호가 일치하지 않아요")
-                textFieldPwdCheck.setFailedUiOfTextField()
-            }
-            SignUpPwdCheckState.Empty -> {
-                textFieldPwdCheck.setDescriptionText("")
-                textFieldPwdCheck.setEmptyUIOfTextField()
+    private fun setUiOfPwdCheckState(pwdState: SignUpPwdState, pwdCheckState: SignUpPwdCheckState) =
+        with(viewBinding) {
+            textFieldPwdCheck.setEnabledTextField(pwdState == SignUpPwdState.Success)
+            when (pwdCheckState) {
+                SignUpPwdCheckState.Success -> {
+                    textFieldPwdCheck.setDescriptionText("")
+                    textFieldPwdCheck.setSuccessUiOfTextField()
+                }
+                SignUpPwdCheckState.Error -> {
+                    textFieldPwdCheck.setDescriptionText("비밀번호가 일치하지 않아요")
+                    textFieldPwdCheck.setFailedUiOfTextField()
+                }
+                SignUpPwdCheckState.Empty -> {
+                    textFieldPwdCheck.setDescriptionText("")
+                    textFieldPwdCheck.setEmptyUIOfTextField()
+                }
             }
         }
-    }
 }

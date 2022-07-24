@@ -66,7 +66,6 @@ class SignUpAuthViewModel @Inject constructor(
                 if (
                     pwdState == SignUpPwdState.Success
                     && pwdCheckState == SignUpPwdCheckState.Success
-                    && validId
                 ) {
                     SignUpButtonState.Enable
                 } else {

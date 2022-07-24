@@ -76,6 +76,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
 
         viewBinding.textFieldPwd.run {
             addOnTextChangedListener { text ->
+                authViewModel.setPwd(text)
                 activityViewModel.setPwd(text)
             }
             setOnFocusChangedListener { hasFocus ->
@@ -90,6 +91,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
         }
         viewBinding.textFieldPwdCheck.run {
             addOnTextChangedListener { text ->
+                authViewModel.setPwdCheck(text)
                 activityViewModel.setPwdCheck(text)
             }
             setOnFocusChangedListener { hasFocus ->

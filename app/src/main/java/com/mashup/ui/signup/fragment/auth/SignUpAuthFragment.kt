@@ -146,12 +146,14 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfButtonState(buttonState: SignUpButtonState) = with(viewBinding) {
         when (buttonState) {
             SignUpButtonState.Loading -> {
-
+                btnSignUp.showLoading()
             }
             SignUpButtonState.Disable -> {
+                btnSignUp.hideLoading()
                 btnSignUp.setButtonEnabled(false)
             }
             else -> {
+                btnSignUp.hideLoading()
                 btnSignUp.setButtonEnabled(true)
             }
         }
@@ -164,7 +166,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                 textFieldPwdCheck.setSuccessUiOfTextField()
             }
             SignUpPwdState.Error -> {
-                textFieldPwdCheck.setDescriptionText("비밀번호가 일치하지 않아요")
+                textFieldPwdCheck.setDescriptionText("영문, 숫자를 조합하여 8자 이상으로 입력해주세요.")
                 textFieldPwdCheck.setFailedUiOfTextField()
             }
             SignUpPwdState.Empty -> {

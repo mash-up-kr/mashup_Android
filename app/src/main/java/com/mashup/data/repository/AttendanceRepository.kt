@@ -1,7 +1,6 @@
 package com.mashup.data.repository
 
 import com.mashup.common.Response
-import com.mashup.data.dto.AttendanceCheckRequest
 import com.mashup.data.dto.AttendanceCheckResponse
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.ui.attendance.model.CrewAttendance
@@ -12,12 +11,9 @@ import javax.inject.Inject
 class AttendanceRepository @Inject constructor(
     private val attendanceDao: AttendanceDao
 ) {
-    suspend fun attendanceCheck(eventId: Int, memberId: Int): Response<AttendanceCheckResponse> {
+    suspend fun attendanceCheck(eventId: Int): Response<AttendanceCheckResponse> {
         return attendanceDao.postAttendanceCheck(
-            AttendanceCheckRequest(
-                eventId = eventId,
-                memberId = memberId
-            )
+            eventId = eventId
         )
     }
 

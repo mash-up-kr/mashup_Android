@@ -1,7 +1,5 @@
 package com.mashup.ui.signup
 
-import android.content.Context
-import android.content.Intent
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity

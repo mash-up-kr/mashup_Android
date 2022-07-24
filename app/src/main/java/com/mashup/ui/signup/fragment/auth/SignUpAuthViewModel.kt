@@ -99,10 +99,17 @@ class SignUpAuthViewModel @Inject constructor(
         viewModelScope.launch {
             id.collectLatest {
                 idState.emit(
-                    if (validationId(it) == Validation.SUCCESS) {
-                        SignUpIdState.Success(false)
-                    } else {
-                        SignUpIdState.Error(code = INVALID_MEMBER_ID)
+                    when (validationId(it)) {
+                        Validation.SUCCESS -> {
+                            buttonState.emit(SignUpButtonState.Enable)
+                            SignUpIdState.Success(false)
+                        }
+                        Validation.EMPTY -> {
+                            SignUpIdState.Empty
+                        }
+                        else -> {
+                            SignUpIdState.Error(code = INVALID_MEMBER_ID)
+                        }
                     }
                 )
             }

@@ -41,7 +41,7 @@ class CommonDialog(context: Context) : Dialog(context) {
         clickListener: (Dialog) -> Unit = { it.dismiss() }
     ) {
         with(viewBinding.btnNegative) {
-            this.text = text
+            setButtonText(text)
             setOnClickListener {
                 clickListener(this@CommonDialog)
                 dismiss()
@@ -54,7 +54,7 @@ class CommonDialog(context: Context) : Dialog(context) {
         clickListener: (Dialog) -> Unit = { it.dismiss() }
     ) {
         with(viewBinding.btnPositive) {
-            this.text = text
+            setButtonText(text)
             setOnClickListener {
                 clickListener.invoke(this@CommonDialog)
                 dismiss()

@@ -24,7 +24,7 @@
             app:indicatorSize="20dp"
             app:indicatorInset="3dp"
             app:indicatorColor="@color/white"
-            android:visibility="visible"
+            android:visibility="gone"
             android:indeterminate="true"
             app:trackCornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -4,7 +4,7 @@ import com.mashup.common.Response
 import com.mashup.data.dto.AccessResponse
 import com.mashup.data.dto.LoginRequest
 import com.mashup.data.dto.SignUpRequest
-import com.mashup.data.dto.TokenResponse
+import com.mashup.data.dto.ValidResponse
 import com.mashup.data.model.Platform
 import com.mashup.network.dao.MemberDao
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class MemberRepository @Inject constructor(
         password: String,
         platform: String,
         privatePolicyAgreed: Boolean
-    ): Response<TokenResponse> {
+    ): Response<AccessResponse> {
         return memberDao.postSignUp(
             SignUpRequest(
                 identification = identification,
@@ -51,6 +51,14 @@ class MemberRepository @Inject constructor(
         return memberDao.getValidateSignUpCode(
             inviteCode = inviteCode,
             platform = Platform.getPlatform(platform)
+        )
+    }
+
+    suspend fun validateId(
+        id: String
+    ): Response<ValidResponse> {
+        return memberDao.getValidId(
+            id = id
         )
     }
 }

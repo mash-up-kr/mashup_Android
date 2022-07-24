@@ -2,26 +2,31 @@ package com.mashup.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.ViewOutlineProvider
+import android.view.LayoutInflater
 import androidx.annotation.ColorRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.button.MaterialButton
 import com.mashup.R
+import com.mashup.databinding.ViewButtonBinding
 import com.mashup.extensions.dp
 import com.mashup.extensions.onDebouncedClick
+import com.mashup.ui.extensions.gone
+import com.mashup.ui.extensions.visible
 
 class ButtonView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.materialButtonStyle
-) : MaterialButton(context, attrs, defStyleAttr) {
+    defStyleAttr: Int = 0
+) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    private val viewBinding: ViewButtonBinding =
+        ViewButtonBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        initButtonTextStyle()
         initButtonViewLayout()
         setButtonStyle(ButtonStyle.PRIMARY)
     }
@@ -41,33 +46,33 @@ class ButtonView @JvmOverloads constructor(
         }
     }
 
-    fun setButtonStyle(buttonStyle: ButtonStyle) {
-        setBackgroundColor(
-            ContextCompat.getColor(context, buttonStyle.backgroundColorRes)
-        )
-        setTextColor(
+    fun showLoading() {
+        viewBinding.progressCircular.visible()
+    }
+
+    fun hideLoading() {
+        viewBinding.progressCircular.gone()
+    }
+
+    fun setButtonStyle(buttonStyle: ButtonStyle) = with(viewBinding) {
+        backgroundTintList =
+            ContextCompat.getColorStateList(context, buttonStyle.backgroundColorRes)
+        tvButton.setTextColor(
             ContextCompat.getColor(context, buttonStyle.textColorRes)
         )
     }
 
     private fun initButtonViewLayout() {
-        cornerRadius = CORNER_RADIUS.dp(context)
-        stateListAnimator = null
-        insetTop = 0
-        insetBottom = 0
-        height = HEIGHT_BUTTON.dp(context)
-        setPadding(
-            paddingStart,
-            PADDING_VERTICAL.dp(context),
-            paddingEnd,
-            PADDING_VERTICAL.dp(context)
-        )
-    }
-
-    private fun initButtonTextStyle() {
-        text = DEFAULT_BUTTON_TEXT
-        textSize = 16f
-        setTextAppearance(R.style.TextAppearance_Mashup_Medium)
+        updateLayoutParams {
+            height = HEIGHT_BUTTON.dp(context)
+            setPadding(
+                paddingStart,
+                PADDING_VERTICAL.dp(context),
+                paddingEnd,
+                PADDING_VERTICAL.dp(context)
+            )
+        }
+        setBackgroundResource(R.drawable.bg_button)
     }
 
     fun setButtonEnabled(isEnabled: Boolean) {
@@ -78,7 +83,7 @@ class ButtonView @JvmOverloads constructor(
     }
 
     private fun setButtonText(text: String) {
-        this.text = text
+        viewBinding.tvButton.text = text
     }
 
     enum class ButtonStyle(@ColorRes val backgroundColorRes: Int, @ColorRes val textColorRes: Int) {
@@ -88,9 +93,6 @@ class ButtonView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val DEFAULT_BUTTON_TEXT = "다음"
-
-        private const val CORNER_RADIUS = 12
         private const val PADDING_VERTICAL = 14
         private const val HEIGHT_BUTTON = 52
 

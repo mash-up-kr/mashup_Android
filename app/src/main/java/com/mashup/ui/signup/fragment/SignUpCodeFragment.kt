@@ -7,6 +7,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.common.Validation
 import com.mashup.databinding.FragmentSignUpCodeBinding
 import com.mashup.network.errorcode.INVALID_PLATFORM_NAME
 import com.mashup.network.errorcode.MEMBER_INVALID_INVITE
@@ -15,7 +16,6 @@ import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState
-import com.mashup.common.Validation
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
@@ -108,7 +108,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(requireContext(), error.message ?: codeMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), codeMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun setUiOfCodeState(codeState: CodeState) {

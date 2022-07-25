@@ -20,7 +20,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun initViews() {
-        startActivity(PlatformAttendanceActivity.newIntent(this@SignUpActivity))
         viewBinding.toolbar.setOnBackButtonClickListener {
             onBackPressed()
         }

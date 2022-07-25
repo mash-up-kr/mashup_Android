@@ -29,7 +29,10 @@ fun AttendanceNoticeItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.shadow(
+            elevation = 2.dp,
+            shape = CardListShape
+        ),
         elevation = 2.dp,
         shape = CardListShape
     ) {

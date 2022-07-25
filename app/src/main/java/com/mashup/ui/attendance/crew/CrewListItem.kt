@@ -18,14 +18,17 @@ import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.MashTextView
 import com.mashup.compose.typography.SubTitle1
+import com.mashup.data.model.AttendanceInfo
+import com.mashup.data.model.MemberInfo
 import com.mashup.ui.attendance.model.AttendanceStatus
-import com.mashup.ui.attendance.model.CrewAttendance
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
+import com.squareup.moshi.Json
+import java.util.*
 
 @Composable
 fun CrewListItem(
     modifier: Modifier = Modifier,
-    crewAttendance: CrewAttendance
+    memberInfo: MemberInfo
 ) {
     Card(
         modifier = modifier,
@@ -39,7 +42,7 @@ fun CrewListItem(
             MashTextView(
                 modifier = Modifier
                     .padding(start = 24.dp),
-                text = crewAttendance.name,
+                text = memberInfo.name,
                 style = SubTitle1,
                 color = Gray800,
                 textAlign = TextAlign.Center
@@ -60,7 +63,7 @@ fun CrewListItem(
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 20.dp),
-                crewAttendance = crewAttendance
+                memberInfo = memberInfo
             )
         }
     }
@@ -69,38 +72,41 @@ fun CrewListItem(
 @Composable
 fun SeminarItems(
     modifier: Modifier = Modifier,
-    crewAttendance: CrewAttendance
+    memberInfo: MemberInfo
 ) {
     val finalAttendance = remember(
-        key1 = crewAttendance.firstSeminarAttendance,
-        key2 = crewAttendance.secondSeminarAttendance
+        key1 = memberInfo.attendanceInfos[0].status,
+        key2 = memberInfo.attendanceInfos[1].status
     ) {
-        crewAttendance.finalAttendance
+        memberInfo.finalAttendance
     }
 
     Row(modifier = modifier) {
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 6.dp),
-            timeStamp = crewAttendance.firstSeminarAttendanceTimeStamp,
-            attendanceStatus = crewAttendance.firstSeminarAttendance,
+            timeStamp = memberInfo.attendanceInfos[0].attendanceAt,
+            attendanceStatus = memberInfo.attendanceInfos[0].status,
             iconRes = R.drawable.ic_circle,
-            iconSize = 8
+            iconSize = 8,
+            index = 0
         )
         SeminarItemSpacer()
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 6.dp),
-            timeStamp = crewAttendance.secondSeminarAttendanceTimeStamp,
-            attendanceStatus = crewAttendance.secondSeminarAttendance,
+            timeStamp = memberInfo.attendanceInfos[1].attendanceAt,
+            attendanceStatus = memberInfo.attendanceInfos[1].status,
             iconRes = R.drawable.ic_circle,
-            iconSize = 8
+            iconSize = 8,
+            index = 1
         )
         SeminarItemSpacer()
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 6.dp),
-            timeStamp = crewAttendance.secondSeminarAttendanceTimeStamp,
-            attendanceStatus = finalAttendance,
+            timeStamp = memberInfo.attendanceInfos[1].attendanceAt,
+            attendanceStatus = finalAttendance.name,
             iconRes = finalAttendance.iconRes,
-            iconSize = 16
+            iconSize = 16,
+            index = 2
         )
     }
 }
@@ -125,12 +131,18 @@ fun RowScope.SeminarItemSpacer() {
 fun SeminarItemsPrev() {
     MashUpTheme {
         SeminarItems(
-            crewAttendance = CrewAttendance(
+            memberInfo = MemberInfo(
                 name = "가길동",
-                firstSeminarAttendance = AttendanceStatus.ATTEND,
-                firstSeminarAttendanceTimeStamp = "13:30",
-                secondSeminarAttendance = AttendanceStatus.ATTEND,
-                secondSeminarAttendanceTimeStamp = "14:00"
+                attendanceInfos = listOf(
+                    AttendanceInfo(
+                        status = "ATTEND",
+                        attendanceAt = Date()
+                    ),
+                    AttendanceInfo(
+                        status = "ATTEND",
+                        attendanceAt = Date()
+                    )
+                )
             )
         )
     }
@@ -142,13 +154,18 @@ fun CrewListItemPrev() {
     MashUpTheme {
         CrewListItem(
             modifier = Modifier.fillMaxWidth(),
-            crewAttendance =
-            CrewAttendance(
+            memberInfo = MemberInfo(
                 name = "가길동",
-                firstSeminarAttendance = AttendanceStatus.ATTEND,
-                firstSeminarAttendanceTimeStamp = "13:30",
-                secondSeminarAttendance = AttendanceStatus.ATTEND,
-                secondSeminarAttendanceTimeStamp = "14:00"
+                attendanceInfos = listOf(
+                    AttendanceInfo(
+                        status = "ATTEND",
+                        attendanceAt = Date()
+                    ),
+                    AttendanceInfo(
+                        status = "ATTEND",
+                        attendanceAt = Date()
+                    )
+                )
             )
         )
     }

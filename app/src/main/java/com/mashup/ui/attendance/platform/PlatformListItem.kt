@@ -2,21 +2,18 @@ package com.mashup.ui.attendance.platform
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
+import androidx.compose.material.Divider
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterEnd
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,59 +23,69 @@ import com.mashup.compose.colors.*
 import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.*
-import com.mashup.ui.attendance.model.PlatformAttendance
-import com.mashup.ui.model.Platform
+import com.mashup.data.model.Platform
+import com.mashup.data.model.PlatformInfo
+import kotlin.math.max
 
 @Composable
 fun PlatformListItem(
     modifier: Modifier = Modifier,
     isAttendingEvent: Boolean = true,
-    platformAttendance: PlatformAttendance,
-    onClickPlatform: (PlatformAttendance) -> Unit
+    platformInfo: PlatformInfo,
+    onClickPlatform: (PlatformInfo) -> Unit
 ) {
+    val attendCount = remember(platformInfo) {
+        max(
+            0,
+            platformInfo.totalCount - (platformInfo.attendanceCount + platformInfo.lateCount)
+        )
+    }
+
     Card(
-        modifier = modifier.clickable {
-            onClickPlatform(platformAttendance)
-        },
-        elevation = 2.dp,
+        modifier = modifier
+            .defaultMinSize(minHeight = 200.dp)
+            .clickable {
+                onClickPlatform(platformInfo)
+            }
+            .shadow(
+                elevation = 2.dp,
+                shape = CardListShape,
+            ),
         shape = CardListShape
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 20.dp)
+                .padding(vertical = 28.dp, horizontal = 12.dp),
+            horizontalAlignment = CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = CenterVertically
-            ) {
-                PlatformInfo(
-                    platformName = platformAttendance.platform.detailName,
-                    modifier = Modifier
-                        .padding(start = 18.dp)
-                )
+            PlatformInfo(
+                platform = platformInfo.platform
+            )
 
-                if (isAttendingEvent) {
-                    PlatformStatus(
-                        modifier = Modifier
-                            .padding(end = 18.dp),
-                        numberOfAttend = platformAttendance.numberOfAttend,
-                        numberOfMaxAttend = platformAttendance.numberOfAttend
-                            + platformAttendance.numberOfLateness
-                            + platformAttendance.numberOfAbsence
-                    )
-                }
-            }
-            if (!isAttendingEvent) {
-                PlatformAttendanceStatus(
+            Surface(
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Divider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 14.dp)
-                        .padding(horizontal = 20.dp),
-                    numberOfAttend = platformAttendance.numberOfAttend,
-                    numberOfLateness = platformAttendance.numberOfLateness,
-                    numberOfAbsence = platformAttendance.numberOfAbsence
+                        .height(1.dp),
+                    color = Gray100
+                )
+            }
+
+            if (isAttendingEvent) {
+                PlatformStatus(
+                    numberOfAttend = platformInfo.attendanceCount,
+                    numberOfMaxAttend = platformInfo.totalCount
+                )
+            } else {
+                PlatformAttendanceStatus(
+                    modifier = Modifier
+                        .padding(top = 14.dp),
+                    numberOfAttend = platformInfo.attendanceCount,
+                    numberOfLateness = platformInfo.lateCount,
+                    numberOfAbsence = attendCount
                 )
             }
         }
@@ -87,37 +94,57 @@ fun PlatformListItem(
 
 
 @Composable
-fun PlatformIcon() {
-    Box(modifier = Modifier.size(width = 48.dp, height = 26.dp)) {
-        Image(
-            modifier = Modifier
-                .size(26.dp)
-                .padding(2.dp)
-                .align(Alignment.CenterStart),
-            painter = painterResource(id = R.drawable.ic_android_1),
-            contentDescription = null
-        )
-        Image(
-            modifier = Modifier
-                .align(CenterEnd)
-                .size(26.dp)
-                .border(width = 2.dp, color = White, shape = CircleShape)
-                .padding(start = 2.dp, top = 2.dp, end = 2.dp, bottom = 2.dp),
-            painter = painterResource(id = R.drawable.ic_android_2),
-            contentDescription = null
-        )
-    }
+fun PlatformIcon(
+    modifier: Modifier = Modifier,
+    @DrawableRes platformImageRes: Int
+) {
+    Image(
+        modifier = modifier
+            .width(60.dp)
+            .height(48.dp),
+        painter = painterResource(id = platformImageRes),
+        contentDescription = null
+    )
 }
 
 @Composable
-fun PlatformInfo(platformName: String, modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
-        PlatformIcon()
+fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
+    val platformImage = remember(platform) {
+        when (platform) {
+            Platform.DESIGN -> {
+                R.drawable.img_statusprofile_design
+            }
+            Platform.ANDROID -> {
+                R.drawable.img_statusprofile_android
+            }
+            Platform.WEB -> {
+                R.drawable.img_statusprofile_web
+            }
+            Platform.IOS -> {
+                R.drawable.img_statusprofile_ios
+            }
+            Platform.SPRING -> {
+                R.drawable.img_statusprofile_spring
+            }
+            Platform.NODE -> {
+                R.drawable.img_statusprofile_node
+            }
+            else -> {
+                R.drawable.ic_img_placeholder_sleeping
+            }
+        }
+    }
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = CenterHorizontally
+    ) {
+        PlatformIcon(platformImageRes = platformImage)
 
         MashTextView(
-            modifier = Modifier.padding(top = 2.dp, start = 2.dp),
-            text = platformName,
-            style = Header2,
+            modifier = Modifier.padding(top = 6.dp),
+            text = platform.getName(),
+            style = SubTitle1,
             color = Gray800
         )
     }
@@ -128,39 +155,33 @@ fun PlatformStatus(
     modifier: Modifier = Modifier,
     numberOfAttend: Int = 0,
     numberOfMaxAttend: Int = 0,
-    platformColor: Color = Green500
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = CenterHorizontally
+    ) {
         MashTextView(
             modifier = Modifier
                 .padding(top = 10.dp)
                 .align(End),
-            text = "출석인원",
+            text = "출석/전체",
             style = Caption3,
-            color = Gray600
+            color = Gray500
         )
 
         Row(
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 2.dp),
+            verticalAlignment = CenterVertically
         ) {
             MashTextView(
                 text = "$numberOfAttend",
-                style = Title1,
-                color = if (numberOfAttend != 0) platformColor else Gray300
+                style = Title3,
+                color = if (numberOfAttend != 0) Green600 else Gray500
             )
             MashTextView(
-                modifier = Modifier.padding(start = 2.dp),
                 text = "/$numberOfMaxAttend",
-                style = Title1,
+                style = Title3,
                 color = Gray700
-            )
-            MashTextView(
-                modifier = Modifier
-                    .padding(start = 2.dp)
-                    .align(CenterVertically),
-                text = "명",
-                style = Body4,
-                color = Gray500
             )
         }
     }
@@ -174,37 +195,35 @@ fun PlatformAttendanceStatus(
     numberOfAbsence: Int
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.height(IntrinsicSize.Min),
         verticalAlignment = CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         PlatformAttendanceStatusItem(
-            modifier = Modifier.weight(1f),
-            backgroundColor = Green100,
-            iconRes = R.drawable.ic_check,
-            iconColor = Green500,
             label = "출석",
-            labelColor = Green500,
             value = numberOfAttend,
             valueColor = Green600
         )
+        Divider(
+            modifier = Modifier
+                .width(1.dp)
+                .fillMaxHeight()
+                .padding(vertical = 9.dp),
+            color = Gray100
+        )
         PlatformAttendanceStatusItem(
-            modifier = Modifier.weight(1f),
-            backgroundColor = Yellow100,
-            iconRes = R.drawable.ic_triangle,
-            iconColor = Yellow500,
             label = "지각",
-            labelColor = Yellow500,
             value = numberOfLateness,
             valueColor = Yellow600
         )
+        Divider(
+            modifier = Modifier
+                .width(1.dp)
+                .fillMaxHeight()
+                .padding(vertical = 9.dp),
+            color = Gray100
+        )
         PlatformAttendanceStatusItem(
-            modifier = Modifier.weight(1f),
-            backgroundColor = Red100,
-            iconRes = R.drawable.ic_xmark,
-            iconColor = Red500,
             label = "불참",
-            labelColor = Red500,
             value = numberOfAbsence,
             valueColor = Red600
         )
@@ -214,36 +233,23 @@ fun PlatformAttendanceStatus(
 @Composable
 fun PlatformAttendanceStatusItem(
     modifier: Modifier = Modifier,
-    backgroundColor: Color,
-    @DrawableRes iconRes: Int,
-    iconColor: Color,
     label: String,
-    labelColor: Color,
     value: Int,
     valueColor: Color
 ) {
-    Row(
+    Column(
         modifier = modifier
-            .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
-            .padding(vertical = 6.dp)
-            .padding(start = 8.dp, end = 12.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = CenterVertically
+            .defaultMinSize(minWidth = 43.dp),
+        horizontalAlignment = CenterHorizontally
     ) {
-        Icon(
-            modifier = Modifier.size(20.dp),
-            painter = painterResource(id = iconRes),
-            contentDescription = null,
-            tint = iconColor
-        )
         MashTextView(
-            modifier = Modifier.padding(end = 2.dp),
             text = label,
-            color = labelColor,
-            style = Body1
+            color = Gray500,
+            style = Caption3
         )
         MashTextView(
-            text = String.format("%02d", value),
+            modifier = Modifier.padding(2.dp),
+            text = "$value",
             color = valueColor,
             style = SubTitle2
         )
@@ -254,7 +260,7 @@ fun PlatformAttendanceStatusItem(
 @Composable
 fun PlatformInfoPrev() {
     MashUpTheme {
-        PlatformInfo("Android")
+        PlatformInfo(Platform.ANDROID)
     }
 }
 
@@ -272,11 +278,11 @@ fun PlatformListItemPrev() {
     MashUpTheme {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
-            platformAttendance = PlatformAttendance(
+            platformInfo = PlatformInfo(
                 platform = Platform.ANDROID,
-                numberOfAttend = 13,
-                numberOfLateness = 0,
-                numberOfAbsence = 7
+                totalCount = 13,
+                attendanceCount = 0,
+                lateCount = 7
             ),
             onClickPlatform = {}
         )
@@ -290,11 +296,11 @@ fun EndedPlatformListItemPrev() {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
             isAttendingEvent = false,
-            platformAttendance = PlatformAttendance(
+            platformInfo = PlatformInfo(
                 platform = Platform.ANDROID,
-                numberOfAttend = 13,
-                numberOfLateness = 0,
-                numberOfAbsence = 7
+                totalCount = 13,
+                attendanceCount = 0,
+                lateCount = 7
             ),
             onClickPlatform = {}
         )
@@ -307,20 +313,42 @@ fun PlatformAttendanceStatusItemPrev() {
     MashUpTheme {
         PlatformAttendanceStatusItem(
             modifier = Modifier.fillMaxWidth(),
-            backgroundColor = Green100,
-            iconRes = R.drawable.ic_check,
-            iconColor = Green500,
             label = "출석",
-            labelColor = Green500,
             value = 10,
             valueColor = Green600
         )
     }
 }
 
-@Preview
+@Preview(widthDp = 200)
 @Composable
-fun PlatformAttendanceStatusPrev() {
+fun PlatformAttendanceStatusWidth200Prev() {
+    MashUpTheme {
+        PlatformAttendanceStatus(
+            modifier = Modifier.fillMaxWidth(),
+            numberOfAttend = 10,
+            numberOfLateness = 1,
+            numberOfAbsence = 2
+        )
+    }
+}
+
+@Preview(widthDp = 400)
+@Composable
+fun PlatformAttendanceStatusWidth400Prev() {
+    MashUpTheme {
+        PlatformAttendanceStatus(
+            modifier = Modifier.fillMaxWidth(),
+            numberOfAttend = 10,
+            numberOfLateness = 1,
+            numberOfAbsence = 2
+        )
+    }
+}
+
+@Preview(widthDp = 800)
+@Composable
+fun PlatformAttendanceStatusWidth800Prev() {
     MashUpTheme {
         PlatformAttendanceStatus(
             modifier = Modifier.fillMaxWidth(),

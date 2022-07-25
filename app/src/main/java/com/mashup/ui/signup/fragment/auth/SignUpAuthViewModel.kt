@@ -5,6 +5,7 @@ import com.mashup.base.BaseViewModel
 import com.mashup.common.Validation
 import com.mashup.data.repository.MemberRepository
 import com.mashup.network.errorcode.INVALID_MEMBER_ID
+import com.mashup.network.errorcode.MEMBER_DUPLICATED_IDENTIFICATION
 import com.mashup.ui.signup.validationId
 import com.mashup.ui.signup.validationPwd
 import com.mashup.ui.signup.validationPwdCheck
@@ -140,12 +141,12 @@ class SignUpAuthViewModel @Inject constructor(
         buttonState.emit(SignUpButtonState.Loading)
         val response = memberRepository.validateId(id.value)
 
-        if (!response.isSuccess() || response.data?.valid == false) {
+        if (!response.isSuccess() || response.data?.valid != true) {
             buttonState.emit(SignUpButtonState.Disable)
-            idState.emit(SignUpIdState.Error(code = response.code, message = response.message))
+            idState.emit(SignUpIdState.Error(code = MEMBER_DUPLICATED_IDENTIFICATION))
         } else {
             buttonState.emit(SignUpButtonState.Enable)
-            idState.emit(SignUpIdState.Success(validId = response.data?.valid == true))
+            idState.emit(SignUpIdState.Success(validId = response.data.valid))
         }
     }
 }
@@ -153,7 +154,7 @@ class SignUpAuthViewModel @Inject constructor(
 sealed interface SignUpIdState {
     object Empty : SignUpIdState
     data class Success(val validId: Boolean) : SignUpIdState
-    data class Error(val code: String, val message: String? = null) : SignUpIdState
+    data class Error(val code: String) : SignUpIdState
 }
 
 sealed interface SignUpPwdState {

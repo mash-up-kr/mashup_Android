@@ -62,7 +62,7 @@ class SignUpViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code, response.message)
+            handleSignUpError(response.code)
             return@mashUpScope
         }
 
@@ -76,7 +76,7 @@ class SignUpViewModel @Inject constructor(
             platform = platform.value.name
         )
 
-        if (!response.isSuccess()) {
+        if (!response.isSuccess() || response.data?.valid != true) {
             _signUpState.emit(SignUpState.InvalidCode)
             return@mashUpScope
         }
@@ -112,13 +112,13 @@ class SignUpViewModel @Inject constructor(
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
 
-    private fun handleSignUpError(errorCode: String, message: String?) = mashUpScope {
-        _signUpState.emit(SignUpState.Error(errorCode, message))
+    private fun handleSignUpError(errorCode: String) = mashUpScope {
+        _signUpState.emit(SignUpState.Error(errorCode))
     }
 }
 
 sealed interface SignUpState {
     object SUCCESS : SignUpState
     object InvalidCode : SignUpState
-    data class Error(val code: String, val message: String?) : SignUpState
+    data class Error(val code: String) : SignUpState
 }

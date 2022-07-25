@@ -108,7 +108,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(requireContext(), error.message ?: codeMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), codeMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun setUiOfCodeState(codeState: CodeState) {

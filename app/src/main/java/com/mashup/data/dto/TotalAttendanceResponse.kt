@@ -8,6 +8,8 @@ import com.squareup.moshi.JsonClass
 data class TotalAttendanceResponse(
     @field:Json(name = "isEnd")
     val isEnd: Boolean,
+    @field:Json(name = "eventNum")
+    val eventNum: Int,
     @field:Json(name = "platformInfos")
     val platformInfos: List<PlatformInfo>,
 )

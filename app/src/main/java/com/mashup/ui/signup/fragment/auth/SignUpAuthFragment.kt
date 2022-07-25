@@ -139,7 +139,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                         "영문 대소문자만 사용하여 15자 이내로 입력해 주세요."
                     }
                 }
-                textFieldId.setDescriptionText(idState.message ?: errorMessage)
+                textFieldId.setDescriptionText(errorMessage)
                 textFieldId.setFailedUiOfTextField()
             }
         }

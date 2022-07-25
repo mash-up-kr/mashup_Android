@@ -47,7 +47,7 @@ class MemberRepository @Inject constructor(
     suspend fun validateSignUpCode(
         inviteCode: String,
         platform: String
-    ): Response<Any> {
+    ): Response<ValidResponse> {
         return memberDao.getValidateSignUpCode(
             inviteCode = inviteCode,
             platform = Platform.getPlatform(platform)

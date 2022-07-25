@@ -24,7 +24,7 @@ interface MemberDao {
     suspend fun getValidateSignUpCode(
         @Query("inviteCode") inviteCode: String,
         @Query("platform") platform: Platform
-    ): Response<Any>
+    ): Response<ValidResponse>
 
     @GET("api/v1/members/{id}")
     suspend fun getValidId(

@@ -67,6 +67,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                             setDescriptionText("")
                             setEmptyUIOfTextField()
                         }
+                        handleCommonError(state.code)
                         handleSignUpErrorCode(state)
                     }
                 }

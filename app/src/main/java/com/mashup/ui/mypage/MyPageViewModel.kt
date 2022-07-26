@@ -37,4 +37,7 @@ class MyPageViewModel @Inject constructor(
         )
         _attendanceList.value = test
     }
+
+    override fun handleErrorCode(code: String) {
+    }
 }

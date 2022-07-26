@@ -12,6 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
+import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.ui.error.NetworkDisconnectActivity
+import com.mashup.ui.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -80,6 +84,24 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
+    }
+
+    protected fun handleCommonError(code: String) {
+        when (code) {
+            UNAUTHORIZED -> {
+                requireActivity().run {
+                    startActivity(
+                        LoginActivity.newIntent(requireContext())
+                    )
+                    finish()
+                }
+            }
+            DISCONNECT_NETWORK -> {
+                requireActivity().startActivity(
+                    NetworkDisconnectActivity.newIntent(requireContext())
+                )
+            }
+        }
     }
 
     protected fun flowViewLifecycleScope(

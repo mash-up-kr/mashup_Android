@@ -37,7 +37,7 @@ class QRScanViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            _qrcodeState.emit(QRCodeState.Error(response.code, response.message))
+            handleErrorCode(response.code)
             return@mashUpScope
         } else {
             if (response.data?.isAttendance() == true) {
@@ -45,9 +45,15 @@ class QRScanViewModel @Inject constructor(
             }
         }
     }
+
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _qrcodeState.emit(QRCodeState.Error(code))
+        }
+    }
 }
 
 sealed interface QRCodeState {
-    data class Error(val code: String, val message: String? = null) : QRCodeState
+    data class Error(val code: String) : QRCodeState
     object SuccessAttendance : QRCodeState
 }

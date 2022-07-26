@@ -67,7 +67,7 @@ class LoginViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code, response.message)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -75,12 +75,14 @@ class LoginViewModel @Inject constructor(
         _loginUiState.emit(LoginState.Success)
     }
 
-    private fun handleSignUpError(errorCode: String, message: String?) = mashUpScope {
-        _loginUiState.emit(LoginState.Error(errorCode, message))
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _loginUiState.emit(LoginState.Error(code))
+        }
     }
 }
 
 sealed interface LoginState {
     object Success : LoginState
-    data class Error(val code: String, val message: String?) : LoginState
+    data class Error(val code: String) : LoginState
 }

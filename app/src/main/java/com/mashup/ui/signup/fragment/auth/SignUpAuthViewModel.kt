@@ -149,6 +149,9 @@ class SignUpAuthViewModel @Inject constructor(
             idState.emit(SignUpIdState.Success(validId = response.data.valid))
         }
     }
+
+    override fun handleErrorCode(code: String) {
+    }
 }
 
 sealed interface SignUpIdState {

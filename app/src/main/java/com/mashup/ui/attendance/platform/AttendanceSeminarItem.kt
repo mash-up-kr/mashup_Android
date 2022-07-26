@@ -14,13 +14,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.compose.theme.MashUpTheme
+import com.mashup.R
 import com.mashup.compose.colors.*
+import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.Caption1
 import com.mashup.compose.typography.Caption3
 import com.mashup.compose.typography.MashTextView
 import com.mashup.ui.attendance.model.AttendanceStatus
-import com.mashup.R
 import java.text.SimpleDateFormat
 import java.util.*
 

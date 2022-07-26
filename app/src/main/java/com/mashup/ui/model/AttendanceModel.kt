@@ -1,6 +1,6 @@
 package com.mashup.ui.model
 
-data class AttendanceModel (
+data class AttendanceModel(
     val id: Int,
     val type: Int
 ) {

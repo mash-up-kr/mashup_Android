@@ -66,8 +66,15 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.setting.SettingActivity"
-            android:exported="true"
+            android:exported="false"
+            android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".ui.error.NetworkDisconnectActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

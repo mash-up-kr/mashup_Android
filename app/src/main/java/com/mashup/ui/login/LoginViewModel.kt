@@ -2,12 +2,15 @@ package com.mashup.ui.login
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.base.BaseViewModel
+import com.mashup.common.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
-import com.mashup.common.Validation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -67,7 +70,7 @@ class LoginViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code, response.message)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -75,12 +78,14 @@ class LoginViewModel @Inject constructor(
         _loginUiState.emit(LoginState.Success)
     }
 
-    private fun handleSignUpError(errorCode: String, message: String?) = mashUpScope {
-        _loginUiState.emit(LoginState.Error(errorCode, message))
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _loginUiState.emit(LoginState.Error(code))
+        }
     }
 }
 
 sealed interface LoginState {
     object Success : LoginState
-    data class Error(val code: String, val message: String?) : LoginState
+    data class Error(val code: String) : LoginState
 }

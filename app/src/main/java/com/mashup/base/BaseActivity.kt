@@ -13,7 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
+import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.ui.error.NetworkDisconnectActivity
+import com.mashup.ui.login.LoginActivity
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.widget.CommonDialog
+import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,7 +39,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         get() = networkStateDetector.hasNetworkConnection()
 
     protected val viewBinding: V by lazy {
-        DataBindingUtil.inflate(
+        DataBindingUtil.inflate<V>(
             LayoutInflater.from(this), layoutId, null, false
         )
     }
@@ -83,6 +89,29 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root, deferringInsetsListener)
     }
 
+    protected fun handleCommonError(code: String) {
+        when (code) {
+            UNAUTHORIZED -> {
+                CommonDialog(this).apply {
+                    setTitle(text = "주의")
+                    setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")
+                    setPositiveButton {
+                        startActivity(
+                            LoginActivity.newIntent(this@BaseActivity)
+                        )
+                        finish()
+                    }
+                    show()
+                }
+            }
+            DISCONNECT_NETWORK -> {
+                startActivity(
+                    NetworkDisconnectActivity.newIntent(this)
+                )
+            }
+        }
+    }
+
     protected fun flowLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
         block: suspend CoroutineScope.() -> Unit
@@ -91,6 +120,13 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
             repeatOnLifecycle(state) {
                 block.invoke(this)
             }
+        }
+    }
+
+    protected fun showToast(text: String) {
+        MashUpToast(applicationContext).run {
+            setText(text)
+            show()
         }
     }
 }

@@ -6,6 +6,7 @@ package com.mashup.network.errorcode
 const val MEMBER_NOT_FOUND = "MEMBER_NOT_FOUND"
 
 const val INVALID_MEMBER_ID = "INVALID_MEMBER_ID"
+
 /**
  * 비밀번호가 일치하지 않습니다.
  */

@@ -26,6 +26,11 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
                             crewAttendanceList = state.data.members
                         )
                     }
+                    is CrewAttendanceState.Error -> {
+                        handleCommonError(state.code)
+                    }
+                    else -> {
+                    }
                 }
             }
         }

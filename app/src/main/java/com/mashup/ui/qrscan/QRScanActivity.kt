@@ -8,10 +8,7 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityQrScanBinding
-import com.mashup.extensions.showToast
 import com.mashup.network.errorcode.*
-import com.mashup.ui.extensions.gone
-import com.mashup.ui.extensions.visible
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.utils.PermissionHelper
 import com.mashup.widget.CommonDialog
@@ -19,8 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class
-QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
+class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
 
     private val viewModel: QRScanViewModel by viewModels()
 
@@ -44,6 +40,7 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                         finish()
                     }
                     is QRCodeState.Error -> {
+                        handleCommonError(qrcodeState.code)
                         handleAttendanceErrorCode(qrcodeState)
                     }
                 }
@@ -68,13 +65,13 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     }
 
     private fun showInvalidMessage(message: String) {
-        viewBinding.tvInvalidMessage.run {
-            visible()
-            text = message
-            postDelayed({
-                gone()
-            }, 3000L)
-        }
+//        viewBinding.tvInvalidMessage.run {
+//            visible()
+//            text = message
+//            postDelayed({
+//                gone()
+//            }, 3000L)
+//        }
     }
 
     private fun createCardAnalyzer() {
@@ -126,9 +123,7 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        showInvalidMessage(
-            error.message ?: codeMessage
-        )
+        showInvalidMessage(codeMessage)
     }
 
     override fun onPause() {

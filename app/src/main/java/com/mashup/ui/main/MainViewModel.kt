@@ -28,4 +28,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     fun setMainTab(mainTab: MainTab) = mashUpScope {
         _mainTab.emit(mainTab)
     }
+
+    override fun handleErrorCode(code: String) {
+    }
 }

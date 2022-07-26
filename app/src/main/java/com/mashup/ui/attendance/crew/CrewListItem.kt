@@ -20,9 +20,7 @@ import com.mashup.compose.typography.MashTextView
 import com.mashup.compose.typography.SubTitle1
 import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
-import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
-import com.squareup.moshi.Json
 import java.util.*
 
 @Composable
@@ -36,7 +34,9 @@ fun CrewListItem(
         shape = CardListShape
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically
         ) {
             MashTextView(

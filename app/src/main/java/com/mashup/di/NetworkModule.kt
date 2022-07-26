@@ -41,7 +41,9 @@ class NetworkModule {
             .addInterceptor(baseInterceptor)
 
         if (DEBUG_MODE) {
-            okHttpClient.addInterceptor(HttpLoggingInterceptor())
+            okHttpClient.addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            })
         }
         return okHttpClient
             .readTimeout(10L, TimeUnit.SECONDS)

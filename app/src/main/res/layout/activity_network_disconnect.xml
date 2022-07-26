@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.mashup.widget.TextFieldView.TextFieldInputType"/>
+
+        <import type="com.mashup.widget.TextFieldView.TextFieldInputType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btn_retry"/>
+            app:layout_constraintBottom_toTopOf="@id/btn_retry" />
 
         <com.mashup.widget.ButtonView
             android:id="@+id/btn_retry"
@@ -34,7 +35,7 @@
             app:layout_constraintTop_toBottomOf="@id/content"
             app:layout_constraintStart_toStartOf="@id/content"
             app:layout_constraintEnd_toEndOf="@id/content"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageButton
             android:id="@+id/btn_close"

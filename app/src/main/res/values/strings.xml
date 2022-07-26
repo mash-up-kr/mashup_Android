@@ -17,26 +17,26 @@
     <string name="what_attendance_plus_content">전체 세미나 발표 +1\n - 프로젝트팀 팀장/부팀장 +2\n - 해커톤 준비 위원회 +1\n- 프로젝트 배포 성공 +1\n - 기술 블로그 작성 +1\n - Mash-Up 콘텐츠 글 작성 +0.5\n - 13기 회장/부회장 +999999999999999999999…</string>
     <string name="total_attendance">총 출석점수</string>
 
-	<string name="event_list_title">다음 세미나 일정까지\n <font fgcolor="#6A36FF">%s</font>일 남았습니다!</string>
-	<string name="event_refresh">일정 새로고침</string>
-	<string name="event_list_card_title"><font fgcolor="#383E4C"><b>%s</b></font>님의 현재 출석현황이에요</string>
-	<string name="attendance">출석</string>
-	<string name="absent">결석</string>
-	<string name="late">지각</string>
-	<string name="click_attendance_list">플랫폼별 출석현황 보러가기</string>
-	<string name="facebook">Facebook</string>
-	<string name="instagram">Instagram</string>
-	<string name="tistory">Tistory</string>
-	<string name="youtube">Youtube</string>
-	<string name="mHome">Mash-Up Home</string>
-	<string name="mRecruit">Mash-Up Recruit</string>
-	<string name="logout">로그아웃</string>
-	<string name="sign_out">회원탈퇴</string>
-	<string name="sign_out_msg">매시업을 잊지말아죠...</string>
-	<string name="sign_out_msg_detail">탈퇴하시면 Admin에 저장된 모든 관련정보는 탈퇴일자 기준으로 3년간 보관된 후 삭제됩니다. 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.</string>
-	<string name="attendance_history">출석 히스토리</string>
+    <string name="event_list_title">다음 세미나 일정까지\n <font fgcolor="#6A36FF">%s</font>일 남았습니다!</string>
+    <string name="event_refresh">일정 새로고침</string>
+    <string name="event_list_card_title"><font fgcolor="#383E4C"><b>%s</b></font>님의 현재 출석현황이에요</string>
+    <string name="attendance">출석</string>
+    <string name="absent">결석</string>
+    <string name="late">지각</string>
+    <string name="click_attendance_list">플랫폼별 출석현황 보러가기</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="tistory">Tistory</string>
+    <string name="youtube">Youtube</string>
+    <string name="mHome">Mash-Up Home</string>
+    <string name="mRecruit">Mash-Up Recruit</string>
+    <string name="logout">로그아웃</string>
+    <string name="sign_out">회원탈퇴</string>
+    <string name="sign_out_msg">매시업을 잊지말아죠...</string>
+    <string name="sign_out_msg_detail">탈퇴하시면 Admin에 저장된 모든 관련정보는 탈퇴일자 기준으로 3년간 보관된 후 삭제됩니다. 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.</string>
+    <string name="attendance_history">출석 히스토리</string>
 
     <string name="title_activity_main">MainActivity</string>
-	<string name="content_disconnect_network">인터넷\n연결이..</string>
-	<string name="text_button_retry">다시시도</string>
+    <string name="content_disconnect_network">인터넷\n연결이..</string>
+    <string name="text_button_retry">다시시도</string>
 </resources>

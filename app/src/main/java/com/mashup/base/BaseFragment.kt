@@ -12,6 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
+import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.ui.error.NetworkDisconnectActivity
+import com.mashup.ui.login.LoginActivity
+import com.mashup.widget.CommonDialog
+import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -82,6 +88,31 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         _viewBinding = null
     }
 
+    protected fun handleCommonError(code: String) {
+        when (code) {
+            UNAUTHORIZED -> {
+                CommonDialog(requireContext()).apply {
+                    setTitle(text = "주의")
+                    setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")
+                    setPositiveButton {
+                        requireActivity().run {
+                            startActivity(
+                                LoginActivity.newIntent(this)
+                            )
+                            finish()
+                        }
+                    }
+                    show()
+                }
+            }
+            DISCONNECT_NETWORK -> {
+                requireActivity().startActivity(
+                    NetworkDisconnectActivity.newIntent(requireContext())
+                )
+            }
+        }
+    }
+
     protected fun flowViewLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
         block: suspend CoroutineScope.() -> Unit
@@ -90,6 +121,13 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(state) {
                 block.invoke(this)
             }
+        }
+    }
+
+    protected fun showToast(text: String) {
+        MashUpToast(requireContext()).run {
+            setText(text)
+            show()
         }
     }
 }

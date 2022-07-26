@@ -14,7 +14,6 @@ import com.mashup.ui.main.MainActivity
 import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 

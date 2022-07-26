@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.text.InputType
 import android.text.InputType.TYPE_CLASS_TEXT
 import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
 import android.util.AttributeSet

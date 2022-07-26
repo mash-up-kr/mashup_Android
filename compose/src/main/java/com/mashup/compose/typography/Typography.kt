@@ -59,6 +59,13 @@ val Title2 = TextStyle(
     letterSpacing = (-1).sp
 )
 
+val Title3 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 18.sp,
+    letterSpacing = (-1).sp
+)
+
 val SubTitle1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Bold,

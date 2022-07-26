@@ -3,16 +3,16 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
+    <data>
 
-		<variable
-			name="model"
-			type="com.mashup.ui.model.AttendanceModel" />
-	</data>
+        <variable
+            name="model"
+            type="com.mashup.ui.model.AttendanceModel" />
+    </data>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 		<View
 			android:id="@+id/bg_top"
@@ -22,13 +22,13 @@
 			app:layout_constraintBottom_toTopOf="@id/bg_bottom"
 			app:layout_constraintTop_toTopOf="parent" />
 
-		<View
-			android:id="@+id/bg_bottom"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:background="@color/gray50"
-			app:layout_constraintBottom_toBottomOf="@id/layout_card_box"
-			app:layout_constraintTop_toBottomOf="@id/bg_top" />
+        <View
+            android:id="@+id/bg_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray50"
+            app:layout_constraintBottom_toBottomOf="@id/layout_card_box"
+            app:layout_constraintTop_toBottomOf="@id/bg_top" />
 
 		<androidx.appcompat.widget.LinearLayoutCompat
 			android:id="@+id/layout_card_box"
@@ -63,14 +63,14 @@
 
 		</androidx.appcompat.widget.LinearLayoutCompat>
 
-		<androidx.appcompat.widget.AppCompatImageView
-			android:id="@+id/btn_detail"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:padding="8dp"
-			android:src="@drawable/ic_info"
-			app:layout_constraintEnd_toEndOf="@id/layout_card_box"
-			app:layout_constraintTop_toTopOf="@id/layout_card_box" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@drawable/ic_info"
+            app:layout_constraintEnd_toEndOf="@id/layout_card_box"
+            app:layout_constraintTop_toTopOf="@id/layout_card_box" />
 
 		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/tv_attendance_history"
@@ -84,5 +84,5 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/layout_card_box" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

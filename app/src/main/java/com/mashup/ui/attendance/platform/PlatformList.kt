@@ -1,40 +1,95 @@
 package com.mashup.ui.attendance.platform
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.ui.attendance.model.PlatformAttendance
+import com.mashup.compose.theme.MashUpTheme
+import com.mashup.data.dto.TotalAttendanceResponse
+import com.mashup.data.model.Platform
+import com.mashup.data.model.PlatformInfo
 
 @Composable
 fun PlatformList(
     modifier: Modifier = Modifier,
     notice: String,
-    platformAttendanceList: List<PlatformAttendance> = emptyList(),
-    onClickPlatform: (PlatformAttendance) -> Unit
+    totalAttendanceResponse: TotalAttendanceResponse,
+    onClickPlatform: (PlatformInfo) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier.padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        itemsIndexed(
-            platformAttendanceList,
-            key = { _, item -> item.platform }) { index, platform ->
-            if (index == 0 && notice.isNotBlank()) {
-                AttendanceNoticeItem(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                    notice = notice
+    Column(modifier = modifier) {
+        if (notice.isNotBlank()) {
+            AttendanceNoticeItem(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                notice = notice
+            )
+        }
+        LazyVerticalGrid(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            cells = GridCells.Fixed(2)
+        ) {
+            items(
+                items = totalAttendanceResponse.platformInfos,
+            ) { platform ->
+                PlatformListItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    platformInfo = platform,
+                    onClickPlatform = onClickPlatform
                 )
             }
-            PlatformListItem(
-                modifier = Modifier.fillMaxWidth(),
-                platformAttendance = platform,
-                onClickPlatform = onClickPlatform
+        }
+    }
+}
+
+@Preview(widthDp = 360)
+@Composable
+fun PlatformListPrev() {
+    MashUpTheme {
+        PlatformList(
+            modifier = Modifier.fillMaxWidth(),
+            notice = "출석 진행 중",
+            totalAttendanceResponse = TotalAttendanceResponse(
+                isEnd = false,
+                eventNum = 1,
+                platformInfos = listOf(
+                    PlatformInfo(
+                        platform = Platform.ANDROID,
+                        totalCount = 13,
+                        attendanceCount = 0,
+                        lateCount = 7
+                    ),
+                    PlatformInfo(
+                        platform = Platform.DESIGN,
+                        totalCount = 13,
+                        attendanceCount = 0,
+                        lateCount = 7
+                    ),
+                    PlatformInfo(
+                        platform = Platform.WEB,
+                        totalCount = 13,
+                        attendanceCount = 0,
+                        lateCount = 7
+                    ),
+                    PlatformInfo(
+                        platform = Platform.IOS,
+                        totalCount = 13,
+                        attendanceCount = 0,
+                        lateCount = 7
+                    )
+                )
             )
+        ) {
         }
     }
 }

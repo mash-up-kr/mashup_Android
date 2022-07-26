@@ -2,7 +2,6 @@ package com.mashup.ui.model
 
 import com.mashup.ui.mypage.AttendanceType
 
-
 data class AttendanceModel(
     val id: Int,
     val type: Int,

@@ -3,10 +3,9 @@ package com.mashup.data.repository
 import com.mashup.common.Response
 import com.mashup.data.dto.AttendanceCheckRequest
 import com.mashup.data.dto.AttendanceCheckResponse
+import com.mashup.data.dto.PlatformAttendanceResponse
+import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.network.dao.AttendanceDao
-import com.mashup.ui.attendance.model.CrewAttendance
-import com.mashup.ui.attendance.model.PlatformAttendance
-import com.mashup.ui.model.Platform
 import javax.inject.Inject
 
 class AttendanceRepository @Inject constructor(
@@ -21,40 +20,19 @@ class AttendanceRepository @Inject constructor(
         )
     }
 
-    suspend fun getNotice(): String {
-        return "공지사항입니다."
+    suspend fun getCrewAttendanceList(
+        platformName: String,
+        scheduleId: Int
+    ): Response<PlatformAttendanceResponse> {
+        return attendanceDao.getAttendancePlatformCrew(
+            platformName = platformName,
+            scheduleId = scheduleId
+        )
     }
 
-    suspend fun getCrewAttendanceList(): List<CrewAttendance> {
-        return emptyList()
-    }
-
-    suspend fun getPlatformList(): List<PlatformAttendance> {
-        return listOf(
-            PlatformAttendance(
-                platform = Platform.DESIGN,
-                numberOfAttend = 7,
-                numberOfAbsence = 10,
-                numberOfLateness = 0
-            ),
-            PlatformAttendance(
-                platform = Platform.ANDROID,
-                numberOfAttend = 3,
-                numberOfAbsence = 18,
-                numberOfLateness = 0
-            ),
-            PlatformAttendance(
-                platform = Platform.WEB,
-                numberOfAttend = 10,
-                numberOfAbsence = 20,
-                numberOfLateness = 0
-            ),
-            PlatformAttendance(
-                platform = Platform.IOS,
-                numberOfAttend = 9,
-                numberOfAbsence = 10,
-                numberOfLateness = 0
-            )
+    suspend fun getPlatformAttendanceList(scheduleId: Int): Response<TotalAttendanceResponse> {
+        return attendanceDao.getAttendancePlatforms(
+            scheduleId = scheduleId
         )
     }
 }

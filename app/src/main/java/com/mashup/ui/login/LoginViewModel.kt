@@ -2,12 +2,15 @@ package com.mashup.ui.login
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.base.BaseViewModel
+import com.mashup.common.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +21,17 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val _loginUiState = MutableSharedFlow<LoginState>()
     val loginUiState: SharedFlow<LoginState> = _loginUiState
+
+    private val id = MutableStateFlow("")
+    private val pwd = MutableStateFlow("")
+
+    val loginValidation = id.combine(pwd) { id, pwd ->
+        if (id.isNotBlank() && pwd.isNotBlank()) {
+            Validation.SUCCESS
+        } else {
+            Validation.EMPTY
+        }
+    }
 
     var isReady: Boolean = false
         private set
@@ -41,6 +55,14 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun setId(id: String) {
+        this.id.value = id
+    }
+
+    fun setPwd(pwd: String) {
+        this.pwd.value = pwd
+    }
+
     fun requestLogin(id: String, pwd: String) = mashUpScope {
         val response = memberRepository.login(
             identification = id,
@@ -48,7 +70,7 @@ class LoginViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code, response.message)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -56,12 +78,14 @@ class LoginViewModel @Inject constructor(
         _loginUiState.emit(LoginState.Success)
     }
 
-    private fun handleSignUpError(errorCode: String, message: String?) = mashUpScope {
-        _loginUiState.emit(LoginState.Error(errorCode, message))
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _loginUiState.emit(LoginState.Error(code))
+        }
     }
 }
 
 sealed interface LoginState {
     object Success : LoginState
-    data class Error(val code: String, val message: String?) : LoginState
+    data class Error(val code: String) : LoginState
 }

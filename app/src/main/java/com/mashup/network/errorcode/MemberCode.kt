@@ -5,10 +5,14 @@ package com.mashup.network.errorcode
  */
 const val MEMBER_NOT_FOUND = "MEMBER_NOT_FOUND"
 
+const val INVALID_MEMBER_ID = "INVALID_MEMBER_ID"
+
 /**
  * 비밀번호가 일치하지 않습니다.
  */
 const val MEMBER_NOT_MATCH_PASSWORD = "MEMBER_NOT_MATCH_PASSWORD"
+
+const val MEMBER_DUPLICATED_IDENTIFICATION = "MEMBER_DUPLICATED_IDENTIFICATION"
 
 /**
  * 잘못된 가입 코드입니다.

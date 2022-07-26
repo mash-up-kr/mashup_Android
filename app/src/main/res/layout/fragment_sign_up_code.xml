@@ -54,7 +54,7 @@
 
                 <com.mashup.widget.TextFieldView
                     android:id="@+id/text_field_code"
-                    text_field_hint='@{"영문 6자리"}'
+                    text_field_hint='@{"가입코드"}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

@@ -1,12 +1,9 @@
 package com.mashup.ui.signup
 
-import android.content.Context
-import android.content.Intent
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivitySignUpBinding
-import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +17,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun initViews() {
-        startActivity(PlatformAttendanceActivity.newIntent(this@SignUpActivity))
         viewBinding.toolbar.setOnBackButtonClickListener {
             onBackPressed()
         }

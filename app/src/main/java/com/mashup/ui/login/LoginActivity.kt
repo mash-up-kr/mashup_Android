@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.Validation
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.extensions.onDebouncedClick
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
@@ -19,6 +20,7 @@ import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
@@ -30,6 +32,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun initViews() {
+        initTextField()
         initSplash()
         initButtons()
         initSplashPreDraw()
@@ -60,9 +63,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                             moveToMainScreen()
                         }
                         is LoginState.Error -> {
+                            handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }
                     }
+                }
+            }
+
+            flowLifecycleScope {
+                loginValidation.collectLatest {
+                    viewBinding.btnLogin.setButtonEnabled(it == Validation.SUCCESS)
                 }
             }
         }
@@ -73,6 +83,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             Intent(this, MainActivity::class.java)
         )
         finish()
+    }
+
+    private fun initTextField() {
+        viewBinding.textFieldId.run {
+            addOnTextChangedListener { text ->
+                viewModel.setId(text)
+            }
+        }
+
+        viewBinding.textFieldPwd.run {
+            addOnTextChangedListener { text ->
+                viewModel.setPwd(text)
+            }
+        }
     }
 
     private fun initButtons() {
@@ -102,7 +126,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(this, error.message ?: codeMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, codeMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun initSplashPreDraw() {
@@ -122,7 +146,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, LoginActivity::class.java)
+            return Intent(context, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         }
     }
 }

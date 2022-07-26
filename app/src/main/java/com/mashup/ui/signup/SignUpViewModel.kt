@@ -1,11 +1,10 @@
 package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
+import com.mashup.common.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform
-import com.mashup.ui.signup.model.Validation
-import com.mashup.ui.signup.state.AuthState
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,27 +19,6 @@ class SignUpViewModel @Inject constructor(
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
     private val pwdCheck = MutableStateFlow("")
-
-    val authState = combine(id, pwd, pwdCheck) { id, pwd, pwdCheck ->
-        AuthState(
-            id = id,
-            pwd = pwd,
-            pwdCheck = pwdCheck
-        )
-    }.map { authState ->
-        val validationId = validationId(authState.id)
-        val validationPwd = validationPwd(authState.pwd)
-        val validationPwdCheck = validationPwdCheck(authState.pwd, authState.pwdCheck)
-
-        authState.copy(
-            validationId = validationId,
-            validationPwd = validationPwd,
-            validationPwdCheck = validationPwdCheck,
-            isValidationState = validationId == Validation.SUCCESS
-                && validationPwd == Validation.SUCCESS
-                && validationPwdCheck == Validation.SUCCESS
-        )
-    }
 
     private val _platform = MutableStateFlow(Platform.NONE)
     val platform: StateFlow<Platform> = _platform
@@ -84,12 +62,12 @@ class SignUpViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code, response.message)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
         userDataSource.token = response.data?.token
-        _signUpState.emit(SignUpState.SUCCESS)
+        _signUpState.emit(SignUpState.Success)
     }
 
     fun requestInvalidSignUpCode() = mashUpScope {
@@ -98,7 +76,7 @@ class SignUpViewModel @Inject constructor(
             platform = platform.value.name
         )
 
-        if (!response.isSuccess()) {
+        if (!response.isSuccess() || response.data?.valid != true) {
             _signUpState.emit(SignUpState.InvalidCode)
             return@mashUpScope
         }
@@ -134,13 +112,15 @@ class SignUpViewModel @Inject constructor(
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
 
-    private fun handleSignUpError(errorCode: String, message: String?) = mashUpScope {
-        _signUpState.emit(SignUpState.Error(errorCode, message))
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _signUpState.emit(SignUpState.Error(code))
+        }
     }
 }
 
 sealed interface SignUpState {
-    object SUCCESS : SignUpState
+    object Success : SignUpState
     object InvalidCode : SignUpState
-    data class Error(val code: String, val message: String?) : SignUpState
+    data class Error(val code: String) : SignUpState
 }

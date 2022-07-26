@@ -8,12 +8,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mashup.ui.attendance.model.CrewAttendance
+import com.mashup.data.model.MemberInfo
 
 @Composable
 fun CrewList(
     modifier: Modifier = Modifier,
-    crewAttendanceList: List<CrewAttendance> = emptyList()
+    crewAttendanceList: List<MemberInfo> = emptyList()
 ) {
     LazyColumn(
         modifier = modifier
@@ -23,10 +23,10 @@ fun CrewList(
     ) {
         items(
             crewAttendanceList,
-            key = { item -> item.name }) { crewAttendance ->
+            key = { item -> item.name }) { memberInfo ->
             CrewListItem(
                 modifier = Modifier.fillMaxWidth(),
-                crewAttendance = crewAttendance
+                memberInfo = memberInfo
             )
         }
     }

@@ -14,7 +14,6 @@ import com.mashup.base.BaseActivity
 import com.mashup.common.Validation
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.extensions.onDebouncedClick
-import com.mashup.extensions.scrollToTarget
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity

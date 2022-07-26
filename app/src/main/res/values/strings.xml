@@ -37,5 +37,6 @@
 	<string name="attendance_history">출석 히스토리</string>
 
     <string name="title_activity_main">MainActivity</string>
-	<style name="content_disconnect_network">인터넷\n연결이..</style>
+	<string name="content_disconnect_network">인터넷\n연결이..</string>
+	<string name="text_button_retry">다시시도</string>
 </resources>

@@ -32,8 +32,7 @@ class PlatformAttendanceViewModel @Inject constructor(
         val response = attendanceRepository.getPlatformAttendanceList(scheduleId)
 
         if (!response.isSuccess()) {
-            _platformAttendanceState.value =
-                PlatformAttendanceState.Error(response.code, response.message)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -61,10 +60,16 @@ class PlatformAttendanceViewModel @Inject constructor(
     companion object {
         const val EXTRA_SCHEDULE_ID = "EXTRA_SCHEDULE_ID"
     }
+
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _platformAttendanceState.value = PlatformAttendanceState.Error(code)
+        }
+    }
 }
 
 sealed interface PlatformAttendanceState {
     object Empty : PlatformAttendanceState
     data class Success(val data: TotalAttendanceResponse) : PlatformAttendanceState
-    data class Error(val code: String, val message: String?) : PlatformAttendanceState
+    data class Error(val code: String) : PlatformAttendanceState
 }

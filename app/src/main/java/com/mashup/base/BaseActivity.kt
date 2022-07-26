@@ -2,9 +2,8 @@ package com.mashup.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +19,8 @@ import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.widget.CommonDialog
+import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -92,10 +93,17 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     protected fun handleCommonError(code: String) {
         when (code) {
             UNAUTHORIZED -> {
-                startActivity(
-                    LoginActivity.newIntent(this)
-                )
-                finish()
+                CommonDialog(this).apply {
+                    setTitle(text = "주의")
+                    setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")
+                    setPositiveButton {
+                        startActivity(
+                            LoginActivity.newIntent(this@BaseActivity)
+                        )
+                        finish()
+                    }
+                    show()
+                }
             }
             DISCONNECT_NETWORK -> {
                 startActivity(
@@ -113,6 +121,13 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
             repeatOnLifecycle(state) {
                 block.invoke(this)
             }
+        }
+    }
+
+    protected fun showToast(text: String) {
+        MashUpToast(applicationContext).run {
+            setText(text)
+            show()
         }
     }
 }

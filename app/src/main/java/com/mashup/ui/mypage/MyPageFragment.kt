@@ -10,6 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
+import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint

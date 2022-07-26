@@ -15,6 +15,8 @@ const val RETRY_REQUEST = "RETRY_REQUEST"
  */
 const val UNAUTHORIZED = "UNAUTHORIZED"
 
+const val DISCONNECT_NETWORK = "DISCONNECT_NETWORK"
+
 /**
  * 허용되지 않은 접근입니다.
  */

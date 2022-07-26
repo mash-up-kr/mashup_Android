@@ -2,7 +2,9 @@ package com.mashup.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +15,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
+import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.ui.error.NetworkDisconnectActivity
+import com.mashup.ui.login.LoginActivity
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +39,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         get() = networkStateDetector.hasNetworkConnection()
 
     protected val viewBinding: V by lazy {
-        DataBindingUtil.inflate(
+        DataBindingUtil.inflate<V>(
             LayoutInflater.from(this), layoutId, null, false
         )
     }
@@ -81,6 +87,22 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         )
         ViewCompat.setWindowInsetsAnimationCallback(viewBinding.root, deferringInsetsListener)
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root, deferringInsetsListener)
+    }
+
+    protected fun handleCommonError(code: String) {
+        when (code) {
+            UNAUTHORIZED -> {
+                startActivity(
+                    LoginActivity.newIntent(this)
+                )
+                finish()
+            }
+            DISCONNECT_NETWORK -> {
+                startActivity(
+                    NetworkDisconnectActivity.newIntent(this)
+                )
+            }
+        }
     }
 
     protected fun flowLifecycleScope(

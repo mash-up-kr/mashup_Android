@@ -19,8 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class
-QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
+class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
 
     private val viewModel: QRScanViewModel by viewModels()
 
@@ -44,6 +43,7 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                         finish()
                     }
                     is QRCodeState.Error -> {
+                        handleCommonError(qrcodeState.code)
                         handleAttendanceErrorCode(qrcodeState)
                     }
                 }
@@ -68,13 +68,13 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     }
 
     private fun showInvalidMessage(message: String) {
-        viewBinding.tvInvalidMessage.run {
-            visible()
-            text = message
-            postDelayed({
-                gone()
-            }, 3000L)
-        }
+//        viewBinding.tvInvalidMessage.run {
+//            visible()
+//            text = message
+//            postDelayed({
+//                gone()
+//            }, 3000L)
+//        }
     }
 
     private fun createCardAnalyzer() {
@@ -126,9 +126,7 @@ QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        showInvalidMessage(
-            error.message ?: codeMessage
-        )
+        showInvalidMessage(codeMessage)
     }
 
     override fun onPause() {

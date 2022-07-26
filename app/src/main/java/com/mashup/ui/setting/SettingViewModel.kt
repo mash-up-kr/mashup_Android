@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.mashup.base.BaseViewModel
-import com.mashup.ui.signup.model.Validation
+import com.mashup.common.Validation
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,5 +36,8 @@ class SettingViewModel @Inject constructor() : BaseViewModel() {
 
     fun onClickSNS(context: Context?, link: String) {
         context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+    }
+
+    override fun handleErrorCode(code: String) {
     }
 }

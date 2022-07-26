@@ -62,7 +62,7 @@ class SignUpViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -112,8 +112,10 @@ class SignUpViewModel @Inject constructor(
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
 
-    private fun handleSignUpError(errorCode: String) = mashUpScope {
-        _signUpState.emit(SignUpState.Error(errorCode))
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _signUpState.emit(SignUpState.Error(code))
+        }
     }
 }
 

@@ -1,69 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
-	<data>
-		<variable
-			name="model"
-			type="com.mashup.ui.model.AttendanceModel" />
-	</data>
+    <data>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="252dp"
-		android:background="@color/gray900">
+        <variable
+            name="model"
+            type="com.mashup.ui.model.AttendanceModel" />
+    </data>
 
-		<ImageView
-			android:id="@+id/iv_mashong"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="12dp"
-			android:src="@drawable/ic_mashong_profile_team"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_setting"
-			tools:ignore="ContentDescription" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="252dp"
+        android:background="@color/gray900">
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="20dp"
-			android:layout_marginTop="12dp"
-			tools:text="김매시업"
-			android:textColor="@color/white"
-			android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/iv_mashong" />
+        <ImageView
+            android:id="@+id/iv_mashong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_mashong_profile_team"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_setting"
+            tools:ignore="ContentDescription" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_platform"
-			android:layout_width="wrap_content"
-			android:layout_height="25dp"
-			android:layout_marginTop="12dp"
-			android:background="@drawable/bg_common_dialog_6"
-			android:gravity="center"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-			android:textColor="@color/white"
-			app:layout_constraintEnd_toEndOf="@id/tv_name"
-			tools:text="Product Design"
-			app:layout_constraintStart_toStartOf="@id/tv_name"
-			app:layout_constraintTop_toBottomOf="@id/tv_name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            tools:text="김매시업"
+            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_mashong" />
 
-		<androidx.appcompat.widget.AppCompatImageView
-			android:id="@+id/btn_setting"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
-			android:padding="10dp"
-			android:src="@drawable/ic_setting"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_platform"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_common_dialog_6"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/tv_name"
+            tools:text="Product Design"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

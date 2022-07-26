@@ -15,7 +15,7 @@
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/composeView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_container"
@@ -28,12 +28,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/nav_main" />
 
-        <include android:id="@+id/layout_main_tab"
+        <include
+            android:id="@+id/layout_main_tab"
             layout="@layout/layout_main_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

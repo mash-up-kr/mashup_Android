@@ -8,10 +8,7 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityQrScanBinding
-import com.mashup.extensions.showToast
 import com.mashup.network.errorcode.*
-import com.mashup.ui.extensions.gone
-import com.mashup.ui.extensions.visible
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.utils.PermissionHelper
 import com.mashup.widget.CommonDialog

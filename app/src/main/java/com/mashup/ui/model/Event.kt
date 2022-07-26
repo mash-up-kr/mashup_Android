@@ -1,6 +1,6 @@
 package com.mashup.ui.model
 
-class Event (
+class Event(
     val title: String,
     val subTitle: String
 )

@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<data>
+    <data>
 
-		<variable
-			name="model"
-			type="com.mashup.ui.model.AttendanceModel" />
-	</data>
+        <variable
+            name="model"
+            type="com.mashup.ui.model.AttendanceModel" />
+    </data>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-		<View
-			android:id="@+id/bg_top"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:background="@color/gray900"
-			app:layout_constraintBottom_toTopOf="@id/bg_bottom"
-			app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/bg_top"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray900"
+            app:layout_constraintBottom_toTopOf="@id/bg_bottom"
+            app:layout_constraintTop_toTopOf="parent" />
 
-		<View
-			android:id="@+id/bg_bottom"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:background="@color/gray50"
-			app:layout_constraintBottom_toBottomOf="@id/layout_card_box"
-			app:layout_constraintTop_toBottomOf="@id/bg_top" />
+        <View
+            android:id="@+id/bg_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray50"
+            app:layout_constraintBottom_toBottomOf="@id/layout_card_box"
+            app:layout_constraintTop_toBottomOf="@id/bg_top" />
 
-		<androidx.appcompat.widget.LinearLayoutCompat
-			android:id="@+id/layout_card_box"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="7dp"
-			android:background="@drawable/bg_mypage_count"
-			android:orientation="vertical"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_card_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:background="@drawable/bg_mypage_count"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-			<androidx.appcompat.widget.AppCompatTextView
-				android:id="@+id/tv_count"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="31dp"
-				android:gravity="center"
-				android:text="2점"
-				android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
-				android:textColor="@color/white" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="31dp"
+                android:gravity="center"
+                android:text="2점"
+                android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
+                android:textColor="@color/white" />
 
-			<androidx.appcompat.widget.AppCompatTextView
-				android:id="@+id/total_attendance"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center"
-				android:text="@string/total_attendance"
-				android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-				android:textColor="@color/white" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/total_attendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/total_attendance"
+                android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
+                android:textColor="@color/white" />
 
-		</androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-		<androidx.appcompat.widget.AppCompatImageView
-			android:id="@+id/btn_detail"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:padding="8dp"
-			android:src="@drawable/ic_info"
-			app:layout_constraintEnd_toEndOf="@id/layout_card_box"
-			app:layout_constraintTop_toTopOf="@id/layout_card_box" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@drawable/ic_info"
+            app:layout_constraintEnd_toEndOf="@id/layout_card_box"
+            app:layout_constraintTop_toTopOf="@id/layout_card_box" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_attendance_history"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="20dp"
-			android:layout_marginTop="20dp"
-			android:text="@string/attendance_history"
-			android:textAppearance="@style/TextAppearance.Mashup.Header3_14_B"
-			android:textColor="@color/gray700"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/layout_card_box" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_attendance_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/attendance_history"
+            android:textAppearance="@style/TextAppearance.Mashup.Header3_14_B"
+            android:textColor="@color/gray700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_card_box" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

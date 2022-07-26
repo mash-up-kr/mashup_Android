@@ -3,7 +3,6 @@ package com.mashup.widget
 import android.content.Context
 import android.view.Gravity
 import android.widget.Toast
-import com.mashup.extensions.dp
 
 class MashUpToast(context: Context) : Toast(context) {
 

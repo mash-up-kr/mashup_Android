@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.base.BaseViewModel
 import com.mashup.data.dto.PlatformAttendanceResponse
-import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.data.model.PlatformInfo
 import com.mashup.data.repository.AttendanceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

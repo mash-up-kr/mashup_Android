@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-	<ImageView
-		android:id="@+id/iv_timeline"
-		android:layout_width="34dp"
-		android:layout_height="34dp"
-		android:src="@drawable/ic_absent_final"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/iv_timeline"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@drawable/ic_absent_final"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-	<androidx.appcompat.widget.AppCompatTextView
-		android:id="@+id/tv_timeline_caption"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="12dp"
-		android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_M"
-		android:textColor="@color/gray600"
-		app:layout_constraintStart_toEndOf="@id/iv_timeline"
-		app:layout_constraintTop_toTopOf="@id/iv_timeline"
-		tools:text="1부" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_timeline_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_M"
+        android:textColor="@color/gray600"
+        app:layout_constraintStart_toEndOf="@id/iv_timeline"
+        app:layout_constraintTop_toTopOf="@id/iv_timeline"
+        tools:text="1부" />
 
-	<androidx.appcompat.widget.AppCompatTextView
-		android:id="@+id/tv_timeline_attendance"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/attendance"
-		android:textAppearance="@style/TextAppearance.Mashup.Subtitle2_16_SB"
-		android:textColor="@color/gray600"
-		app:layout_constraintBottom_toBottomOf="@id/iv_timeline"
-		app:layout_constraintStart_toStartOf="@id/tv_timeline_caption" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_timeline_attendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/attendance"
+        android:textAppearance="@style/TextAppearance.Mashup.Subtitle2_16_SB"
+        android:textColor="@color/gray600"
+        app:layout_constraintBottom_toBottomOf="@id/iv_timeline"
+        app:layout_constraintStart_toStartOf="@id/tv_timeline_caption" />
 
 
-	<androidx.appcompat.widget.AppCompatTextView
-		android:id="@+id/tv_timeline_time"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="2.5dp"
-		android:textAppearance="@style/TextAppearance.Mashup.Body3_14_R"
-		android:textColor="@color/gray500"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		tools:text="오후 3:32" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_timeline_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2.5dp"
+        android:textAppearance="@style/TextAppearance.Mashup.Body3_14_R"
+        android:textColor="@color/gray500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="오후 3:32" />
 </androidx.constraintlayout.widget.ConstraintLayout>

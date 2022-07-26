@@ -1,10 +1,10 @@
 package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
+import com.mashup.common.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform
-import com.mashup.common.Validation
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel

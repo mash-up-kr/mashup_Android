@@ -1,13 +1,9 @@
 package com.mashup.ui.event
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.mashup.R
 import com.mashup.databinding.ItemEventBinding
-import com.mashup.databinding.ItemEventTimelineHeaderBinding
 import com.mashup.ui.model.Event
 
 class EventViewPagerAdapter(idolList: ArrayList<Event>) :
@@ -15,7 +11,7 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
     var item = idolList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        PagerViewHolder(parent,mListener)
+        PagerViewHolder(parent, mListener)
 
     override fun getItemCount(): Int = item.size
 

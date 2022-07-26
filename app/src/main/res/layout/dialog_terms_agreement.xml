@@ -14,7 +14,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_confirm"
-            app:layout_constraintEnd_toStartOf="@id/tv_detail"/>
+            app:layout_constraintEnd_toStartOf="@id/tv_detail" />
 
         <ImageView
             android:id="@+id/ic_personal_agreement"

@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
-			<padding
-                android:bottom="1.5dp"
-                android:left="1.5dp"
-                android:right="1.5dp"
-                android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
             <padding
                 android:bottom="1.5dp"
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
             <padding
                 android:bottom="1.5dp"
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
             <padding
                 android:bottom="1.5dp"
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
             <padding
                 android:bottom="1.5dp"
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
             <padding
                 android:bottom="1.5dp"
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
-		<shape xmlns:android="http://schemas.android.com/apk/res/android"
-			android:shape="rectangle">
-			<corners android:radius="20dp" />
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
             <padding
                 android:bottom="1.5dp"
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#035A5A5A" />
-		</shape>
-	</item>
-	<item>
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <padding
+                android:bottom="1.5dp"
+                android:left="1.5dp"
+                android:right="1.5dp"
+                android:top="1.5dp" />
+            <solid android:color="#035A5A5A" />
+        </shape>
+    </item>
+    <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
             <corners android:radius="20dp" />
@@ -141,8 +141,8 @@
                 android:left="1.5dp"
                 android:right="1.5dp"
                 android:top="1.5dp" />
-			<solid android:color="#00000000" />
-		</shape>
-	</item>
+            <solid android:color="#00000000" />
+        </shape>
+    </item>
 
 </layer-list>

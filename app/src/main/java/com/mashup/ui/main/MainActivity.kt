@@ -2,14 +2,14 @@ package com.mashup.ui.main
 
 import android.view.Window
 import android.view.WindowManager
-import com.mashup.R
-import com.mashup.base.BaseActivity
-import com.mashup.databinding.ActivityMainBinding
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.mashup.R
+import com.mashup.base.BaseActivity
+import com.mashup.databinding.ActivityMainBinding
 import com.mashup.extensions.onDebouncedClick
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen

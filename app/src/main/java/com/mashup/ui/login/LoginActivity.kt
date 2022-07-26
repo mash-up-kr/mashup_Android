@@ -14,7 +14,6 @@ import com.mashup.base.BaseActivity
 import com.mashup.common.Validation
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.extensions.onDebouncedClick
-import com.mashup.extensions.scrollToTarget
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
@@ -64,6 +63,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                             moveToMainScreen()
                         }
                         is LoginState.Error -> {
+                            handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }
                     }
@@ -126,7 +126,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(this, error.message ?: codeMessage, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, codeMessage, Toast.LENGTH_LONG).show()
     }
 
     private fun initSplashPreDraw() {
@@ -146,7 +146,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, LoginActivity::class.java)
+            return Intent(context, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         }
     }
 }

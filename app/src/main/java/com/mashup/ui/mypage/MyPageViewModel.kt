@@ -21,20 +21,23 @@ class MyPageViewModel @Inject constructor(
 
     init {
         val test = listOf<AttendanceModel>(
-            AttendanceModel(0,0),
-            AttendanceModel(0,1),
-            AttendanceModel(0,4),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3),
-            AttendanceModel(0,4),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3),
-            AttendanceModel(0,3)
+            AttendanceModel(0, 0),
+            AttendanceModel(0, 1),
+            AttendanceModel(0, 4),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 4),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3),
+            AttendanceModel(0, 3)
         )
         _attendanceList.value = test
+    }
+
+    override fun handleErrorCode(code: String) {
     }
 }

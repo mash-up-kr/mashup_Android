@@ -29,6 +29,11 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                             onClickPlatform = ::moveToCrewAttendance
                         )
                     }
+                    is PlatformAttendanceState.Error -> {
+                        handleCommonError(state.code)
+                    }
+                    else -> {
+                    }
                 }
             }
         }

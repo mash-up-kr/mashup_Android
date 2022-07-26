@@ -1,10 +1,10 @@
 package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
+import com.mashup.common.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform
-import com.mashup.common.Validation
 import com.mashup.ui.signup.state.CodeState
 import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -62,7 +62,7 @@ class SignUpViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            handleSignUpError(response.code)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -112,8 +112,10 @@ class SignUpViewModel @Inject constructor(
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
 
-    private fun handleSignUpError(errorCode: String) = mashUpScope {
-        _signUpState.emit(SignUpState.Error(errorCode))
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _signUpState.emit(SignUpState.Error(code))
+        }
     }
 }
 

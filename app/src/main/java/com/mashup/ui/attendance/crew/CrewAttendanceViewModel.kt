@@ -41,8 +41,7 @@ class CrewAttendanceViewModel @Inject constructor(
         )
 
         if (!response.isSuccess()) {
-            _crewAttendanceState.value =
-                CrewAttendanceState.Error(code = response.code, message = response.message)
+            handleErrorCode(response.code)
             return@mashUpScope
         }
 
@@ -56,10 +55,17 @@ class CrewAttendanceViewModel @Inject constructor(
         const val EXTRA_PLATFORM_KEY = "EXTRA_PLATFORM_KEY"
         const val EXTRA_SCHEDULE_ID = "EXTRA_SCHEDULE_ID"
     }
+
+    override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _crewAttendanceState.value =
+                CrewAttendanceState.Error(code)
+        }
+    }
 }
 
 sealed interface CrewAttendanceState {
     object Empty : CrewAttendanceState
     data class Success(val data: PlatformAttendanceResponse) : CrewAttendanceState
-    data class Error(val code: String, val message: String?) : CrewAttendanceState
+    data class Error(val code: String) : CrewAttendanceState
 }

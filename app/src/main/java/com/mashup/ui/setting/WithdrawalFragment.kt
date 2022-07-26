@@ -3,11 +3,11 @@ package com.mashup.ui.setting
 import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.common.Validation
 import com.mashup.databinding.FragmentWithdrawalBinding
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
 import com.mashup.ui.extensions.setSuccessUiOfTextField
-import com.mashup.ui.signup.model.Validation
 import com.mashup.ui.signup.state.CodeState
 import kotlinx.coroutines.flow.collectLatest
 

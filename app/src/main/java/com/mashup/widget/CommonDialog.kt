@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment.STYLE_NO_TITLE
 import com.mashup.databinding.DialogCommonBinding
+import com.mashup.ui.extensions.visible
 
 class CommonDialog(context: Context) : Dialog(context) {
 
@@ -41,6 +42,7 @@ class CommonDialog(context: Context) : Dialog(context) {
         clickListener: (Dialog) -> Unit = { it.dismiss() }
     ) {
         with(viewBinding.btnNegative) {
+            visible()
             setButtonText(text)
             setOnClickListener {
                 clickListener(this@CommonDialog)
@@ -54,6 +56,7 @@ class CommonDialog(context: Context) : Dialog(context) {
         clickListener: (Dialog) -> Unit = { it.dismiss() }
     ) {
         with(viewBinding.btnPositive) {
+            visible()
             setButtonText(text)
             setOnClickListener {
                 clickListener.invoke(this@CommonDialog)

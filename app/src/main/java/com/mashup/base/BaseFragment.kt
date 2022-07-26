@@ -16,6 +16,8 @@ import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.widget.CommonDialog
+import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -89,11 +91,18 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
     protected fun handleCommonError(code: String) {
         when (code) {
             UNAUTHORIZED -> {
-                requireActivity().run {
-                    startActivity(
-                        LoginActivity.newIntent(requireContext())
-                    )
-                    finish()
+                CommonDialog(requireContext()).apply {
+                    setTitle(text = "주의")
+                    setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")
+                    setPositiveButton {
+                        requireActivity().run {
+                            startActivity(
+                                LoginActivity.newIntent(this)
+                            )
+                            finish()
+                        }
+                    }
+                    show()
                 }
             }
             DISCONNECT_NETWORK -> {
@@ -112,6 +121,13 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(state) {
                 block.invoke(this)
             }
+        }
+    }
+
+    protected fun showToast(text: String) {
+        MashUpToast(requireContext()).run {
+            setText(text)
+            show()
         }
     }
 }

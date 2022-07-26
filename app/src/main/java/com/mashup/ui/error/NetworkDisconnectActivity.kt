@@ -16,6 +16,12 @@ class NetworkDisconnectActivity : BaseActivity<ActivityNetworkDisconnectBinding>
     }
 
     private fun initButtons() {
+        viewBinding.btnClose.setOnClickListener {
+            finish()
+        }
+        viewBinding.btnRetry.setButtonText(
+            getString(R.string.text_button_retry)
+        )
         viewBinding.btnRetry.setOnClickListener {
             finish()
         }

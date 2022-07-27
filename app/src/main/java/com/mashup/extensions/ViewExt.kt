@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.onEach
 
 fun View.onDebouncedClick(
     viewLifecycleScope: CoroutineScope,
-    duration: Long = 300L,
+    duration: Long = 1000L,
     clickListener: () -> Unit
 ) = callbackFlow {
     setOnClickListener {

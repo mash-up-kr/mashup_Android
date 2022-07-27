@@ -29,6 +29,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        if (intent.getBooleanExtra(EXTRA_CLEAR_USER, false)) {
+            viewModel.clearUserData()
+            viewModel.ready()
+        } else {
+            viewModel.ready()
+        }
     }
 
     override fun initViews() {
@@ -145,8 +152,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         get() = R.layout.activity_login
 
     companion object {
+        private const val EXTRA_CLEAR_USER = "EXTRA_CLEAR_USER"
+
         fun newIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java).apply {
+                putExtra(EXTRA_CLEAR_USER, true)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }

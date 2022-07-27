@@ -5,8 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class AttendanceCheckRequest(
-    @field:Json(name = "eventId")
-    val eventId: Int,
-    @field:Json(name = "memberId")
-    val memberId: Int
+    @field:Json(name = "checkingCode")
+    val checkingCode: String,
 )

@@ -49,5 +49,19 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         }.commit()
     }
 
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.fragments.size < 1 ||
+            supportFragmentManager.findFragmentById(R.id.fragment_container) == null
+        ) {
+            super.onBackPressed()
+        } else {
+            supportFragmentManager.findFragmentById(R.id.fragment_container)
+                ?.let {
+                    supportFragmentManager.beginTransaction().remove(it).commit()
+                }
+        }
+    }
+
     override val layoutId = R.layout.activity_setting
 }

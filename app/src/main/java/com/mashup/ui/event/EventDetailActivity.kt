@@ -107,10 +107,7 @@ class EventDetailActivity : BaseActivity<ActivityEventDetailBinding>() {
     }
 
     companion object {
-        fun start(context: Context?, action: Intent.() -> Unit = {}) {
-            val intent = Intent(context, EventDetailActivity::class.java).apply(action)
-            context?.startActivity(intent)
-        }
+        fun newIntent(context: Context) = Intent(context, EventDetailActivity::class.java)
     }
 
 }

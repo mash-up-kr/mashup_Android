@@ -45,7 +45,7 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
                     listener?.onClickAttendanceList()
                 }
                 it.btnAttendanceList.setOnClickListener {
-                    listener?.onClickCrewAttendanceActivity()
+                    listener?.onClickCrewAttendanceActivity(data.id)
                 }
             }
         }
@@ -53,7 +53,7 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
 
     interface OnItemClickListener {
         fun onClickAttendanceList()
-        fun onClickCrewAttendanceActivity()
+        fun onClickCrewAttendanceActivity(scheduleId: Int)
     }
 
     private var mListener: OnItemClickListener? = null

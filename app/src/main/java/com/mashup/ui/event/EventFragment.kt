@@ -28,11 +28,13 @@ class EventFragment : BaseFragment<FragmentEventBinding>() {
             adapter = EventViewPagerAdapter(getTestList()).apply {
                 setOnItemClickListener(object : EventViewPagerAdapter.OnItemClickListener {
                     override fun onClickAttendanceList() {
-                        startActivity(Intent(context, EventDetailActivity::class.java))
+                        startActivity(EventDetailActivity.newIntent(context))
                     }
 
-                    override fun onClickCrewAttendanceActivity() {
-                        startActivity(Intent(context, PlatformAttendanceActivity::class.java))
+                    override fun onClickCrewAttendanceActivity(scheduleId: Int) {
+                        startActivity(PlatformAttendanceActivity.newIntent(context, scheduleId))
+
+
                     }
                 })
             }

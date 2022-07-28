@@ -1,5 +1,7 @@
 package com.mashup.ui.setting
 
+import android.content.Context
+import android.content.Intent
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -61,6 +63,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     supportFragmentManager.beginTransaction().remove(it).commit()
                 }
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, SettingActivity::class.java)
     }
 
     override val layoutId = R.layout.activity_setting

@@ -4,6 +4,7 @@ import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
+import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
@@ -79,6 +80,14 @@ class NetworkModule {
     fun provideAttendanceDao(
         retrofit: Retrofit
     ): AttendanceDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideScheduleDao(
+        retrofit: Retrofit
+    ): ScheduleDao {
         return retrofit.create()
     }
 }

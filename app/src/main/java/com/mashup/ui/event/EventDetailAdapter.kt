@@ -1,6 +1,7 @@
 package com.mashup.ui.event
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -8,24 +9,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.databinding.ItemEventTimelineContentBinding
 import com.mashup.databinding.ItemEventTimelineHeaderBinding
-import com.mashup.ui.model.EventDetail
+import com.mashup.ui.event.model.EventDetail
+import com.mashup.ui.event.model.EventDetailType
 
 class EventDetailAdapter :
     ListAdapter<EventDetail, RecyclerView.ViewHolder>(EventComparator) {
 
-    companion object {
-        private const val VIEW_TYPE_TITLE = 0
-        private const val VIEW_TYPE_CONTENT = 1
-    }
-
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).type
+        return getItem(position).type.num
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-
-            VIEW_TYPE_TITLE -> {
+            EventDetailType.HEADER.num -> {
                 TitleViewHolder(parent)
             }
             else -> {
@@ -54,6 +50,9 @@ class EventDetailAdapter :
 
         fun bind(item: EventDetail) {
             binding?.model = item
+            if (item.header?.eventId == 1) {
+                binding?.line?.visibility = View.GONE
+            }
         }
     }
 

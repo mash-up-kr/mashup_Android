@@ -1,8 +1,9 @@
 package com.mashup.ui.mypage
 
+import androidx.annotation.DrawableRes
 import com.mashup.R
 
-enum class AttendanceType(val title: String, val score: Double, val resourceId: Int) {
+enum class AttendanceType(val title: String, val score: Double, @DrawableRes val resourceId: Int) {
     PLACEHOLDER_HISTORY("플레이스홀더", 0.0, R.drawable.img_placeholder_history),
     PRESENTATION("전체세미나발표", 1.0, R.drawable.img_presentation),
     PROJECT_FAIL("프로젝트 배포 실패", -0.5, R.drawable.img_projectfail),

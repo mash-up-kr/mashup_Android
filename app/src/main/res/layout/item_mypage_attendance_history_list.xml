@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,20 +14,20 @@
         android:layout_width="match_parent"
         android:layout_height="68dp">
 
-
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/iv_attendance_list"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:background="@color/gray800"
+            app:attendanceIcon="@{model.activityHistory.attendanceType}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/img_attendance" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@id/iv_attendance_list"
@@ -38,25 +39,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="전체 세미나 발표"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                android:textColor="@color/gray800" />
+                android:textColor="@color/gray800"
+                app:attendanceTitle="@{model.activityHistory.attendanceType}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:gravity="bottom"
-                android:text="2022.02.03 | 3차 전체 세미나"
+                android:text="@{model.activityHistory.getAttendanceDetail}"
                 android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_R"
-                android:textColor="@color/gray500" />
+                android:textColor="@color/gray500"
+                tools:text="2022.02.03 | 3차 전체 세미나" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@id/iv_attendance_list"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,22 +65,23 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_seminar_attendance_count"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="+1 점"
+                android:layout_gravity="end"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                android:textColor="@color/blue500" />
+                app:attendanceScore="@{model.activityHistory.attendanceType}"
+                tools:text="+20222" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_seminar_attendance_total_count"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:gravity="bottom"
-                android:text="1 점"
+                android:gravity="bottom|end"
+                android:text="@{model.activityHistory.totalScoreText}"
                 android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_R"
-                android:textColor="@color/gray500" />
+                android:textColor="@color/gray500"
+                tools:text="307.5점" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

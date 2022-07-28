@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/gray900"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp">
+
+        <TextView
+            android:id="@+id/tvSample"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="볼 수 있는 일정이 없어요..!"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.cardview.widget.CardView>
+</layout>

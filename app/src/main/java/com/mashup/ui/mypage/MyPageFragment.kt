@@ -43,7 +43,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                 setContentView(bottomSheetView)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
-            (activity as MainActivity).updateStatusBarColor(it.getColor(R.color.gray900))
+            (activity as MainActivity).updateStatusBarColor(it.getColor(R.color.gray950))
         }
         viewBinding.rvMypage.apply {
             adapter = attendanceAdapter

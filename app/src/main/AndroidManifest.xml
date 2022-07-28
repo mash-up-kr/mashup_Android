@@ -55,6 +55,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MashUp"
             tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".ui.event.EventDetailActivity"
             android:exported="false" />

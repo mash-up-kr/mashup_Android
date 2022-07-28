@@ -43,6 +43,7 @@
     <color name="blue500">#2B8AF9</color>
 
     <!--    gray color system-->
+    <color name="gray950">#25272E</color>
     <color name="gray900">#2C3037</color>
     <color name="gray800">#383E4C</color>
     <color name="gray700">#4D535E</color>
@@ -53,4 +54,18 @@
     <color name="gray200">#D6DBE8</color>
     <color name="gray100">#EBEFF9</color>
     <color name="gray50">#F8F7FC</color>
+
+    <color name="teamProductDesign">#4D8176FB</color>
+    <color name="teamProductDesign200">#BAB5FF</color>
+    <color name="teamAndroid">#4D58AE56</color>
+    <color name="teamAndroid200">#A9DBA8</color>
+    <color name="teamWeb">#4D5A88FF</color>
+    <color name="teamWeb200">#AFC5FF</color>
+    <color name="teamNode">#4DFFCD4C</color>
+    <color name="teamNode200">#FFE6A7</color>
+    <color name="teamSpring">#4D259688</color>
+    <color name="teamSpring200">#92D9D0</color>
+    <color name="teamIos">#4DD35C5C</color>
+    <color name="teamIos200">#FFB2B2</color>
+
 </resources>

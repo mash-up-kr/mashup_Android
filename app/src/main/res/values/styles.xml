@@ -22,12 +22,19 @@
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
-    <style name="TextAppearance.Mashup.Header1_24_EB" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/pretendard_extrabold</item>
-        <item name="android:textSize">24dp</item>
-        <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="TextAppearance.Mashup.Header_32_B" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_bold</item>
+		<item name="android:textSize">32dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
+
+	<style name="TextAppearance.Mashup.Header1_24_EB" parent="Widget.AppCompat.TextView">
+		<item name="android:fontFamily">@font/pretendard_extrabold</item>
+		<item name="android:textSize">24dp</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
     <style name="TextAppearance.Mashup.Header1_24_B" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/pretendard_bold</item>
@@ -143,14 +150,15 @@
         <item name="android:src">@drawable/ic_mashong_stare</item>
     </style>
 
-    <style name="AttendanceInfoTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle1_16_B</item>
-        <item name="android:textColor">@color/gray900</item>
-    </style>
+	<style name="AttendanceInfoTitle" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:paddingTop">12dp</item>
+		<item name="android:paddingBottom">12dp</item>
+		<item name="android:layout_marginTop">12dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle1_16_B</item>
+		<item name="android:textColor">@color/gray900</item>
+	</style>
 
     <style name="AttendanceInfoContent" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">match_parent</item>
@@ -161,19 +169,28 @@
         <item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
     </style>
 
-    <style name="SettingBtn" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">74dp</item>
-        <item name="android:layout_margin">4dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/bg_common_dialog</item>
-        <item name="android:drawablePadding">5dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray700</item>
-        <item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_M</item>
-    </style>
+	<style name="AttendanceInfoList" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:drawableLeft">@drawable/ic_dot</item>
+		<item name="android:drawablePadding">8dp</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
+	</style>
+
+	<style name="SettingBtn" parent="Widget.AppCompat.TextView">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">74dp</item>
+		<item name="android:layout_margin">4dp</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:background">@drawable/bg_common_dialog</item>
+		<item name="android:drawablePadding">5dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+		<item name="android:gravity">center</item>
+		<item name="android:textColor">@color/gray700</item>
+		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_M</item>
+	</style>
 
     <style name="SettingTextBtn" parent="Widget.AppCompat.Button">
         <item name="android:layout_width">match_parent</item>

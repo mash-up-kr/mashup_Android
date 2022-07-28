@@ -41,8 +41,11 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
                         "홍길동"
                     )
                 }
-                it.btnAttendanceList.setOnClickListener {
+                it.layoutHistoryLevel.setOnClickListener{
                     listener?.onClickAttendanceList()
+                }
+                it.btnAttendanceList.setOnClickListener {
+                    listener?.onClickCrewAttendanceActivity()
                 }
             }
         }
@@ -50,6 +53,7 @@ class EventViewPagerAdapter(idolList: ArrayList<Event>) :
 
     interface OnItemClickListener {
         fun onClickAttendanceList()
+        fun onClickCrewAttendanceActivity()
     }
 
     private var mListener: OnItemClickListener? = null

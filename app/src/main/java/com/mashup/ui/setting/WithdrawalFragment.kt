@@ -22,6 +22,7 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>() {
 
     private fun initButton() {
         viewBinding.toolbar.setOnBackButtonClickListener {
+            closeFragment()
         }
     }
 
@@ -58,6 +59,15 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>() {
             }
         }
         viewBinding.btnWithdrawal.setButtonEnabled(codeState.isValidationState)
+    }
+
+
+    private fun closeFragment() {
+        val fragmentManager = activity?.supportFragmentManager
+        fragmentManager?.let {
+            it.beginTransaction().remove(this@WithdrawalFragment).commit()
+            it.popBackStack()
+        }
     }
 
     companion object {

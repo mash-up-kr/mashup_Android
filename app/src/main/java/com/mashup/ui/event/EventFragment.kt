@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentEventBinding
+import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
 import com.mashup.ui.event.model.Event
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +29,10 @@ class EventFragment : BaseFragment<FragmentEventBinding>() {
                 setOnItemClickListener(object : EventViewPagerAdapter.OnItemClickListener {
                     override fun onClickAttendanceList() {
                         startActivity(Intent(context, EventDetailActivity::class.java))
+                    }
+
+                    override fun onClickCrewAttendanceActivity() {
+                        startActivity(Intent(context, PlatformAttendanceActivity::class.java))
                     }
                 })
             }

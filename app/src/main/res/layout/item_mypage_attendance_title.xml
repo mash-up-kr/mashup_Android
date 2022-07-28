@@ -4,57 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <data>
+	<data>
 
-        <variable
-            name="model"
-            type="com.mashup.ui.model.AttendanceModel" />
-    </data>
+		<variable
+			name="model"
+			type="com.mashup.ui.model.AttendanceModel" />
+	</data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="252dp"
-        android:background="@color/gray900">
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="255dp"
+		android:background="@color/gray950">
 
-        <ImageView
-            android:id="@+id/iv_mashong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_mashong_profile_team"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_setting"
-            tools:ignore="ContentDescription" />
+		<ImageView
+			android:id="@+id/iv_mashong"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:platformProfileImage="@{model.profile.platform}"
+			tools:ignore="ContentDescription"
+			tools:src="@drawable/img_profile_android" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            tools:text="김매시업"
-            android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_mashong" />
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/tv_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@{model.profile.name}"
+			android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
+			android:textColor="@color/white"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/iv_mashong"
+			tools:text="Android" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_platform"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_common_dialog_6"
-            android:gravity="center"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/tv_name"
-            tools:text="Product Design"
-            app:layout_constraintStart_toStartOf="@id/tv_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/tv_platform"
+			android:layout_width="wrap_content"
+			android:layout_height="26dp"
+			android:layout_marginTop="6dp"
+			android:background="@drawable/icon_circle"
+			android:gravity="center"
+			android:paddingHorizontal="10dp"
+			android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+			app:layout_constraintEnd_toEndOf="@id/tv_name"
+			app:layout_constraintStart_toStartOf="@id/tv_name"
+			app:layout_constraintTop_toBottomOf="@id/tv_name"
+			app:textPlatformColor="@{model.profile.platform}"
+			tools:text="Product Design" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_setting"

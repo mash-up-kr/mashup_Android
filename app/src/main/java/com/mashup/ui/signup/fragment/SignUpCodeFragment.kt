@@ -17,7 +17,6 @@ import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
-import com.mashup.utils.ToastUtil.showToast
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -92,7 +91,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
-        viewBinding.btnSignUp.setOnButtonDebounceClickListener(this) {
+        viewBinding.btnSignUp.setOnButtonThrottleFirstClickListener(this) {
             viewModel.requestInvalidSignUpCode()
         }
     }

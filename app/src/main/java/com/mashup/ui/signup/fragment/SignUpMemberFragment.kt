@@ -39,7 +39,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
             viewModel.setUserName(it)
         }
 
-        viewBinding.textFieldPlatform.setSelectionClickListener {
+        viewBinding.textFieldPlatform.setSelectionThrottleFirstClickListener(viewLifecycleOwner) {
             viewBinding.textFieldName.clearTextFieldFocus()
             findNavController().navigate(R.id.action_signUpMemberFragment_to_platFormSelectionDialog)
         }

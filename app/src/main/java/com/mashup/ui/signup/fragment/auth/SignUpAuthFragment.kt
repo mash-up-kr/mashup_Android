@@ -115,7 +115,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
-        viewBinding.btnSignUp.setOnButtonClickListener {
+        viewBinding.btnSignUp.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             authViewModel.onClickNextButton()
         }
     }

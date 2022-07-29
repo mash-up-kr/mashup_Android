@@ -5,7 +5,7 @@ import com.mashup.ui.signup.validationId
 import com.mashup.ui.signup.validationName
 import com.mashup.ui.signup.validationPlatform
 import com.mashup.ui.signup.validationPwd
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SignInValidationTest {

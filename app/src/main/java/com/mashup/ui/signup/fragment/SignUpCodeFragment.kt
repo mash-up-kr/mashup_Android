@@ -1,7 +1,6 @@
 package com.mashup.ui.signup.fragment
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
@@ -18,6 +17,7 @@ import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
+import com.mashup.utils.ToastUtil.showToast
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -109,7 +109,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(requireContext(), codeMessage, Toast.LENGTH_LONG).show()
+        showToast(codeMessage)
     }
 
     private fun setUiOfCodeState(codeState: CodeState) {

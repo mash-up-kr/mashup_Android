@@ -133,7 +133,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(this, codeMessage, Toast.LENGTH_LONG).show()
+        showToast(codeMessage)
     }
 
     private fun initSplashPreDraw() {

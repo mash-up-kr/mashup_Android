@@ -16,8 +16,8 @@ import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.utils.ToastUtil
 import com.mashup.widget.CommonDialog
-import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -125,9 +125,6 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
     }
 
     protected fun showToast(text: String) {
-        MashUpToast(requireContext()).run {
-            setText(text)
-            show()
-        }
+        ToastUtil.showToast(requireContext(), text)
     }
 }

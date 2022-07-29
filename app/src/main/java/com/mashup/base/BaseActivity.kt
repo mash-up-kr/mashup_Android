@@ -17,9 +17,9 @@ import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.utils.ToastUtil
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.widget.CommonDialog
-import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -124,9 +124,6 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     }
 
     protected fun showToast(text: String) {
-        MashUpToast(applicationContext).run {
-            setText(text)
-            show()
-        }
+        ToastUtil.showToast(this, text)
     }
 }

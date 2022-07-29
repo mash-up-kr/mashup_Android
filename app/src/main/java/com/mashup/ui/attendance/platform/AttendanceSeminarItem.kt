@@ -56,7 +56,7 @@ fun AttendanceSeminarItem(
             "-"
         }
     } else {
-        "-"
+        ""
     }
 
     Column(

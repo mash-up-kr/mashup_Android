@@ -13,8 +13,11 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.databinding.ViewTextLayoutBinding
+import com.mashup.extensions.onThrottleFirstClick
 
 class TextSelectionView @JvmOverloads constructor(
     context: Context,
@@ -104,8 +107,11 @@ class TextSelectionView @JvmOverloads constructor(
         viewBinding.tvDescription.text = description
     }
 
-    fun setSelectionClickListener(clickListener: () -> Unit) {
-        viewBinding.viewTouch.setOnClickListener {
+    fun setSelectionThrottleFirstClickListener(
+        lifecycleOwner: LifecycleOwner,
+        clickListener: () -> Unit
+    ) {
+        viewBinding.viewTouch.onThrottleFirstClick(lifecycleOwner.lifecycleScope) {
             clickListener()
         }
     }

@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
 import com.mashup.databinding.DialogTermsAgreementBinding
-import com.mashup.extensions.onDebouncedClick
+import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.extensions.setUnderLine
 import com.mashup.ui.constant.POLICY_URL
 import com.mashup.ui.signup.SignUpViewModel
@@ -30,7 +30,7 @@ class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementB
         viewBinding.termClickableSpace.setOnClickListener {
             viewModel.updatedTerm()
         }
-        viewBinding.tvDetail.onDebouncedClick(viewLifecycleOwner.lifecycleScope) {
+        viewBinding.tvDetail.onThrottleFirstClick(viewLifecycleOwner.lifecycleScope) {
             context?.run {
                 startActivity(
                     WebViewActivity.newIntent(

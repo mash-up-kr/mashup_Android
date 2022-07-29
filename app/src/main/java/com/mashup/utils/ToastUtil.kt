@@ -9,9 +9,8 @@ import androidx.databinding.DataBindingUtil
 import com.mashup.R
 import com.mashup.databinding.LayoutToastBinding
 
-
 object ToastUtil {
-    fun createToast(context: Context, message: String) {
+    fun showToast(context: Context, message: String) {
         val inflater = LayoutInflater.from(context)
         val binding: LayoutToastBinding =
             DataBindingUtil.inflate(inflater, R.layout.layout_toast, null, false)
@@ -23,5 +22,6 @@ object ToastUtil {
             view = binding.root
         }.show()
     }
+
     private fun Int.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 }

@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.databinding.ViewButtonBinding
 import com.mashup.extensions.dp
-import com.mashup.extensions.onDebouncedClick
+import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.extensions.gone
 import com.mashup.ui.extensions.visible
 
@@ -39,11 +39,11 @@ class ButtonView @JvmOverloads constructor(
         }
     }
 
-    fun setOnButtonDebounceClickListener(
+    fun setOnButtonThrottleFirstClickListener(
         lifecycleOwner: LifecycleOwner,
         clickListener: () -> Unit
     ) {
-        onDebouncedClick(lifecycleOwner.lifecycleScope) {
+        onThrottleFirstClick(lifecycleOwner.lifecycleScope) {
             clickListener.invoke()
         }
     }

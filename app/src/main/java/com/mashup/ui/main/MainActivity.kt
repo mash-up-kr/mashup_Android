@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityMainBinding
-import com.mashup.extensions.onDebouncedClick
+import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
@@ -52,15 +52,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun initTabButtons() = with(viewBinding) {
-        layoutMainTab.btnQrcode.onDebouncedClick(lifecycleScope) {
+        layoutMainTab.btnQrcode.onThrottleFirstClick(lifecycleScope) {
             qrcodeLauncher.launch(
                 QRScanActivity.newIntent(this@MainActivity)
             )
         }
-        layoutMainTab.sectionEvent.onDebouncedClick(lifecycleScope) {
+        layoutMainTab.sectionEvent.onThrottleFirstClick(lifecycleScope) {
             viewModel.setMainTab(MainTab.EVENT)
         }
-        layoutMainTab.sectionMyPage.onDebouncedClick(lifecycleScope) {
+        layoutMainTab.sectionMyPage.onThrottleFirstClick(lifecycleScope) {
             viewModel.setMainTab(MainTab.MY_PAGE)
         }
     }

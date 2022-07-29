@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +12,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.common.Validation
 import com.mashup.databinding.ActivityLoginBinding
-import com.mashup.extensions.onDebouncedClick
+import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
@@ -107,14 +106,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun initButtons() {
-        viewBinding.btnLogin.onDebouncedClick(lifecycleScope) {
+        viewBinding.btnLogin.setOnButtonThrottleFirstClickListener(this) {
             viewModel.requestLogin(
                 id = viewBinding.textFieldId.inputtedText,
                 pwd = viewBinding.textFieldPwd.inputtedText
             )
         }
 
-        viewBinding.tvSignIn.onDebouncedClick(lifecycleScope) {
+        viewBinding.tvSignIn.onThrottleFirstClick(lifecycleScope) {
             startActivity(
                 Intent(this, SignUpActivity::class.java)
             )

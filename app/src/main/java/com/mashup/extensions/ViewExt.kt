@@ -4,22 +4,19 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 
 
-fun View.onDebouncedClick(
+fun View.onThrottleFirstClick(
     viewLifecycleScope: CoroutineScope,
-    duration: Long = 1000L,
+    duration: Long = 500L,
     clickListener: () -> Unit
 ) = callbackFlow {
     setOnClickListener {
         trySend(Unit)
     }
     awaitClose { setOnClickListener(null) }
-}.debounce(duration)
+}.sample(duration)
     .onEach { clickListener() }
     .launchIn(viewLifecycleScope)
 
@@ -28,7 +25,7 @@ fun View.findYPositionInView(targetView: View, yCumulative: Int): Int {
         return yCumulative
     }
     if (this is ViewGroup) {
-        val parentView = this as ViewGroup
+        val parentView = this
         for (i in 0 until parentView.childCount) {
             val child = parentView.getChildAt(i)
             val yChild = yCumulative + child.y.toInt()

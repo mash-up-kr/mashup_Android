@@ -42,7 +42,8 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
     private fun moveToCrewAttendance(platform: PlatformInfo) {
         val scheduleId = viewModel.scheduleId
         if (scheduleId == null) {
-            Toast.makeText(this, "정보를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+            showToast("정보를 찾을 수 없습니다.")
+            finish()
         } else {
             startActivity(
                 CrewAttendanceActivity.newIntent(this, platform, scheduleId)

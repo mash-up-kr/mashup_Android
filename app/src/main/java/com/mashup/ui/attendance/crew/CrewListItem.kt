@@ -102,7 +102,7 @@ fun SeminarItems(
         SeminarItemSpacer()
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 6.dp),
-            timeStamp = memberInfo.attendanceInfos[1].attendanceAt,
+            timeStamp = null,
             attendanceStatus = finalAttendance.name,
             iconRes = finalAttendance.iconRes,
             iconSize = 16,

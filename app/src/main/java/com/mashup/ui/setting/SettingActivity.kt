@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivitySettingBinding
+import com.mashup.ui.login.LoginActivity
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +18,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     override fun initViews() {
         initDataBinding()
         initButton()
-        window.setSoftInputMode(SOFT_INPUT_ADJUST_NOTHING);
+        window.setSoftInputMode(SOFT_INPUT_ADJUST_NOTHING)
     }
 
     private fun initDataBinding() {
@@ -33,7 +34,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 setTitle(text = "로그아웃 하시겠습니까?")
                 setNegativeButton()
                 setPositiveButton {
-                    //sign out
+                    startActivity(
+                        LoginActivity.newIntent(this@SettingActivity)
+                    )
+                    finish()
                 }
                 show()
             }

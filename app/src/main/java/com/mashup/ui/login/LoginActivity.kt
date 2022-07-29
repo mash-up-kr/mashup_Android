@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +12,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.common.Validation
 import com.mashup.databinding.ActivityLoginBinding
-import com.mashup.extensions.onDebouncedClick
+import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
@@ -29,6 +28,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        if (intent.getBooleanExtra(EXTRA_CLEAR_USER, false)) {
+            viewModel.clearUserData()
+            viewModel.ready()
+        } else {
+            viewModel.ready()
+        }
     }
 
     override fun initViews() {
@@ -100,14 +106,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun initButtons() {
-        viewBinding.btnLogin.onDebouncedClick(lifecycleScope) {
+        viewBinding.btnLogin.setOnButtonThrottleFirstClickListener(this) {
             viewModel.requestLogin(
                 id = viewBinding.textFieldId.inputtedText,
                 pwd = viewBinding.textFieldPwd.inputtedText
             )
         }
 
-        viewBinding.tvSignIn.onDebouncedClick(lifecycleScope) {
+        viewBinding.tvSignIn.onThrottleFirstClick(lifecycleScope) {
             startActivity(
                 Intent(this, SignUpActivity::class.java)
             )
@@ -126,7 +132,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(this, codeMessage, Toast.LENGTH_LONG).show()
+        showToast(codeMessage)
     }
 
     private fun initSplashPreDraw() {
@@ -145,8 +151,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         get() = R.layout.activity_login
 
     companion object {
+        private const val EXTRA_CLEAR_USER = "EXTRA_CLEAR_USER"
+
         fun newIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java).apply {
+                putExtra(EXTRA_CLEAR_USER, true)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }

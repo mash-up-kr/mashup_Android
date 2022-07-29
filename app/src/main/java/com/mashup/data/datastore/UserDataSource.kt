@@ -32,9 +32,9 @@ class UserDataSource @Inject constructor(
 
 
     var memberId: Int?
-        get() = read(KEY_TOKEN, null)?.toIntOrNull()
+        get() = read(KEY_MEMBER_ID, null)?.toIntOrNull()
         set(value) {
-            write(KEY_TOKEN, value.toString())
+            write(KEY_MEMBER_ID, value.toString())
         }
 
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {

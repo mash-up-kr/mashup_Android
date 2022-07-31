@@ -66,7 +66,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
                 textFieldName.setSuccessUiOfTextField()
             }
             Validation.FAILED -> {
-                textFieldName.setDescriptionText("영어가 아닌 한글로 입력해주세요.")
+                textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setFailedUiOfTextField()
             }
         }

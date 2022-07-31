@@ -34,7 +34,7 @@ class CrewAttendanceViewModel @Inject constructor(
 
     fun getCrewAttendanceList() = mashUpScope {
         _crewAttendanceState.emit(CrewAttendanceState.Loading)
-        val platformName = platformAttendance.value?.platform?.name?.uppercase()
+        val platformName = platformAttendance.value?.platform?.uppercase()
         val scheduleId = scheduleId
         if (platformName == null || scheduleId == null) {
             handleErrorCode(BAD_REQUEST)

@@ -1,6 +1,7 @@
 package com.mashup.ui.setting
 
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
+import android.content.Context
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
@@ -20,7 +21,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     override fun initViews() {
         initDataBinding()
         initButton()
-        window.setSoftInputMode(SOFT_INPUT_ADJUST_NOTHING)
     }
 
     private fun initDataBinding() {
@@ -49,6 +49,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 WithdrawalActivity.newInstance(this)
             )
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, SettingActivity::class.java)
     }
 
     override val layoutId = R.layout.activity_setting

@@ -41,7 +41,8 @@ fun CrewListItem(
         ) {
             MashTextView(
                 modifier = Modifier
-                    .padding(start = 24.dp),
+                    .padding(start = 24.dp, end = 22.dp)
+                    .width(70.dp),
                 text = memberInfo.name,
                 style = SubTitle1,
                 color = Gray800,
@@ -50,7 +51,7 @@ fun CrewListItem(
             Surface(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(vertical = 14.dp, horizontal = 22.dp)
+                    .padding(vertical = 22.dp)
             ) {
                 Divider(
                     color = Gray200,
@@ -61,8 +62,7 @@ fun CrewListItem(
             }
             SeminarItems(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 20.dp),
+                    .padding(start = 22.dp, end = 20.dp),
                 memberInfo = memberInfo
             )
         }
@@ -78,12 +78,12 @@ fun SeminarItems(
         key1 = memberInfo.attendanceInfos[0].status,
         key2 = memberInfo.attendanceInfos[1].status
     ) {
-        memberInfo.finalAttendance
+        memberInfo.getFinalAttendance()
     }
 
     Row(modifier = modifier) {
         AttendanceSeminarItem(
-            modifier = Modifier.padding(vertical = 6.dp),
+            modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = memberInfo.attendanceInfos[0].attendanceAt,
             attendanceStatus = memberInfo.attendanceInfos[0].status,
             iconRes = R.drawable.ic_circle,
@@ -92,7 +92,7 @@ fun SeminarItems(
         )
         SeminarItemSpacer()
         AttendanceSeminarItem(
-            modifier = Modifier.padding(vertical = 6.dp),
+            modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = memberInfo.attendanceInfos[1].attendanceAt,
             attendanceStatus = memberInfo.attendanceInfos[1].status,
             iconRes = R.drawable.ic_circle,
@@ -101,7 +101,7 @@ fun SeminarItems(
         )
         SeminarItemSpacer()
         AttendanceSeminarItem(
-            modifier = Modifier.padding(vertical = 6.dp),
+            modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = null,
             attendanceStatus = finalAttendance.name,
             iconRes = finalAttendance.iconRes,
@@ -116,7 +116,7 @@ fun RowScope.SeminarItemSpacer() {
     Surface(
         modifier = Modifier
             .weight(1f)
-            .padding(top = 15.dp)
+            .padding(top = 24.dp)
     ) {
         Divider(
             color = Gray200,

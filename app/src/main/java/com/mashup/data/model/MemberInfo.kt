@@ -2,15 +2,17 @@ package com.mashup.data.model
 
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class MemberInfo(
-    @Json(name = "name")
+    @field:Json(name = "name")
     val name: String,
-    @Json(name = "attendanceInfos")
+    @field:Json(name = "attendanceInfos")
     val attendanceInfos: List<AttendanceInfo>
 ) {
-    val finalAttendance
-        get() = when {
+    fun getFinalAttendance(): AttendanceStatus {
+        return when {
             attendanceInfos[0].status.uppercase() == "ATTEND"
                 && attendanceInfos[1].status.uppercase() == "ATTEND" -> {
                 AttendanceStatus.ATTEND
@@ -23,4 +25,5 @@ data class MemberInfo(
                 AttendanceStatus.LATENESS
             }
         }
+    }
 }

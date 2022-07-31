@@ -27,7 +27,9 @@ class AttendanceRepository @Inject constructor(
         )
     }
 
-    suspend fun getPlatformAttendanceList(scheduleId: Int): Response<TotalAttendanceResponse> {
+    suspend fun getPlatformAttendanceList(
+        scheduleId: Int
+    ): Response<TotalAttendanceResponse> {
         return attendanceDao.getAttendancePlatforms(
             scheduleId = scheduleId
         )

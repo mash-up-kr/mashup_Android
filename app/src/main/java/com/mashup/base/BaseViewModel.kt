@@ -2,6 +2,7 @@ package com.mashup.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.network.errorcode.BAD_REQUEST
 import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,9 @@ abstract class BaseViewModel : ViewModel() {
             when (throwable) {
                 is UnknownHostException, is EOFException -> {
                     handleErrorCode(DISCONNECT_NETWORK)
+                }
+                else -> {
+                    handleErrorCode(BAD_REQUEST)
                 }
             }
         }

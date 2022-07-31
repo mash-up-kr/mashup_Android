@@ -37,7 +37,8 @@ fun PlatformListItem(
     val attendCount = remember(platformInfo) {
         max(
             0,
-            platformInfo.totalCount - (platformInfo.attendanceCount + platformInfo.lateCount)
+            platformInfo.totalCount - ((platformInfo.attendanceCount ?: 0) + (platformInfo.lateCount
+                ?: 0))
         )
     }
 
@@ -76,15 +77,15 @@ fun PlatformListItem(
 
             if (isAttendingEvent) {
                 PlatformStatus(
-                    numberOfAttend = platformInfo.attendanceCount,
+                    numberOfAttend = platformInfo.attendanceCount ?: 0,
                     numberOfMaxAttend = platformInfo.totalCount
                 )
             } else {
                 PlatformAttendanceStatus(
                     modifier = Modifier
                         .padding(top = 14.dp),
-                    numberOfAttend = platformInfo.attendanceCount,
-                    numberOfLateness = platformInfo.lateCount,
+                    numberOfAttend = platformInfo.attendanceCount ?: 0,
+                    numberOfLateness = platformInfo.lateCount ?: 0,
                     numberOfAbsence = attendCount
                 )
             }
@@ -108,25 +109,25 @@ fun PlatformIcon(
 }
 
 @Composable
-fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
+fun PlatformInfo(platform: String, modifier: Modifier = Modifier) {
     val platformImage = remember(platform) {
         when (platform) {
-            Platform.DESIGN -> {
+            Platform.DESIGN.name -> {
                 R.drawable.img_statusprofile_design
             }
-            Platform.ANDROID -> {
+            Platform.ANDROID.name -> {
                 R.drawable.img_statusprofile_android
             }
-            Platform.WEB -> {
+            Platform.WEB.name -> {
                 R.drawable.img_statusprofile_web
             }
-            Platform.IOS -> {
+            Platform.IOS.name -> {
                 R.drawable.img_statusprofile_ios
             }
-            Platform.SPRING -> {
+            Platform.SPRING.name -> {
                 R.drawable.img_statusprofile_spring
             }
-            Platform.NODE -> {
+            Platform.NODE.name -> {
                 R.drawable.img_statusprofile_node
             }
             else -> {
@@ -143,7 +144,7 @@ fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
 
         MashTextView(
             modifier = Modifier.padding(top = 6.dp),
-            text = platform.getName(),
+            text = platform,
             style = SubTitle1,
             color = Gray800
         )
@@ -260,7 +261,7 @@ fun PlatformAttendanceStatusItem(
 @Composable
 fun PlatformInfoPrev() {
     MashUpTheme {
-        PlatformInfo(Platform.ANDROID)
+        PlatformInfo(Platform.ANDROID.name)
     }
 }
 
@@ -279,7 +280,7 @@ fun PlatformListItemPrev() {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
             platformInfo = PlatformInfo(
-                platform = Platform.ANDROID,
+                platform = Platform.ANDROID.name,
                 totalCount = 13,
                 attendanceCount = 0,
                 lateCount = 7
@@ -297,7 +298,7 @@ fun EndedPlatformListItemPrev() {
             modifier = Modifier.fillMaxWidth(),
             isAttendingEvent = false,
             platformInfo = PlatformInfo(
-                platform = Platform.ANDROID,
+                platform = Platform.ANDROID.name,
                 totalCount = 13,
                 attendanceCount = 0,
                 lateCount = 7

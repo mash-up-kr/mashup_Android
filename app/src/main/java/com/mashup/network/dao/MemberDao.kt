@@ -30,4 +30,7 @@ interface MemberDao {
     suspend fun getValidId(
         @Path("id") id: String
     ): Response<ValidResponse>
+
+    @DELETE("/api/v1/members")
+    suspend fun deleteMember(): Response<Any>
 }

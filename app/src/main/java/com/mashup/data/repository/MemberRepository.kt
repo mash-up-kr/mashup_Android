@@ -62,4 +62,8 @@ class MemberRepository @Inject constructor(
             id = id
         )
     }
+
+    suspend fun deleteMember(): Response<Any> {
+        return memberDao.deleteMember()
+    }
 }

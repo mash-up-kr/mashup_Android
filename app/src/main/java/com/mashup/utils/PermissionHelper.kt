@@ -26,7 +26,7 @@ class PermissionHelper(private val activity: Activity) {
                 permission, onRequestPermission, onShowRationaleUi
             )
         } else {
-            false
+            true
         }
     }
 
@@ -43,7 +43,7 @@ class PermissionHelper(private val activity: Activity) {
         return false
     }
 
-    private fun isPermissionGranted(permission: String) =
+    fun isPermissionGranted(permission: String) =
         ContextCompat.checkSelfPermission(
             activity,
             permission

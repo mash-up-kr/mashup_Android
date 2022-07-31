@@ -65,6 +65,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun requestLogin(id: String, pwd: String) = mashUpScope {
+        _loginUiState.emit(LoginState.Loading)
         val response = memberRepository.login(
             identification = id,
             password = pwd
@@ -87,6 +88,7 @@ class LoginViewModel @Inject constructor(
 }
 
 sealed interface LoginState {
+    object Loading : LoginState
     object Success : LoginState
     data class Error(val code: String) : LoginState
 }

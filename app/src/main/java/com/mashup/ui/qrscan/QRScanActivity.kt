@@ -35,11 +35,16 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         flowLifecycleScope {
             viewModel.qrcodeState.collectLatest { qrcodeState ->
                 when (qrcodeState) {
-                    QRCodeState.SuccessAttendance -> {
+                    QRCodeState.Loading -> {
+                        showLoading()
+                    }
+                    QRCodeState.Success -> {
+                        hideLoading()
                         setResult(RESULT_OK)
                         finish()
                     }
                     is QRCodeState.Error -> {
+                        hideLoading()
                         handleCommonError(qrcodeState.code)
                         handleAttendanceErrorCode(qrcodeState)
                     }

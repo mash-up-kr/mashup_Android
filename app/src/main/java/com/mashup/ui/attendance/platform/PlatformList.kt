@@ -23,7 +23,7 @@ fun PlatformList(
     totalAttendanceResponse: TotalAttendanceResponse,
     onClickPlatform: (PlatformInfo) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(horizontal = 20.dp)) {
         if (notice.isNotBlank()) {
             AttendanceNoticeItem(
                 modifier = Modifier
@@ -64,25 +64,25 @@ fun PlatformListPrev() {
                 eventNum = 1,
                 platformInfos = listOf(
                     PlatformInfo(
-                        platform = Platform.ANDROID,
+                        platform = Platform.ANDROID.name,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7
                     ),
                     PlatformInfo(
-                        platform = Platform.DESIGN,
+                        platform = Platform.DESIGN.name,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7
                     ),
                     PlatformInfo(
-                        platform = Platform.WEB,
+                        platform = Platform.WEB.name,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7
                     ),
                     PlatformInfo(
-                        platform = Platform.IOS,
+                        platform = Platform.IOS.name,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7

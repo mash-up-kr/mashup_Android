@@ -77,6 +77,8 @@ dependencies {
     implementation project(":common")
     implementation project(":compose")
 
+    testImplementation 'junit:junit:4.12'
+
     // androidx
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.activity:activity-ktx:$activityKtxVersion"

@@ -67,6 +67,8 @@ class SignUpViewModel @Inject constructor(
         }
 
         userDataSource.token = response.data?.token
+        userDataSource.memberId = response.data?.memberId
+        userDataSource.generateNumber = response.data?.generationNumber
         _signUpState.emit(SignUpState.Success)
     }
 

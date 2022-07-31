@@ -1,14 +1,14 @@
 package com.mashup.ui.attendance.crew
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.base.BaseViewModel
 import com.mashup.data.dto.PlatformAttendanceResponse
 import com.mashup.data.model.PlatformInfo
 import com.mashup.data.repository.AttendanceRepository
-import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.network.errorcode.BAD_REQUEST
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,18 +23,21 @@ class CrewAttendanceViewModel @Inject constructor(
     val scheduleId
         get() = savedStateHandle.get<Int>(EXTRA_SCHEDULE_ID)
 
-    private val _crewAttendanceState = mutableStateOf<CrewAttendanceState>(
-        CrewAttendanceState.Empty
-    )
-    val crewAttendanceState: State<CrewAttendanceState> =
+    private val _crewAttendanceState =
+        MutableStateFlow<CrewAttendanceState>(CrewAttendanceState.Empty)
+    val crewAttendanceState: StateFlow<CrewAttendanceState> =
         _crewAttendanceState
 
+    init {
+        getCrewAttendanceList()
+    }
+
     fun getCrewAttendanceList() = mashUpScope {
-        _crewAttendanceState.value = CrewAttendanceState.Loading
+        _crewAttendanceState.emit(CrewAttendanceState.Loading)
         val platformName = platformAttendance.value?.platform?.name?.uppercase()
         val scheduleId = scheduleId
         if (platformName == null || scheduleId == null) {
-            handleErrorCode(UNAUTHORIZED)
+            handleErrorCode(BAD_REQUEST)
             return@mashUpScope
         }
         val response = attendanceRepository.getCrewAttendanceList(
@@ -48,8 +51,9 @@ class CrewAttendanceViewModel @Inject constructor(
         }
 
         response.data?.run {
-            _crewAttendanceState.value =
+            _crewAttendanceState.emit(
                 CrewAttendanceState.Success(response.data)
+            )
         }
     }
 
@@ -60,8 +64,7 @@ class CrewAttendanceViewModel @Inject constructor(
 
     override fun handleErrorCode(code: String) {
         mashUpScope {
-            _crewAttendanceState.value =
-                CrewAttendanceState.Error(code)
+            _crewAttendanceState.emit(CrewAttendanceState.Error(code))
         }
     }
 }

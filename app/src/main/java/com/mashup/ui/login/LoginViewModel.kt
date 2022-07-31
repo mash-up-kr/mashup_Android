@@ -78,6 +78,8 @@ class LoginViewModel @Inject constructor(
         }
 
         userDataSource.token = response.data?.token
+        userDataSource.generateNumber = response.data?.generationNumber
+        userDataSource.memberId = response.data?.memberId
         _loginUiState.emit(LoginState.Success)
     }
 

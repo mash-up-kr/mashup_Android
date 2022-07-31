@@ -53,10 +53,10 @@ fun AttendanceSeminarItem(
         try {
             SimpleDateFormat("hh:mm").format(timeStamp)
         } catch (ignore: Exception) {
-            "-"
+            if (index < 2) "-" else ""
         }
     } else {
-        ""
+        if (index < 2) "-" else ""
     }
 
     Column(

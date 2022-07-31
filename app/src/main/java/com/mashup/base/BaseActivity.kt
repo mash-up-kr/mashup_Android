@@ -96,7 +96,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     protected fun handleCommonError(code: String) {
         when (code) {
-            UNAUTHORIZED, MEMBER_NOT_FOUND -> {
+            UNAUTHORIZED -> {
                 CommonDialog(this).apply {
                     setTitle(text = "주의")
                     setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")

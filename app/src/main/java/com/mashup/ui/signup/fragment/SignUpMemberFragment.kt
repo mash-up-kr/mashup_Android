@@ -6,9 +6,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.common.Validation
 import com.mashup.databinding.FragmentSignUpMemberBinding
+import com.mashup.ui.extensions.setEmptyUIOfTextField
+import com.mashup.ui.extensions.setFailedUiOfTextField
+import com.mashup.ui.extensions.setSuccessUiOfTextField
+import com.mashup.ui.signup.MemberState
 import com.mashup.ui.signup.SignUpViewModel
-import com.mashup.ui.signup.state.MemberState
 import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -46,8 +50,26 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     }
 
     private fun setUiOfMemberState(memberState: MemberState) = with(viewBinding) {
+        setUiOfNameState(memberState.isValidationName)
         textFieldPlatform.setText(memberState.platform)
         btnSignUp.setButtonEnabled(memberState.isValidationState)
+    }
+
+    private fun setUiOfNameState(nameValidation: Validation) = with(viewBinding) {
+        when (nameValidation) {
+            Validation.EMPTY -> {
+                textFieldName.setDescriptionText("주민등록상의 실명을 입력해주세요.")
+                textFieldName.setEmptyUIOfTextField()
+            }
+            Validation.SUCCESS -> {
+                textFieldName.setDescriptionText("주민등록상의 실명을 입력해주세요.")
+                textFieldName.setSuccessUiOfTextField()
+            }
+            Validation.FAILED -> {
+                textFieldName.setDescriptionText("영어가 아닌 한글로 입력해주세요.")
+                textFieldName.setFailedUiOfTextField()
+            }
+        }
     }
 
     private fun initButton() {

@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
@@ -95,7 +96,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     protected fun handleCommonError(code: String) {
         when (code) {
-            UNAUTHORIZED -> {
+            UNAUTHORIZED, MEMBER_NOT_FOUND -> {
                 CommonDialog(this).apply {
                     setTitle(text = "주의")
                     setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")

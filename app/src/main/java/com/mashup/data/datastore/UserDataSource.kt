@@ -22,6 +22,7 @@ class UserDataSource @Inject constructor(
     companion object {
         private val KEY_TOKEN = stringPreferencesKey("accessToken")
         private val KEY_MEMBER_ID = stringPreferencesKey("memberId")
+        private val KEY_GENERATE_NUMBER = stringPreferencesKey("generateNumber")
     }
 
     var token: String?
@@ -34,7 +35,13 @@ class UserDataSource @Inject constructor(
     var memberId: Int?
         get() = read(KEY_MEMBER_ID, null)?.toIntOrNull()
         set(value) {
-            write(KEY_MEMBER_ID, value.toString())
+            write(KEY_MEMBER_ID, value?.toString())
+        }
+
+    var generateNumber: Int?
+        get() = read(KEY_GENERATE_NUMBER, null)?.toIntOrNull()
+        set(value) {
+            write(KEY_GENERATE_NUMBER, value?.toString())
         }
 
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {

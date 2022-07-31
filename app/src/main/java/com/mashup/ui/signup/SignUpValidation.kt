@@ -34,7 +34,7 @@ fun validationPwdCheck(pwd: String, pwdCheck: String): Validation {
 
 fun validationName(name: String): Validation {
     if (name.isEmpty()) return Validation.EMPTY
-    return if (name.isNotBlank()) {
+    return if ("^[가-힣]*\$".toRegex().matches(name)) {
         Validation.SUCCESS
     } else {
         Validation.FAILED

@@ -31,7 +31,6 @@ class UserDataSource @Inject constructor(
             write(KEY_TOKEN, value)
         }
 
-
     var memberId: Int?
         get() = read(KEY_MEMBER_ID, null)?.toIntOrNull()
         set(value) {

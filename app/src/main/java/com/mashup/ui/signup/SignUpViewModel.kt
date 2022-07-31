@@ -6,7 +6,6 @@ import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform
 import com.mashup.ui.signup.state.CodeState
-import com.mashup.ui.signup.state.MemberState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -28,16 +27,15 @@ class SignUpViewModel @Inject constructor(
 
     private val userName = MutableStateFlow("")
     val memberState = userName.combine(platform) { name, platform ->
+        val validationName = validationName(name)
         MemberState(
             name = name,
-            platform = platform.detailName
+            platform = platform.detailName,
+            isValidationName = validationName,
+            isValidationState = validationName == Validation.SUCCESS
+                && validationPlatform(platform.detailName) == Validation.SUCCESS
         )
-    }.map { memberState ->
-        memberState.copy(
-            isValidationState = validationName(memberState.name) == Validation.SUCCESS
-                && validationPlatform(memberState.platform) == Validation.SUCCESS
-        )
-    }
+    }.debounce(250)
 
     private val signUpCode = MutableStateFlow("")
     val codeState = signUpCode
@@ -128,3 +126,10 @@ sealed interface SignUpState {
     object InvalidCode : SignUpState
     data class Error(val code: String) : SignUpState
 }
+
+data class MemberState(
+    val name: String = "",
+    val platform: String = "",
+    val isValidationName: Validation,
+    val isValidationState: Boolean = false
+)

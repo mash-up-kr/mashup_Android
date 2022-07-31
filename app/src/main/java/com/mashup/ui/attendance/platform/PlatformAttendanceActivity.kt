@@ -2,7 +2,6 @@ package com.mashup.ui.attendance.platform
 
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -22,7 +21,11 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
         viewBinding.viewCompose.setContent {
             MashUpTheme {
                 when (val state = viewModel.platformAttendanceState.value) {
+                    PlatformAttendanceState.Loading -> {
+                        showLoading()
+                    }
                     is PlatformAttendanceState.Success -> {
+                        hideLoading()
                         PlatformList(
                             notice = viewModel.notice.value,
                             totalAttendanceResponse = state.data,
@@ -30,9 +33,11 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                         )
                     }
                     is PlatformAttendanceState.Error -> {
+                        hideLoading()
                         handleCommonError(state.code)
                     }
                     else -> {
+                        hideLoading()
                     }
                 }
             }
@@ -42,7 +47,8 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
     private fun moveToCrewAttendance(platform: PlatformInfo) {
         val scheduleId = viewModel.scheduleId
         if (scheduleId == null) {
-            Toast.makeText(this, "정보를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+            showToast("정보를 찾을 수 없습니다.")
+            finish()
         } else {
             startActivity(
                 CrewAttendanceActivity.newIntent(this, platform, scheduleId)

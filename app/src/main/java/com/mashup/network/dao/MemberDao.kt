@@ -1,10 +1,7 @@
 package com.mashup.network.dao
 
 import com.mashup.common.Response
-import com.mashup.data.dto.AccessResponse
-import com.mashup.data.dto.LoginRequest
-import com.mashup.data.dto.SignUpRequest
-import com.mashup.data.dto.ValidResponse
+import com.mashup.data.dto.*
 import com.mashup.data.model.Platform
 import retrofit2.http.*
 
@@ -14,6 +11,9 @@ interface MemberDao {
     suspend fun postLogin(
         @Body loginRequest: LoginRequest
     ): Response<AccessResponse>
+
+    @POST("api/v1/members/token")
+    suspend fun postToken(): Response<TokenResponse>
 
     @POST("api/v1/members/signup")
     suspend fun postSignUp(
@@ -30,4 +30,7 @@ interface MemberDao {
     suspend fun getValidId(
         @Path("id") id: String
     ): Response<ValidResponse>
+
+    @DELETE("/api/v1/members")
+    suspend fun deleteMember(): Response<Any>
 }

@@ -2,12 +2,14 @@ package com.mashup.ui.setting
 
 import android.content.Context
 import android.content.Intent
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
 import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivitySettingBinding
+import com.mashup.extensions.onThrottleFirstClick
+import com.mashup.ui.login.LoginActivity
+import com.mashup.ui.withdrawl.WithdrawalActivity
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +21,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     override fun initViews() {
         initDataBinding()
         initButton()
-        window.setSoftInputMode(SOFT_INPUT_ADJUST_NOTHING);
     }
 
     private fun initDataBinding() {
@@ -35,33 +36,18 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 setTitle(text = "로그아웃 하시겠습니까?")
                 setNegativeButton()
                 setPositiveButton {
-                    //sign out
+                    startActivity(
+                        LoginActivity.newIntent(this@SettingActivity)
+                    )
+                    finish()
                 }
                 show()
             }
         }
-        viewBinding.btnWithdrawal.setOnClickListener {
-            changeOutContainerFragment(WithdrawalFragment.newInstance())
-        }
-    }
-
-    private fun changeOutContainerFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragment)
-        }.commit()
-    }
-
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.fragments.size < 1 ||
-            supportFragmentManager.findFragmentById(R.id.fragment_container) == null
-        ) {
-            super.onBackPressed()
-        } else {
-            supportFragmentManager.findFragmentById(R.id.fragment_container)
-                ?.let {
-                    supportFragmentManager.beginTransaction().remove(it).commit()
-                }
+        viewBinding.btnWithdrawal.onThrottleFirstClick(lifecycleScope) {
+            startActivity(
+                WithdrawalActivity.newInstance(this)
+            )
         }
     }
 

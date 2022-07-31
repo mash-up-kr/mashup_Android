@@ -20,6 +20,17 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
 
     override fun initViews() {
         super.initViews()
+        initButton()
+        initCompose()
+    }
+
+    private fun initButton() {
+        viewBinding.toolbar.setOnCloseButtonClickListener {
+            finish()
+        }
+    }
+
+    private fun initCompose() {
         viewBinding.viewCompose.setContent {
             MashUpTheme {
                 val crewState = viewModel.crewAttendanceState.collectAsState(

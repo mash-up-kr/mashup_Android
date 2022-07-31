@@ -4,7 +4,6 @@ import com.mashup.base.BaseViewModel
 import com.mashup.common.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
-import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -40,13 +39,8 @@ class WithdrawalViewModel @Inject constructor(
     }
 
     fun deleteMember() = mashUpScope {
-        val memberId = userDataSource.memberId
-        if (memberId == null) {
-            handleErrorCode(UNAUTHORIZED)
-            return@mashUpScope
-        }
-
-        val result = memberRepository.deleteMember(memberId)
+        _withdrawalState.emit(WithdrawalState.Loading)
+        val result = memberRepository.deleteMember()
         if (!result.isSuccess()) {
             handleErrorCode(result.code)
         }
@@ -62,6 +56,7 @@ class WithdrawalViewModel @Inject constructor(
 }
 
 sealed interface WithdrawalState {
+    object Loading : WithdrawalState
     object Success : WithdrawalState
     data class Error(val code: String) : WithdrawalState
 }

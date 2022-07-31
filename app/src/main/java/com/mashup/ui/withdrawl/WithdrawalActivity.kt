@@ -66,10 +66,15 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         flowLifecycleScope {
             withdrawalState.collectLatest { state ->
                 when (state) {
+                    is WithdrawalState.Loading -> {
+                        showLoading()
+                    }
                     is WithdrawalState.Error -> {
+                        hideLoading()
                         handleCommonError(state.code)
                     }
                     is WithdrawalState.Success -> {
+                        hideLoading()
                         startActivity(
                             LoginActivity.newIntent(this@WithdrawalActivity)
                         )

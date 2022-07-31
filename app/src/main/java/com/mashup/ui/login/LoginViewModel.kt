@@ -62,6 +62,7 @@ class LoginViewModel @Inject constructor(
     fun clearUserData() {
         userDataSource.token = ""
         userDataSource.memberId = null
+        userDataSource.generateNumber = null
     }
 
     fun requestLogin(id: String, pwd: String) = mashUpScope {

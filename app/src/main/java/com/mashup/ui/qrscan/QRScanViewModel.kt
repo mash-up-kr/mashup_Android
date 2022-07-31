@@ -15,8 +15,8 @@ class QRScanViewModel @Inject constructor(
     val qrcodeState: SharedFlow<QRCodeState> = _qrcodeState
 
     fun requestAttendance(qrcode: QRCode) = mashUpScope {
+        _qrcodeState.emit(QRCodeState.Loading)
         val recognizedCode = qrcode.recognizedCode
-
         val response = attendanceRepository.attendanceCheck(
             code = recognizedCode
         )
@@ -26,7 +26,7 @@ class QRScanViewModel @Inject constructor(
             return@mashUpScope
         } else {
             if (response.data?.isAttendance() == true) {
-                _qrcodeState.emit(QRCodeState.SuccessAttendance)
+                _qrcodeState.emit(QRCodeState.Success)
             }
         }
     }
@@ -39,6 +39,7 @@ class QRScanViewModel @Inject constructor(
 }
 
 sealed interface QRCodeState {
+    object Loading : QRCodeState
     data class Error(val code: String) : QRCodeState
-    object SuccessAttendance : QRCodeState
+    object Success : QRCodeState
 }

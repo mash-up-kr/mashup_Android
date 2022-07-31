@@ -7,6 +7,7 @@ import com.mashup.base.BaseViewModel
 import com.mashup.data.dto.PlatformAttendanceResponse
 import com.mashup.data.model.PlatformInfo
 import com.mashup.data.repository.AttendanceRepository
+import com.mashup.network.errorcode.UNAUTHORIZED
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,9 +30,11 @@ class CrewAttendanceViewModel @Inject constructor(
         _crewAttendanceState
 
     fun getCrewAttendanceList() = mashUpScope {
+        _crewAttendanceState.value = CrewAttendanceState.Loading
         val platformName = platformAttendance.value?.platform?.name?.uppercase()
         val scheduleId = scheduleId
         if (platformName == null || scheduleId == null) {
+            handleErrorCode(UNAUTHORIZED)
             return@mashUpScope
         }
         val response = attendanceRepository.getCrewAttendanceList(
@@ -65,6 +68,7 @@ class CrewAttendanceViewModel @Inject constructor(
 
 sealed interface CrewAttendanceState {
     object Empty : CrewAttendanceState
+    object Loading : CrewAttendanceState
     data class Success(val data: PlatformAttendanceResponse) : CrewAttendanceState
     data class Error(val code: String) : CrewAttendanceState
 }

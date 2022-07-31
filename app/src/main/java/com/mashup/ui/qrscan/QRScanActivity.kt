@@ -63,9 +63,27 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     private fun initCamera() {
         createCardAnalyzer()
         createCameraManager()
+        startCameraWithPermissionCheck()
+    }
 
+    private fun startCameraWithPermissionCheck() {
         if (requestCameraPermission()) {
             cameraManager.startCamera()
+        } else {
+            CommonDialog(this).apply {
+                setTitle(text = "카메라 권한")
+                setMessage(text = "QR 출석체크를 하기 위해서는 카메라의 권한이 필수로 필요합니다")
+                setNegativeButton(text = "닫기") {
+                    finish()
+                }
+                setPositiveButton("확인") {
+                    permissionHelper.requestPermission(
+                        requestCode = REQUEST_CODE_CAMERA,
+                        permission = PERMISSION_CAMERA
+                    )
+                }
+                show()
+            }
         }
     }
 
@@ -94,7 +112,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
 
     override fun onResume() {
         super.onResume()
-        cameraManager.startCamera()
+        startCameraWithPermissionCheck()
     }
 
     private fun handleAttendanceErrorCode(error: QRCodeState.Error) {
@@ -142,10 +160,12 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
 
     private fun showRequestCameraPermissionDialog() {
         CommonDialog(this).apply {
-            setTitle(text = "카메라 권한")
-            setMessage(text = "QR 출석을 위해 카메라 권한이 필수로 필요합니다. 권한을 허용해주세요!")
-            setNegativeButton(text = "거절")
-            setPositiveButton {
+            setTitle(text = "카메라 권한 재설정")
+            setMessage(text = "QR 출석체크를 하기 위해서는 카메라의 권한이 필수로 필요합니다")
+            setNegativeButton(text = "거절") {
+                finish()
+            }
+            setPositiveButton("확인") {
                 permissionHelper.requestPermission(
                     requestCode = REQUEST_CODE_CAMERA,
                     permission = PERMISSION_CAMERA
@@ -166,6 +186,15 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
             REQUEST_CODE_CAMERA -> {
                 if (grantResults.find { it == PackageManager.PERMISSION_GRANTED } != null) {
                     cameraManager.startCamera()
+                } else {
+                    CommonDialog(this).apply {
+                        setTitle(text = "카메라 권한 없음")
+                        setMessage(text = "QR 출석체크를 하기 위한 카메라의 권한이 허용되지 않아 종료됩니다.")
+                        setPositiveButton("확인") {
+                            finish()
+                        }
+                        show()
+                    }
                 }
             }
         }

@@ -21,15 +21,21 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
         viewBinding.viewCompose.setContent {
             MashUpTheme {
                 when (val state = viewModel.crewAttendanceState.value) {
+                    CrewAttendanceState.Loading -> {
+                        showLoading()
+                    }
                     is CrewAttendanceState.Success -> {
+                        hideLoading()
                         CrewList(
                             crewAttendanceList = state.data.members
                         )
                     }
                     is CrewAttendanceState.Error -> {
+                        hideLoading()
                         handleCommonError(state.code)
                     }
                     else -> {
+                        hideLoading()
                     }
                 }
             }

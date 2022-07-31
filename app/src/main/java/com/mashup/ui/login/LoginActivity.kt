@@ -65,10 +65,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             flowLifecycleScope {
                 loginUiState.collect { state ->
                     when (state) {
+                        is LoginState.Loading -> {
+                            showLoading()
+                        }
                         LoginState.Success -> {
+                            hideLoading()
                             moveToMainScreen()
                         }
                         is LoginState.Error -> {
+                            hideLoading()
                             handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }

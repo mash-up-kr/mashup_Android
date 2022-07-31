@@ -1,5 +1,6 @@
 package com.mashup.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.utils.ProgressbarUtil
 import com.mashup.utils.ToastUtil
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.widget.CommonDialog
@@ -37,6 +39,8 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     val isConnectedNetwork: Boolean
         get() = networkStateDetector.hasNetworkConnection()
+
+    private var loadingDialog: Dialog? = null
 
     protected val viewBinding: V by lazy {
         DataBindingUtil.inflate<V>(
@@ -121,6 +125,16 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
                 block.invoke(this)
             }
         }
+    }
+
+    fun showLoading() {
+        if (loadingDialog == null) {
+            loadingDialog = ProgressbarUtil.show(this)
+        }
+    }
+
+    fun hideLoading() {
+        loadingDialog?.dismiss()
     }
 
     protected fun showToast(text: String) {

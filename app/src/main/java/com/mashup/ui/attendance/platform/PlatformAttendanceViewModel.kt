@@ -28,6 +28,7 @@ class PlatformAttendanceViewModel @Inject constructor(
         _platformAttendanceState
 
     fun getPlatformAttendanceList() = mashUpScope {
+        _platformAttendanceState.value = PlatformAttendanceState.Loading
         val scheduleId = scheduleId ?: return@mashUpScope
         val response = attendanceRepository.getPlatformAttendanceList(scheduleId)
 
@@ -70,6 +71,7 @@ class PlatformAttendanceViewModel @Inject constructor(
 
 sealed interface PlatformAttendanceState {
     object Empty : PlatformAttendanceState
+    object Loading : PlatformAttendanceState
     data class Success(val data: TotalAttendanceResponse) : PlatformAttendanceState
     data class Error(val code: String) : PlatformAttendanceState
 }

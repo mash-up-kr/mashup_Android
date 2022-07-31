@@ -1,6 +1,7 @@
 package com.mashup.ui.attendance.crew
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,13 +18,11 @@ fun CrewList(
 ) {
     LazyColumn(
         modifier = modifier
-            .padding(8.dp)
             .padding(horizontal = 20.dp),
+        contentPadding = PaddingValues(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(
-            crewAttendanceList,
-            key = { item -> item.name }) { memberInfo ->
+        items(crewAttendanceList) { memberInfo ->
             CrewListItem(
                 modifier = Modifier.fillMaxWidth(),
                 memberInfo = memberInfo

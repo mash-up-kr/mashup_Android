@@ -14,8 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
+import com.mashup.network.errorcode.BAD_REQUEST
 import com.mashup.network.errorcode.DISCONNECT_NETWORK
-import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
@@ -96,6 +96,16 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     protected fun handleCommonError(code: String) {
         when (code) {
+            BAD_REQUEST -> {
+                CommonDialog(this).apply {
+                    setTitle(text = "오류 발생")
+                    setMessage(text = "잠시 후 다시 시도해주세요.")
+                    setPositiveButton {
+                        finish()
+                    }
+                    show()
+                }
+            }
             UNAUTHORIZED -> {
                 CommonDialog(this).apply {
                     setTitle(text = "주의")

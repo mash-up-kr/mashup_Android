@@ -1,5 +1,6 @@
 package com.mashup.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +15,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.utils.ProgressbarUtil
+import com.mashup.utils.ToastUtil
 import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.widget.CommonDialog
-import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,6 +40,8 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     val isConnectedNetwork: Boolean
         get() = networkStateDetector.hasNetworkConnection()
+
+    private var loadingDialog: Dialog? = null
 
     protected val viewBinding: V by lazy {
         DataBindingUtil.inflate<V>(
@@ -91,7 +96,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     protected fun handleCommonError(code: String) {
         when (code) {
-            UNAUTHORIZED -> {
+            UNAUTHORIZED, MEMBER_NOT_FOUND -> {
                 CommonDialog(this).apply {
                     setTitle(text = "주의")
                     setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")
@@ -123,10 +128,17 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         }
     }
 
-    protected fun showToast(text: String) {
-        MashUpToast(applicationContext).run {
-            setText(text)
-            show()
+    fun showLoading() {
+        if (loadingDialog == null) {
+            loadingDialog = ProgressbarUtil.show(this)
         }
+    }
+
+    fun hideLoading() {
+        loadingDialog?.dismiss()
+    }
+
+    protected fun showToast(text: String) {
+        ToastUtil.showToast(this, text)
     }
 }

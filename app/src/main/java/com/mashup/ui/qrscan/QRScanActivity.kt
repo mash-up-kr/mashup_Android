@@ -35,11 +35,16 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         flowLifecycleScope {
             viewModel.qrcodeState.collectLatest { qrcodeState ->
                 when (qrcodeState) {
-                    QRCodeState.SuccessAttendance -> {
+                    QRCodeState.Loading -> {
+                        showLoading()
+                    }
+                    QRCodeState.Success -> {
+                        hideLoading()
                         setResult(RESULT_OK)
                         finish()
                     }
                     is QRCodeState.Error -> {
+                        hideLoading()
                         handleCommonError(qrcodeState.code)
                         handleAttendanceErrorCode(qrcodeState)
                     }
@@ -62,16 +67,6 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         if (requestCameraPermission()) {
             cameraManager.startCamera()
         }
-    }
-
-    private fun showInvalidMessage(message: String) {
-//        viewBinding.tvInvalidMessage.run {
-//            visible()
-//            text = message
-//            postDelayed({
-//                gone()
-//            }, 3000L)
-//        }
     }
 
     private fun createCardAnalyzer() {
@@ -123,7 +118,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        showInvalidMessage(codeMessage)
+        showToast(codeMessage)
     }
 
     override fun onPause() {

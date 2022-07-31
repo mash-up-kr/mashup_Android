@@ -67,10 +67,13 @@ class SignUpViewModel @Inject constructor(
         }
 
         userDataSource.token = response.data?.token
+        userDataSource.memberId = response.data?.memberId
+        userDataSource.generateNumber = response.data?.generationNumber
         _signUpState.emit(SignUpState.Success)
     }
 
     fun requestInvalidSignUpCode() = mashUpScope {
+        _signUpState.emit(SignUpState.Loading)
         val response = memberRepository.validateSignUpCode(
             inviteCode = signUpCode.value,
             platform = platform.value.name
@@ -120,6 +123,7 @@ class SignUpViewModel @Inject constructor(
 }
 
 sealed interface SignUpState {
+    object Loading : SignUpState
     object Success : SignUpState
     object InvalidCode : SignUpState
     data class Error(val code: String) : SignUpState

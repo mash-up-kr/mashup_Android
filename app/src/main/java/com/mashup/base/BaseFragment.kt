@@ -1,5 +1,6 @@
 package com.mashup.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +17,9 @@ import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.utils.ProgressbarUtil
+import com.mashup.utils.ToastUtil
 import com.mashup.widget.CommonDialog
-import com.mashup.widget.MashUpToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,6 +30,9 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         get() = _viewBinding!!
 
     abstract val layoutId: Int
+
+    private var loadingDialog: Dialog? = null
+
 
     private val networkStateDetector: NetworkStatusDetector by lazy {
         NetworkStatusDetector(
@@ -124,10 +129,17 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         }
     }
 
-    protected fun showToast(text: String) {
-        MashUpToast(requireContext()).run {
-            setText(text)
-            show()
+    fun showLoading() {
+        if (loadingDialog == null) {
+            loadingDialog = ProgressbarUtil.show(requireContext())
         }
+    }
+
+    fun hideLoading() {
+        loadingDialog?.dismiss()
+    }
+
+    protected fun showToast(text: String) {
+        ToastUtil.showToast(requireContext(), text)
     }
 }

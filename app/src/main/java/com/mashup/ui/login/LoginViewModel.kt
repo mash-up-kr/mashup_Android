@@ -36,21 +36,17 @@ class LoginViewModel @Inject constructor(
     var isReady: Boolean = false
         private set
 
-    init {
-        ready()
-    }
-
     /**
      * Splash API 2초 딜레이를 위한 로직
      */
-    private fun ready() = viewModelScope.launch {
+    fun ready() = viewModelScope.launch {
         delay(2000L)
         isReady = true
         checkAutoLogin()
     }
 
     private fun checkAutoLogin() = mashUpScope {
-        if (userDataSource.token != null) {
+        if (!userDataSource.token.isNullOrBlank()) {
             _loginUiState.emit(LoginState.Success)
         }
     }
@@ -63,7 +59,14 @@ class LoginViewModel @Inject constructor(
         this.pwd.value = pwd
     }
 
+    fun clearUserData() {
+        userDataSource.token = ""
+        userDataSource.memberId = null
+        userDataSource.generateNumber = null
+    }
+
     fun requestLogin(id: String, pwd: String) = mashUpScope {
+        _loginUiState.emit(LoginState.Loading)
         val response = memberRepository.login(
             identification = id,
             password = pwd
@@ -86,6 +89,7 @@ class LoginViewModel @Inject constructor(
 }
 
 sealed interface LoginState {
+    object Loading : LoginState
     object Success : LoginState
     data class Error(val code: String) : LoginState
 }

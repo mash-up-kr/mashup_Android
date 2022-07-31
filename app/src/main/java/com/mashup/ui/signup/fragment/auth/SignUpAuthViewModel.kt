@@ -106,9 +106,11 @@ class SignUpAuthViewModel @Inject constructor(
                             SignUpIdState.Success(false)
                         }
                         Validation.EMPTY -> {
+                            buttonState.emit(SignUpButtonState.Disable)
                             SignUpIdState.Empty
                         }
                         else -> {
+                            buttonState.emit(SignUpButtonState.Disable)
                             SignUpIdState.Error(code = INVALID_MEMBER_ID)
                         }
                     }
@@ -139,14 +141,18 @@ class SignUpAuthViewModel @Inject constructor(
 
     private fun checkValidId() = mashUpScope {
         buttonState.emit(SignUpButtonState.Loading)
-        val response = memberRepository.validateId(id.value)
+        try {
+            val response = memberRepository.validateId(id.value)
 
-        if (!response.isSuccess() || response.data?.valid != true) {
+            if (!response.isSuccess() || response.data?.valid != true) {
+                buttonState.emit(SignUpButtonState.Disable)
+                idState.emit(SignUpIdState.Error(code = MEMBER_DUPLICATED_IDENTIFICATION))
+            } else {
+                buttonState.emit(SignUpButtonState.Enable)
+                idState.emit(SignUpIdState.Success(validId = response.data.valid))
+            }
+        } catch (ignore: Exception) {
             buttonState.emit(SignUpButtonState.Disable)
-            idState.emit(SignUpIdState.Error(code = MEMBER_DUPLICATED_IDENTIFICATION))
-        } else {
-            buttonState.emit(SignUpButtonState.Enable)
-            idState.emit(SignUpIdState.Success(validId = response.data.valid))
         }
     }
 

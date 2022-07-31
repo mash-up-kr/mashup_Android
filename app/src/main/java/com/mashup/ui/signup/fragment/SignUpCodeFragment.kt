@@ -1,7 +1,6 @@
 package com.mashup.ui.signup.fragment
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
@@ -45,13 +44,18 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
         flowViewLifecycleScope {
             signUpState.collectLatest { state ->
                 when (state) {
+                    SignUpState.Loading -> {
+                        showLoading()
+                    }
                     SignUpState.InvalidCode -> {
+                        hideLoading()
                         viewBinding.textFieldCode.run {
                             setDescriptionText("가입코드가 일치하지 않아요")
                             setFailedUiOfTextField()
                         }
                     }
                     SignUpState.Success -> {
+                        hideLoading()
                         requireActivity().run {
                             startActivity(
                                 Intent(requireContext(), MainActivity::class.java).apply {
@@ -63,6 +67,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                         }
                     }
                     is SignUpState.Error -> {
+                        hideLoading()
                         viewBinding.textFieldCode.run {
                             setDescriptionText("")
                             setEmptyUIOfTextField()
@@ -92,7 +97,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
-        viewBinding.btnSignUp.setOnButtonDebounceClickListener(this) {
+        viewBinding.btnSignUp.setOnButtonThrottleFirstClickListener(this) {
             viewModel.requestInvalidSignUpCode()
         }
     }
@@ -109,7 +114,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 "잠시 후 다시 시도해주세요."
             }
         }
-        Toast.makeText(requireContext(), codeMessage, Toast.LENGTH_LONG).show()
+        showToast(codeMessage)
     }
 
     private fun setUiOfCodeState(codeState: CodeState) {

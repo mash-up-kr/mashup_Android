@@ -3,18 +3,17 @@ package com.mashup.ui.qrscan
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.R
 import com.mashup.compose.colors.Black
-import com.mashup.compose.colors.White
-import com.mashup.compose.typography.MashTextView
+import com.mashup.compose.theme.MashUpTheme
 
 @Composable
 fun CongratsAttendanceScreen(
@@ -51,20 +50,19 @@ fun AnimatedVisibilityScope.CongratsImage(modifier: Modifier = Modifier) {
                 enter = scaleIn(),
                 exit = scaleOut()
             ),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.img_sucess_attendance),
+            painter = painterResource(id = R.drawable.img_success_attendance),
             contentDescription = null
         )
+    }
+}
 
-        MashTextView(
-            modifier = Modifier.padding(top = 40.dp),
-            text = "1부 출석 완료!",
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            color = White
-        )
+@Preview
+@Composable
+fun AttendanceSuccessScreenPrev() {
+    MashUpTheme {
+        CongratsAttendanceScreen(true)
     }
 }

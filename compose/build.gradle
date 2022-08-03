@@ -45,6 +45,7 @@ dependencies {
 
     api "androidx.compose.ui:ui:$compose_version"
     api "androidx.compose.material:material:$compose_version"
+    api 'androidx.compose.material3:material3:1.0.0-alpha14'
     api "androidx.compose.ui:ui-tooling-preview:$compose_version"
     api 'androidx.activity:activity-compose:1.4.0'
     androidTestApi "androidx.compose.ui:ui-test-junit4:$compose_version"

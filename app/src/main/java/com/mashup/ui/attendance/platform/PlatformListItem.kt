@@ -13,10 +13,15 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mashup.R
 import com.mashup.compose.colors.*
@@ -48,9 +53,16 @@ fun PlatformListItem(
             .clickable {
                 onClickPlatform(platformInfo)
             }
+//            ambientColor 안되면 이거로...도전..
+//            .drawColoredShadow(
+//                color = colorResource(id = R.color.black),
+//                offsetY = 20.dp,
+//                offsetX = 20.dp
+//            ),
             .shadow(
-                elevation = 2.dp,
+                elevation = 20.dp,
                 shape = CardListShape,
+                ambientColor = colorResource(id = R.color.black_10),
             ),
         shape = CardListShape
     ) {
@@ -93,6 +105,38 @@ fun PlatformListItem(
     }
 }
 
+
+fun Modifier.drawColoredShadow(
+    color: Color,
+    alpha: Float = 0.1f,
+    borderRadius: Dp = 0.dp,
+    shadowRadius: Dp = 20.dp,
+    offsetY: Dp = 0.dp,
+    offsetX: Dp = 0.dp
+) = this.drawBehind {
+    val transparentColor = android.graphics.Color.toArgb(color.copy(alpha = 0.0f).value.toLong())
+    val shadowColor = android.graphics.Color.toArgb(color.copy(alpha = alpha).value.toLong())
+    this.drawIntoCanvas {
+        val paint = Paint()
+        val frameworkPaint = paint.asFrameworkPaint()
+        frameworkPaint.color = transparentColor
+        frameworkPaint.setShadowLayer(
+            shadowRadius.toPx(),
+            offsetX.toPx(),
+            offsetY.toPx(),
+            shadowColor
+        )
+        it.drawRoundRect(
+            0f,
+            0f,
+            this.size.width,
+            this.size.height,
+            borderRadius.toPx(),
+            borderRadius.toPx(),
+            paint
+        )
+    }
+}
 
 @Composable
 fun PlatformIcon(

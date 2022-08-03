@@ -1,12 +1,9 @@
 package com.mashup.ui.attendance.platform
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,12 +29,12 @@ fun PlatformList(
             )
         }
         LazyVerticalGrid(
+            contentPadding = PaddingValues(vertical = 12.dp),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            cells = GridCells.Fixed(2)
+            columns = GridCells.Fixed(2)
         ) {
             items(
                 items = totalAttendanceResponse.platformInfos,

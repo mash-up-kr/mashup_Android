@@ -14,57 +14,58 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_mypage_attendance_history_list" />
 
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:id="@+id/layout_title"
-			android:layout_width="match_parent"
-			android:layout_height="74dp"
-			android:background="@color/gray950"
-			android:paddingStart="20dp"
-			android:paddingEnd="20dp"
-			app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:background="@color/gray950"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                tools:text="김매시업"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="김매시업" />
 
-			<androidx.appcompat.widget.AppCompatTextView
-				android:id="@+id/tv_platform"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-				android:textColor="@color/white"
-				android:text="@string/total_attendance_score"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintStart_toStartOf="@id/tv_name"
-				app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_attendance_score"
+                android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
-			<androidx.appcompat.widget.AppCompatImageView
-				android:id="@+id/btn_detail"
-				android:layout_width="18dp"
-				android:layout_height="18dp"
-				android:layout_marginStart="2dp"
-				android:src="@drawable/ic_info"
-				app:layout_constraintBottom_toBottomOf="@id/tv_platform"
-				app:layout_constraintStart_toEndOf="@id/tv_platform"
-				app:layout_constraintTop_toTopOf="@id/tv_platform" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_detail"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/ic_info"
+                app:layout_constraintBottom_toBottomOf="@id/tv_platform"
+                app:layout_constraintStart_toEndOf="@id/tv_platform"
+                app:layout_constraintTop_toTopOf="@id/tv_platform" />
 
-			<androidx.appcompat.widget.AppCompatTextView
-				android:id="@+id/tv_num"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="19dp"
-				android:textAppearance="@style/TextAppearance.Mashup.Header2_20_B"
-				android:textColor="@color/white"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				tools:text="1점" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="19dp"
+                android:textAppearance="@style/TextAppearance.Mashup.Header2_20_B"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="1점" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

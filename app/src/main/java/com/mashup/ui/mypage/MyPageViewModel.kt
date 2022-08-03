@@ -49,22 +49,22 @@ class MyPageViewModel @Inject constructor(
             if (response.isSuccess()) {
                 val list = mutableListOf<AttendanceModel>()
 
-                if (response.data?.isNotEmpty() == true) {
+                if (response.data?.scoreHistoryResponseList?.isNotEmpty() == true) {
                     list += AttendanceModel(
                         0,
                         MyPageAdapterType.TITLE,
                         profile.also {
-                            it.score = response.data.first().totalScore
+                            it.score = response.data.scoreHistoryResponseList.first().totalScore
                         }, null, null
                     )
 
                     list += AttendanceModel(
                         0, MyPageAdapterType.SCORE,
                         profile.also {
-                            it.score = response.data.first().totalScore
+                            it.score = response.data.scoreHistoryResponseList.first().totalScore
                         }, null, null
                     )
-                    response.data.forEach { it ->
+                    response.data.scoreHistoryResponseList.forEach { it ->
                         list += AttendanceModel(
                             0, MyPageAdapterType.LIST_LEVEL, null, it.generationNumber, null
                         )

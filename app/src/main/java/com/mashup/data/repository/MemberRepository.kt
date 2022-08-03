@@ -63,6 +63,10 @@ class MemberRepository @Inject constructor(
         )
     }
 
+    suspend fun getMember(): Response<MemberInfoResponse> {
+        return memberDao.getMember()
+    }
+
     suspend fun deleteMember(): Response<Any> {
         return memberDao.deleteMember()
     }

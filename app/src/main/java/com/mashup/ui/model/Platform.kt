@@ -7,5 +7,11 @@ enum class Platform(val detailName: String) {
     WEB("Web"),
     SPRING("Spring"),
     NODE("Node"),
-    NONE("")
+    NONE("");
+
+    companion object {
+        fun getPlatform(platformName: String?): Platform {
+            return Platform.values().find { it.name == platformName?.uppercase() } ?: NONE
+        }
+    }
 }

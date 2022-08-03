@@ -62,15 +62,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                             bottomSheetDialog.show()
                         }
                     }
-                    /*
-                    수동 다음 아이템 당겨오기
-                        val lastVisibleItemPosition =
-                             (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                         val itemTotalCount = recyclerView.adapter!!.itemCount - 2 // 어댑터에 등록된 아이템의 총 개수 -1
-                         if (lastVisibleItemPosition >= itemTotalCount) {
-                             viewModel.getItem(++page)
-                         }
-                     */
                 }
             })
         }
@@ -79,6 +70,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     override fun initObserves() {
         viewModel.attendanceList.observe(viewLifecycleOwner) { it ->
             attendanceAdapter.submitList(it)
+            it.firstOrNull()?.profile?.let {
+                viewBinding.tvName.text = it.name
+                viewBinding.tvNum.text = it.getAttendanceScore()
+            }
         }
     }
 

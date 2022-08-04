@@ -1,4 +1,4 @@
-package com.mashup.ui.event.model
+package com.mashup.ui.schedule.model
 
 data class EventDetail(
     val id: Int,

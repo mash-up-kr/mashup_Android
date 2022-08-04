@@ -1,4 +1,4 @@
-package com.mashup.ui.event
+package com.mashup.ui.schedule
 
 import android.content.Context
 import android.content.Intent
@@ -8,16 +8,16 @@ import com.mashup.data.dto.AttendanceCodeResponse
 import com.mashup.data.dto.ContentResponse
 import com.mashup.data.dto.EventResponse
 import com.mashup.data.dto.ScheduleResponse
-import com.mashup.databinding.ActivityEventDetailBinding
-import com.mashup.ui.event.model.Body
-import com.mashup.ui.event.model.EventDetail
-import com.mashup.ui.event.model.EventDetailType
-import com.mashup.ui.event.model.Header
+import com.mashup.databinding.ActivityScheduleDetailBinding
+import com.mashup.ui.schedule.model.Body
+import com.mashup.ui.schedule.model.EventDetail
+import com.mashup.ui.schedule.model.EventDetailType
+import com.mashup.ui.schedule.model.Header
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EventDetailActivity : BaseActivity<ActivityEventDetailBinding>() {
-    override val layoutId = R.layout.activity_event_detail
+class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
+    override val layoutId = R.layout.activity_schedule_detail
 
     private val eventDetailAdapter by lazy {
         EventDetailAdapter().apply {
@@ -107,7 +107,7 @@ class EventDetailActivity : BaseActivity<ActivityEventDetailBinding>() {
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, EventDetailActivity::class.java)
+        fun newIntent(context: Context) = Intent(context, ScheduleDetailActivity::class.java)
     }
 
 }

@@ -29,8 +29,8 @@
 			tools:src="@drawable/img_profile_android" />
 
 		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_name"
-			android:layout_width="wrap_content"
+			android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@{model.profile.name}"
 			android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
@@ -40,20 +40,20 @@
 			app:layout_constraintTop_toBottomOf="@id/iv_mashong"
 			tools:text="Android" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/tv_platform"
-			android:layout_width="wrap_content"
-			android:layout_height="26dp"
-			android:layout_marginTop="6dp"
-			android:background="@drawable/icon_circle"
-			android:gravity="center"
-			android:paddingHorizontal="10dp"
-			android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-			app:layout_constraintEnd_toEndOf="@id/tv_name"
-			app:layout_constraintStart_toStartOf="@id/tv_name"
-			app:layout_constraintTop_toBottomOf="@id/tv_name"
-			app:textPlatformColor="@{model.profile.platform}"
-			tools:text="Product Design" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_platform"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/icon_circle"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            app:layout_constraintEnd_toEndOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:textPlatformColor="@{model.profile.platform}"
+            tools:text="Product Design" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_setting"

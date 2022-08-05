@@ -131,7 +131,7 @@ fun PlatformInfo(platform: String, modifier: Modifier = Modifier) {
                 R.drawable.img_statusprofile_node
             }
             else -> {
-                R.drawable.ic_img_placeholder_sleeping
+                R.drawable.img_placeholder_sleeping
             }
         }
     }

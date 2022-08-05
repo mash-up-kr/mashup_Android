@@ -35,17 +35,23 @@ data class ScheduleResponse(
     }
 
     fun getDDay(): String {
-        return if (dateCount > 0) {
-            "D-$dateCount"
-        } else {
-            "D+${-dateCount}"
+        return when {
+            dateCount == 0 -> {
+                "D-Day"
+            }
+            dateCount > 0 -> {
+                "D+$dateCount"
+            }
+            else -> {
+                "D${dateCount}"
+            }
         }
     }
 
     @SuppressLint("SimpleDateFormat")
     fun getTimeLine(): String {
         return try {
-            val timeLineFormat = SimpleDateFormat("a hh:mm")
+            val timeLineFormat = SimpleDateFormat("a hh:mm", Locale.KOREA)
             "${timeLineFormat.format(startedAt)} - ${timeLineFormat.format(endedAt)}"
         } catch (ignore: Exception) {
             "오류로 인해 알 수 없음"

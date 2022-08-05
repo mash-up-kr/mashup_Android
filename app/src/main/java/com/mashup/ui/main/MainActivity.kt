@@ -76,16 +76,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun navigationTab(toDestination: MainTab) {
-        navController.navigate(
-            when (toDestination) {
-                MainTab.EVENT -> {
-                    R.id.eventFragment
-                }
-                MainTab.MY_PAGE -> {
-                    R.id.myPageFragment
-                }
+        val currentNavigationId = navController.currentDestination?.id
+        val newNavigationId = when (toDestination) {
+            MainTab.EVENT -> {
+                R.id.eventFragment
             }
-        )
+            MainTab.MY_PAGE -> {
+                R.id.myPageFragment
+            }
+        }
+        if (currentNavigationId != newNavigationId) {
+            navController.navigate(newNavigationId)
+        }
     }
 
     private fun setUIOfTab(tab: MainTab) = with(viewBinding.layoutMainTab) {

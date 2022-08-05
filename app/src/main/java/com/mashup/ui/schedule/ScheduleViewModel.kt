@@ -4,6 +4,7 @@ import com.mashup.base.BaseViewModel
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
+import com.mashup.data.repository.AttendanceRepository
 import com.mashup.data.repository.ScheduleRepository
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.schedule.model.ScheduleCard
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class ScheduleViewModel @Inject constructor(
     private val userDataSource: UserDataSource,
     private val scheduleRepository: ScheduleRepository,
+    private val attendanceRepository: AttendanceRepository
 ) : BaseViewModel() {
     private val _scheduleState = MutableStateFlow<ScheduleState>(ScheduleState.Empty)
     val scheduleState: StateFlow<ScheduleState> = _scheduleState
@@ -52,7 +54,7 @@ class ScheduleViewModel @Inject constructor(
                         }
                     },
                     scheduleList = if (response.data.scheduleList.isEmpty()) {
-                        listOf(ScheduleCard.EmptySchedule)
+                        listOf(ScheduleCard.EmptySchedule())
                     } else {
                         response.data.scheduleList.map { mapperToScheduleCard(it) }
                     }
@@ -67,9 +69,29 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun mapperToScheduleCard(scheduleResponse: ScheduleResponse): ScheduleCard {
+    private suspend fun mapperToScheduleCard(scheduleResponse: ScheduleResponse): ScheduleCard {
+        if (scheduleResponse.eventList.isEmpty()) {
+            return ScheduleCard.EmptySchedule(scheduleResponse)
+        }
+
+        val attendResponse = attendanceRepository.getScheduleAttendanceInfo(
+            scheduleResponse.scheduleId
+        )
+
         return when {
-            scheduleResponse.ev
+            !attendResponse.isSuccess() || attendResponse.data == null
+                || attendResponse.data.attendanceInfos.size < 2 -> {
+                ScheduleCard.InProgressSchedule(
+                    scheduleResponse = scheduleResponse,
+                    attendanceInfo = attendResponse.data
+                )
+            }
+            else -> {
+                ScheduleCard.EndSchedule(
+                    scheduleResponse = scheduleResponse,
+                    attendanceInfo = attendResponse.data
+                )
+            }
         }
     }
 }

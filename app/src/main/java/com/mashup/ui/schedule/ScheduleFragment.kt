@@ -7,6 +7,8 @@ import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
+import com.mashup.ui.schedule.adapter.OnItemClickListener
+import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -20,8 +22,17 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
     private val scheduleAdapter by lazy {
         ScheduleViewPagerAdapter(
             object : OnItemClickListener {
-                override fun onClickAttendanceList() {
-                    startActivity(ScheduleDetailActivity.newIntent(requireContext()))
+                override fun onClickEmptySchedule() {
+                    showToast("볼 수 있는 일정이 없어요..!")
+                }
+
+                override fun onClickAttendanceList(scheduleId: Int) {
+                    startActivity(
+                        ScheduleDetailActivity.newIntent(
+                            requireContext(), scheduleId
+                        )
+                    )
+
                 }
 
                 override fun onClickCrewAttendanceActivity(scheduleId: Int) {
@@ -75,6 +86,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                     is ScheduleState.Success -> {
                         hideLoading()
                         setUiOfScheduleTitle(state.scheduleTitleState)
+                        scheduleAdapter.submitList(state.scheduleList)
                     }
                     is ScheduleState.Error -> {
                         hideLoading()

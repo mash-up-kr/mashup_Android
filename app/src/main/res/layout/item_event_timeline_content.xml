@@ -36,7 +36,6 @@
             android:layout_marginStart="8dp"
             android:text="@{model.body.title}"
             android:textAppearance="@style/TextAppearance.Mashup.Subtitle2_16_SB"
-
             android:textColor="@color/gray700"
             app:layout_constraintStart_toEndOf="@id/tv_number"
             app:layout_constraintTop_toTopOf="parent"
@@ -58,7 +57,7 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.body.startedAt}"
+            android:text="@{model.body.getTimeStampStr()}"
             android:textAppearance="@style/TextAppearance.Mashup.Caption1_13_M"
             android:textColor="@color/gray400"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"

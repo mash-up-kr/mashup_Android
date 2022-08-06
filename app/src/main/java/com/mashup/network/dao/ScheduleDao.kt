@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ScheduleDao {
-    @GET("api/v1/schedule/{id}")
+    @GET("api/v1/schedules/{id}")
     suspend fun getSchedule(
         @Path("id") id: Int
     ): Response<ScheduleResponse>

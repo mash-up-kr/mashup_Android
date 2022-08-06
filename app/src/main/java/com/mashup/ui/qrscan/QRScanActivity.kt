@@ -47,9 +47,9 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                         hideLoading()
                         handleCommonError(qrcodeState.code)
                         handleAttendanceErrorCode(qrcodeState)
+                        cameraManager.startCamera()
                     }
                 }
-                cameraManager.startCamera()
             }
         }
     }

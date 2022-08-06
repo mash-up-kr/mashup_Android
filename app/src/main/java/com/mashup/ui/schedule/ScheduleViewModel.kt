@@ -1,6 +1,7 @@
 package com.mashup.ui.schedule
 
 import com.mashup.base.BaseViewModel
+import com.mashup.data.datastore.AttendanceDataSource
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
@@ -9,18 +10,24 @@ import com.mashup.data.repository.ScheduleRepository
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.schedule.model.ScheduleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
     private val userDataSource: UserDataSource,
+    private val attendanceDataSource: AttendanceDataSource,
     private val scheduleRepository: ScheduleRepository,
     private val attendanceRepository: AttendanceRepository
 ) : BaseViewModel() {
     private val _scheduleState = MutableStateFlow<ScheduleState>(ScheduleState.Empty)
     val scheduleState: StateFlow<ScheduleState> = _scheduleState
+
+    private val _showCoachMark = MutableSharedFlow<Unit>()
+    val showCoachMark: SharedFlow<Unit> = _showCoachMark
 
     init {
         getScheduleList()
@@ -57,9 +64,11 @@ class ScheduleViewModel @Inject constructor(
                         listOf(ScheduleCard.EmptySchedule())
                     } else {
                         response.data.scheduleList.map { mapperToScheduleCard(it) }
-                    }
+                    },
+                    schedulePosition = getSchedulePosition(response.data.scheduleList)
                 )
             )
+            showCoachMark(response.data.scheduleList)
         }
     }
 
@@ -94,6 +103,21 @@ class ScheduleViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getSchedulePosition(schedules: List<ScheduleResponse>): Int {
+        return schedules.size - schedules.filter { it.dateCount >= 0 }.size
+    }
+
+    private fun showCoachMark(schedules: List<ScheduleResponse>) {
+        mashUpScope {
+            val showCoachMark = schedules.any { it.dateCount >= 0 }
+                && !attendanceDataSource.coachMark
+            if (showCoachMark) {
+                attendanceDataSource.coachMark = true
+                _showCoachMark.emit(Unit)
+            }
+        }
+    }
 }
 
 sealed interface ScheduleTitleState {
@@ -107,7 +131,8 @@ sealed interface ScheduleState {
     object Loading : ScheduleState
     data class Success(
         val scheduleTitleState: ScheduleTitleState,
-        val scheduleList: List<ScheduleCard>
+        val scheduleList: List<ScheduleCard>,
+        val schedulePosition: Int
     ) : ScheduleState
 
     data class Error(val code: String) : ScheduleState

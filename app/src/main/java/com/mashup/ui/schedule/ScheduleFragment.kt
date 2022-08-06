@@ -1,16 +1,24 @@
 package com.mashup.ui.schedule
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
+import com.mashup.ui.extensions.gone
+import com.mashup.ui.extensions.visible
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+
 
 @AndroidEntryPoint
 class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
@@ -32,10 +40,10 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                             requireContext(), scheduleId
                         )
                     )
-
                 }
 
                 override fun onClickCrewAttendanceActivity(scheduleId: Int) {
+                    hideCoachMark()
                     startActivity(
                         PlatformAttendanceActivity.newIntent(
                             requireContext(),
@@ -71,6 +79,18 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                 page.translationX = ((position) * -(pageMarginPx + pagerWidth))
                 page.scaleY = 1 - (0.1f * kotlin.math.abs(position))
             }
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    if (viewBinding.layoutCoachMark.root.visibility == View.VISIBLE) {
+                        viewBinding.layoutCoachMark.root.gone()
+                    }
+                }
+            })
             adapter = scheduleAdapter
             offscreenPageLimit = 4
         }
@@ -87,6 +107,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                         hideLoading()
                         setUiOfScheduleTitle(state.scheduleTitleState)
                         scheduleAdapter.submitList(state.scheduleList)
+                        viewBinding.vpSchedule.currentItem = state.schedulePosition
                     }
                     is ScheduleState.Error -> {
                         hideLoading()
@@ -97,6 +118,14 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                     }
                 }
             }
+        }
+
+        flowViewLifecycleScope {
+            viewModel.showCoachMark
+                .debounce(1000L)
+                .collectLatest {
+                    showCoachMark()
+                }
         }
     }
 
@@ -114,7 +143,37 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
         }
     }
 
+    private fun showCoachMark() = with(viewBinding.layoutCoachMark.root) {
+        visible()
+        alpha = 0.0f
+
+        animate()
+            .translationY(TRANSLATION_COACH_MARK_Y)
+            .alpha(1.0f)
+
+        postDelayed({
+            if (isViewBindingExist()) {
+                hideCoachMark()
+            }
+        }, 5000)
+    }
+
+    private fun hideCoachMark() = with(viewBinding.layoutCoachMark.root) {
+        if (visibility == View.GONE) return@with
+        animate()
+            .translationY(0f)
+            .alpha(0.0f)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    gone()
+                }
+            })
+    }
+
     companion object {
+        private const val TRANSLATION_COACH_MARK_Y = 10f
+
         fun newInstance() = ScheduleFragment()
     }
 }

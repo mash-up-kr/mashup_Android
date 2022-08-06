@@ -40,10 +40,10 @@ data class ScheduleResponse(
                 "D-Day"
             }
             dateCount > 0 -> {
-                "D+$dateCount"
+                "D-$dateCount"
             }
             else -> {
-                "D${dateCount}"
+                "D+${-dateCount}"
             }
         }
     }

@@ -1,5 +1,8 @@
 package com.mashup.ui.schedule.model
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 data class EventDetail(
     val id: Int,
     val type: EventDetailType,
@@ -9,33 +12,32 @@ data class EventDetail(
 
 data class Header(
     val eventId: Int,
-    val startedAt: String,
-    val endedAt: String
+    val startedAt: Date,
+    val endedAt: Date
 ) {
-    companion object {
-        val EMPTY = Header(
-            eventId = 1,
-            startedAt = "2021-07-02T15:30:00",
-            endedAt = "2023-07-02T16:30:00",
-        )
-    }
-
     fun getHeader() = "${eventId}부"
-    fun getTimeStampStr() = "AM 11:00 - PM 2:00"
+    fun getTimeStampStr(): String {
+        return try {
+            val timeLineFormat = SimpleDateFormat("a hh:mm", Locale.ENGLISH)
+            "${timeLineFormat.format(startedAt)} - ${timeLineFormat.format(endedAt)}"
+        } catch (ignore: Exception) {
+            "??:?? - ??:??"
+        }
+    }
 }
 
 data class Body(
     val contentId: String,
     val title: String,
     val content: String,
-    val startedAt: String,
+    val startedAt: Date,
 ) {
-    companion object {
-        val EMPTY = Body(
-            contentId = "1",
-            title = "안드로이드 팀 세미나",
-            content = "Android Crew",
-            startedAt = "PM 2:30"
-        )
+    fun getTimeStampStr(): String {
+        return try {
+            val timeLineFormat = SimpleDateFormat("a hh:mm", Locale.ENGLISH)
+            timeLineFormat.format(startedAt)
+        } catch (ignore: Exception) {
+            "??:??"
+        }
     }
 }

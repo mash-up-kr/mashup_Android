@@ -3,8 +3,10 @@ package com.mashup.ui.schedule
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
@@ -15,13 +17,15 @@ import com.mashup.ui.extensions.gone
 import com.mashup.ui.extensions.visible
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
+import com.mashup.ui.schedule.detail.ScheduleDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 
 
 @AndroidEntryPoint
-class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
+class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
@@ -61,8 +65,18 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
     }
 
     private fun setUi() {
+        setUiOfSwipeRefreshLayout()
         setUiOfRefreshButton()
         setUiOfViewPager()
+    }
+
+    private fun setUiOfSwipeRefreshLayout() {
+        viewBinding.layoutSwipe.apply {
+            setOnRefreshListener(this@ScheduleFragment)
+            setColorSchemeColors(
+                ContextCompat.getColor(requireContext(), R.color.brand500)
+            )
+        }
     }
 
     private fun setUiOfRefreshButton() {
@@ -175,5 +189,10 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
         private const val TRANSLATION_COACH_MARK_Y = 10f
 
         fun newInstance() = ScheduleFragment()
+    }
+
+    override fun onRefresh() {
+        viewModel.getScheduleList()
+        viewBinding.layoutSwipe.isRefreshing = false
     }
 }

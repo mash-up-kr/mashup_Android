@@ -1,4 +1,4 @@
-package com.mashup.ui.schedule
+package com.mashup.ui.schedule.detail
 
 import android.view.LayoutInflater
 import android.view.View
@@ -71,12 +71,6 @@ class EventDetailAdapter :
 
     interface OnItemEventListener {
         fun onExitEventClick()
-    }
-
-    private var mListener: OnItemEventListener? = null
-
-    fun setOnItemClickListener(listener: OnItemEventListener?) {
-        mListener = listener
     }
 }
 

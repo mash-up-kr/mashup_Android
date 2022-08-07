@@ -5,9 +5,9 @@ import android.content.Intent
 import android.webkit.WebViewClient
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_TITLE_KEY
+import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.databinding.ActivityWebViewBinding
-import com.mashup.ui.constant.EXTRA_TITLE_KEY
-import com.mashup.ui.constant.EXTRA_URL_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +44,13 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
                 defaultTextEncodingName = "UTF-8"
             }
             webViewUrl?.run { loadUrl(this) }
+            setOnScrollChangeListener { view, _, _, _, _ ->
+                if (view.canScrollVertically(-1)) {
+                    viewBinding.toolbar.showDivider()
+                } else {
+                    viewBinding.toolbar.hideDivider()
+                }
+            }
         }
     }
 

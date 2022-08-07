@@ -31,6 +31,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     override fun initViews() {
         initTextField()
         initButton()
+        initScrollView()
     }
 
     override fun initObserves() {
@@ -54,6 +55,14 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                     setUiOfPwdCheckState(authScreenState.pwdState, authScreenState.pwdCheckState)
                 }
             }
+        }
+    }
+
+    private fun initScrollView() {
+        viewBinding.scrollView.setOnScrollChangeListener { view, _, _, _, _ ->
+            activityViewModel.setToolbarDividerVisible(
+                view.canScrollVertically(-1)
+            )
         }
     }
 

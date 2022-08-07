@@ -12,6 +12,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.network.errorcode.BAD_REQUEST
@@ -38,6 +40,8 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         )
     }
 
+    private var animationType: NavigationAnimationType? = null
+
     val isConnectedNetwork: Boolean
         get() = networkStateDetector.hasNetworkConnection()
 
@@ -55,6 +59,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         setContentView(viewBinding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        initAnimationType()
         initWindowInset()
         initViews()
         initObserves()
@@ -92,6 +97,22 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         )
         ViewCompat.setWindowInsetsAnimationCallback(viewBinding.root, deferringInsetsListener)
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root, deferringInsetsListener)
+    }
+
+    private fun initAnimationType() {
+        when (intent.getSerializableExtra(EXTRA_ANIMATION)) {
+            NavigationAnimationType.SLIDE -> {
+                animationType = NavigationAnimationType.SLIDE
+            }
+            NavigationAnimationType.PULL -> {
+                animationType = NavigationAnimationType.PULL
+            }
+        }
+        animationType?.run {
+            overridePendingTransition(
+                enterIn, enterOut
+            )
+        }
     }
 
     protected fun handleCommonError(code: String) {
@@ -150,5 +171,15 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     protected fun showToast(text: String) {
         ToastUtil.showToast(this, text)
+    }
+
+    override fun finish() {
+        super.finish()
+        animationType?.run {
+            overridePendingTransition(
+                0,
+                exitOut
+            )
+        }
     }
 }

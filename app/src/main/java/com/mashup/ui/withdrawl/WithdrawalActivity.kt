@@ -7,7 +7,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
 import com.mashup.common.Validation
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityWithdrawalBinding
 import com.mashup.ui.extensions.setEmptyUIOfTextField
 import com.mashup.ui.extensions.setFailedUiOfTextField
@@ -116,7 +118,10 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
     }
 
     companion object {
-        fun newInstance(context: Context) = Intent(context, WithdrawalActivity::class.java)
+        fun newInstance(context: Context) =
+            Intent(context, WithdrawalActivity::class.java).apply {
+                putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
+            }
     }
 
     override val layoutId: Int = R.layout.activity_withdrawal

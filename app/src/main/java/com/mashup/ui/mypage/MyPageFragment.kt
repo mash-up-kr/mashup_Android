@@ -9,6 +9,7 @@ import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
 import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
@@ -64,6 +65,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
             it.firstOrNull()?.profile?.let {
                 viewBinding.tvTitle.text = it.name
                 viewBinding.tvNum.text = it.getAttendanceScore()
+            }
+        }
+
+        flowViewLifecycleScope {
+            viewModel.errorCode.collectLatest {
+                handleCommonError(it)
             }
         }
     }

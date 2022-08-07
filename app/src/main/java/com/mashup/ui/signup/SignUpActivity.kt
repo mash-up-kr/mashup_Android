@@ -2,6 +2,7 @@ package com.mashup.ui.signup
 
 import android.content.Context
 import android.content.Intent
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -10,9 +11,12 @@ import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySignUpBinding
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
+
+    private val viewModel: SignUpViewModel by viewModels()
 
     private val navController by lazy {
         val navHostFragment =
@@ -26,6 +30,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         }
         viewBinding.toolbar.setOnCloseButtonClickListener {
             finish()
+        }
+    }
+
+    override fun initObserves() {
+        super.initObserves()
+        flowLifecycleScope {
+            viewModel.showToolbarDivider.collectLatest { isVisible ->
+                if (isVisible) {
+                    viewBinding.toolbar.showDivider()
+                } else {
+                    viewBinding.toolbar.hideDivider()
+                }
+            }
         }
     }
 

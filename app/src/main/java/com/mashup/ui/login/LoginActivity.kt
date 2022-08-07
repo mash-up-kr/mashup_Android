@@ -15,10 +15,11 @@ import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
+import com.mashup.ui.constant.EXTRA_LOGOUT
+import com.mashup.ui.constant.EXTRA_WITH_DRAWL
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -28,20 +29,34 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        if (intent.getBooleanExtra(EXTRA_CLEAR_USER, false)) {
-            viewModel.clearUserData()
-            viewModel.ready()
-        } else {
-            viewModel.ready()
-        }
     }
 
     override fun initViews() {
+        initLoginState()
         initTextField()
         initSplash()
         initButtons()
         initSplashPreDraw()
+    }
+
+    private fun initLoginState() {
+        val isRequestLogOut = intent.getBooleanExtra(EXTRA_LOGOUT, false)
+        val isRequestWithDrawl = intent.getBooleanExtra(EXTRA_WITH_DRAWL, false)
+
+        if (isRequestLogOut || isRequestWithDrawl) {
+            viewModel.clearUserData()
+        }
+
+        when {
+            isRequestWithDrawl -> {
+                showToast("회원탈퇴 완료되었어요")
+            }
+            isRequestLogOut -> {
+                showToast("로그아웃 되었어요")
+            }
+        }
+
+        viewModel.ready()
     }
 
     private fun initSplash() {
@@ -156,11 +171,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         get() = R.layout.activity_login
 
     companion object {
-        private const val EXTRA_CLEAR_USER = "EXTRA_CLEAR_USER"
 
-        fun newIntent(context: Context): Intent {
+        fun newIntent(
+            context: Context,
+            isLogOut: Boolean = false,
+            isWithDrawl: Boolean = false
+        ): Intent {
             return Intent(context, LoginActivity::class.java).apply {
-                putExtra(EXTRA_CLEAR_USER, true)
+                putExtra(EXTRA_LOGOUT, isLogOut)
+                putExtra(EXTRA_WITH_DRAWL, isWithDrawl)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }

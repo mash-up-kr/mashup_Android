@@ -28,6 +28,11 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_auth
 
+    override fun onResume() {
+        super.onResume()
+        activityViewModel.setToolbarCloseButtonVisible(false)
+    }
+
     override fun initViews() {
         initTextField()
         initButton()

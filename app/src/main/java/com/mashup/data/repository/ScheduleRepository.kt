@@ -1,6 +1,7 @@
 package com.mashup.data.repository
 
 import com.mashup.common.Response
+import com.mashup.data.dto.ScheduleListResponse
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.network.dao.ScheduleDao
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class ScheduleRepository @Inject constructor(
         )
     }
 
-    suspend fun getScheduleList(generationNumber: Int): Response<List<ScheduleResponse>> {
+    suspend fun getScheduleList(generationNumber: Int): Response<ScheduleListResponse> {
         return scheduleDao.getScheduleList(
             generationNumber = generationNumber
         )

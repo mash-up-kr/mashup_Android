@@ -140,11 +140,11 @@ fun SeminarItemsPrev() {
                 name = "가길동",
                 attendanceInfos = listOf(
                     AttendanceInfo(
-                        status = "ATTEND",
+                        status = "ATTENDANCE",
                         attendanceAt = Date()
                     ),
                     AttendanceInfo(
-                        status = "ATTEND",
+                        status = "ATTENDANCE",
                         attendanceAt = Date()
                     )
                 )

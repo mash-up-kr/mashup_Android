@@ -148,6 +148,8 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
         loadingDialog?.dismiss()
     }
 
+    protected fun isViewBindingExist() = _viewBinding != null
+
     protected fun showToast(text: String) {
         ToastUtil.showToast(requireContext(), text)
     }

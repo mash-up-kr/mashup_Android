@@ -37,7 +37,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 setNegativeButton()
                 setPositiveButton {
                     startActivity(
-                        LoginActivity.newIntent(this@SettingActivity)
+                        LoginActivity.newIntent(
+                            context = this@SettingActivity,
+                            isLogOut = true
+                        )
                     )
                     finish()
                 }

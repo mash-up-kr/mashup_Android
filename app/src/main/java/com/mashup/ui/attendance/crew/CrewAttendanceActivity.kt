@@ -25,7 +25,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
     }
 
     private fun initButton() {
-        viewBinding.toolbar.setOnCloseButtonClickListener {
+        viewBinding.toolbar.setOnBackButtonClickListener {
             finish()
         }
     }

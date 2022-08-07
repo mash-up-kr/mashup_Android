@@ -45,17 +45,17 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
             signUpState.collectLatest { state ->
                 when (state) {
                     SignUpState.Loading -> {
-                        showLoading()
+                        viewBinding.btnSignUp.showLoading()
                     }
                     SignUpState.InvalidCode -> {
-                        hideLoading()
+                        viewBinding.btnSignUp.hideLoading()
                         viewBinding.textFieldCode.run {
                             setDescriptionText("가입코드가 일치하지 않아요")
                             setFailedUiOfTextField()
                         }
                     }
                     SignUpState.Success -> {
-                        hideLoading()
+                        viewBinding.btnSignUp.hideLoading()
                         requireActivity().run {
                             startActivity(
                                 Intent(requireContext(), MainActivity::class.java).apply {
@@ -67,7 +67,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                         }
                     }
                     is SignUpState.Error -> {
-                        hideLoading()
+                        viewBinding.btnSignUp.hideLoading()
                         viewBinding.textFieldCode.run {
                             setDescriptionText("")
                             setEmptyUIOfTextField()

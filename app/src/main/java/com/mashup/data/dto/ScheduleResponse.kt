@@ -1,20 +1,60 @@
 package com.mashup.data.dto
 
+import android.annotation.SuppressLint
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.text.SimpleDateFormat
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class ScheduleResponse(
     @field:Json(name = "scheduleId")
     val scheduleId: Int,
+    @field:Json(name = "dateCount")
+    val dateCount: Int,
     @field:Json(name = "generationNumber")
-    val generationNum: Int,
+    val generationNumber: Int,
     @field:Json(name = "name")
     val name: String,
     @field:Json(name = "eventList")
     val eventList: List<EventResponse>,
     @field:Json(name = "startedAt")
-    val startedAt: String,
+    val startedAt: Date,
     @field:Json(name = "endedAt")
-    val endedAt: String,
-)
+    val endedAt: Date,
+) {
+
+    @SuppressLint("SimpleDateFormat")
+    fun getDate(): String {
+        return try {
+            val dateFormat = SimpleDateFormat("MM월 dd일")
+            return dateFormat.format(startedAt)
+        } catch (ignore: Exception) {
+            "오류로 인해 알 수 없음"
+        }
+    }
+
+    fun getDDay(): String {
+        return when {
+            dateCount == 0 -> {
+                "D-Day"
+            }
+            dateCount > 0 -> {
+                "D-$dateCount"
+            }
+            else -> {
+                "D+${-dateCount}"
+            }
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getTimeLine(): String {
+        return try {
+            val timeLineFormat = SimpleDateFormat("a hh:mm", Locale.KOREA)
+            "${timeLineFormat.format(startedAt)} - ${timeLineFormat.format(endedAt)}"
+        } catch (ignore: Exception) {
+            "오류로 인해 알 수 없음"
+        }
+    }
+}

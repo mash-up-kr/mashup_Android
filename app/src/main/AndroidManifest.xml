@@ -63,7 +63,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.event.EventDetailActivity"
+            android:name=".ui.schedule.detail.ScheduleDetailActivity"
             android:exported="false" />
 
         <activity

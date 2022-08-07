@@ -6,6 +6,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.login.LoginActivity
@@ -55,7 +57,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, SettingActivity::class.java)
+        fun newIntent(context: Context) = Intent(context, SettingActivity::class.java).apply {
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+        }
     }
 
     override val layoutId = R.layout.activity_setting

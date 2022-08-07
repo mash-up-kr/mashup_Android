@@ -1,14 +1,22 @@
 package com.mashup.ui.signup
 
+import android.content.Context
+import android.content.Intent
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySignUpBinding
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
+
+    private val viewModel: SignUpViewModel by viewModels()
 
     private val navController by lazy {
         val navHostFragment =
@@ -19,6 +27,22 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     override fun initViews() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             onBackPressed()
+        }
+        viewBinding.toolbar.setOnCloseButtonClickListener {
+            finish()
+        }
+    }
+
+    override fun initObserves() {
+        super.initObserves()
+        flowLifecycleScope {
+            viewModel.showToolbarDivider.collectLatest { isVisible ->
+                if (isVisible) {
+                    viewBinding.toolbar.showDivider()
+                } else {
+                    viewBinding.toolbar.hideDivider()
+                }
+            }
         }
     }
 
@@ -33,6 +57,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
                 show()
             }
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, SignUpActivity::class.java).apply {
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
     }
 

@@ -2,9 +2,9 @@ package com.mashup.ui.schedule.detail
 
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.base.BaseViewModel
+import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.data.dto.EventResponse
 import com.mashup.data.repository.ScheduleRepository
-import com.mashup.ui.constant.EXTRA_SCHEDULE_ID
 import com.mashup.ui.schedule.model.Body
 import com.mashup.ui.schedule.model.EventDetail
 import com.mashup.ui.schedule.model.EventDetailType

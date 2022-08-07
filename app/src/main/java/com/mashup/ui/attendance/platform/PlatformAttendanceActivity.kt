@@ -5,11 +5,13 @@ import android.content.Intent
 import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
 import com.mashup.compose.theme.MashUpTheme
+import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityPlatformAttendanceBinding
 import com.mashup.ui.attendance.crew.CrewAttendanceActivity
-import com.mashup.ui.constant.EXTRA_SCHEDULE_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,6 +80,7 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
     companion object {
         fun newIntent(context: Context, scheduleId: Int) =
             Intent(context, PlatformAttendanceActivity::class.java).apply {
+                putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
                 putExtra(EXTRA_SCHEDULE_ID, scheduleId)
             }
     }

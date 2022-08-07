@@ -1,5 +1,7 @@
 package com.mashup.ui.main
 
+import android.content.Context
+import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -7,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.extensions.setStatusBarColorRes
@@ -124,6 +128,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 setStatusBarColorRes(R.color.gray950)
                 setStatusBarDarkTextColor(false)
             }
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, MainActivity::class.java).apply {
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
         }
     }
 }

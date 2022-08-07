@@ -10,6 +10,8 @@ import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.model.Platform
 import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,6 +22,9 @@ class MyPageViewModel @Inject constructor(
 
     private val _attendanceList = MutableLiveData<List<AttendanceModel>>()
     val attendanceList: LiveData<List<AttendanceModel>> = _attendanceList
+
+    private val _errorCode = MutableSharedFlow<String>()
+    val errorCode: SharedFlow<String> = _errorCode
 
     init {
         getMember()
@@ -38,6 +43,8 @@ class MyPageViewModel @Inject constructor(
                         score = 0.0
                     )
                 )
+            } else {
+                handleErrorCode(response.code)
             }
         } catch (ignore: Exception) {
         }
@@ -101,11 +108,16 @@ class MyPageViewModel @Inject constructor(
 
                 }
                 _attendanceList.postValue(list)
+            } else {
+                handleErrorCode(response.code)
             }
         } catch (ignore: Exception) {
         }
     }
 
     override fun handleErrorCode(code: String) {
+        mashUpScope {
+            _errorCode.emit(code)
+        }
     }
 }

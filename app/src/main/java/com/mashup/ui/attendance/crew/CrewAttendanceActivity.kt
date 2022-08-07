@@ -6,7 +6,9 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
 import com.mashup.compose.theme.MashUpTheme
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
@@ -76,6 +78,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
         fun newIntent(
             context: Context, platformInfo: PlatformInfo, scheduleId: Int
         ) = Intent(context, CrewAttendanceActivity::class.java).apply {
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
             putExtra(EXTRA_PLATFORM_KEY, platformInfo)
             putExtra(EXTRA_SCHEDULE_ID, scheduleId)
         }

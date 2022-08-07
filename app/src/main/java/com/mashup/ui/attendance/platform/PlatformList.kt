@@ -1,9 +1,6 @@
 package com.mashup.ui.attendance.platform
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -23,32 +20,37 @@ fun PlatformList(
     totalAttendanceResponse: TotalAttendanceResponse,
     onClickPlatform: (PlatformInfo) -> Unit
 ) {
-    LazyVerticalGrid(
-        contentPadding = PaddingValues(vertical = 12.dp),
+    Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        columns = GridCells.Fixed(2)
+            .padding(top = 12.dp)
+            .padding(horizontal = 20.dp)
     ) {
-        item {
-            if (notice.isNotBlank()) {
-                AttendanceNoticeItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    notice = notice
+
+        if (notice.isNotBlank()) {
+            AttendanceNoticeItem(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                notice = notice
+            )
+        }
+        LazyVerticalGrid(
+            contentPadding = PaddingValues(vertical = 12.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            columns = GridCells.Fixed(2)
+        ) {
+            items(
+                items = totalAttendanceResponse.platformInfos,
+            ) { platform ->
+                PlatformListItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    platformInfo = platform,
+                    onClickPlatform = onClickPlatform
                 )
             }
-        }
-        items(
-            items = totalAttendanceResponse.platformInfos,
-        ) { platform ->
-            PlatformListItem(
-                modifier = Modifier.fillMaxWidth(),
-                platformInfo = platform,
-                onClickPlatform = onClickPlatform
-            )
         }
     }
 }

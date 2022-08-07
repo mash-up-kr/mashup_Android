@@ -5,9 +5,9 @@ import android.content.Intent
 import android.webkit.WebViewClient
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_TITLE_KEY
+import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.databinding.ActivityWebViewBinding
-import com.mashup.ui.constant.EXTRA_TITLE_KEY
-import com.mashup.ui.constant.EXTRA_URL_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

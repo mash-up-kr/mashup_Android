@@ -1,8 +1,12 @@
 package com.mashup.ui.signup
 
+import android.content.Context
+import android.content.Intent
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySignUpBinding
 import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +24,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             onBackPressed()
         }
+        viewBinding.toolbar.setOnCloseButtonClickListener {
+            finish()
+        }
     }
 
     override fun onBackPressed() {
@@ -33,6 +40,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
                 show()
             }
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, SignUpActivity::class.java).apply {
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
     }
 

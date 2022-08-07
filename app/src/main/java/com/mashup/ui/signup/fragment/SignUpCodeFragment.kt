@@ -29,6 +29,12 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_code
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setToolbarDividerVisible(false)
+        viewModel.setToolbarCloseButtonVisible(true)
+    }
+
     override fun initViews() {
         initTextField()
         initButton()

@@ -29,7 +29,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             onBackPressed()
         }
         viewBinding.toolbar.setOnCloseButtonClickListener {
-            finish()
+            CommonDialog(this).apply {
+                setTitle(text = "회원가입을 그만두시겠어요?")
+                setMessage(text = "입력한 전체 내용이 삭제됩니다.")
+                setNegativeButton()
+                setPositiveButton {
+                    finish()
+                }
+                show()
+            }
         }
     }
 
@@ -44,19 +52,17 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
             }
         }
+
+        flowLifecycleScope {
+            viewModel.showCloseButton.collectLatest {
+                viewBinding.toolbar.setVisibleCloseButton(it)
+            }
+        }
     }
 
     override fun onBackPressed() {
         if (!navController.popBackStack()) {
-            CommonDialog(this).apply {
-                setTitle(text = "회원가입을 그만두시겠어요?")
-                setMessage(text = "입력한 전체 내용이 삭제됩니다.")
-                setNegativeButton()
-                setPositiveButton {
-                    finish()
-                }
-                show()
-            }
+            finish()
         }
     }
 

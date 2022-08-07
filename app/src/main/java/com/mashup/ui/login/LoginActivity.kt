@@ -11,12 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.common.Validation
+import com.mashup.constant.EXTRA_LOGOUT
+import com.mashup.constant.EXTRA_WITH_DRAWL
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
-import com.mashup.ui.constant.EXTRA_LOGOUT
-import com.mashup.ui.constant.EXTRA_WITH_DRAWL
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -135,7 +135,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         viewBinding.tvSignIn.onThrottleFirstClick(lifecycleScope) {
             startActivity(
-                Intent(this, SignUpActivity::class.java)
+                SignUpActivity.newIntent(this)
             )
         }
     }

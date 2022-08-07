@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityQrScanBinding
 import com.mashup.network.errorcode.*
 import com.mashup.ui.qrscan.camera.CameraManager
@@ -195,6 +197,8 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
         private const val REQUEST_CODE_CAMERA = 200
 
-        fun newIntent(context: Context) = Intent(context, QRScanActivity::class.java)
+        fun newIntent(context: Context) = Intent(context, QRScanActivity::class.java).apply {
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+        }
     }
 }

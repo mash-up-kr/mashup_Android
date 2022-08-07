@@ -47,6 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:overScrollMode="never"
+            android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@id/layout_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_mashong_crying" />
+                        android:src="@drawable/ic_mashong_crying"
+                        tools:ignore="ContentDescription" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -110,11 +112,11 @@
                         android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:text="@string/sign_out_msg_detail"
                         android:textAppearance="@style/TextAppearance.Mashup.Body3_14_R"
                         android:textColor="@color/gray600" />
                 </LinearLayout>

@@ -27,6 +27,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         initToolbar()
         initTextField()
         initButton()
+        initDescription()
     }
 
     private fun initToolbar() {
@@ -44,6 +45,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
+        viewBinding.btnWithdrawal.setButtonEnabled(false)
         viewBinding.btnWithdrawal.setOnButtonThrottleFirstClickListener(this) {
             viewModel.deleteMember()
         }
@@ -55,6 +57,11 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                 viewModel.setCode(text)
             }
         }
+    }
+
+    private fun initDescription() {
+        viewBinding.tvDescription.text =
+            getString(R.string.sign_out_msg_detail).replace(" ", "\u00A0")
     }
 
     override fun initObserves() = with(viewModel) {
@@ -76,7 +83,10 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                     is WithdrawalState.Success -> {
                         hideLoading()
                         startActivity(
-                            LoginActivity.newIntent(this@WithdrawalActivity)
+                            LoginActivity.newIntent(
+                                context = this@WithdrawalActivity,
+                                isWithDrawl = true
+                            )
                         )
                         finish()
                     }

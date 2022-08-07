@@ -23,6 +23,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
             tools:src="@drawable/img_attendance" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -36,12 +37,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_seminar_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
+                android:text="@{model.activityHistory.scoreName}"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                android:textColor="@color/gray800"
-                app:attendanceTitle="@{model.activityHistory.attendanceType}" />
+                android:textColor="@color/gray800" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_title"
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                app:attendanceScore="@{model.activityHistory.attendanceType}"
+                app:attendanceScore="@{model.activityHistory.cumulativeScore}"
                 tools:text="+20222" />
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -3,3 +3,6 @@ package com.mashup.ui.constant
 const val EXTRA_TITLE_KEY = "EXTRA_TITLE_KEY"
 const val EXTRA_URL_KEY = "EXTRA_URL_KEY"
 const val EXTRA_SCHEDULE_ID = "EXTRA_SCHEDULE_ID"
+
+const val EXTRA_LOGOUT = "EXTRA_LOGOUT"
+const val EXTRA_WITH_DRAWL = "EXTRA_WITH_DRAWL"

@@ -61,16 +61,12 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
 
     override fun initViews() {
         super.initViews()
-        setUi()
+        initSwipeRefreshLayout()
+        initRefreshButton()
+        initViewPager()
     }
 
-    private fun setUi() {
-        setUiOfSwipeRefreshLayout()
-        setUiOfRefreshButton()
-        setUiOfViewPager()
-    }
-
-    private fun setUiOfSwipeRefreshLayout() {
+    private fun initSwipeRefreshLayout() {
         viewBinding.layoutSwipe.apply {
             setOnRefreshListener(this@ScheduleFragment)
             setColorSchemeColors(
@@ -79,13 +75,13 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
         }
     }
 
-    private fun setUiOfRefreshButton() {
+    private fun initRefreshButton() {
         viewBinding.btnRefresh.onThrottleFirstClick(viewLifecycleOwner.lifecycleScope) {
             viewModel.getScheduleList()
         }
     }
 
-    private fun setUiOfViewPager() {
+    private fun initViewPager() {
         viewBinding.vpSchedule.apply {
             val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
             val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pagerWidth)

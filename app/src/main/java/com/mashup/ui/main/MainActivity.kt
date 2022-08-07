@@ -1,7 +1,5 @@
 package com.mashup.ui.main
 
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -11,6 +9,8 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.extensions.onThrottleFirstClick
+import com.mashup.extensions.setStatusBarColorRes
+import com.mashup.extensions.setStatusBarDarkTextColor
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
@@ -71,6 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             viewModel.mainTab.collectLatest { tab ->
                 navigationTab(tab)
                 setUIOfTab(tab)
+                updateStatusBarColor(tab)
             }
         }
     }
@@ -113,9 +114,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    fun updateStatusBarColor(color: Int) {
-        val window: Window = window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = color
+    private fun updateStatusBarColor(tab: MainTab) {
+        when (tab) {
+            MainTab.EVENT -> {
+                setStatusBarColorRes(R.color.gray50)
+                setStatusBarDarkTextColor(true)
+            }
+            MainTab.MY_PAGE -> {
+                setStatusBarColorRes(R.color.gray950)
+                setStatusBarDarkTextColor(false)
+            }
+        }
     }
 }

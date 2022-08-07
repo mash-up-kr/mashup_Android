@@ -1,7 +1,10 @@
 package com.mashup.ui.model
 
+import android.annotation.SuppressLint
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class AttendanceModel(
     val id: Int,
@@ -10,52 +13,40 @@ data class AttendanceModel(
     val generationNum: Int?,
     val activityHistory: ActivityHistory?
 ) {
-    companion object {
-        val EMPTY = AttendanceModel(
-            id = 0,
-            myPageType = MyPageAdapterType.TITLE,
-            profile = Profile.EMPTY,
-            generationNum = 12,
-            activityHistory = ActivityHistory.EMPTY
-        )
-    }
-
     fun getGeneration() = "${generationNum}기"
-
 }
 
 
 data class ActivityHistory(
+    val scoreName: String,
     val attendanceType: AttendanceType,
-    val totalScore: Double?,
+    val cumulativeScore: Double,
+    val totalScore: Double,
     val detail: String?,
-    val date: String?,
+    val date: Date,
 ) {
-    companion object {
-        val EMPTY = ActivityHistory(
-            attendanceType = AttendanceType.ETC,
-            totalScore = 103.0,
-            detail = "3차 전체 세미나",
-            date = "2022.02.03",
-        )
+    @SuppressLint("SimpleDateFormat")
+    fun getAttendanceDetail(): String {
+        val format = SimpleDateFormat("yyyy-MM-dd")
+        val dateFormat = try {
+            format.format(date)
+        } catch (ignore: Exception) {
+            "????-??-??"
+        }
+        return "$dateFormat | $detail"
     }
 
-    fun getAttendanceDetail() = "$date | $detail"
-    fun getTotalScoreText() = "${totalScore}점"
+    fun getTotalScoreText(): String {
+        val score: Number =
+            if (totalScore % 1 == 0.0) totalScore.toInt() else totalScore
+        return "${score}점"
+    }
 }
 
 data class Profile(
     val platform: Platform,
     val name: String,
-    var score: Double,
+    val score: Double,
 ) {
-    companion object {
-        val EMPTY = Profile(
-            platform = Platform.NODE,
-            name = "test",
-            score = 2.0
-        )
-    }
-
     fun getAttendanceScore() = "${score}점"
 }

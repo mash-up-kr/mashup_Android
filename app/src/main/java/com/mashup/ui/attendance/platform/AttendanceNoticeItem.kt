@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,10 +27,10 @@ fun AttendanceNoticeItem(
 ) {
     Card(
         modifier = modifier.shadow(
-            elevation = 2.dp,
-            shape = CardListShape
+            elevation = 20.dp,
+            shape = CardListShape,
+            ambientColor = colorResource(id = R.color.black_10)
         ),
-        elevation = 2.dp,
         shape = CardListShape
     ) {
         Row(

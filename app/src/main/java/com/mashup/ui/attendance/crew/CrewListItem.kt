@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,8 +31,11 @@ fun CrewListItem(
     memberInfo: MemberInfo
 ) {
     Card(
-        modifier = modifier,
-        elevation = 2.dp,
+        modifier = modifier.shadow(
+            elevation = 20.dp,
+            shape = CardListShape,
+            ambientColor = colorResource(id = R.color.black_10)
+        ),
         shape = CardListShape
     ) {
         Row(

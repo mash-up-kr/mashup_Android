@@ -1,15 +1,16 @@
-package com.mashup.data.model
+package com.mashup.data.dto
 
+import com.mashup.data.model.AttendanceInfo
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class MemberInfo(
-    @field:Json(name = "name")
-    val name: String,
+data class AttendanceInfoResponse(
     @field:Json(name = "attendanceInfos")
-    val attendanceInfos: List<AttendanceInfo>
+    val attendanceInfos: List<AttendanceInfo>,
+    @field:Json(name = "memberName")
+    val memberName: String
 ) {
     fun getFinalAttendance(): AttendanceStatus {
         return when {

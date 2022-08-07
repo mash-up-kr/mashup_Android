@@ -1,4 +1,4 @@
-package com.mashup.ui.event
+package com.mashup.ui.schedule.detail
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.databinding.ItemEventTimelineContentBinding
 import com.mashup.databinding.ItemEventTimelineHeaderBinding
-import com.mashup.ui.event.model.EventDetail
-import com.mashup.ui.event.model.EventDetailType
+import com.mashup.ui.schedule.model.EventDetail
+import com.mashup.ui.schedule.model.EventDetailType
 
 class EventDetailAdapter :
     ListAdapter<EventDetail, RecyclerView.ViewHolder>(EventComparator) {
@@ -71,12 +71,6 @@ class EventDetailAdapter :
 
     interface OnItemEventListener {
         fun onExitEventClick()
-    }
-
-    private var mListener: OnItemEventListener? = null
-
-    fun setOnItemClickListener(listener: OnItemEventListener?) {
-        mListener = listener
     }
 }
 

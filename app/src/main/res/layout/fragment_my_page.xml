@@ -24,7 +24,7 @@
 			app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
@@ -34,16 +34,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-			<androidx.appcompat.widget.AppCompatTextView
-				android:id="@+id/tv_platform"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-				android:textColor="@color/white"
-				android:text="@string/total_attendance_score"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintStart_toStartOf="@id/tv_name"
-				app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+                android:textColor="@color/white"
+                android:text="@string/total_attendance_score"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
 			<androidx.appcompat.widget.AppCompatImageView
 				android:id="@+id/btn_detail"

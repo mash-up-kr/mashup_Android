@@ -66,14 +66,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 loginUiState.collect { state ->
                     when (state) {
                         is LoginState.Loading -> {
-                            showLoading()
+                            viewBinding.btnLogin.showLoading()
                         }
                         LoginState.Success -> {
-                            hideLoading()
+                            viewBinding.btnLogin.hideLoading()
                             moveToMainScreen()
                         }
                         is LoginState.Error -> {
-                            hideLoading()
+                            viewBinding.btnLogin.hideLoading()
                             handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }

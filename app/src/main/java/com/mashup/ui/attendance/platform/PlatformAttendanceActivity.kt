@@ -9,7 +9,7 @@ import com.mashup.compose.theme.MashUpTheme
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityPlatformAttendanceBinding
 import com.mashup.ui.attendance.crew.CrewAttendanceActivity
-import com.mashup.ui.attendance.platform.PlatformAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID
+import com.mashup.ui.constant.EXTRA_SCHEDULE_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +18,11 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
 
     override fun initViews() {
         super.initViews()
+        initCompose()
+        initButton()
+    }
+
+    private fun initCompose() {
         viewBinding.viewCompose.setContent {
             MashUpTheme {
                 when (val state = viewModel.platformAttendanceState.value) {
@@ -41,6 +46,12 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                     }
                 }
             }
+        }
+    }
+
+    private fun initButton() {
+        viewBinding.toolbar.setOnBackButtonClickListener {
+            finish()
         }
     }
 

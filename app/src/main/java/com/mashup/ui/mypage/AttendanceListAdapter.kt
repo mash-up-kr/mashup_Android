@@ -11,31 +11,22 @@ import com.mashup.ui.model.AttendanceModel
 class AttendanceListAdapter :
     ListAdapter<AttendanceModel, RecyclerView.ViewHolder>(AttendanceComparator) {
 
-    companion object {
-        private const val VIEW_TYPE_TITLE = 0
-        private const val VIEW_TYPE_SCORE = 1
-        private const val VIEW_TYPE_LIST_NONE = 2
-        private const val VIEW_TYPE_LIST_ITEM = 3
-        private const val VIEW_TYPE_LIST_LEVEL = 4
-    }
-
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).type
+        return getItem(position).myPageType.type
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-
-            VIEW_TYPE_LIST_ITEM -> {
+            MyPageAdapterType.LIST_ITEM.type -> {
                 MyPageListItemViewHolder(parent)
             }
-            VIEW_TYPE_LIST_LEVEL -> {
+            MyPageAdapterType.LIST_LEVEL.type -> {
                 MyPageListLevelViewHolder(parent)
             }
-            VIEW_TYPE_TITLE -> {
+            MyPageAdapterType.TITLE.type -> {
                 MyPageTitleViewHolder(parent, mListener)
             }
-            VIEW_TYPE_SCORE -> {
+            MyPageAdapterType.SCORE.type -> {
                 MyPageScoreViewHolder(parent, mListener)
             }
             else -> {

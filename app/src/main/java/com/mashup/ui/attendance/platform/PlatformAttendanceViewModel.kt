@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.mashup.base.BaseViewModel
 import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.data.repository.AttendanceRepository
+import com.mashup.ui.constant.EXTRA_SCHEDULE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -56,10 +57,6 @@ class PlatformAttendanceViewModel @Inject constructor(
             _platformAttendanceState.value =
                 PlatformAttendanceState.Success(response.data)
         }
-    }
-
-    companion object {
-        const val EXTRA_SCHEDULE_ID = "EXTRA_SCHEDULE_ID"
     }
 
     override fun handleErrorCode(code: String) {

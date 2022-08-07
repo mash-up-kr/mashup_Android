@@ -76,6 +76,7 @@ android {
 dependencies {
     implementation project(":common")
     implementation project(":compose")
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     testImplementation 'junit:junit:4.12'
 

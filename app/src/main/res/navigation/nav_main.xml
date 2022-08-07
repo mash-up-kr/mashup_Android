@@ -9,6 +9,6 @@
         android:label="MyPageFragment" />
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.mashup.ui.event.EventFragment"
+        android:name="com.mashup.ui.schedule.ScheduleFragment"
         android:label="EventFragment" />
 </navigation>

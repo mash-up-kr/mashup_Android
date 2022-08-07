@@ -13,16 +13,16 @@ data class MemberInfo(
 ) {
     fun getFinalAttendance(): AttendanceStatus {
         return when {
-            attendanceInfos[0].status.uppercase() == "ATTEND"
-                && attendanceInfos[1].status.uppercase() == "ATTEND" -> {
-                AttendanceStatus.ATTEND
+            attendanceInfos[0].status.uppercase() == "ATTENDANCE"
+                && attendanceInfos[1].status.uppercase() == "ATTENDANCE" -> {
+                AttendanceStatus.ATTENDANCE
             }
-            attendanceInfos[0].status.uppercase() == "ABSENCE"
-                || attendanceInfos[1].status.uppercase() == "ABSENCE" -> {
-                AttendanceStatus.ABSENCE
+            attendanceInfos[0].status.uppercase() == "ABSENT"
+                || attendanceInfos[1].status.uppercase() == "ABSENT" -> {
+                AttendanceStatus.ABSENT
             }
             else -> {
-                AttendanceStatus.LATENESS
+                AttendanceStatus.LATE
             }
         }
     }

@@ -1,10 +1,7 @@
 package com.mashup.network.dao
 
 import com.mashup.common.Response
-import com.mashup.data.dto.AttendanceCheckRequest
-import com.mashup.data.dto.AttendanceCheckResponse
-import com.mashup.data.dto.PlatformAttendanceResponse
-import com.mashup.data.dto.TotalAttendanceResponse
+import com.mashup.data.dto.*
 import retrofit2.http.*
 
 interface AttendanceDao {
@@ -24,4 +21,9 @@ interface AttendanceDao {
         @Path("platformName") platformName: String,
         @Query("scheduleId") scheduleId: Int
     ): Response<PlatformAttendanceResponse>
+
+    @GET("api/v1/attendance/schedules/{scheduleId}")
+    suspend fun getAttendanceInSchedule(
+        @Path("scheduleId") scheduleId: Int
+    ): Response<AttendanceInfoResponse>
 }

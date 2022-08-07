@@ -35,13 +35,13 @@ fun AttendanceSeminarItem(
     iconSize: Int,
 ) {
     val (attendanceColor, label) = when (attendanceStatus) {
-        AttendanceStatus.ATTEND.name -> {
+        AttendanceStatus.ATTENDANCE.name -> {
             Green500 to "출석"
         }
-        AttendanceStatus.ABSENCE.name -> {
+        AttendanceStatus.ABSENT.name -> {
             Red500 to "결석"
         }
-        AttendanceStatus.LATENESS.name -> {
+        AttendanceStatus.LATE.name -> {
             Yellow500 to "지각"
         }
         else -> {
@@ -51,7 +51,7 @@ fun AttendanceSeminarItem(
 
     val timeString = if (timeStamp != null) {
         try {
-            SimpleDateFormat("hh:mm").format(timeStamp)
+            SimpleDateFormat("hh:mm", Locale.KOREA).format(timeStamp)
         } catch (ignore: Exception) {
             if (index < 2) "-" else ""
         }
@@ -101,7 +101,7 @@ fun AttendanceSeminarPrev() {
         AttendanceSeminarItem(
             timeStamp = Date(),
             index = 1,
-            attendanceStatus = AttendanceStatus.ATTEND.name,
+            attendanceStatus = AttendanceStatus.ATTENDANCE.name,
             iconRes = R.drawable.ic_circle,
             iconSize = 8
         )

@@ -1,146 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-	<data>
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:clipToPadding="false"
+		android:paddingStart="20dp"
+		android:paddingEnd="20dp"
+		android:paddingBottom="40dp">
 
-		<variable
-			name="model"
-			type="com.mashup.ui.model.AttendanceModel" />
-	</data>
+		<androidx.appcompat.widget.LinearLayoutCompat
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
+			<androidx.appcompat.widget.AppCompatImageView
+				style="@style/AttendanceInfoImage"
+				android:src="@drawable/img_rule" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoTitle"
+				android:text="@string/what_attendance_out_count" />
 
+			<androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/tv_description"
+				style="@style/AttendanceInfoContent"
+				android:text="@string/what_attendance_out_count_content" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="28dp" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp">
+			<androidx.appcompat.widget.AppCompatImageView
+				style="@style/AttendanceInfoImage"
+				android:src="@drawable/img_minus" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/what_attendance_title"
-                    android:textAppearance="@style/TextAppearance.Mashup.Subtitle2_16_SB"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoTitle"
+				android:text="@string/what_attendance_minus" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/btn_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_close"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_minus_content1" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray200" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_minus_content2" />
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatImageView style="@style/AttendanceInfoImage" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/AttendanceInfoTitle"
-                        android:text="@string/what_attendance_out_count" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/AttendanceInfoContent"
-                        android:text="@string/what_attendance_out_count_content" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView style="@style/AttendanceInfoImage" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/AttendanceInfoTitle"
-                        android:text="@string/what_attendance_minus" />
-
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_minus_content1" />
-
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_minus_content2" />
-
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_minus_content3" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_minus_content3" />
 
 
-					<androidx.appcompat.widget.AppCompatImageView
-						style="@style/AttendanceInfoImage"
-						android:layout_marginTop="28dp" />
+			<androidx.appcompat.widget.AppCompatImageView
+				style="@style/AttendanceInfoImage"
+				android:layout_marginTop="28dp"
+				android:src="@drawable/img_add" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/AttendanceInfoTitle"
-                        android:text="@string/what_attendance_plus" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoTitle"
+				android:text="@string/what_attendance_plus" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content1" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content1" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content2" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content2" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content3" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content3" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content4" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content4" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content5" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content5" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content6" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content6" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content7" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content7" />
 
-					<androidx.appcompat.widget.AppCompatTextView
-						style="@style/AttendanceInfoList"
-						android:text="@string/what_attendance_plus_content8" />
+			<androidx.appcompat.widget.AppCompatTextView
+				style="@style/AttendanceInfoList"
+				android:text="@string/what_attendance_plus_content8" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.core.widget.NestedScrollView>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="28dp" />
+		</androidx.appcompat.widget.LinearLayoutCompat>
+	</androidx.core.widget.NestedScrollView>
 </layout>

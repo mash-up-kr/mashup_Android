@@ -4,12 +4,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
-import com.mashup.ui.main.MainActivity
 import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,13 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     private val viewModel: MyPageViewModel by viewModels()
-    private lateinit var bottomSheetDialog: BottomSheetDialog
 
     private val attendanceAdapter by lazy {
         AttendanceListAdapter().apply {
             setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {
                 override fun onTotalAttendanceClick() {
-                    bottomSheetDialog.show()
+                    showAttendanceInfoDialog()
                 }
 
                 override fun onStartSettingActivity() {
@@ -35,15 +31,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     override fun initViews() {
         super.initViews()
-        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_attendance_info, null)
-        context?.let {
-            bottomSheetDialog = BottomSheetDialog(it)
-            bottomSheetDialog.apply {
-                setContentView(bottomSheetView)
-                behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
-            (activity as MainActivity).updateStatusBarColor(it.getColor(R.color.gray950))
-        }
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
         viewBinding.rvMypage.apply {
             adapter = attendanceAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -59,7 +50,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                     } else {
                         viewBinding.layoutTitle.visibility = View.VISIBLE
                         viewBinding.layoutTitle.setOnClickListener {
-                            bottomSheetDialog.show()
+                            showAttendanceInfoDialog()
                         }
                     }
                 }
@@ -71,10 +62,16 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
         viewModel.attendanceList.observe(viewLifecycleOwner) { it ->
             attendanceAdapter.submitList(it)
             it.firstOrNull()?.profile?.let {
-                viewBinding.tvName.text = it.name
+                viewBinding.tvTitle.text = it.name
                 viewBinding.tvNum.text = it.getAttendanceScore()
             }
         }
+    }
+
+    private fun showAttendanceInfoDialog() {
+        AttendanceExplainDialog().show(
+            childFragmentManager, null
+        )
     }
 
     companion object {

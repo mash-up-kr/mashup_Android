@@ -2,13 +2,14 @@ package com.mashup.data.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class ScoreDetails(
     @Json(name = "cumulativeScore")
     val cumulativeScore: Double,
     @Json(name = "date")
-    val date: String,
+    val date: Date,
     @Json(name = "scheduleName")
     val scheduleName: String,
     @Json(name = "scoreType")

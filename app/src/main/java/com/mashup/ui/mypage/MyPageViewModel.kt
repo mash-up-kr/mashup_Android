@@ -48,23 +48,22 @@ class MyPageViewModel @Inject constructor(
             val response = myPageRepository.getScoreHistory()
             if (response.isSuccess()) {
                 val list = mutableListOf<AttendanceModel>()
-
                 if (response.data?.scoreHistoryResponseList?.isNotEmpty() == true) {
                     list += AttendanceModel(
                         0,
                         MyPageAdapterType.TITLE,
-                        profile.also {
-                            it.score = response.data.scoreHistoryResponseList.first().totalScore
-                        }, null, null
+                        profile.copy(
+                            score = response.data.scoreHistoryResponseList.first().totalScore
+                        ), null, null
                     )
 
                     list += AttendanceModel(
                         0, MyPageAdapterType.SCORE,
-                        profile.also {
-                            it.score = response.data.scoreHistoryResponseList.first().totalScore
-                        }, null, null
+                        profile.copy(
+                            score = response.data.scoreHistoryResponseList.first().totalScore
+                        ), null, null
                     )
-                    response.data.scoreHistoryResponseList.forEach { it ->
+                    response.data.scoreHistoryResponseList.forEach {
                         list += AttendanceModel(
                             0, MyPageAdapterType.LIST_LEVEL, null, it.generationNumber, null
                         )
@@ -75,14 +74,15 @@ class MyPageViewModel @Inject constructor(
                                 null,
                                 it.generationNumber,
                                 ActivityHistory(
+                                    scoreName = score.scoreName,
                                     attendanceType = AttendanceType.getAttendanceType(score.scoreType),
-                                    totalScore = score.cumulativeScore,
-                                    detail = score.scoreName,
+                                    cumulativeScore = score.cumulativeScore,
+                                    totalScore = score.score,
+                                    detail = score.scheduleName,
                                     date = score.date
                                 )
                             )
                         }
-
                     }
                 } else {
                     list.addAll(
@@ -101,8 +101,6 @@ class MyPageViewModel @Inject constructor(
 
                 }
                 _attendanceList.postValue(list)
-            } else {
-
             }
         } catch (ignore: Exception) {
         }

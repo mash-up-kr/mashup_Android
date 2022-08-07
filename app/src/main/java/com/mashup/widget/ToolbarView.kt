@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.mashup.databinding.ViewToolbarBinding
+import com.mashup.ui.extensions.gone
+import com.mashup.ui.extensions.visible
 
 class ToolbarView @JvmOverloads constructor(
     context: Context,
@@ -39,6 +41,14 @@ class ToolbarView @JvmOverloads constructor(
         viewBinding.btnClose.setOnClickListener {
             clickListener(this)
         }
+    }
+
+    fun showDivider() = with(viewBinding.divider) {
+        visible()
+    }
+
+    fun hideDivider() = with(viewBinding.divider) {
+        gone()
     }
 
     companion object {

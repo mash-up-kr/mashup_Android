@@ -25,6 +25,9 @@ class SignUpViewModel @Inject constructor(
     private val _isCheckedTerm = MutableStateFlow(false)
     val isCheckedTerm: StateFlow<Boolean> = _isCheckedTerm
 
+    private val _showToolbarDivider = MutableSharedFlow<Boolean>()
+    val showToolbarDivider: SharedFlow<Boolean> = _showToolbarDivider
+
     private val userName = MutableStateFlow("")
     val memberState = userName.combine(platform) { name, platform ->
         val validationName = validationName(name)
@@ -111,6 +114,12 @@ class SignUpViewModel @Inject constructor(
 
     fun updatedTerm(value: Boolean? = null) {
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
+    }
+
+    fun setToolbarDividerVisible(isVisible: Boolean) {
+        mashUpScope {
+            _showToolbarDivider.emit(isVisible)
+        }
     }
 
     override fun handleErrorCode(code: String) {

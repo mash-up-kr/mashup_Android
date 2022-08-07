@@ -44,6 +44,13 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
                 defaultTextEncodingName = "UTF-8"
             }
             webViewUrl?.run { loadUrl(this) }
+            setOnScrollChangeListener { view, _, _, _, _ ->
+                if (view.canScrollVertically(-1)) {
+                    viewBinding.toolbar.showDivider()
+                } else {
+                    viewBinding.toolbar.hideDivider()
+                }
+            }
         }
     }
 

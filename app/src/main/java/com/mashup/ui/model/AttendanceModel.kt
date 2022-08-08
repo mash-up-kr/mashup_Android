@@ -47,6 +47,7 @@ data class Profile(
     val platform: Platform,
     val name: String,
     val score: Double,
+    val generationNumber: Int,
 ) {
     fun getAttendanceScore() = "${score}점"
 }

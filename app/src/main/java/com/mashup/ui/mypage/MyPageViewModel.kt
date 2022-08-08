@@ -84,7 +84,7 @@ class MyPageViewModel @Inject constructor(
                                     scoreName = score.scoreName,
                                     attendanceType = AttendanceType.getAttendanceType(score.scoreType),
                                     cumulativeScore = score.cumulativeScore,
-                                    totalScore = score.score,
+                                    score = score.score,
                                     detail = score.scheduleName,
                                     date = score.date
                                 )

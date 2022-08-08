@@ -147,7 +147,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
             is SignUpIdState.Error -> {
                 val errorMessage = when (idState.code) {
                     MEMBER_DUPLICATED_IDENTIFICATION -> {
-                        "이미 사용 중인 아이디에요."
+                        "이미 사용 중인 아이디이에요."
                     }
                     else -> {
                         "영문 대소문자만 사용하여 15자 이내로 입력해 주세요."

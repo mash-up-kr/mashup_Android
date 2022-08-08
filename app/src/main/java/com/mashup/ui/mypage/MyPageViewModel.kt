@@ -40,7 +40,8 @@ class MyPageViewModel @Inject constructor(
                     Profile(
                         platform = Platform.getPlatform(response.data?.platform),
                         name = response.data?.name.toString(),
-                        score = 0.0
+                        score = 0.0,
+                        generationNumber = response.data?.generationNumber ?: 0
                     )
                 )
             } else {
@@ -54,23 +55,27 @@ class MyPageViewModel @Inject constructor(
         try {
             val response = myPageRepository.getScoreHistory()
             if (response.isSuccess()) {
+
+                val filterItem = response.data?.scoreHistoryResponseList?.filter {
+                    it.generationNumber == profile.generationNumber
+                }
                 val list = mutableListOf<AttendanceModel>()
-                if (response.data?.scoreHistoryResponseList?.isNotEmpty() == true) {
+                if (filterItem?.isNotEmpty() == true) {
                     list += AttendanceModel(
                         0,
                         MyPageAdapterType.TITLE,
                         profile.copy(
-                            score = response.data.scoreHistoryResponseList.first().totalScore
+                            score = filterItem.first().totalScore
                         ), null, null
                     )
 
                     list += AttendanceModel(
                         0, MyPageAdapterType.SCORE,
                         profile.copy(
-                            score = response.data.scoreHistoryResponseList.first().totalScore
+                            score = filterItem.first().totalScore
                         ), null, null
                     )
-                    response.data.scoreHistoryResponseList.forEach {
+                    filterItem.forEach {
                         list += AttendanceModel(
                             0, MyPageAdapterType.LIST_LEVEL, null, it.generationNumber, null
                         )
@@ -84,7 +89,7 @@ class MyPageViewModel @Inject constructor(
                                     scoreName = score.scoreName,
                                     attendanceType = AttendanceType.getAttendanceType(score.scoreType),
                                     cumulativeScore = score.cumulativeScore,
-                                    totalScore = score.score,
+                                    score = score.score,
                                     detail = score.scheduleName,
                                     date = score.date
                                 )

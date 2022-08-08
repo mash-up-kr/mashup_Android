@@ -56,26 +56,26 @@ class ScheduleDetailViewModel @Inject constructor(
 
     private fun getEventDetailList(eventList: List<EventResponse>): List<EventDetail> {
         return mutableListOf<EventDetail>().apply {
-            for (event in eventList) {
+            eventList.forEachIndexed { index, event ->
                 add(
                     EventDetail(
                         0,
                         EventDetailType.HEADER,
                         Header(
-                            eventId = event.eventId,
+                            eventId = index + 1,
                             startedAt = event.startedAt,
                             endedAt = event.endedAt
                         ),
                         null
                     )
                 )
-                event.contentList.forEach {
+                event.contentList.forEachIndexed { eventIndex, it ->
                     add(
                         EventDetail(
                             event.eventId,
                             EventDetailType.CONTENT,
                             null,
-                            Body(it.contentId.toString(), it.title, it.content, it.startedAt)
+                            Body("${eventIndex + 1}", it.title, it.content, it.startedAt)
                         )
                     )
                 }

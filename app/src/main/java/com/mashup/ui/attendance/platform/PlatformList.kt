@@ -36,8 +36,7 @@ fun PlatformList(
         LazyVerticalGrid(
             contentPadding = PaddingValues(vertical = 12.dp),
             modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             columns = GridCells.Fixed(2)

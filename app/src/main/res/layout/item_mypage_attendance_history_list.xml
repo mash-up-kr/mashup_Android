@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                app:attendanceScore="@{model.activityHistory.cumulativeScore}"
+                app:attendanceScore="@{model.activityHistory.score}"
                 tools:text="+20222" />
 
             <androidx.appcompat.widget.AppCompatTextView

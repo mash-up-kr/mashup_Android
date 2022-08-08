@@ -21,7 +21,7 @@ data class ActivityHistory(
     val scoreName: String,
     val attendanceType: AttendanceType,
     val cumulativeScore: Double,
-    val totalScore: Double,
+    val score: Double,
     val detail: String?,
     val date: Date,
 ) {
@@ -38,7 +38,7 @@ data class ActivityHistory(
 
     fun getTotalScoreText(): String {
         val score: Number =
-            if (totalScore % 1 == 0.0) totalScore.toInt() else totalScore
+            if (cumulativeScore % 1 == 0.0) cumulativeScore.toInt() else cumulativeScore
         return "${score}점"
     }
 }

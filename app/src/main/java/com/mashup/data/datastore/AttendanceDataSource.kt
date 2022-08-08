@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-val Context.attendanceDataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
+val Context.attendanceDataStore: DataStore<Preferences> by preferencesDataStore(name = "attendance")
 
 class AttendanceDataSource @Inject constructor(
     @ApplicationContext private val context: Context

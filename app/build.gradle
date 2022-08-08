@@ -8,13 +8,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/yangmin-ug/Desktop/mashupKey')
+            storePassword 'mashup1234!'
+            keyPassword 'mashup1234!'
+            keyAlias 'key'
+        }
+    }
     compileSdkVersion compileVersion
 
     defaultConfig {
         applicationId "com.mashup"
         minSdkVersion minVersion
         targetSdkVersion targetVersion
-        versionCode 1
+        versionCode 2
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -31,7 +39,6 @@ android {
         debug {
             java.srcDirs = ['src/main/java', 'src/debug/java']
         }
-
     }
 
     buildFeatures {
@@ -43,11 +50,12 @@ android {
         debug {
             minifyEnabled false
             buildConfigField "Boolean", "DEBUG_MODE", "true"
+            signingConfig signingConfigs.debug
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             buildConfigField "Boolean", "DEBUG_MODE", "false"
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

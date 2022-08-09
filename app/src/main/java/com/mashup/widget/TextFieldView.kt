@@ -4,8 +4,8 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.text.InputType.TYPE_CLASS_TEXT
-import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+import android.text.InputFilter
+import android.text.InputType.*
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +32,8 @@ class TextFieldView @JvmOverloads constructor(
 
     val inputtedText: String
         get() = viewBinding.etText.text.toString()
+
+    private var foregroundDrawableRes: Int = R.drawable.bg_text_field_out_line_idle
 
     private val collapseValueAnimator: ValueAnimator by lazy {
         ValueAnimator.ofFloat(1f, 0f).apply {
@@ -73,6 +75,13 @@ class TextFieldView @JvmOverloads constructor(
         initEditText()
     }
 
+    fun setText(text: String) {
+        if (inputtedText == text || text.isEmpty()) return
+        viewBinding.etText.setText(text)
+        viewBinding.etText.setSelection(text.length - 1)
+        startExpendAnimationHintLabel()
+    }
+
     private fun initEditText() {
         viewBinding.etText.setOnFocusChangeListener { editText, hasFocus ->
             when {
@@ -83,9 +92,11 @@ class TextFieldView @JvmOverloads constructor(
                     startCollapseAnimationHintLabel()
                 }
             }
-            setStrokeForegroundDrawable(
-                if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
-            )
+            if (foregroundDrawableRes == R.drawable.bg_text_field_out_line_idle) {
+                setStrokeForegroundDrawable(
+                    if (hasFocus) R.drawable.bg_text_field_out_line_primary else R.drawable.bg_text_field_out_line_idle
+                )
+            }
             focusChangedListener?.invoke(hasFocus)
         }
     }
@@ -122,6 +133,7 @@ class TextFieldView @JvmOverloads constructor(
     }
 
     fun setStrokeForegroundDrawable(@DrawableRes drawableRes: Int) {
+        foregroundDrawableRes = drawableRes
         viewBinding.layoutTextField.foreground =
             ResourcesCompat.getDrawable(context.resources, drawableRes, null)
     }
@@ -151,10 +163,18 @@ class TextFieldView @JvmOverloads constructor(
             TextFieldInputType.PASSWORD -> {
                 TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
             }
+            TextFieldInputType.TEXT_CAP_CHARACTERS -> {
+                viewBinding.etText.privateImeOptions = "defaultInputmode=english"
+                TYPE_TEXT_FLAG_CAP_CHARACTERS
+            }
             else -> {
                 TYPE_CLASS_TEXT
             }
         }
+    }
+
+    fun setMaxLength(length: Int) {
+        viewBinding.etText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(length))
     }
 
     fun isFocus() = viewBinding.etText.hasFocus()
@@ -242,9 +262,15 @@ class TextFieldView @JvmOverloads constructor(
         fun TextFieldView.bindInputType(inputType: TextFieldInputType) {
             setInputType(inputType)
         }
+
+        @JvmStatic
+        @BindingAdapter("text_field_length")
+        fun TextFieldView.bindLength(length: Int) {
+            setMaxLength(length)
+        }
     }
 
     enum class TextFieldInputType {
-        PASSWORD, TEXT
+        PASSWORD, TEXT, TEXT_CAP_CHARACTERS
     }
 }

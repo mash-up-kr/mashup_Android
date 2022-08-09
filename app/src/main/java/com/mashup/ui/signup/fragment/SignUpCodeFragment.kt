@@ -32,7 +32,6 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarDividerVisible(false)
-        viewModel.setToolbarCloseButtonVisible(true)
     }
 
     override fun initViews() {
@@ -56,7 +55,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                     SignUpState.InvalidCode -> {
                         viewBinding.btnSignUp.hideLoading()
                         viewBinding.textFieldCode.run {
-                            setDescriptionText("가입코드가 일치하지 않아요")
+                            setDescriptionText("가입코드가 일치하지 않아요.")
                             setFailedUiOfTextField()
                         }
                     }

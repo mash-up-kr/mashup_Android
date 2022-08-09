@@ -18,7 +18,6 @@ import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.extensions.gone
 import com.mashup.ui.extensions.visible
 
-
 class ButtonView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -31,6 +30,7 @@ class ButtonView @JvmOverloads constructor(
     init {
         initButtonViewLayout()
         setButtonStyle(ButtonStyle.PRIMARY)
+        layoutTransition = LayoutTransition()
     }
 
     fun setOnButtonClickListener(clickListener: () -> Unit) {

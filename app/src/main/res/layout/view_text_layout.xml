@@ -36,6 +36,7 @@
                     android:layout_height="32dp"
                     android:textAppearance="@style/TextAppearance.Mashup.Medium"
                     android:textSize="20sp"
+                    android:textColor="@color/gray300"
                     tools:layout_editor_absoluteX="20dp"
                     tools:layout_editor_absoluteY="22dp"
                     tools:text="label" />
@@ -55,7 +56,7 @@
                 android:saveEnabled="false"
                 android:paddingBottom="20dp"
                 android:textAppearance="@style/TextAppearance.Mashup.Medium"
-                android:textColor="@color/gray700"
+                android:textColor="@color/gray800"
                 android:textCursorDrawable="@drawable/cursor_text_field"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"

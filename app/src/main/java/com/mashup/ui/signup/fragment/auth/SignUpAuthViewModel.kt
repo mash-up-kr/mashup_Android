@@ -132,7 +132,10 @@ class SignUpAuthViewModel @Inject constructor(
     }
 
     fun onClickNextButton() = mashUpScope {
-        if ((idState.value as? SignUpIdState.Success)?.validId == true) {
+        if (authScreenState.value.idState is SignUpIdState.Success
+            && authScreenState.value.pwdState is SignUpPwdState.Success
+            && authScreenState.value.pwdCheckState is SignUpPwdCheckState.Success
+        ) {
             _moveToNextScreen.emit(Unit)
         } else {
             checkValidId()

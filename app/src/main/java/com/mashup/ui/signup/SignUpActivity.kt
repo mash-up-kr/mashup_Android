@@ -18,6 +18,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     private val viewModel: SignUpViewModel by viewModels()
 
+    private var navigationAnimationType = NavigationAnimationType.SLIDE
+
     private val navController by lazy {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -25,18 +27,28 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun initViews() {
+        initToolbar()
+    }
+
+    private fun initToolbar() {
         viewBinding.toolbar.setOnBackButtonClickListener {
+            navigationAnimationType = NavigationAnimationType.SLIDE
             onBackPressed()
         }
         viewBinding.toolbar.setOnCloseButtonClickListener {
-            CommonDialog(this).apply {
-                setTitle(text = "회원가입을 그만두시겠어요?")
-                setMessage(text = "입력한 전체 내용이 삭제됩니다.")
-                setNegativeButton()
-                setPositiveButton {
-                    finish()
+            navigationAnimationType = NavigationAnimationType.PULL
+            if (!viewModel.isDataEmpty()) {
+                CommonDialog(this).apply {
+                    setTitle(text = "회원가입을 그만두시겠어요?")
+                    setMessage(text = "입력한 전체 내용이 삭제됩니다.")
+                    setNegativeButton()
+                    setPositiveButton {
+                        finish()
+                    }
+                    show()
                 }
-                show()
+            } else {
+                finish()
             }
         }
     }
@@ -52,18 +64,20 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
             }
         }
-
-        flowLifecycleScope {
-            viewModel.showCloseButton.collectLatest {
-                viewBinding.toolbar.setVisibleCloseButton(it)
-            }
-        }
     }
 
     override fun onBackPressed() {
         if (!navController.popBackStack()) {
             finish()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(
+            0,
+            navigationAnimationType.exitOut
+        )
     }
 
     companion object {

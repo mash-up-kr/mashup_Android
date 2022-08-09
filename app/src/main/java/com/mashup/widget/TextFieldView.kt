@@ -75,6 +75,13 @@ class TextFieldView @JvmOverloads constructor(
         initEditText()
     }
 
+    fun setText(text: String) {
+        if (inputtedText == text || text.isEmpty()) return
+        viewBinding.etText.setText(text)
+        viewBinding.etText.setSelection(text.length - 1)
+        startExpendAnimationHintLabel()
+    }
+
     private fun initEditText() {
         viewBinding.etText.setOnFocusChangeListener { editText, hasFocus ->
             when {

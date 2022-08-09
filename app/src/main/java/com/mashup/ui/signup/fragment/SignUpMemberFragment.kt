@@ -64,11 +64,11 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     private fun setUiOfNameState(nameValidation: Validation) = with(viewBinding) {
         when (nameValidation) {
             Validation.EMPTY -> {
-                textFieldName.setDescriptionText("주민등록상의 실명을 입력해주세요.")
+                textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setEmptyUIOfTextField()
             }
             Validation.SUCCESS -> {
-                textFieldName.setDescriptionText("주민등록상의 실명을 입력해주세요.")
+                textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setSuccessUiOfTextField()
             }
             Validation.FAILED -> {

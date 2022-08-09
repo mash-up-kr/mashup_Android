@@ -67,6 +67,7 @@ class TextSelectionView @JvmOverloads constructor(
     private fun initViews() {
         initIcon()
         initEditText()
+        setHintTextColor(R.color.gray300)
     }
 
     private fun initIcon() {
@@ -98,7 +99,7 @@ class TextSelectionView @JvmOverloads constructor(
         text = hint
     }
 
-    fun setHintTextColor(@ColorRes colorRes: Int) {
+    private fun setHintTextColor(@ColorRes colorRes: Int) {
         viewBinding.tvHintLabel.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
@@ -152,7 +153,10 @@ class TextSelectionView @JvmOverloads constructor(
         private const val SIZE_TEXT_EXPEND = 13
 
         @JvmStatic
-        @BindingAdapter(value = ["text_field_hint", "text_field_description"], requireAll = false)
+        @BindingAdapter(
+            value = ["text_section_hint", "text_section_description"],
+            requireAll = false
+        )
         fun TextSelectionView.setTitleText(hint: String?, description: String?) {
             hint?.run {
                 setHintText(this)

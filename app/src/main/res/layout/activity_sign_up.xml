@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             app:toolbar_title='@{"회원가입"}'
             app:toolbar_back_button_visible="@{true}"
+            app:toolbar_close_button_visible="@{true}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

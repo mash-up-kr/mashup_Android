@@ -56,7 +56,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                     SignUpState.InvalidCode -> {
                         viewBinding.btnSignUp.hideLoading()
                         viewBinding.textFieldCode.run {
-                            setDescriptionText("가입코드가 일치하지 않아요")
+                            setDescriptionText("가입코드가 일치하지 않아요.")
                             setFailedUiOfTextField()
                         }
                     }

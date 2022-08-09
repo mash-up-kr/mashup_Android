@@ -137,11 +137,11 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfIdState(idState: SignUpIdState) = with(viewBinding) {
         when (idState) {
             SignUpIdState.Empty -> {
-                textFieldId.setDescriptionText("")
+                textFieldId.setDescriptionText("영문 대소문자만 사용하여 15자 이내로 입력해주세요.")
                 textFieldId.setEmptyUIOfTextField()
             }
             is SignUpIdState.Success -> {
-                textFieldId.setDescriptionText("")
+                textFieldId.setDescriptionText("영문 대소문자만 사용하여 15자 이내로 입력해주세요.")
                 textFieldId.setSuccessUiOfTextField()
             }
             is SignUpIdState.Error -> {
@@ -150,7 +150,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                         "이미 사용 중인 아이디예요."
                     }
                     else -> {
-                        "영문 대소문자만 사용하여 15자 이내로 입력해 주세요."
+                        "영문 대소문자만 사용하여 15자 이내로 입력해주세요."
                     }
                 }
                 textFieldId.setDescriptionText(errorMessage)

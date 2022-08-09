@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.mashup.widget.TextFieldView.TextFieldInputType" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,6 +60,8 @@
                 <com.mashup.widget.TextFieldView
                     android:id="@+id/text_field_code"
                     text_field_hint='@{"가입코드"}'
+                    text_field_input_type="@{TextFieldInputType.TEXT_CAP_CHARACTERS}"
+                    text_field_length="@{8}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

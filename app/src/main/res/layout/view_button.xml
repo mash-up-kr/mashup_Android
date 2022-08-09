@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="52dp"
-        android:animateLayoutChanges="true"
         tools:background="@drawable/bg_button"
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 

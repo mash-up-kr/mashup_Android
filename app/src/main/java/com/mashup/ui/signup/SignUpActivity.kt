@@ -27,6 +27,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun initViews() {
+        initToolbar()
+    }
+
+    private fun initToolbar() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             navigationAnimationType = NavigationAnimationType.SLIDE
             onBackPressed()
@@ -58,12 +62,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 } else {
                     viewBinding.toolbar.hideDivider()
                 }
-            }
-        }
-
-        flowLifecycleScope {
-            viewModel.showCloseButton.collectLatest {
-                viewBinding.toolbar.setVisibleCloseButton(it)
             }
         }
     }

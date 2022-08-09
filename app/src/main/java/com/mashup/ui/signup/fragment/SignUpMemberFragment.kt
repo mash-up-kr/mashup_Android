@@ -56,13 +56,14 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     }
 
     private fun setUiOfMemberState(memberState: MemberState) = with(viewBinding) {
-        setUiOfNameState(memberState.isValidationName)
+        setUiOfNameState(memberState)
         textFieldPlatform.setText(memberState.platform)
         btnSignUp.setButtonEnabled(memberState.isValidationState)
     }
 
-    private fun setUiOfNameState(nameValidation: Validation) = with(viewBinding) {
-        when (nameValidation) {
+    private fun setUiOfNameState(memberState: MemberState) = with(viewBinding) {
+        viewBinding.textFieldName.setText(memberState.name)
+        when (memberState.isValidationName) {
             Validation.EMPTY -> {
                 textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setEmptyUIOfTextField()

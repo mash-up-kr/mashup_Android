@@ -4,8 +4,10 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
-
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 fun View.onThrottleFirstClick(
     viewLifecycleScope: CoroutineScope,
@@ -13,12 +15,15 @@ fun View.onThrottleFirstClick(
     clickListener: () -> Unit
 ) = callbackFlow {
     setOnClickListener {
-        trySend(Unit)
+        it.isEnabled = false
+        trySend(it)
     }
     awaitClose { setOnClickListener(null) }
-}.sample(duration)
-    .onEach { clickListener() }
-    .launchIn(viewLifecycleScope)
+}.onEach { view ->
+    clickListener()
+    delay(duration)
+    view.isEnabled = true
+}.launchIn(viewLifecycleScope)
 
 fun View.findYPositionInView(targetView: View, yCumulative: Int): Int {
     if (this === targetView) {

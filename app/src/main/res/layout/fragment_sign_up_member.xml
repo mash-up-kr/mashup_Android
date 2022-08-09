@@ -54,7 +54,6 @@
 
                 <com.mashup.widget.TextFieldView
                     android:id="@+id/text_field_name"
-                    text_field_description='@{"주민등록상의 실명을 입력해주세요."}'
                     text_field_hint='@{"이름"}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -66,7 +65,7 @@
 
                 <com.mashup.widget.TextSelectionView
                     android:id="@+id/text_field_platform"
-                    text_field_hint='@{"플랫폼"}'
+                    text_section_hint='@{"플랫폼"}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

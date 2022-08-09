@@ -25,9 +25,6 @@ class SignUpViewModel @Inject constructor(
     private val _isCheckedTerm = MutableStateFlow(false)
     val isCheckedTerm: StateFlow<Boolean> = _isCheckedTerm
 
-    private val _showCloseButton = MutableStateFlow(false)
-    val showCloseButton: StateFlow<Boolean> = _showCloseButton
-
     private val _showToolbarDivider = MutableSharedFlow<Boolean>()
     val showToolbarDivider: SharedFlow<Boolean> = _showToolbarDivider
 
@@ -119,12 +116,6 @@ class SignUpViewModel @Inject constructor(
         _isCheckedTerm.value = value ?: !isCheckedTerm.value
     }
 
-    fun setToolbarCloseButtonVisible(isVisible: Boolean) {
-        mashUpScope {
-            _showCloseButton.emit(isVisible)
-        }
-    }
-
     fun setToolbarDividerVisible(isVisible: Boolean) {
         mashUpScope {
             _showToolbarDivider.emit(isVisible)
@@ -135,6 +126,14 @@ class SignUpViewModel @Inject constructor(
         mashUpScope {
             _signUpState.emit(SignUpState.Error(code))
         }
+    }
+
+    fun isDataEmpty(): Boolean {
+        return id.value.isEmpty()
+            && pwd.value.isEmpty()
+            && pwdCheck.value.isEmpty()
+            && platform.value == Platform.NONE
+            && signUpCode.value.isEmpty()
     }
 }
 

@@ -28,11 +28,6 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_auth
 
-    override fun onResume() {
-        super.onResume()
-        activityViewModel.setToolbarCloseButtonVisible(false)
-    }
-
     override fun initViews() {
         initTextField()
         initButton()
@@ -137,20 +132,20 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfIdState(idState: SignUpIdState) = with(viewBinding) {
         when (idState) {
             SignUpIdState.Empty -> {
-                textFieldId.setDescriptionText("")
+                textFieldId.setDescriptionText("영문 대소문자만 사용하여 15자 이내로 입력해주세요.")
                 textFieldId.setEmptyUIOfTextField()
             }
             is SignUpIdState.Success -> {
-                textFieldId.setDescriptionText("")
+                textFieldId.setDescriptionText("영문 대소문자만 사용하여 15자 이내로 입력해주세요.")
                 textFieldId.setSuccessUiOfTextField()
             }
             is SignUpIdState.Error -> {
                 val errorMessage = when (idState.code) {
                     MEMBER_DUPLICATED_IDENTIFICATION -> {
-                        "이미 사용 중인 아이디이에요."
+                        "이미 사용 중인 아이디예요."
                     }
                     else -> {
-                        "영문 대소문자만 사용하여 15자 이내로 입력해 주세요."
+                        "영문 대소문자만 사용하여 15자 이내로 입력해주세요."
                     }
                 }
                 textFieldId.setDescriptionText(errorMessage)
@@ -178,15 +173,12 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfPwdState(pwdState: SignUpPwdState) = with(viewBinding) {
         when (pwdState) {
             SignUpPwdState.Success -> {
-                textFieldPwd.setDescriptionText("")
                 textFieldPwd.setSuccessUiOfTextField()
             }
             SignUpPwdState.Error -> {
-                textFieldPwd.setDescriptionText("영문, 숫자를 조합하여 8자 이상으로 입력해주세요.")
                 textFieldPwd.setFailedUiOfTextField()
             }
             SignUpPwdState.Empty -> {
-                textFieldPwd.setDescriptionText("")
                 textFieldPwd.setEmptyUIOfTextField()
             }
         }
@@ -201,7 +193,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                     textFieldPwdCheck.setSuccessUiOfTextField()
                 }
                 SignUpPwdCheckState.Error -> {
-                    textFieldPwdCheck.setDescriptionText("비밀번호가 일치하지 않아요")
+                    textFieldPwdCheck.setDescriptionText("비밀번호가 일치하지 않아요.")
                     textFieldPwdCheck.setFailedUiOfTextField()
                 }
                 SignUpPwdCheckState.Empty -> {

@@ -5,7 +5,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@+id/start"
-        motion:duration="300"></Transition>
+        motion:duration="300" />
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
@@ -18,7 +18,7 @@
             motion:layout_constraintTop_toTopOf="parent">
             <CustomAttribute
                 motion:attributeName="textColor"
-                motion:customColorValue="@color/gray400" />
+                motion:customColorValue="@color/gray300" />
         </Constraint>
     </ConstraintSet>
 

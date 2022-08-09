@@ -30,7 +30,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
 
     override fun onResume() {
         super.onResume()
-        activityViewModel.setToolbarCloseButtonVisible(false)
+        activityViewModel.setToolbarCloseButtonVisible(true)
     }
 
     override fun initViews() {

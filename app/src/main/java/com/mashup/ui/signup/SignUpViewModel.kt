@@ -136,6 +136,14 @@ class SignUpViewModel @Inject constructor(
             _signUpState.emit(SignUpState.Error(code))
         }
     }
+
+    fun isDataEmpty(): Boolean {
+        return id.value.isEmpty()
+            && pwd.value.isEmpty()
+            && pwdCheck.value.isEmpty()
+            && platform.value == Platform.NONE
+            && signUpCode.value.isEmpty()
+    }
 }
 
 sealed interface SignUpState {

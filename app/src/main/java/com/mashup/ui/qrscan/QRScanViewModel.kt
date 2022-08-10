@@ -28,7 +28,7 @@ class QRScanViewModel @Inject constructor(
             .onEach {
                 isCheckingCode.set(true)
                 checkAttendance(it)
-                delay(1000)
+                delay(5000)
                 isCheckingCode.set(false)
             }.launchIn(viewModelScope)
     }

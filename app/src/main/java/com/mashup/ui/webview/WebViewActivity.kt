@@ -5,6 +5,8 @@ import android.content.Intent
 import android.webkit.WebViewClient
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.common.NavigationAnimationType
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.databinding.ActivityWebViewBinding
@@ -61,6 +63,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
 
         fun newIntent(context: Context, title: String, url: String): Intent {
             return Intent(context, WebViewActivity::class.java).apply {
+                putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
                 putExtra(EXTRA_TITLE_KEY, title)
                 putExtra(EXTRA_URL_KEY, url)
             }

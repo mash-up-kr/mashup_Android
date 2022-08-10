@@ -91,6 +91,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 viewModel.setCode(text)
             }
         }
+        viewBinding.textFieldCode.setFocus()
     }
 
     private fun initButton() {

@@ -26,19 +26,23 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var scheduleResponse: ScheduleResponse? = null
 
         init {
-            binding.layoutHistoryLevel.setOnClickListener {
-                scheduleResponse?.run {
-                    listener.onClickAttendanceList(scheduleId)
-                } ?: kotlin.run {
+            itemView.setOnClickListener {
+                if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
+                } else {
+                    listener.onClickAttendanceList(
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                    )
                 }
             }
 
             binding.btnAttendanceList.setOnClickListener {
-                scheduleResponse?.run {
-                    listener.onClickCrewAttendanceActivity(scheduleId)
-                } ?: kotlin.run {
+                if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
+                } else {
+                    listener.onClickCrewAttendanceActivity(
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                    )
                 }
             }
         }
@@ -196,15 +200,23 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var scheduleResponse: ScheduleResponse? = null
 
         init {
-            binding.layoutHistoryLevel.setOnClickListener {
-                scheduleResponse?.run {
-                    listener.onClickAttendanceList(scheduleId)
+            itemView.setOnClickListener {
+                if (scheduleResponse?.eventList.isNullOrEmpty()) {
+                    listener.onClickEmptySchedule()
+                } else {
+                    listener.onClickAttendanceList(
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                    )
                 }
             }
 
             binding.btnAttendanceList.setOnClickListener {
-                scheduleResponse?.run {
-                    listener.onClickCrewAttendanceActivity(scheduleId)
+                if (scheduleResponse?.eventList.isNullOrEmpty()) {
+                    listener.onClickEmptySchedule()
+                } else {
+                    listener.onClickAttendanceList(
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                    )
                 }
             }
         }

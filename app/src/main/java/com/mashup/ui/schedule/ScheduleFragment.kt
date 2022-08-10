@@ -181,6 +181,11 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
             })
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getScheduleList()
+    }
+
     companion object {
         private const val TRANSLATION_COACH_MARK_Y = 10f
 

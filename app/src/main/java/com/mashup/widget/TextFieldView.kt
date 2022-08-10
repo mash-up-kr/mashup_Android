@@ -186,6 +186,10 @@ class TextFieldView @JvmOverloads constructor(
         )
     }
 
+    fun setFocus() {
+        viewBinding.etText.requestFocus()
+    }
+
     fun clearTextFieldFocus() {
         viewBinding.etText.clearFocus()
     }

@@ -47,6 +47,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
         viewBinding.textFieldName.addOnTextChangedListener {
             viewModel.setUserName(it)
         }
+        viewBinding.textFieldName.setFocus()
 
         viewBinding.textFieldPlatform.setSelectionThrottleFirstClickListener(viewLifecycleOwner) {
             viewBinding.textFieldName.clearTextFieldFocus()

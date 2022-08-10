@@ -61,10 +61,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun onBackPressed() {
-        showExitPopup {
-            if (!navController.popBackStack()) {
-                finish()
-            }
+        if (!navController.popBackStack()) {
+            finish()
         }
     }
 

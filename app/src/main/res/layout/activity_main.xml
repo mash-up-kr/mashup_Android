@@ -15,6 +15,7 @@
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/composeView"
             android:layout_width="match_parent"
+            android:elevation="6dp"
             android:layout_height="match_parent" />
 
         <androidx.fragment.app.FragmentContainerView

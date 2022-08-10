@@ -3,6 +3,7 @@ package com.mashup.ui.qrscan
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,7 +51,8 @@ fun AnimatedVisibilityScope.CongratsImage(modifier: Modifier = Modifier) {
                 enter = scaleIn(),
                 exit = scaleOut()
             ),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Image(
             painter = painterResource(id = R.drawable.img_success_attendance),

@@ -38,14 +38,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         viewBinding.toolbar.setOnCloseButtonClickListener {
             navigationAnimationType = NavigationAnimationType.PULL
             if (!viewModel.isDataEmpty()) {
-                CommonDialog(this).apply {
-                    setTitle(text = "회원가입을 그만두시겠어요?")
-                    setMessage(text = "입력한 전체 내용이 삭제됩니다.")
-                    setNegativeButton()
-                    setPositiveButton {
-                        finish()
-                    }
-                    show()
+                showExitPopup {
+                    finish()
                 }
             } else {
                 finish()
@@ -67,8 +61,22 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun onBackPressed() {
-        if (!navController.popBackStack()) {
-            finish()
+        showExitPopup {
+            if (!navController.popBackStack()) {
+                finish()
+            }
+        }
+    }
+
+    private fun showExitPopup(action: () -> Unit) {
+        CommonDialog(this).apply {
+            setTitle(text = "회원가입을 그만두시겠어요?")
+            setMessage(text = "입력한 전체 내용이 삭제됩니다.")
+            setNegativeButton()
+            setPositiveButton {
+                action()
+            }
+            show()
         }
     }
 

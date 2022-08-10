@@ -165,6 +165,7 @@ class TextFieldView @JvmOverloads constructor(
             }
             TextFieldInputType.TEXT_CAP_CHARACTERS -> {
                 viewBinding.etText.privateImeOptions = "defaultInputmode=english"
+                viewBinding.etText.filters += arrayOf<InputFilter>(InputFilter.AllCaps())
                 TYPE_TEXT_FLAG_CAP_CHARACTERS
             }
             else -> {
@@ -174,7 +175,7 @@ class TextFieldView @JvmOverloads constructor(
     }
 
     fun setMaxLength(length: Int) {
-        viewBinding.etText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(length))
+        viewBinding.etText.filters += arrayOf<InputFilter>(InputFilter.LengthFilter(length))
     }
 
     fun isFocus() = viewBinding.etText.hasFocus()

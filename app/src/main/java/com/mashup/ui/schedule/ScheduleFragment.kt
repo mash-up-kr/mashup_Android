@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
@@ -101,6 +102,11 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
                         viewBinding.layoutCoachMark.root.gone()
                     }
                 }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE)
+                }
             })
             adapter = scheduleAdapter
             offscreenPageLimit = 4
@@ -191,6 +197,10 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
         private const val TRANSLATION_COACH_MARK_Y = 10f
 
         fun newInstance() = ScheduleFragment()
+    }
+
+    private fun enableDisableSwipeRefresh(enable: Boolean) {
+        viewBinding.layoutSwipe.isEnabled = enable
     }
 
     override fun onRefresh() {

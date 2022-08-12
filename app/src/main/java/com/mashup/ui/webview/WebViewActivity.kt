@@ -10,6 +10,7 @@ import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.databinding.ActivityWebViewBinding
+import com.mashup.extensions.setStatusBarColorRes
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +23,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
 
     override fun initViews() {
         super.initViews()
-
+        setStatusBarColorRes(R.color.white)
         initWindowInset()
 
         initToolbar()

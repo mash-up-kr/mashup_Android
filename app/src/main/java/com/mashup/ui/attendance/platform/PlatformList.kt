@@ -2,8 +2,8 @@ package com.mashup.ui.attendance.platform
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,17 +22,8 @@ fun PlatformList(
 ) {
     Column(
         modifier = modifier
-            .padding(top = 12.dp)
             .padding(horizontal = 20.dp)
     ) {
-
-        if (notice.isNotBlank()) {
-            AttendanceNoticeItem(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                notice = notice
-            )
-        }
         LazyVerticalGrid(
             contentPadding = PaddingValues(vertical = 12.dp),
             modifier = modifier
@@ -41,14 +32,30 @@ fun PlatformList(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             columns = GridCells.Fixed(2)
         ) {
-            items(
-                items = totalAttendanceResponse.platformInfos,
-            ) { platform ->
-                PlatformListItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    platformInfo = platform,
-                    onClickPlatform = onClickPlatform
-                )
+
+            totalAttendanceResponse.platformInfos.forEachIndexed { index, platform ->
+                if (index == 0) {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        AttendanceNoticeItem(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            notice = notice
+                        )
+                    }
+                    item(span = { GridItemSpan(1) }) {
+                        PlatformListItem(
+                            platformInfo = platform,
+                            onClickPlatform = onClickPlatform
+                        )
+                    }
+                } else {
+                    item(span = { GridItemSpan(1) }) {
+                        PlatformListItem(
+                            platformInfo = platform,
+                            onClickPlatform = onClickPlatform
+                        )
+                    }
+                }
             }
         }
     }
@@ -66,25 +73,25 @@ fun PlatformListPrev() {
                 eventNum = 1,
                 platformInfos = listOf(
                     PlatformInfo(
-                        platform = Platform.ANDROID.name,
+                        platform = Platform.ANDROID,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7
                     ),
                     PlatformInfo(
-                        platform = Platform.DESIGN.name,
+                        platform = Platform.DESIGN,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7
                     ),
                     PlatformInfo(
-                        platform = Platform.WEB.name,
+                        platform = Platform.WEB,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7
                     ),
                     PlatformInfo(
-                        platform = Platform.IOS.name,
+                        platform = Platform.IOS,
                         totalCount = 13,
                         attendanceCount = 0,
                         lateCount = 7

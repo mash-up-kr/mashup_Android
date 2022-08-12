@@ -34,6 +34,7 @@ class ScheduleDetailViewModel @Inject constructor(
 
     fun getSchedule() {
         mashUpScope {
+            _scheduleState.emit(ScheduleState.Loading)
             val response = scheduleRepository.getSchedule(scheduleId)
 
             if (!response.isSuccess() || response.data == null) {

@@ -118,20 +118,20 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
             viewModel.scheduleState.collectLatest { state ->
                 when (state) {
                     ScheduleState.Loading -> {
-                        showLoading()
+                        showRefreshSpinner()
                     }
                     is ScheduleState.Success -> {
-                        hideLoading()
+                        hideRefreshSpinner()
                         setUiOfScheduleTitle(state.scheduleTitleState)
                         scheduleAdapter.submitList(state.scheduleList)
                         viewBinding.vpSchedule.currentItem = state.schedulePosition
                     }
                     is ScheduleState.Error -> {
-                        hideLoading()
+                        hideRefreshSpinner()
                         handleCommonError(state.code)
                     }
                     else -> {
-                        hideLoading()
+                        hideRefreshSpinner()
                     }
                 }
             }
@@ -191,6 +191,14 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
     override fun onResume() {
         super.onResume()
         viewModel.getScheduleList()
+    }
+
+    private fun showRefreshSpinner() {
+        viewBinding.layoutSwipe.isRefreshing = true
+    }
+
+    private fun hideRefreshSpinner() {
+        viewBinding.layoutSwipe.isRefreshing = false
     }
 
     companion object {

@@ -12,6 +12,7 @@ import com.mashup.data.dto.AttendanceInfoResponse
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
+import com.mashup.ui.extensions.fromHtml
 import com.mashup.ui.extensions.gone
 import com.mashup.ui.schedule.model.ScheduleCard
 import java.text.SimpleDateFormat
@@ -58,7 +59,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 text = String.format(
                     context.resources.getString(R.string.event_list_card_title),
                     data.attendanceInfo.memberName
-                )
+                ).fromHtml()
             }
 
             if (data.attendanceInfo.attendanceInfos.size < 2) {
@@ -282,7 +283,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 itemView.context.getString(
                     R.string.description_standby_schedule,
                     data?.memberName ?: "알 수 없음"
-                )
+                ).fromHtml()
         }
 
         private fun onBindButton(scheduleResponse: ScheduleResponse) {

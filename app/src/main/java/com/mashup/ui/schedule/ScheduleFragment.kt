@@ -13,6 +13,7 @@ import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
+import com.mashup.ui.extensions.fromHtml
 import com.mashup.ui.extensions.gone
 import com.mashup.ui.extensions.visible
 import com.mashup.ui.schedule.adapter.OnItemClickListener
@@ -148,7 +149,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
                 getString(R.string.end_schedule, scheduleTitleState.generatedNumber)
             }
             is ScheduleTitleState.DateCount -> {
-                getString(R.string.event_list_title, scheduleTitleState.dataCount)
+                getString(R.string.event_list_title, scheduleTitleState.dataCount).fromHtml()
             }
         }
     }

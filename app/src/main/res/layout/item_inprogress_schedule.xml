@@ -137,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+                        android:textAppearance="@style/TextAppearance.Mashup.Body1_16_M"
                         android:textColor="@color/gray400"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

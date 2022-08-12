@@ -111,25 +111,25 @@ fun PlatformIcon(
 }
 
 @Composable
-fun PlatformInfo(platform: String, modifier: Modifier = Modifier) {
+fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
     val platformImage = remember(platform) {
         when (platform) {
-            Platform.DESIGN.name -> {
+            Platform.DESIGN -> {
                 R.drawable.img_statusprofile_design
             }
-            Platform.ANDROID.name -> {
+            Platform.ANDROID -> {
                 R.drawable.img_statusprofile_android
             }
-            Platform.WEB.name -> {
+            Platform.WEB -> {
                 R.drawable.img_statusprofile_web
             }
-            Platform.IOS.name -> {
+            Platform.IOS -> {
                 R.drawable.img_statusprofile_ios
             }
-            Platform.SPRING.name -> {
+            Platform.SPRING -> {
                 R.drawable.img_statusprofile_spring
             }
-            Platform.NODE.name -> {
+            Platform.NODE -> {
                 R.drawable.img_statusprofile_node
             }
             else -> {
@@ -146,7 +146,7 @@ fun PlatformInfo(platform: String, modifier: Modifier = Modifier) {
 
         MashTextView(
             modifier = Modifier.padding(top = 6.dp),
-            text = platform,
+            text = platform.getName(),
             style = SubTitle1,
             color = Gray800
         )
@@ -263,7 +263,7 @@ fun PlatformAttendanceStatusItem(
 @Composable
 fun PlatformInfoPrev() {
     MashUpTheme {
-        PlatformInfo(Platform.ANDROID.name)
+        PlatformInfo(Platform.ANDROID)
     }
 }
 
@@ -282,7 +282,7 @@ fun PlatformListItemPrev() {
         PlatformListItem(
             modifier = Modifier.fillMaxWidth(),
             platformInfo = PlatformInfo(
-                platform = Platform.ANDROID.name,
+                platform = Platform.ANDROID,
                 totalCount = 13,
                 attendanceCount = 0,
                 lateCount = 7
@@ -300,7 +300,7 @@ fun EndedPlatformListItemPrev() {
             modifier = Modifier.fillMaxWidth(),
             isAttendingEvent = false,
             platformInfo = PlatformInfo(
-                platform = Platform.ANDROID.name,
+                platform = Platform.ANDROID,
                 totalCount = 13,
                 attendanceCount = 0,
                 lateCount = 7

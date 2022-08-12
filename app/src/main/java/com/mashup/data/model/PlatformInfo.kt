@@ -13,5 +13,5 @@ data class PlatformInfo(
     @Json(name = "totalCount")
     val totalCount: Int,
     @Json(name = "platform")
-    val platform: String
+    val platform: Platform
 ) : Serializable

@@ -11,6 +11,7 @@ import com.mashup.compose.theme.MashUpTheme
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
+import com.mashup.extensions.setStatusBarColorRes
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,8 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
 
     override fun initViews() {
         super.initViews()
+
+        setStatusBarColorRes(R.color.white)
         initButton()
         initCompose()
     }
@@ -50,7 +53,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
         super.initObserves()
         viewModel.platformAttendance.observe(this) {
             viewBinding.toolbar.setTitle(
-                "${it.platform}(${it.totalCount}명)"
+                "${it.platform.getName()}(${it.totalCount}명)"
             )
         }
         flowLifecycleScope {

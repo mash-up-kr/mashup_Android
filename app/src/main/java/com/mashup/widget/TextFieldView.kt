@@ -161,15 +161,15 @@ class TextFieldView @JvmOverloads constructor(
     fun setInputType(inputType: TextFieldInputType) {
         viewBinding.etText.inputType = when (inputType) {
             TextFieldInputType.PASSWORD -> {
-                TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
+                TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD or TYPE_TEXT_FLAG_NO_SUGGESTIONS
             }
             TextFieldInputType.TEXT_CAP_CHARACTERS -> {
                 viewBinding.etText.privateImeOptions = "defaultInputmode=english"
                 viewBinding.etText.filters += arrayOf<InputFilter>(InputFilter.AllCaps())
-                TYPE_TEXT_FLAG_CAP_CHARACTERS
+                TYPE_TEXT_FLAG_CAP_CHARACTERS or TYPE_TEXT_FLAG_NO_SUGGESTIONS
             }
             else -> {
-                TYPE_CLASS_TEXT
+                TYPE_CLASS_TEXT or TYPE_TEXT_FLAG_NO_SUGGESTIONS
             }
         }
     }

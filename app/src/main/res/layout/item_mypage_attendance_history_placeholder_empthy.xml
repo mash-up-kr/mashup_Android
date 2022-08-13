@@ -15,10 +15,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_placeholder_empty"
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="77dp"
-            android:src="@drawable/ic_placeholder_empty"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/img_placeholder_sleeping"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
             android:layout_marginTop="8dp"
             android:gravity="bottom"
             android:text="아직 매시업 활동 내역이 없어요"
-            android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
             android:textColor="@color/gray400"
             app:layout_constraintEnd_toEndOf="@id/iv_placeholder_empty"
             app:layout_constraintStart_toStartOf="@id/iv_placeholder_empty"

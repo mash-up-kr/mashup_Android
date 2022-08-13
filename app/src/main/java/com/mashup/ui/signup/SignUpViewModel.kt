@@ -28,6 +28,9 @@ class SignUpViewModel @Inject constructor(
     private val _showToolbarDivider = MutableSharedFlow<Boolean>()
     val showToolbarDivider: SharedFlow<Boolean> = _showToolbarDivider
 
+    private val _showToolbarClose = MutableStateFlow(false)
+    val showToolbarClose: SharedFlow<Boolean> = _showToolbarClose
+
     private val userName = MutableStateFlow("")
     val memberState = userName.combine(platform) { name, platform ->
         val validationName = validationName(name)
@@ -119,6 +122,12 @@ class SignUpViewModel @Inject constructor(
     fun setToolbarDividerVisible(isVisible: Boolean) {
         mashUpScope {
             _showToolbarDivider.emit(isVisible)
+        }
+    }
+
+    fun setToolbarCloseVisible(isVisible: Boolean) {
+        mashUpScope {
+            _showToolbarClose.emit(isVisible)
         }
     }
 

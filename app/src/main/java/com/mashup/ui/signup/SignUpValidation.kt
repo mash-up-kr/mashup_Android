@@ -4,7 +4,7 @@ import com.mashup.common.Validation
 
 fun validationId(id: String): Validation {
     if (id.isEmpty()) return Validation.EMPTY
-    return if ("[a-zA-Z]{1,15}".toRegex().matches(id)) {
+    return if ("[a-zA-Z]{5,15}".toRegex().matches(id)) {
         Validation.SUCCESS
     } else {
         Validation.FAILED

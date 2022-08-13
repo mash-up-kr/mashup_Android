@@ -32,6 +32,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarDividerVisible(false)
+        viewModel.setToolbarCloseVisible(true)
     }
 
     override fun initViews() {

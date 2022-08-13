@@ -79,11 +79,9 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
             }
             setOnFocusChangedListener { hasFocus ->
                 if (hasFocus) {
-                    post {
-                        viewBinding.scrollView.scrollToTarget(
-                            viewBinding.layoutContent, this
-                        )
-                    }
+                    viewBinding.scrollView.scrollToTarget(
+                        viewBinding.layoutContent, this
+                    )
                 }
             }
         }
@@ -95,11 +93,9 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
             }
             setOnFocusChangedListener { hasFocus ->
                 if (hasFocus) {
-                    post {
-                        viewBinding.scrollView.scrollToTarget(
-                            viewBinding.layoutContent, this
-                        )
-                    }
+                    viewBinding.scrollView.scrollToTarget(
+                        viewBinding.layoutContent, this
+                    )
                 }
             }
         }
@@ -110,11 +106,9 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
             }
             setOnFocusChangedListener { hasFocus ->
                 if (hasFocus) {
-                    post {
-                        viewBinding.scrollView.scrollToTarget(
-                            viewBinding.layoutContent, this
-                        )
-                    }
+                    viewBinding.scrollView.scrollToTarget(
+                        viewBinding.layoutContent, this
+                    )
                 }
             }
         }

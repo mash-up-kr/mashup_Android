@@ -61,9 +61,9 @@
                         android:text="@string/facebook" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_instgram"
+                        android:id="@+id/btn_instagram"
                         style="@style/SettingBtn"
-                        android:drawableTop="@drawable/ic_instagram"
+                        android:drawableTop="@drawable/layout_instagrame_icon"
                         android:onClick="@{() -> viewModel.onClickSNS(context,URL.INSTAGRAM)}"
                         android:text="@string/instagram" />
 

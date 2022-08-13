@@ -58,6 +58,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
             }
         }
+
+        flowLifecycleScope {
+            viewModel.showToolbarClose.collectLatest { isVisible ->
+                viewBinding.toolbar.setVisibleCloseButton(isVisible)
+            }
+        }
     }
 
     override fun onBackPressed() {

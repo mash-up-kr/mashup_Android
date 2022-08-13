@@ -28,6 +28,11 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_sign_up_auth
 
+    override fun onResume() {
+        super.onResume()
+        activityViewModel.setToolbarCloseVisible(false)
+    }
+
     override fun initViews() {
         initTextField()
         initButton()
@@ -132,11 +137,11 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     private fun setUiOfIdState(idState: SignUpIdState) = with(viewBinding) {
         when (idState) {
             SignUpIdState.Empty -> {
-                textFieldId.setDescriptionText("영문 대소문자만 사용하여 15자 이내로 입력해주세요.")
+                textFieldId.setDescriptionText("영문 대소문자를 조합하여 5자에서 15자 이내로 입력해주세요.")
                 textFieldId.setEmptyUIOfTextField()
             }
             is SignUpIdState.Success -> {
-                textFieldId.setDescriptionText("영문 대소문자만 사용하여 15자 이내로 입력해주세요.")
+                textFieldId.setDescriptionText("영문 대소문자를 조합하여 5자에서 15자 이내로 입력해주세요.")
                 textFieldId.setSuccessUiOfTextField()
             }
             is SignUpIdState.Error -> {
@@ -145,7 +150,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                         "이미 사용 중인 아이디예요."
                     }
                     else -> {
-                        "영문 대소문자만 사용하여 15자 이내로 입력해주세요."
+                        "영문 대소문자를 조합하여 5자에서 15자 이내로 입력해주세요."
                     }
                 }
                 textFieldId.setDescriptionText(errorMessage)

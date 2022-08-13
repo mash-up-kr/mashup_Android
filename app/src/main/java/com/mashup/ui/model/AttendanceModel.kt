@@ -49,5 +49,9 @@ data class Profile(
     val score: Double,
     val generationNumber: Int,
 ) {
-    fun getAttendanceScore() = "${score}점"
+    fun getAttendanceScore(): String {
+        val scoreNumber: Number =
+            if (score % 1 == 0.0) score.toInt() else score
+        return "${scoreNumber}점"
+    }
 }

@@ -1,5 +1,6 @@
 package com.mashup.base
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.network.errorcode.BAD_REQUEST
@@ -17,6 +18,7 @@ abstract class BaseViewModel : ViewModel() {
 
     private val exceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
+            Log.e("coroutine throwable", throwable.message ?: "")
             when (throwable) {
                 is UnknownHostException, is EOFException -> {
                     handleErrorCode(DISCONNECT_NETWORK)

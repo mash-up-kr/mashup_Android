@@ -63,6 +63,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                     SignUpState.Success -> {
                         viewBinding.btnSignUp.hideLoading()
                         requireActivity().run {
+                            showToast("회원가입 성공했습니다!")
                             startActivity(
                                 Intent(requireContext(), MainActivity::class.java).apply {
                                     flags =

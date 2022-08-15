@@ -46,6 +46,13 @@ class ScheduleViewModel @Inject constructor(
 
             if (!response.isSuccess() || response.data == null) {
                 handleErrorCode(response.code)
+                _scheduleState.emit(
+                    ScheduleState.Success(
+                        scheduleTitleState = ScheduleTitleState.Empty,
+                        scheduleList = listOf(ScheduleCard.EmptySchedule()),
+                        schedulePosition = 0
+                    )
+                )
                 return@mashUpScope
             }
             _scheduleState.emit(

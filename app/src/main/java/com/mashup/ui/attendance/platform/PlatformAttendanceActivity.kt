@@ -11,6 +11,8 @@ import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityPlatformAttendanceBinding
+import com.mashup.network.errorcode.EVENT_NOT_FOUND
+import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
 import com.mashup.ui.attendance.crew.CrewAttendanceActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,6 +44,7 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                     is PlatformAttendanceState.Error -> {
                         hideLoading()
                         handleCommonError(state.code)
+                        handlePlatformAttendanceErrorCode(state)
                     }
                     else -> {
                         hideLoading()
@@ -57,10 +60,25 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
         }
     }
 
+    private fun handlePlatformAttendanceErrorCode(error: PlatformAttendanceState.Error) {
+        val codeMessage = when (error.code) {
+            SCHEDULE_NOT_FOUND -> {
+                "스케줄 정보를 찾을 수 없습니다."
+            }
+            EVENT_NOT_FOUND -> {
+                "스케줄 상세 정보를 찾을 수 없습니다."
+            }
+            else -> {
+                null
+            }
+        }
+        codeMessage?.run { showToast(codeMessage) }
+    }
+
     private fun moveToCrewAttendance(platform: PlatformInfo) {
         val scheduleId = viewModel.scheduleId
         if (scheduleId == null) {
-            showToast("정보를 찾을 수 없습니다.")
+            showToast("스케줄 정보를 찾을 수 없습니다.")
             finish()
         } else {
             startActivity(

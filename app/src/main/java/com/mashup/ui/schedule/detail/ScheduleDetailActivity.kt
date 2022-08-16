@@ -7,6 +7,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.databinding.ActivityScheduleDetailBinding
+import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -42,6 +43,7 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
                     is ScheduleState.Error -> {
                         hideLoading()
                         handleCommonError(state.code)
+                        handleScheduleDetailErrorCode(state)
                     }
                     else -> {
                         hideLoading()
@@ -49,6 +51,18 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
                 }
             }
         }
+    }
+
+    private fun handleScheduleDetailErrorCode(error: ScheduleState.Error) {
+        val codeMessage = when (error.code) {
+            SCHEDULE_NOT_FOUND -> {
+                "스케줄 정보를 찾을 수 없습니다. 다시 시도해주세요"
+            }
+            else -> {
+                null
+            }
+        }
+        codeMessage?.run { showToast(this) }
     }
 
     private fun initButton() {

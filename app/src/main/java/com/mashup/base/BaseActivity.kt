@@ -118,14 +118,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     protected fun handleCommonError(code: String) {
         when (code) {
             BAD_REQUEST -> {
-                CommonDialog(this).apply {
-                    setTitle(text = "오류 발생")
-                    setMessage(text = "잠시 후 다시 시도해주세요.")
-                    setPositiveButton {
-                        finish()
-                    }
-                    show()
-                }
+                showToast("잠시 후 다시 시도해주세요.")
             }
             UNAUTHORIZED -> {
                 CommonDialog(this).apply {

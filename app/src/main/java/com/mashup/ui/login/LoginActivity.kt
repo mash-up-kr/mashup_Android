@@ -149,10 +149,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 "비밀번호가 일치하지 않습니다."
             }
             else -> {
-                "잠시 후 다시 시도해주세요."
+                null
             }
         }
-        showToast(codeMessage)
+        codeMessage?.run { showToast(codeMessage) }
     }
 
     private fun initSplashPreDraw() {

@@ -23,7 +23,7 @@
 	<string name="what_attendance_plus_content7">스태프 : +99</string>
 	<string name="what_attendance_plus_content8">회장/부회장 : +100</string>
 
-	<string name="total_activity_count">활동점수</string>
+	<string name="total_activity_count">활동 점수</string>
 	<string name="event_list_title"><![CDATA[다음 세미나 일정까지\n<font color="#6A36FF">%d</font>일 남았습니다!]]></string>
 	<string name="event_refresh">일정 새로고침</string>
 	<string name="event_list_card_title"><![CDATA[<font color="#383E4C"><b>%s</b></font>님의 현재 출석현황이에요]]></string>

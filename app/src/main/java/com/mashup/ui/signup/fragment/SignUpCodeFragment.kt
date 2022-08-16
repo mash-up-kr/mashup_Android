@@ -119,10 +119,10 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                 "잘못된 플랫폼 이름입니다."
             }
             else -> {
-                "잠시 후 다시 시도해주세요."
+                null
             }
         }
-        showToast(codeMessage)
+        codeMessage?.run { showToast(this) }
     }
 
     private fun setUiOfCodeState(codeState: CodeState) {

@@ -12,6 +12,7 @@ import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
 import com.mashup.extensions.setStatusBarColorRes
+import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,6 +66,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
                     is CrewAttendanceState.Error -> {
                         hideLoading()
                         handleCommonError(state.code)
+                        handleCrewAttendanceErrorCode(state)
                     }
                     else -> {
                         hideLoading()
@@ -72,6 +74,18 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
                 }
             }
         }
+    }
+
+    private fun handleCrewAttendanceErrorCode(error: CrewAttendanceState.Error) {
+        val codeMessage = when (error.code) {
+            SCHEDULE_NOT_FOUND -> {
+                "스케줄 정보를 찾을 수 없습니다."
+            }
+            else -> {
+                null
+            }
+        }
+        codeMessage?.run { showToast(codeMessage) }
     }
 
     override val layoutId: Int

@@ -17,6 +17,7 @@ import com.mashup.data.model.PlatformInfo
 fun PlatformList(
     modifier: Modifier = Modifier,
     notice: String,
+    isAttendingEvent: Boolean,
     totalAttendanceResponse: TotalAttendanceResponse,
     onClickPlatform: (PlatformInfo) -> Unit
 ) {
@@ -45,14 +46,16 @@ fun PlatformList(
                     item(span = { GridItemSpan(1) }) {
                         PlatformListItem(
                             platformInfo = platform,
-                            onClickPlatform = onClickPlatform
+                            onClickPlatform = onClickPlatform,
+                            isAttendingEvent = isAttendingEvent
                         )
                     }
                 } else {
                     item(span = { GridItemSpan(1) }) {
                         PlatformListItem(
                             platformInfo = platform,
-                            onClickPlatform = onClickPlatform
+                            onClickPlatform = onClickPlatform,
+                            isAttendingEvent = isAttendingEvent
                         )
                     }
                 }
@@ -97,7 +100,8 @@ fun PlatformListPrev() {
                         lateCount = 7
                     )
                 )
-            )
+            ),
+            isAttendingEvent = false
         ) {
         }
     }

@@ -38,6 +38,7 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                         PlatformList(
                             notice = viewModel.notice.value,
                             totalAttendanceResponse = state.data,
+                            isAttendingEvent = state.data.eventNum != 2 || !state.data.isEnd,
                             onClickPlatform = ::moveToCrewAttendance
                         )
                     }

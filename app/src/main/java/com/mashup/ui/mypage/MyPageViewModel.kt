@@ -41,7 +41,7 @@ class MyPageViewModel @Inject constructor(
                         platform = Platform.getPlatform(response.data?.platform),
                         name = response.data?.name.toString(),
                         score = 0.0,
-                        generationNumber = response.data?.generationNumber ?: 0
+                        generationNumber = response.data?.generationNumbers?.lastOrNull() ?: 0
                     )
                 )
             } else {

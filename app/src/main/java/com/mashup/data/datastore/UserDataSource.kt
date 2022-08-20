@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.mashup.extensions.getListTypeAdapter
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -18,11 +20,12 @@ class UserDataSource @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     private val userDataStore: DataStore<Preferences> by lazy { context.userDataStore }
+    private val moshi: Moshi by lazy { Moshi.Builder().build() }
 
     companion object {
         private val KEY_TOKEN = stringPreferencesKey("accessToken")
         private val KEY_MEMBER_ID = stringPreferencesKey("memberId")
-        private val KEY_GENERATE_NUMBER = stringPreferencesKey("generateNumber")
+        private val KEY_GENERATE_NUMBERS = stringPreferencesKey("generateNumber")
     }
 
     var token: String?
@@ -37,10 +40,14 @@ class UserDataSource @Inject constructor(
             write(KEY_MEMBER_ID, value?.toString())
         }
 
-    var generateNumber: Int?
-        get() = read(KEY_GENERATE_NUMBER, null)?.toIntOrNull()
+    var generateNumbers: List<Int>?
+        get() {
+            val adapter = moshi.getListTypeAdapter(Int::class.java)
+            return adapter.nullSafe().fromJson(read(KEY_GENERATE_NUMBERS, null) ?: "")
+        }
         set(value) {
-            write(KEY_GENERATE_NUMBER, value?.toString())
+            val adapter = moshi.getListTypeAdapter(Int::class.java)
+            write(KEY_GENERATE_NUMBERS, adapter.toJson(value))
         }
 
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {

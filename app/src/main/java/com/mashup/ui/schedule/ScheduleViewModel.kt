@@ -36,7 +36,7 @@ class ScheduleViewModel @Inject constructor(
     fun getScheduleList() {
         mashUpScope {
             _scheduleState.emit(ScheduleState.Loading)
-            val generateNumber = userDataSource.generateNumber
+            val generateNumber = userDataSource.generateNumbers?.lastOrNull()
             if (generateNumber == null) {
                 handleErrorCode(UNAUTHORIZED)
                 return@mashUpScope

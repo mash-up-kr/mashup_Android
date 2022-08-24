@@ -40,13 +40,13 @@ class UserDataSource @Inject constructor(
             write(KEY_MEMBER_ID, value?.toString())
         }
 
-    var generateNumbers: List<Int>?
+    var generateNumbers: List<Int?>?
         get() {
-            val adapter = moshi.getListTypeAdapter(Int::class.java)
-            return adapter.nullSafe().fromJson(read(KEY_GENERATE_NUMBERS, null) ?: "")
+            val adapter = moshi.getListTypeAdapter<Int>(Int::class)
+            return adapter.fromJson(read(KEY_GENERATE_NUMBERS, null) ?: "")
         }
         set(value) {
-            val adapter = moshi.getListTypeAdapter(Int::class.java)
+            val adapter = moshi.getListTypeAdapter<Int>(Int::class)
             write(KEY_GENERATE_NUMBERS, adapter.toJson(value))
         }
 

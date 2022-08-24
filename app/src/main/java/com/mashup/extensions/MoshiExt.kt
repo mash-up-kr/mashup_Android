@@ -3,11 +3,12 @@ package com.mashup.extensions
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import kotlin.reflect.KClass
 
-fun <T> Moshi.getListTypeAdapter(dataType: Class<T>): JsonAdapter<List<T>> {
+fun <T> Moshi.getListTypeAdapter(dataType: KClass<*>): JsonAdapter<List<T?>> {
     val listIntType = Types.newParameterizedType(
         List::class.java,
-        dataType
+        dataType.javaObjectType
     )
-    return adapter(listIntType)
+    return adapter<List<T?>>(listIntType).nullSafe()
 }

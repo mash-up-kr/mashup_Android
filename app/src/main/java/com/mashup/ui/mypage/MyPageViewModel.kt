@@ -117,8 +117,10 @@ class MyPageViewModel @Inject constructor(
         AttendanceModel(1, MyPageAdapterType.SCORE, profile)
     )
 
-    private fun attendanceEmpty(profile: Profile) =
-        myPageHeader(profile) + AttendanceModel(3, MyPageAdapterType.LIST_NONE)
+    private fun attendanceEmpty(profile: Profile): List<AttendanceModel> {
+        val headers = myPageHeader(profile)
+        return headers + AttendanceModel(headers.size, MyPageAdapterType.LIST_NONE)
+    }
 
     override fun handleErrorCode(code: String) {
         mashUpScope {

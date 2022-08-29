@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MemberInfoResponse(
-    @field:Json(name = "generationNumber")
-    val generationNumber: Int,
+    @field:Json(name = "generationNumbers")
+    val generationNumbers: List<Int>,
     @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "identification")

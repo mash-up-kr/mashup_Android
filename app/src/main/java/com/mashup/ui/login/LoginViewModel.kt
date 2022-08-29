@@ -62,7 +62,7 @@ class LoginViewModel @Inject constructor(
     fun clearUserData() {
         userDataSource.token = ""
         userDataSource.memberId = null
-        userDataSource.generateNumber = null
+        userDataSource.generateNumbers = null
     }
 
     fun requestLogin(id: String, pwd: String) = mashUpScope {
@@ -78,7 +78,7 @@ class LoginViewModel @Inject constructor(
         }
 
         userDataSource.token = response.data?.token
-        userDataSource.generateNumber = response.data?.generationNumber
+        userDataSource.generateNumbers = response.data?.generationNumbers
         userDataSource.memberId = response.data?.memberId
         _loginUiState.emit(LoginState.Success)
     }

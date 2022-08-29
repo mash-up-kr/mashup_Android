@@ -9,9 +9,9 @@ import java.util.*
 data class AttendanceModel(
     val id: Int,
     val myPageType: MyPageAdapterType,
-    val profile: Profile?,
-    val generationNum: Int?,
-    val activityHistory: ActivityHistory?
+    val profile: Profile? = null,
+    val generationNum: Int? = null,
+    val activityHistory: ActivityHistory? = null
 ) {
     fun getGeneration() = "${generationNum}기"
 }

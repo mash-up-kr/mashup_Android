@@ -3,6 +3,7 @@ package com.mashup.ui.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.base.BaseViewModel
+import com.mashup.data.dto.ScoreHistoryResponse
 import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.MyPageRepository
 import com.mashup.ui.model.ActivityHistory
@@ -56,68 +57,69 @@ class MyPageViewModel @Inject constructor(
             val response = myPageRepository.getScoreHistory()
             if (response.isSuccess()) {
 
+                //현재 기수만 사용(필터링)
                 val filterItem = response.data?.scoreHistoryResponseList?.filter {
                     it.generationNumber == profile.generationNumber
                 }
-                val list = mutableListOf<AttendanceModel>()
-                if (filterItem?.isNotEmpty() == true) {
-                    list += AttendanceModel(
-                        0,
-                        MyPageAdapterType.TITLE,
-                        profile.copy(
-                            score = filterItem.first().totalScore
-                        ), null, null
-                    )
 
-                    list += AttendanceModel(
-                        0, MyPageAdapterType.SCORE,
-                        profile.copy(
-                            score = filterItem.first().totalScore
-                        ), null, null
-                    )
-                    filterItem.forEach {
-                        list += AttendanceModel(
-                            0, MyPageAdapterType.LIST_LEVEL, null, it.generationNumber, null
+                val attendanceItem =
+                    if (filterItem?.isNotEmpty() == true) {
+                        attendanceScoreList(
+                            profile.copy(score = filterItem.first().totalScore),
+                            filterItem
                         )
-                        list += it.scoreDetails.map { score ->
-                            AttendanceModel(
-                                id = 0,
-                                MyPageAdapterType.LIST_ITEM,
-                                null,
-                                it.generationNumber,
-                                ActivityHistory(
-                                    scoreName = score.scoreName,
-                                    attendanceType = AttendanceType.getAttendanceType(score.scoreType),
-                                    cumulativeScore = score.cumulativeScore,
-                                    score = score.score,
-                                    detail = score.scheduleName,
-                                    date = score.date
-                                )
-                            )
-                        }
+                    } else {
+                        attendanceEmpty(profile)
                     }
-                } else {
-                    list.addAll(
-                        listOf(
-                            AttendanceModel(
-                                0, MyPageAdapterType.TITLE, profile, null, null
-                            ),
-                            AttendanceModel(
-                                0, MyPageAdapterType.SCORE, profile, null, null
-                            ),
-                            AttendanceModel(
-                                0, MyPageAdapterType.LIST_NONE, profile, null, null
-                            )
-                        )
-                    )
-
-                }
-                _attendanceList.postValue(list)
+                _attendanceList.postValue(attendanceItem)
             } else {
                 handleErrorCode(response.code)
             }
         } catch (ignore: Exception) {
         }
+    }
+
+    private fun attendanceScoreList(
+        profile: Profile,
+        filterItem: List<ScoreHistoryResponse>
+    ): MutableList<AttendanceModel> {
+
+        val attendanceItem = mutableListOf<AttendanceModel>()
+        attendanceItem.addAll(myPageHeader(profile))
+
+        filterItem.forEach {
+            attendanceItem += AttendanceModel(
+                id = attendanceItem.size,
+                myPageType = MyPageAdapterType.LIST_LEVEL,
+                generationNum = it.generationNumber
+            )
+            attendanceItem += it.scoreDetails.map { score ->
+                AttendanceModel(
+                    id = attendanceItem.size,
+                    myPageType = MyPageAdapterType.LIST_ITEM,
+                    generationNum = it.generationNumber,
+                    activityHistory = ActivityHistory(
+                        scoreName = score.scoreName,
+                        attendanceType = AttendanceType.getAttendanceType(score.scoreType),
+                        cumulativeScore = score.cumulativeScore,
+                        score = score.score,
+                        detail = score.scheduleName,
+                        date = score.date
+                    )
+                )
+            }
+        }
+        return attendanceItem
+    }
+
+    private fun myPageHeader(profile: Profile) = listOf(
+        AttendanceModel(0, MyPageAdapterType.TITLE, profile),
+        AttendanceModel(1, MyPageAdapterType.SCORE, profile)
+    )
+
+    private fun attendanceEmpty(profile: Profile): List<AttendanceModel> {
+        val headers = myPageHeader(profile)
+        return headers + AttendanceModel(headers.size, MyPageAdapterType.LIST_NONE)
     }
 
     override fun handleErrorCode(code: String) {

@@ -6,13 +6,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.extensions.onThrottleFirstClick
+import com.mashup.common.model.NavigationAnimationType
+import com.mashup.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySettingBinding
-import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.withdrawl.WithdrawalActivity
-import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -6,18 +6,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
-import com.mashup.common.Validation
+import com.mashup.common.extensions.setEmptyUIOfTextField
+import com.mashup.common.extensions.setFailedUiOfTextField
+import com.mashup.common.extensions.setSuccessUiOfTextField
+import com.mashup.common.model.Validation
+import com.mashup.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import com.mashup.databinding.FragmentSignUpCodeBinding
 import com.mashup.network.errorcode.INVALID_PLATFORM_NAME
 import com.mashup.network.errorcode.MEMBER_INVALID_INVITE
-import com.mashup.ui.extensions.setEmptyUIOfTextField
-import com.mashup.ui.extensions.setFailedUiOfTextField
-import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.signup.state.CodeState
-import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

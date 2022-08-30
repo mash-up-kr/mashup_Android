@@ -9,12 +9,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.extensions.onThrottleFirstClick
+import com.mashup.common.extensions.setStatusBarColorRes
+import com.mashup.common.extensions.setStatusBarDarkTextColor
+import com.mashup.common.model.NavigationAnimationType
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityMainBinding
-import com.mashup.extensions.onThrottleFirstClick
-import com.mashup.extensions.setStatusBarColorRes
-import com.mashup.extensions.setStatusBarDarkTextColor
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity

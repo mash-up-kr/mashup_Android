@@ -6,14 +6,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
-import com.mashup.common.Validation
+import com.mashup.common.extensions.setEmptyUIOfTextField
+import com.mashup.common.extensions.setFailedUiOfTextField
+import com.mashup.common.extensions.setSuccessUiOfTextField
+import com.mashup.common.model.Validation
+import com.mashup.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import com.mashup.databinding.FragmentSignUpMemberBinding
-import com.mashup.ui.extensions.setEmptyUIOfTextField
-import com.mashup.ui.extensions.setFailedUiOfTextField
-import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.signup.MemberState
 import com.mashup.ui.signup.SignUpViewModel
-import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

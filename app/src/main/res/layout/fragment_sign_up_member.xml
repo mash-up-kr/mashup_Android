@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.mashup.widget.ButtonView
+            <com.mashup.common.widget.ButtonView
                 android:id="@+id/btn_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,18 +52,19 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText" />
 
-                <com.mashup.widget.TextFieldView
+                <com.mashup.common.widget.TextFieldView
                     android:id="@+id/text_field_name"
                     text_field_hint='@{"이름"}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="24dp"
+                    text_field_description='@{"한글 이름(실명)을 입력해주세요."}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
-                <com.mashup.widget.TextSelectionView
+                <com.mashup.common.widget.TextSelectionView
                     android:id="@+id/text_field_platform"
                     text_section_hint='@{"플랫폼"}'
                     android:layout_width="0dp"

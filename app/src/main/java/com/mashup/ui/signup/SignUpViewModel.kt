@@ -1,7 +1,7 @@
 package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
-import com.mashup.common.Validation
+import com.mashup.common.model.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform

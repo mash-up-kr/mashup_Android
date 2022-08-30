@@ -1,7 +1,7 @@
 package com.mashup.network.dao
 
-import com.mashup.common.Response
 import com.mashup.data.dto.*
+import com.mashup.network.Response
 import retrofit2.http.*
 
 interface AttendanceDao {

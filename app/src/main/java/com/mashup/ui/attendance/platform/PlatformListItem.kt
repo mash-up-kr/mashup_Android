@@ -2,6 +2,7 @@ package com.mashup.ui.attendance.platform
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -13,9 +14,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,11 +48,7 @@ fun PlatformListItem(
             .clickable {
                 onClickPlatform(platformInfo)
             }
-            .shadow(
-                elevation = 20.dp,
-                shape = CardListShape,
-                ambientColor = colorResource(id = R.color.black_10),
-            ),
+            .border(width = 1.dp, color = Gray100, shape = CardListShape),
         shape = CardListShape
     ) {
         Column(

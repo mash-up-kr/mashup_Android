@@ -10,12 +10,12 @@ ext {
     kotlinVersion = "1.6.10"
 
     // androidx
-    appcompatVersion = "1.4.1"
-    coreKtxVersion = "1.7.0"
-    activityKtxVersion = "1.4.0"
-    fragmentKtxVersion = "1.4.1"
-    lifecycleVersion = "2.5.0-alpha03"
-    constraintLayoutVersion = "2.1.3"
+    appcompatVersion = "1.5.0"
+    coreKtxVersion = "1.8.0"
+    activityKtxVersion = "1.5.1"
+    fragmentKtxVersion = "1.5.2"
+    lifecycleVersion = "2.6.0-alpha01"
+    constraintLayoutVersion = "2.1.4"
     recyclerViewVersion = "1.2.1"
     viewPagerVersion = "1.0.0"
 
@@ -38,7 +38,7 @@ ext {
     coroutineVersion = "1.5.2"
 
     // material
-    materialVersion = "1.5.0"
+    materialVersion = "1.6.1"
 
     // network
     retrofitVersion = "2.9.0"

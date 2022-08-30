@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -19,11 +20,33 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        dataBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    dependencies {
+        api "androidx.core:core-ktx:$coreKtxVersion"
+        api "androidx.activity:activity-ktx:$activityKtxVersion"
+        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+        api "androidx.appcompat:appcompat:$appcompatVersion"
+        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+        api "androidx.viewpager2:viewpager2:$viewPagerVersion"
+        api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+        // lifecycle
+        api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+        api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+        api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+
+        // material
+        api "com.google.android.material:material:$materialVersion"
     }
 }

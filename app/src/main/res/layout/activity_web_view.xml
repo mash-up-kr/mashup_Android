@@ -13,7 +13,7 @@
         android:background="@color/white"
         tools:context=".ui.webview.WebViewActivity">
 
-        <com.mashup.widget.ToolbarView
+        <com.mashup.common.widget.ToolbarView
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

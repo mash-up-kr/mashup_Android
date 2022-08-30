@@ -1,8 +1,8 @@
 package com.mashup.data.repository
 
-import com.mashup.common.Response
 import com.mashup.data.dto.*
 import com.mashup.data.model.Platform
+import com.mashup.network.Response
 import com.mashup.network.dao.MemberDao
 import javax.inject.Inject
 

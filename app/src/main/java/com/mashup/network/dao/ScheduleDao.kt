@@ -1,8 +1,8 @@
 package com.mashup.network.dao
 
-import com.mashup.common.Response
 import com.mashup.data.dto.ScheduleListResponse
 import com.mashup.data.dto.ScheduleResponse
+import com.mashup.network.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 

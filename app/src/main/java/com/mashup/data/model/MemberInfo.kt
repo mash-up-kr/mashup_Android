@@ -13,6 +13,9 @@ data class MemberInfo(
 ) {
     fun getFinalAttendance(): AttendanceStatus {
         return when {
+            attendanceInfos.isEmpty() -> {
+                AttendanceStatus.NONE
+            }
             attendanceInfos[0].status.uppercase() == "ATTENDANCE"
                 && attendanceInfos[1].status.uppercase() == "ATTENDANCE" -> {
                 AttendanceStatus.ATTENDANCE

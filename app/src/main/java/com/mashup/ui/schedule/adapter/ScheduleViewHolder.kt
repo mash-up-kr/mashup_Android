@@ -215,7 +215,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
-                    listener.onClickAttendanceList(
+                    listener.onClickCrewAttendanceActivity(
                         scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }

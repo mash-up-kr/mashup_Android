@@ -86,8 +86,8 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_my_page"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="마이페이지"
                 android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_M"

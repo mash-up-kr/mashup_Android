@@ -10,162 +10,137 @@
             type="com.mashup.ui.model.AttendanceModel" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp">
+        android:layout_margin="24dp"
+        android:background="@drawable/bg_common_dialog_20"
+        android:padding="20dp"
+        android:descendantFocusability="afterDescendants"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_d_day"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:background="@drawable/bg_day_text_field"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            android:textColor="@color/gray600"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="D-12" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
+            app:layout_constraintStart_toStartOf="@id/tv_d_day"
+            app:layout_constraintTop_toBottomOf="@id/tv_d_day"
+            tools:text="1차정기세미나" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_calender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/ic_calender"
+            android:drawablePadding="4dp"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            android:textColor="@color/gray700"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="3월 27일" />
+
+        <ImageView
+            android:id="@+id/iv_time_line"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="6dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_calender"
+            app:tint="@color/gray300"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            android:textColor="@color/gray700"
+            app:layout_constraintStart_toEndOf="@id/iv_time_line"
+            app:layout_constraintTop_toBottomOf="@id/tv_calender"
+            tools:text="오후 3:30 - 오후 4:30" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_history_level"
+            android:id="@+id/layout_timeline"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false">
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            app:layout_goneMarginBottom="0dp"
+            android:background="@drawable/bg_common_dialog_16"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_attendance_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_time_line">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/bg_gradient"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/bg_shadow"
-                android:padding="6dp"
+            <ImageView
+                android:id="@+id/iv_schedule"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toTopOf="@id/tv_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/img_placeholder_sleeping" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.Mashup.Body1_16_M"
+                android:textColor="@color/gray400"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/iv_schedule"
+                tools:text="테스트" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="12dp"
-                android:background="@drawable/bg_common_dialog_20"
-                android:padding="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_d_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:background="@drawable/bg_day_text_field"
-                    android:gravity="center"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-                    android:textColor="@color/gray600"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="D-12" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textAppearance="@style/TextAppearance.Mashup.Header1_24_B"
-                    app:layout_constraintStart_toStartOf="@id/tv_d_day"
-                    app:layout_constraintTop_toBottomOf="@id/tv_d_day"
-                    tools:text="1차정기세미나" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_calender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:drawableStart="@drawable/ic_calender"
-                    android:drawablePadding="4dp"
-                    android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-                    android:textColor="@color/gray700"
-                    app:layout_constraintStart_toStartOf="@id/tv_title"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title"
-                    tools:text="3월 27일" />
-
-                <ImageView
-                    android:id="@+id/iv_time_line"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="6dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_clock"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_calender"
-                    app:tint="@color/gray300"
-                    tools:ignore="ContentDescription" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_time_line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="6dp"
-                    android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-                    android:textColor="@color/gray700"
-                    app:layout_constraintStart_toEndOf="@id/iv_time_line"
-                    app:layout_constraintTop_toBottomOf="@id/tv_calender"
-                    tools:text="오후 3:30 - 오후 4:30" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_timeline"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_goneMarginBottom="0dp"
-                    android:background="@drawable/bg_common_dialog_16"
-                    android:padding="20dp"
-                    app:layout_constraintBottom_toTopOf="@id/btn_attendance_list"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_time_line">
-
-                    <ImageView
-                        android:id="@+id/iv_schedule"
-                        android:layout_width="124dp"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        app:layout_constraintBottom_toTopOf="@id/tv_description"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        tools:ignore="ContentDescription"
-                        tools:src="@drawable/img_placeholder_sleeping" />
-
-                    <TextView
-                        android:id="@+id/tv_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textAppearance="@style/TextAppearance.Mashup.Body1_16_M"
-                        android:textColor="@color/gray400"
-                        android:gravity="center"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_schedule"
-                        tools:text="테스트" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btn_attendance_list"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/bg_common_dialog"
-                    android:backgroundTint="@color/brand100"
-                    android:gravity="center"
-                    android:text="@string/click_attendance_list"
-                    android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
-                    android:textColor="@color/brand500"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:visibility="gone" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_attendance_list"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_common_dialog"
+            android:backgroundTint="@color/brand100"
+            android:gravity="center"
+            android:text="@string/click_attendance_list"
+            android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+            android:textColor="@color/brand500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

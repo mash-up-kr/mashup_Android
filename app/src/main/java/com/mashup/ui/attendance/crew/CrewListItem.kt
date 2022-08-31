@@ -1,5 +1,6 @@
 package com.mashup.ui.attendance.crew
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
@@ -8,12 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
+import com.mashup.compose.colors.Gray100
 import com.mashup.compose.colors.Gray200
 import com.mashup.compose.colors.Gray800
 import com.mashup.compose.shape.CardListShape
@@ -22,6 +22,7 @@ import com.mashup.compose.typography.MashTextView
 import com.mashup.compose.typography.SubTitle1
 import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
+import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
 import java.util.*
 
@@ -31,11 +32,7 @@ fun CrewListItem(
     memberInfo: MemberInfo
 ) {
     Card(
-        modifier = modifier.shadow(
-            elevation = 20.dp,
-            shape = CardListShape,
-            ambientColor = colorResource(id = R.color.black_10)
-        ),
+        modifier = modifier.border(width = 1.dp, color = Gray100, shape = CardListShape),
         shape = CardListShape
     ) {
         Row(
@@ -80,8 +77,8 @@ fun SeminarItems(
     memberInfo: MemberInfo
 ) {
     val finalAttendance = remember(
-        key1 = memberInfo.attendanceInfos[0].status,
-        key2 = memberInfo.attendanceInfos[1].status
+        key1 = memberInfo.attendanceInfos.getOrNull(0)?.status,
+        key2 = memberInfo.attendanceInfos.getOrNull(1)?.status
     ) {
         memberInfo.getFinalAttendance()
     }
@@ -89,8 +86,9 @@ fun SeminarItems(
     Row(modifier = modifier) {
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 14.dp),
-            timeStamp = memberInfo.attendanceInfos[0].attendanceAt,
-            attendanceStatus = memberInfo.attendanceInfos[0].status,
+            timeStamp = memberInfo.attendanceInfos.getOrNull(0)?.attendanceAt,
+            attendanceStatus = memberInfo.attendanceInfos.getOrNull(0)?.status
+                ?: AttendanceStatus.NONE.name,
             iconRes = R.drawable.ic_circle,
             iconSize = 8,
             index = 0
@@ -98,8 +96,9 @@ fun SeminarItems(
         SeminarItemSpacer()
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 14.dp),
-            timeStamp = memberInfo.attendanceInfos[1].attendanceAt,
-            attendanceStatus = memberInfo.attendanceInfos[1].status,
+            timeStamp = memberInfo.attendanceInfos.getOrNull(1)?.attendanceAt,
+            attendanceStatus = memberInfo.attendanceInfos.getOrNull(1)?.status
+                ?: AttendanceStatus.NONE.name,
             iconRes = R.drawable.ic_circle,
             iconSize = 8,
             index = 1

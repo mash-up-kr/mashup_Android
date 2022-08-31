@@ -8,7 +8,7 @@ data class ScheduleListResponse(
     @field:Json(name = "progress")
     val progress: SchedulesProgress,
     @field:Json(name = "dateCount")
-    val dateCount: Int,
+    val dateCount: Int?,
     @field:Json(name = "scheduleList")
     val scheduleList: List<ScheduleResponse>
 )

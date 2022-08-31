@@ -18,8 +18,8 @@
 
 		<ImageView
 			android:id="@+id/iv_mashong"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="180dp"
+			android:layout_height="146dp"
 			android:layout_marginTop="20dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"

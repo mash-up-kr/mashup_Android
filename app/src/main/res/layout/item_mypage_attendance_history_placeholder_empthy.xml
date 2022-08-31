@@ -15,8 +15,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_placeholder_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/img_placeholder_sleeping"
             app:layout_constraintEnd_toEndOf="parent"

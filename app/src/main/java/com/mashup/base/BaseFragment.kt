@@ -18,6 +18,7 @@ import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.network.errorcode.BAD_REQUEST
 import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.network.errorcode.INTERNAL_SERVER_ERROR
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
@@ -96,7 +97,7 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
 
     protected fun handleCommonError(code: String) {
         when (code) {
-            BAD_REQUEST -> {
+            BAD_REQUEST, INTERNAL_SERVER_ERROR -> {
                 showToast("잠시 후 다시 시도해주세요.")
             }
             UNAUTHORIZED -> {

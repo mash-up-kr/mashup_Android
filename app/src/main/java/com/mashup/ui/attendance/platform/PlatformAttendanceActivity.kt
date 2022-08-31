@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.model.NavigationAnimationType
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_SCHEDULE_ID

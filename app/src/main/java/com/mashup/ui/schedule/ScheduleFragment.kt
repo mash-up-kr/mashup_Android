@@ -11,12 +11,12 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.common.extensions.fromHtml
+import com.mashup.common.extensions.gone
+import com.mashup.common.extensions.onThrottleFirstClick
+import com.mashup.common.extensions.visible
 import com.mashup.databinding.FragmentScheduleBinding
-import com.mashup.extensions.onThrottleFirstClick
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
-import com.mashup.ui.extensions.fromHtml
-import com.mashup.ui.extensions.gone
-import com.mashup.ui.extensions.visible
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import com.mashup.ui.schedule.detail.ScheduleDetailActivity

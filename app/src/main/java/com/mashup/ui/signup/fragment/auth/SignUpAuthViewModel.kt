@@ -2,7 +2,7 @@ package com.mashup.ui.signup.fragment.auth
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.base.BaseViewModel
-import com.mashup.common.Validation
+import com.mashup.common.model.Validation
 import com.mashup.data.repository.MemberRepository
 import com.mashup.network.errorcode.INVALID_MEMBER_ID
 import com.mashup.network.errorcode.MEMBER_DUPLICATED_IDENTIFICATION

@@ -1,7 +1,7 @@
 package com.mashup.data.repository
 
-import com.mashup.common.Response
 import com.mashup.data.dto.*
+import com.mashup.network.Response
 import com.mashup.network.dao.AttendanceDao
 import javax.inject.Inject
 

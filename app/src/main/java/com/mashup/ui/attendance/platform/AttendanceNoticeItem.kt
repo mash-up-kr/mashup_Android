@@ -1,6 +1,7 @@
 package com.mashup.ui.attendance.platform
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,12 +9,11 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
+import com.mashup.compose.colors.Gray100
 import com.mashup.compose.colors.Gray800
 import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
@@ -26,11 +26,7 @@ fun AttendanceNoticeItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.shadow(
-            elevation = 20.dp,
-            shape = CardListShape,
-            ambientColor = colorResource(id = R.color.black_10)
-        ),
+        modifier = modifier.border(width = 1.dp, color = Gray100, shape = CardListShape),
         shape = CardListShape
     ) {
         Row(

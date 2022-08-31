@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="HardcodedText" />
 
-        <com.mashup.widget.ButtonView
+        <com.mashup.common.widget.ButtonView
             android:id="@+id/btn_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

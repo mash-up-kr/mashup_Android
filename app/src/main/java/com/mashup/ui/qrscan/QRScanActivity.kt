@@ -7,13 +7,13 @@ import androidx.activity.viewModels
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.model.NavigationAnimationType
+import com.mashup.common.utils.PermissionHelper
+import com.mashup.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityQrScanBinding
 import com.mashup.network.errorcode.*
 import com.mashup.ui.qrscan.camera.CameraManager
-import com.mashup.utils.PermissionHelper
-import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

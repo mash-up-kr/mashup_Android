@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.mashup.widget.TextFieldView.TextFieldInputType" />
+        <import type="com.mashup.common.widget.TextFieldView.TextFieldInputType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_retry" />
 
-        <com.mashup.widget.ButtonView
+        <com.mashup.common.widget.ButtonView
             android:id="@+id/btn_retry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

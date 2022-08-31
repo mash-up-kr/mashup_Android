@@ -6,10 +6,10 @@ import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.model.NavigationAnimationType
+import com.mashup.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySignUpBinding
-import com.mashup.widget.CommonDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

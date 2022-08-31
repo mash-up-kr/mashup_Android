@@ -6,12 +6,12 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.extensions.setStatusBarColorRes
+import com.mashup.common.model.NavigationAnimationType
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
-import com.mashup.extensions.setStatusBarColorRes
 import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID

@@ -12,7 +12,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mashup.common.NavigationAnimationType
+import com.mashup.common.model.NavigationAnimationType
+import com.mashup.common.utils.ProgressbarUtil
+import com.mashup.common.utils.ToastUtil
+import com.mashup.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
@@ -21,10 +25,6 @@ import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
-import com.mashup.utils.ProgressbarUtil
-import com.mashup.utils.ToastUtil
-import com.mashup.utils.keyboard.RootViewDeferringInsetsCallback
-import com.mashup.widget.CommonDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

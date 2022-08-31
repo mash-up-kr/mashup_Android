@@ -2,7 +2,7 @@ package com.mashup.ui.login
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.base.BaseViewModel
-import com.mashup.common.Validation
+import com.mashup.common.model.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

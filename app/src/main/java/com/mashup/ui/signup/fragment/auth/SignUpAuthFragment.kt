@@ -8,14 +8,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.common.extensions.scrollToTarget
+import com.mashup.common.extensions.setEmptyUIOfTextField
+import com.mashup.common.extensions.setFailedUiOfTextField
+import com.mashup.common.extensions.setSuccessUiOfTextField
+import com.mashup.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import com.mashup.databinding.FragmentSignUpAuthBinding
-import com.mashup.extensions.scrollToTarget
 import com.mashup.network.errorcode.MEMBER_DUPLICATED_IDENTIFICATION
-import com.mashup.ui.extensions.setEmptyUIOfTextField
-import com.mashup.ui.extensions.setFailedUiOfTextField
-import com.mashup.ui.extensions.setSuccessUiOfTextField
 import com.mashup.ui.signup.SignUpViewModel
-import com.mashup.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

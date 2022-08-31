@@ -1,6 +1,6 @@
 package com.mashup.ui.signup.state
 
-import com.mashup.common.Validation
+import com.mashup.common.model.Validation
 
 data class CodeState(
     val code: String = "",

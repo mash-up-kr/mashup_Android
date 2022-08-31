@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class AccessResponse(
-    @field:Json(name = "generationNumbers")
+    @field:Json(name = "generations")
     val generationNumbers: List<Int>,
     @field:Json(name = "memberId")
     val memberId: Int,

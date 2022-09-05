@@ -97,7 +97,7 @@ class ScheduleViewModel @Inject constructor(
 
         return when {
             !attendResponse.isSuccess() || attendResponse.data == null
-                || attendResponse.data.attendanceInfos.size < 2 -> {
+                || attendResponse.data.attendanceInfos.isEmpty() -> {
                 ScheduleCard.InProgressSchedule(
                     scheduleResponse = scheduleResponse,
                     attendanceInfo = attendResponse.data

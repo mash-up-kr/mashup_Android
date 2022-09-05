@@ -88,7 +88,7 @@ fun SeminarItems(
             modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = memberInfo.attendanceInfos.getOrNull(0)?.attendanceAt,
             attendanceStatus = memberInfo.attendanceInfos.getOrNull(0)?.status
-                ?: AttendanceStatus.NONE.name,
+                ?: AttendanceStatus.NOT_YET.name,
             iconRes = R.drawable.ic_circle,
             iconSize = 8,
             index = 0
@@ -98,7 +98,7 @@ fun SeminarItems(
             modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = memberInfo.attendanceInfos.getOrNull(1)?.attendanceAt,
             attendanceStatus = memberInfo.attendanceInfos.getOrNull(1)?.status
-                ?: AttendanceStatus.NONE.name,
+                ?: AttendanceStatus.NOT_YET.name,
             iconRes = R.drawable.ic_circle,
             iconSize = 8,
             index = 1

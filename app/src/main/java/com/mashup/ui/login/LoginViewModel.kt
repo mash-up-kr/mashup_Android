@@ -5,7 +5,6 @@ import com.mashup.common.model.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
@@ -16,7 +15,7 @@ class LoginViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
     private val userDataSource: UserDataSource
 ) : BaseViewModel() {
-    private val _loginUiState = MutableSharedFlow<LoginState>()
+    private val _loginUiState = MutableStateFlow<LoginState>(LoginState.Empty)
     val loginUiState: SharedFlow<LoginState> = _loginUiState
 
     private val id = MutableStateFlow("")
@@ -80,6 +79,7 @@ class LoginViewModel @Inject constructor(
 }
 
 sealed interface LoginState {
+    object Empty : LoginState
     object Loading : LoginState
     object Success : LoginState
     data class Error(val code: String) : LoginState

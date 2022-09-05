@@ -63,6 +63,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                             handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -126,8 +128,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         codeMessage?.run { showToast(codeMessage) }
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_login
+    override val layoutId: Int = R.layout.activity_login
 
     companion object {
 

@@ -1,17 +1,14 @@
 package com.mashup.ui.login
 
-import androidx.lifecycle.viewModelScope
 import com.mashup.base.BaseViewModel
 import com.mashup.common.model.Validation
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,24 +22,16 @@ class LoginViewModel @Inject constructor(
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
 
+    init {
+        checkAutoLogin()
+    }
+
     val loginValidation = id.combine(pwd) { id, pwd ->
         if (id.isNotBlank() && pwd.isNotBlank()) {
             Validation.SUCCESS
         } else {
             Validation.EMPTY
         }
-    }
-
-    var isReady: Boolean = false
-        private set
-
-    /**
-     * Splash API 2초 딜레이를 위한 로직
-     */
-    fun ready() = viewModelScope.launch {
-        delay(2000L)
-        isReady = true
-        checkAutoLogin()
     }
 
     private fun checkAutoLogin() = mashUpScope {

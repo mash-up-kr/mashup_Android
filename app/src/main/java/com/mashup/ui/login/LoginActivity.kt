@@ -2,11 +2,7 @@ package com.mashup.ui.login
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.viewModels
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -26,17 +22,10 @@ import kotlinx.coroutines.flow.collectLatest
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initViews() {
         initLoginState()
         initTextField()
-        initSplash()
         initButtons()
-        initSplashPreDraw()
     }
 
     private fun initLoginState() {
@@ -55,24 +44,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 showToast("로그아웃 되었어요")
             }
         }
-
-        viewModel.ready()
-    }
-
-    private fun initSplash() {
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (viewModel.isReady) {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }
-        )
     }
 
     override fun initObserves() {
@@ -153,18 +124,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
         }
         codeMessage?.run { showToast(codeMessage) }
-    }
-
-    private fun initSplashPreDraw() {
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    content.viewTreeObserver.removeOnPreDrawListener(this)
-                    return true
-                }
-            }
-        )
     }
 
     override val layoutId: Int

@@ -65,12 +65,12 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             onBindAttendanceImage(
                 view = binding.timeline1.ivTimeline,
-                attendanceStatus = data.attendanceInfo.getAttendance(0),
+                attendanceStatus = data.attendanceInfo.getAttendanceStatus(0),
                 isFinal = false
             )
             onBindAttendanceImage(
                 view = binding.timeline2.ivTimeline,
-                attendanceStatus = data.attendanceInfo.getAttendance(1),
+                attendanceStatus = data.attendanceInfo.getAttendanceStatus(1),
                 isFinal = false
             )
             onBindAttendanceImage(
@@ -81,12 +81,12 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             onBindAttendanceStatus(
                 view = binding.timeline1.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.getAttendance(0),
+                attendanceStatus = data.attendanceInfo.getAttendanceStatus(0),
                 isFinal = false
             )
             onBindAttendanceStatus(
                 view = binding.timeline2.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.getAttendance(1),
+                attendanceStatus = data.attendanceInfo.getAttendanceStatus(1),
                 isFinal = false
             )
             onBindAttendanceStatus(

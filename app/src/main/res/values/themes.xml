@@ -10,14 +10,10 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
-    <style name="SplashTheme" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/brand500</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/img_splash</item>
-        <item name="postSplashScreenTheme">@style/Theme.MashUp</item>
-        <item name="windowSplashScreenAnimationDuration">1000</item>
-
+    <style name="SplashTheme" parent="Theme.MashUp">
+        <item name="android:windowBackground">@color/brand500</item>
         <item name="android:statusBarColor">@color/brand500</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

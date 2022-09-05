@@ -13,7 +13,7 @@ data class AttendanceInfoResponse(
     @field:Json(name = "memberName")
     val memberName: String
 ) {
-    fun getAttendance(position: Int): AttendanceStatus {
+    fun getAttendanceStatus(position: Int): AttendanceStatus {
         return AttendanceStatus.getAttendanceStatus(attendanceInfos.getOrNull(position)?.status)
     }
 
@@ -23,12 +23,16 @@ data class AttendanceInfoResponse(
 
     fun getFinalAttendance(): AttendanceStatus {
         return when {
-            attendanceInfos[0].status.uppercase() == "ATTENDANCE"
-                && attendanceInfos[1].status.uppercase() == "ATTENDANCE" -> {
+            getAttendanceStatus(0) == AttendanceStatus.ATTENDANCE
+                && getAttendanceStatus(1) == AttendanceStatus.ATTENDANCE -> {
                 AttendanceStatus.ATTENDANCE
             }
-            attendanceInfos[0].status.uppercase() == "ABSENT"
-                || attendanceInfos[1].status.uppercase() == "ABSENT" -> {
+            getAttendanceStatus(0) == AttendanceStatus.NOT_YET
+                || getAttendanceStatus(1) == AttendanceStatus.NOT_YET -> {
+                AttendanceStatus.NOT_YET
+            }
+            getAttendanceStatus(0) == AttendanceStatus.ABSENT
+                || getAttendanceStatus(1) == AttendanceStatus.ABSENT -> {
                 AttendanceStatus.ABSENT
             }
             else -> {

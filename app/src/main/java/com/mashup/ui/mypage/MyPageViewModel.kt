@@ -31,51 +31,43 @@ class MyPageViewModel @Inject constructor(
         getMember()
     }
 
-    private fun getMember() = mashUpScope {
-        try {
-
-            val response = memberRepository.getMember()
-
-            if (response.isSuccess()) {
-                getScore(
-                    Profile(
-                        platform = Platform.getPlatform(response.data?.platform),
-                        name = response.data?.name.toString(),
-                        score = 0.0,
-                        generationNumber = response.data?.generationNumbers?.lastOrNull() ?: 0
-                    )
+    fun getMember() = mashUpScope {
+        val response = memberRepository.getMember()
+        if (response.isSuccess()) {
+            getScore(
+                Profile(
+                    platform = Platform.getPlatform(response.data?.platform),
+                    name = response.data?.name.toString(),
+                    score = 0.0,
+                    generationNumber = response.data?.generationNumbers?.lastOrNull() ?: 0
                 )
-            } else {
-                handleErrorCode(response.code)
-            }
-        } catch (ignore: Exception) {
+            )
+        } else {
+            handleErrorCode(response.code)
         }
     }
 
     private fun getScore(profile: Profile) = mashUpScope {
-        try {
-            val response = myPageRepository.getScoreHistory()
-            if (response.isSuccess()) {
+        val response = myPageRepository.getScoreHistory()
+        if (response.isSuccess()) {
 
-                //현재 기수만 사용(필터링)
-                val filterItem = response.data?.scoreHistoryResponseList?.filter {
-                    it.generationNumber == profile.generationNumber
-                }
-
-                val attendanceItem =
-                    if (filterItem?.isNotEmpty() == true) {
-                        attendanceScoreList(
-                            profile.copy(score = filterItem.first().totalScore),
-                            filterItem
-                        )
-                    } else {
-                        attendanceEmpty(profile)
-                    }
-                _attendanceList.postValue(attendanceItem)
-            } else {
-                handleErrorCode(response.code)
+            //현재 기수만 사용(필터링)
+            val filterItem = response.data?.scoreHistoryResponseList?.filter {
+                it.generationNumber == profile.generationNumber
             }
-        } catch (ignore: Exception) {
+
+            val attendanceItem =
+                if (filterItem?.isNotEmpty() == true) {
+                    attendanceScoreList(
+                        profile.copy(score = filterItem.first().totalScore),
+                        filterItem
+                    )
+                } else {
+                    attendanceEmpty(profile)
+                }
+            _attendanceList.postValue(attendanceItem)
+        } else {
+            handleErrorCode(response.code)
         }
     }
 

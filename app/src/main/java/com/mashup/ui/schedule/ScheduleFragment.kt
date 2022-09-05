@@ -6,7 +6,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
@@ -25,8 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 
 @AndroidEntryPoint
-class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
-    SwipeRefreshLayout.OnRefreshListener {
+class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
@@ -69,7 +67,10 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
 
     private fun initSwipeRefreshLayout() {
         viewBinding.layoutSwipe.apply {
-            setOnRefreshListener(this@ScheduleFragment)
+            setOnRefreshListener {
+                viewModel.getScheduleList()
+                viewBinding.layoutSwipe.isRefreshing = false
+            }
             setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), R.color.brand500)
             )
@@ -208,10 +209,5 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(),
 
     private fun enableDisableSwipeRefresh(enable: Boolean) {
         viewBinding.layoutSwipe.isEnabled = enable
-    }
-
-    override fun onRefresh() {
-        viewModel.getScheduleList()
-        viewBinding.layoutSwipe.isRefreshing = false
     }
 }

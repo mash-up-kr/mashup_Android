@@ -1,6 +1,7 @@
 package com.mashup.ui.mypage
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,16 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     override fun initViews() {
         super.initViews()
         initRecyclerView()
+        initSwipeRefresh()
+    }
+
+    private fun initSwipeRefresh() {
+        viewBinding.layoutSwipe.apply {
+            setOnRefreshListener { viewModel.getMember() }
+            setColorSchemeColors(
+                ContextCompat.getColor(requireContext(), R.color.brand500)
+            )
+        }
     }
 
     private fun initRecyclerView() {
@@ -61,6 +72,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     override fun initObserves() {
         viewModel.attendanceList.observe(viewLifecycleOwner) { it ->
+            viewBinding.layoutSwipe.isRefreshing = false
             attendanceAdapter.submitList(it)
             it.firstOrNull()?.profile?.let {
                 viewBinding.tvTitle.text = it.name
@@ -70,6 +82,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
         flowViewLifecycleScope {
             viewModel.errorCode.collectLatest {
+                viewBinding.layoutSwipe.isRefreshing = false
                 handleCommonError(it)
             }
         }

@@ -4,6 +4,7 @@ import com.mashup.data.model.AttendanceInfo
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class AttendanceInfoResponse(
@@ -12,6 +13,14 @@ data class AttendanceInfoResponse(
     @field:Json(name = "memberName")
     val memberName: String
 ) {
+    fun getAttendance(position: Int): AttendanceStatus {
+        return AttendanceStatus.getAttendanceStatus(attendanceInfos.getOrNull(position)?.status)
+    }
+
+    fun getAttendanceAt(position: Int): Date? {
+        return attendanceInfos.getOrNull(position)?.attendanceAt
+    }
+
     fun getFinalAttendance(): AttendanceStatus {
         return when {
             attendanceInfos[0].status.uppercase() == "ATTENDANCE"

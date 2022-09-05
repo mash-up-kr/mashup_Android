@@ -125,5 +125,4 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
     }
 
     override val layoutId: Int = R.layout.activity_withdrawal
-
 }

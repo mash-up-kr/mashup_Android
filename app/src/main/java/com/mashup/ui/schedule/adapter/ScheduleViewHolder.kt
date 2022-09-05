@@ -14,6 +14,7 @@ import com.mashup.data.dto.AttendanceInfoResponse
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
+import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.schedule.model.ScheduleCard
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,39 +63,35 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 ).fromHtml()
             }
 
-            if (data.attendanceInfo.attendanceInfos.size < 2) {
-                return
-            }
-
             onBindAttendanceImage(
                 view = binding.timeline1.ivTimeline,
-                attendanceStatus = data.attendanceInfo.attendanceInfos[0].status,
+                attendanceStatus = data.attendanceInfo.getAttendance(0),
                 isFinal = false
             )
             onBindAttendanceImage(
                 view = binding.timeline2.ivTimeline,
-                attendanceStatus = data.attendanceInfo.attendanceInfos[1].status,
+                attendanceStatus = data.attendanceInfo.getAttendance(1),
                 isFinal = false
             )
             onBindAttendanceImage(
                 view = binding.timeline3.ivTimeline,
-                attendanceStatus = data.attendanceInfo.getFinalAttendance().name,
+                attendanceStatus = data.attendanceInfo.getFinalAttendance(),
                 isFinal = true
             )
 
             onBindAttendanceStatus(
                 view = binding.timeline1.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.attendanceInfos[0].status,
+                attendanceStatus = data.attendanceInfo.getAttendance(0),
                 isFinal = false
             )
             onBindAttendanceStatus(
                 view = binding.timeline2.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.attendanceInfos[1].status,
+                attendanceStatus = data.attendanceInfo.getAttendance(1),
                 isFinal = false
             )
             onBindAttendanceStatus(
                 view = binding.timeline3.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.getFinalAttendance().name,
+                attendanceStatus = data.attendanceInfo.getFinalAttendance(),
                 isFinal = true
             )
 
@@ -104,41 +101,44 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             onBindAttendanceTime(
                 binding.timeline1.tvTimelineTime,
-                data.attendanceInfo.attendanceInfos[0].attendanceAt
+                data.attendanceInfo.getAttendanceAt(0)
             )
             onBindAttendanceTime(
                 binding.timeline2.tvTimelineTime,
-                data.attendanceInfo.attendanceInfos[1].attendanceAt
+                data.attendanceInfo.getAttendanceAt(1)
             )
             binding.timeline3.tvTimelineTime.gone()
         }
 
         private fun onBindAttendanceImage(
             view: ImageView,
-            attendanceStatus: String,
+            attendanceStatus: AttendanceStatus,
             isFinal: Boolean
         ) {
             val drawableRes = when (attendanceStatus) {
-                "ABSENT" -> {
+                AttendanceStatus.ABSENT -> {
                     if (isFinal) {
                         R.drawable.ic_absent_final
                     } else {
                         R.drawable.ic_absent_default
                     }
                 }
-                "ATTENDANCE" -> {
+                AttendanceStatus.ATTENDANCE -> {
                     if (isFinal) {
                         R.drawable.ic_attendance_final
                     } else {
                         R.drawable.ic_attendance_default
                     }
                 }
-                else -> {
+                AttendanceStatus.LATE -> {
                     if (isFinal) {
                         R.drawable.ic_late_final
                     } else {
                         R.drawable.ic_late_default
                     }
+                }
+                else -> {
+                    R.drawable.ic_attendance_not_yet
                 }
             }
             view.setImageResource(drawableRes)
@@ -146,30 +146,33 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private fun onBindAttendanceStatus(
             view: TextView,
-            attendanceStatus: String,
+            attendanceStatus: AttendanceStatus,
             isFinal: Boolean
         ) {
             val text = when (attendanceStatus) {
-                "ABSENT" -> {
+                AttendanceStatus.ABSENT -> {
                     if (isFinal) {
                         "슬프지만 결석이에요..."
                     } else {
                         "결석"
                     }
                 }
-                "ATTENDANCE" -> {
+                AttendanceStatus.ATTENDANCE -> {
                     if (isFinal) {
                         "출석을 완료했어요!"
                     } else {
                         "출석"
                     }
                 }
-                else -> {
+                AttendanceStatus.LATE -> {
                     if (isFinal) {
                         "아쉽지만 지각이에요..."
                     } else {
                         "지각"
                     }
+                }
+                else -> {
+                    "-"
                 }
             }
             view.text = text

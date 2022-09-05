@@ -107,19 +107,19 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     private fun handleAttendanceErrorCode(error: QRCodeState.Error) {
         val codeMessage = when (error.code) {
             ATTENDANCE_ALREADY_CHECKED -> {
-                "이미 출석 체크를 완료했습니다."
+                "이미 출석 체크를 했어요"
             }
             ATTENDANCE_CODE_DUPLICATED -> {
                 "이미 사용된 코드입니다."
             }
             ATTENDANCE_TIME_OVER -> {
-                "출석 체크 시간이 지났습니다."
+                "출석 마감 시간이 지나서 결석이에요"
             }
             ATTENDANCE_TIME_BEFORE -> {
-                "출석 체크 시간 전입니다."
+                "아직 출석할 수 없어요"
             }
             ATTENDANCE_CODE_INVALID, ATTENDANCE_CODE_NOT_FOUND -> {
-                "올바른 코드가 아닙니다."
+                "올바르지 않은 QR 코드입니다"
             }
             MEMBER_NOT_FOUND -> {
                 "회원 정보를 찾을 수 없습니다."

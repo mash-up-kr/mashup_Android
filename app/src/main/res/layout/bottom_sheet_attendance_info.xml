@@ -72,10 +72,6 @@
 
 			<androidx.appcompat.widget.AppCompatTextView
 				style="@style/AttendanceInfoList"
-				android:text="@string/what_attendance_plus_content3" />
-
-			<androidx.appcompat.widget.AppCompatTextView
-				style="@style/AttendanceInfoList"
 				android:text="@string/what_attendance_plus_content4" />
 
 			<androidx.appcompat.widget.AppCompatTextView

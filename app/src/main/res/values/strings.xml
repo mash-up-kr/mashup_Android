@@ -15,8 +15,7 @@
 
 	<string name="what_attendance_plus">점수 획득 케이스</string>
 	<string name="what_attendance_plus_content1">전체 세미나 발표 : +1</string>
-	<string name="what_attendance_plus_content2">기술 블로그 작성 : +1</string>
-	<string name="what_attendance_plus_content3">Mash-Up 콘텐츠 글 작성 : +0.5</string>
+	<string name="what_attendance_plus_content2">블로그 콘텐츠 작성 : +1</string>
 	<string name="what_attendance_plus_content4">프로젝트 배포 성공 : +1</string>
 	<string name="what_attendance_plus_content5">프로젝트팀 팀장/부팀장 : +2</string>
 	<string name="what_attendance_plus_content6">해커톤 준비 위원회 : +1</string>

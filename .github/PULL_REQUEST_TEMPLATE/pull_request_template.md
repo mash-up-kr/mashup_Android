@@ -1,8 +1,7 @@
----
-name: Pull request
-about: Create a pull request
----
+## 작업 내역
+- 
 
+## 화면
 |이전 화면|변경된 화면|
 |---|---|
 |||

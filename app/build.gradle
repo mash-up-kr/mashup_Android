@@ -71,7 +71,6 @@ android {
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xuse-experimental=androidx.compose.animation.ExperimentalAnimationApi",
                 "-Xuse-experimental=androidx.compose.foundation.ExperimentalFoundationApi"
-
         ]
     }
     composeOptions {

@@ -25,7 +25,7 @@ android {
         versionCode 11
         versionName "1.0.6"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.mashup.core.testing.MashUpTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }

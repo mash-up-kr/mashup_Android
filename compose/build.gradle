@@ -31,7 +31,7 @@ android {
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion composeVersion
     }
     packagingOptions {
         resources {
@@ -43,12 +43,10 @@ android {
 dependencies {
     implementation project(":common")
 
-    api "androidx.compose.ui:ui:$compose_version"
-    api "androidx.compose.material:material:$compose_version"
+    api "androidx.compose.ui:ui:$composeVersion"
+    api "androidx.compose.material:material:$composeVersion"
     api 'androidx.compose.material3:material3:1.0.0-alpha14'
-    api "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    api "androidx.compose.ui:ui-tooling-preview:$composeVersion"
     api 'androidx.activity:activity-compose:1.4.0'
-    androidTestApi "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugApi "androidx.compose.ui:ui-tooling:$compose_version"
-    debugApi "androidx.compose.ui:ui-test-manifest:$compose_version"
+    debugApi "androidx.compose.ui:ui-tooling:$composeVersion"
 }

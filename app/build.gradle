@@ -25,7 +25,7 @@ android {
         versionCode 11
         versionName "1.0.6"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.mashup.core.testing.MashUpTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -71,11 +71,10 @@ android {
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                 "-Xuse-experimental=androidx.compose.animation.ExperimentalAnimationApi",
                 "-Xuse-experimental=androidx.compose.foundation.ExperimentalFoundationApi"
-
         ]
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion composeVersion
     }
     packagingOptions {
         resources {
@@ -87,8 +86,7 @@ android {
 dependencies {
     implementation project(":common")
     implementation project(":compose")
-
-    testImplementation 'junit:junit:4.12'
+    implementation project(":core:testing")
 
     // ml Kit
     implementation "com.google.mlkit:barcode-scanning:$barcodeSacnnerVersion"

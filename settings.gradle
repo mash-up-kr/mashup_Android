@@ -10,3 +10,4 @@ rootProject.name = "MashUp"
 include ':app'
 include ':compose'
 include ':common'
+include ':core:testing'

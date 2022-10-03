@@ -93,7 +93,9 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
 
     companion object {
         fun newIntent(
-            context: Context, platformInfo: PlatformInfo, scheduleId: Int
+            context: Context,
+            platformInfo: PlatformInfo,
+            scheduleId: Int
         ) = Intent(context, CrewAttendanceActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
             putExtra(EXTRA_PLATFORM_KEY, platformInfo)

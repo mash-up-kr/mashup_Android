@@ -1,6 +1,10 @@
 package com.mashup.ui.attendance.platform
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -33,7 +37,6 @@ fun PlatformList(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             columns = GridCells.Fixed(2)
         ) {
-
             totalAttendanceResponse.platformInfos.forEachIndexed { index, platform ->
                 if (index == 0) {
                     item(span = { GridItemSpan(maxLineSpan) }) {

@@ -39,5 +39,4 @@ abstract class BaseImageAnalyzer<T> : ImageAnalysis.Analyzer {
     )
 
     protected abstract fun onFailure(e: Exception)
-
 }

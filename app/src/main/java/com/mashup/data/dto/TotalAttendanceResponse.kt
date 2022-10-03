@@ -11,5 +11,5 @@ data class TotalAttendanceResponse(
     @field:Json(name = "eventNum")
     val eventNum: Int,
     @field:Json(name = "platformInfos")
-    val platformInfos: List<PlatformInfo>,
+    val platformInfos: List<PlatformInfo>
 )

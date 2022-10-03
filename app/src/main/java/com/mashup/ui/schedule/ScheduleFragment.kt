@@ -40,7 +40,8 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                 override fun onClickAttendanceList(scheduleId: Int) {
                     startActivity(
                         ScheduleDetailActivity.newIntent(
-                            requireContext(), scheduleId
+                            requireContext(),
+                            scheduleId
                         )
                     )
                 }

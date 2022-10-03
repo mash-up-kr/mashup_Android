@@ -3,7 +3,13 @@ package com.mashup.ui.attendance.platform
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -15,7 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
-import com.mashup.compose.colors.*
+import com.mashup.compose.colors.Gray200
+import com.mashup.compose.colors.Gray500
+import com.mashup.compose.colors.Gray600
+import com.mashup.compose.colors.Green500
+import com.mashup.compose.colors.Red500
+import com.mashup.compose.colors.Yellow500
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.Caption1
 import com.mashup.compose.typography.Caption3
@@ -32,7 +43,7 @@ fun AttendanceSeminarItem(
     timeStamp: Date?,
     attendanceStatus: String,
     @DrawableRes iconRes: Int,
-    iconSize: Int,
+    iconSize: Int
 ) {
     val (attendanceColor, label) = when (attendanceStatus) {
         AttendanceStatus.ATTENDANCE.name -> {

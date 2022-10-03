@@ -24,7 +24,6 @@ class ScheduleDetailViewModel @Inject constructor(
             savedStateHandle.get<Int>(EXTRA_SCHEDULE_ID)
         )
 
-
     private val _scheduleState = MutableStateFlow<ScheduleState>(ScheduleState.Empty)
     val scheduleState: StateFlow<ScheduleState> = _scheduleState
 

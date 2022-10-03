@@ -5,7 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mashup.databinding.*
+import com.mashup.databinding.ItemMypageAttendanceHistoryLevelBinding
+import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
+import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
+import com.mashup.databinding.ItemMypageAttendanceScoreBinding
+import com.mashup.databinding.ItemMypageAttendanceTitleBinding
 import com.mashup.ui.model.AttendanceModel
 
 class AttendanceListAdapter :
@@ -57,7 +61,9 @@ class AttendanceListAdapter :
 
     class MyPageListItemViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(
         ItemMypageAttendanceHistoryListBinding.inflate(
-            LayoutInflater.from(view.context), view, false
+            LayoutInflater.from(view.context),
+            view,
+            false
         ).root
     ) {
         private val binding: ItemMypageAttendanceHistoryListBinding? =
@@ -70,7 +76,9 @@ class AttendanceListAdapter :
 
     class MyPageListLevelViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(
         ItemMypageAttendanceHistoryLevelBinding.inflate(
-            LayoutInflater.from(view.context), view, false
+            LayoutInflater.from(view.context),
+            view,
+            false
         ).root
     ) {
         private val binding: ItemMypageAttendanceHistoryLevelBinding? =
@@ -83,7 +91,9 @@ class AttendanceListAdapter :
 
     class MyPageListNoneViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(
         ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(
-            LayoutInflater.from(view.context), view, false
+            LayoutInflater.from(view.context),
+            view,
+            false
         ).root
     ) {
         private val binding: ItemMypageAttendanceHistoryPlaceholderEmpthyBinding? =
@@ -97,7 +107,9 @@ class AttendanceListAdapter :
     class MyPageScoreViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
         RecyclerView.ViewHolder(
             ItemMypageAttendanceScoreBinding.inflate(
-                LayoutInflater.from(view.context), view, false
+                LayoutInflater.from(view.context),
+                view,
+                false
             ).root
         ) {
         private val binding: ItemMypageAttendanceScoreBinding? =
@@ -116,7 +128,9 @@ class AttendanceListAdapter :
     class MyPageTitleViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
         RecyclerView.ViewHolder(
             ItemMypageAttendanceTitleBinding.inflate(
-                LayoutInflater.from(view.context), view, false
+                LayoutInflater.from(view.context),
+                view,
+                false
             ).root
         ) {
         private val binding: ItemMypageAttendanceTitleBinding? =
@@ -130,10 +144,8 @@ class AttendanceListAdapter :
                 }
             }
             binding?.model = item
-
         }
     }
-
 
     interface OnItemEventListener {
         fun onTotalAttendanceClick()
@@ -146,7 +158,6 @@ class AttendanceListAdapter :
         mListener = listener
     }
 }
-
 
 object AttendanceComparator : DiffUtil.ItemCallback<AttendanceModel>() {
     override fun areItemsTheSame(

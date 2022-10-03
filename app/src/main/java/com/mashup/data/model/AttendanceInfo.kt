@@ -9,5 +9,5 @@ data class AttendanceInfo(
     @field:Json(name = "attendanceAt")
     val attendanceAt: Date?,
     @field:Json(name = "status")
-    val status: String,
+    val status: String
 )

@@ -12,5 +12,5 @@ data class ScheduleCreateRequest(
     @field:Json(name = "startedAt")
     val startedAt: String,
     @field:Json(name = "endedAt")
-    val endedAt: String,
+    val endedAt: String
 )

@@ -23,16 +23,16 @@ data class AttendanceInfoResponse(
 
     fun getFinalAttendance(): AttendanceStatus {
         return when {
-            getAttendanceStatus(0) == AttendanceStatus.ATTENDANCE
-                && getAttendanceStatus(1) == AttendanceStatus.ATTENDANCE -> {
+            getAttendanceStatus(0) == AttendanceStatus.ATTENDANCE &&
+                getAttendanceStatus(1) == AttendanceStatus.ATTENDANCE -> {
                 AttendanceStatus.ATTENDANCE
             }
-            getAttendanceStatus(0) == AttendanceStatus.NOT_YET
-                || getAttendanceStatus(1) == AttendanceStatus.NOT_YET -> {
+            getAttendanceStatus(0) == AttendanceStatus.NOT_YET ||
+                getAttendanceStatus(1) == AttendanceStatus.NOT_YET -> {
                 AttendanceStatus.NOT_YET
             }
-            getAttendanceStatus(0) == AttendanceStatus.ABSENT
-                || getAttendanceStatus(1) == AttendanceStatus.ABSENT -> {
+            getAttendanceStatus(0) == AttendanceStatus.ABSENT ||
+                getAttendanceStatus(1) == AttendanceStatus.ABSENT -> {
                 AttendanceStatus.ABSENT
             }
             else -> {

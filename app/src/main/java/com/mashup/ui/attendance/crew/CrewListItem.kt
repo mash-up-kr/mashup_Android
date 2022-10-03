@@ -1,7 +1,14 @@
 package com.mashup.ui.attendance.crew
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
@@ -24,7 +31,7 @@ import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
 import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
-import java.util.*
+import java.util.Date
 
 @Composable
 fun CrewListItem(

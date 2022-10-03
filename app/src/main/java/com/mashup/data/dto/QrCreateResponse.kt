@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class QrCreateResponse(
     @field:Json(name = "qrCodeUrl")
-    val qrCodeUrl: String,
+    val qrCodeUrl: String
 )

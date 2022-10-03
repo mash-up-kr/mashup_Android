@@ -33,7 +33,6 @@ import kotlinx.coroutines.launch
 abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutId: Int
 
-
     private val networkStateDetector: NetworkStatusDetector by lazy {
         NetworkStatusDetector(
             context = this,
@@ -50,7 +49,10 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
 
     protected val viewBinding: V by lazy {
         DataBindingUtil.inflate<V>(
-            LayoutInflater.from(this), layoutId, null, false
+            LayoutInflater.from(this),
+            layoutId,
+            null,
+            false
         )
     }
 
@@ -111,7 +113,8 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         }
         animationType?.run {
             overridePendingTransition(
-                enterIn, enterOut
+                enterIn,
+                enterOut
             )
         }
     }

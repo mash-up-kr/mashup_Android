@@ -17,5 +17,5 @@ data class SignUpRequest(
     @field:Json(name = "platform")
     val platform: Platform,
     @field:Json(name = "privatePolicyAgreed")
-    val privatePolicyAgreed: Boolean,
+    val privatePolicyAgreed: Boolean
 )

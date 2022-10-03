@@ -16,14 +16,13 @@ data class AttendanceModel(
     fun getGeneration() = "${generationNum}기"
 }
 
-
 data class ActivityHistory(
     val scoreName: String,
     val attendanceType: AttendanceType,
     val cumulativeScore: Double,
     val score: Double,
     val detail: String?,
-    val date: Date,
+    val date: Date
 ) {
     @SuppressLint("SimpleDateFormat")
     fun getAttendanceDetail(): String {
@@ -47,7 +46,7 @@ data class Profile(
     val platform: Platform,
     val name: String,
     val score: Double,
-    val generationNumber: Int,
+    val generationNumber: Int
 ) {
     fun getAttendanceScore(): String {
         val scoreNumber: Number =

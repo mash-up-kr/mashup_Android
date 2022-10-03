@@ -42,7 +42,6 @@ object DesignUtil {
                 }
             )
         )
-
     }
 
     @SuppressLint("ResourceAsColor")

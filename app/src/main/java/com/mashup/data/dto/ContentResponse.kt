@@ -13,5 +13,5 @@ data class ContentResponse(
     @field:Json(name = "content")
     val content: String,
     @field:Json(name = "startedAt")
-    val startedAt: Date,
+    val startedAt: Date
 )

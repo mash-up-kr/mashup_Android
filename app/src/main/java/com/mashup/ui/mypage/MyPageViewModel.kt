@@ -50,8 +50,7 @@ class MyPageViewModel @Inject constructor(
     private fun getScore(profile: Profile) = mashUpScope {
         val response = myPageRepository.getScoreHistory()
         if (response.isSuccess()) {
-
-            //현재 기수만 사용(필터링)
+            // 현재 기수만 사용(필터링)
             val filterItem = response.data?.scoreHistoryResponseList?.filter {
                 it.generationNumber == profile.generationNumber
             }
@@ -75,7 +74,6 @@ class MyPageViewModel @Inject constructor(
         profile: Profile,
         filterItem: List<ScoreHistoryResponse>
     ): MutableList<AttendanceModel> {
-
         val attendanceItem = mutableListOf<AttendanceModel>()
         attendanceItem.addAll(myPageHeader(profile))
 

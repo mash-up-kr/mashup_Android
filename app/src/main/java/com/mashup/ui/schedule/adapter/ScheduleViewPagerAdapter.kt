@@ -16,7 +16,9 @@ class ScheduleViewPagerAdapter(private val listener: OnItemClickListener) :
             TYPE_END_SCHEDULE -> {
                 ScheduleViewHolder.EndScheduleCard(
                     ItemEndScheduleBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     listener
                 )
@@ -24,7 +26,9 @@ class ScheduleViewPagerAdapter(private val listener: OnItemClickListener) :
             else -> {
                 ScheduleViewHolder.InProgressScheduleCard(
                     ItemInprogressScheduleBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     listener
                 )

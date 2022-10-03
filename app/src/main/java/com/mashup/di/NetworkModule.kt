@@ -43,9 +43,11 @@ class NetworkModule {
             .addInterceptor(baseInterceptor)
 
         if (DEBUG_MODE) {
-            okHttpClient.addInterceptor(HttpLoggingInterceptor().apply {
-                setLevel(HttpLoggingInterceptor.Level.BODY)
-            })
+            okHttpClient.addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    setLevel(HttpLoggingInterceptor.Level.BODY)
+                }
+            )
         }
         return okHttpClient
             .readTimeout(10L, TimeUnit.SECONDS)
@@ -66,7 +68,6 @@ class NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
-
     @Provides
     @Singleton
     fun provideMemberDao(
@@ -74,7 +75,6 @@ class NetworkModule {
     ): MemberDao {
         return retrofit.create()
     }
-
 
     @Provides
     @Singleton

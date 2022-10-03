@@ -12,7 +12,13 @@ import com.mashup.common.utils.PermissionHelper
 import com.mashup.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityQrScanBinding
-import com.mashup.network.errorcode.*
+import com.mashup.network.errorcode.ATTENDANCE_ALREADY_CHECKED
+import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
+import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
+import com.mashup.network.errorcode.ATTENDANCE_CODE_NOT_FOUND
+import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
+import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
+import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.ui.qrscan.camera.CameraManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

@@ -35,7 +35,6 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
 
     private var loadingDialog: Dialog? = null
 
-
     private val networkStateDetector: NetworkStatusDetector by lazy {
         NetworkStatusDetector(
             context = requireContext(),
@@ -53,7 +52,10 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment() {
     ): View? {
         _viewBinding =
             DataBindingUtil.inflate(
-                LayoutInflater.from(requireContext()), layoutId, null, false
+                LayoutInflater.from(requireContext()),
+                layoutId,
+                null,
+                false
             )
         viewBinding.lifecycleOwner = viewLifecycleOwner
         return viewBinding.root

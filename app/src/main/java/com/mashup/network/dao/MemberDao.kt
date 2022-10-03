@@ -1,9 +1,19 @@
 package com.mashup.network.dao
 
-import com.mashup.data.dto.*
+import com.mashup.data.dto.AccessResponse
+import com.mashup.data.dto.LoginRequest
+import com.mashup.data.dto.MemberInfoResponse
+import com.mashup.data.dto.SignUpRequest
+import com.mashup.data.dto.TokenResponse
+import com.mashup.data.dto.ValidResponse
 import com.mashup.data.model.Platform
 import com.mashup.network.Response
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MemberDao {
 
@@ -32,8 +42,7 @@ interface MemberDao {
     ): Response<ValidResponse>
 
     @GET("api/v1/members")
-    suspend fun getMember(
-    ): Response<MemberInfoResponse>
+    suspend fun getMember(): Response<MemberInfoResponse>
 
     @DELETE("/api/v1/members")
     suspend fun deleteMember(): Response<Any>

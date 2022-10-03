@@ -30,7 +30,7 @@ data class Body(
     val contentId: String,
     val title: String,
     val content: String,
-    val startedAt: Date,
+    val startedAt: Date
 ) {
     fun getTimeStampStr(): String {
         return try {

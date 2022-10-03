@@ -43,7 +43,9 @@ class EventDetailAdapter :
 
     class TitleViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         ItemEventTimelineHeaderBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         ).root
     ) {
         private val binding: ItemEventTimelineHeaderBinding? = DataBindingUtil.bind(itemView)
@@ -58,7 +60,9 @@ class EventDetailAdapter :
 
     class ContentViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         ItemEventTimelineContentBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         ).root
     ) {
         private val binding: ItemEventTimelineContentBinding? =
@@ -73,7 +77,6 @@ class EventDetailAdapter :
         fun onExitEventClick()
     }
 }
-
 
 object EventComparator : DiffUtil.ItemCallback<EventDetail>() {
     override fun areItemsTheSame(

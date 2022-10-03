@@ -8,7 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class RootViewDeferringInsetsCallback(
     private val persistentInsetTypes: Int, // 레이아웃의 일부로 처리된 InsetType (항상 적용되는 InsetType)
-    private val deferredInsetTypes: Int, // 애니메이션이 끝날 때까지 연기되어야 하는 InsetType
+    private val deferredInsetTypes: Int // 애니메이션이 끝날 때까지 연기되어야 하는 InsetType
 
     // 이후에 TranslateDeferringInsetsAnimationCallback로 애니메이션 처리를 위해
     // 하위 뷰까지 디스패치가 전해져야 하므로 `DISPATCH_MODE_CONTINUE_ON_SUBTREE` 사용

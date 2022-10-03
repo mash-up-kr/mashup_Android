@@ -12,7 +12,9 @@ class PermissionHelper(private val activity: Activity) {
         permission: String
     ) {
         ActivityCompat.requestPermissions(
-            activity, arrayOf(permission), requestCode
+            activity,
+            arrayOf(permission),
+            requestCode
         )
     }
 
@@ -23,7 +25,9 @@ class PermissionHelper(private val activity: Activity) {
     ): Boolean {
         return if (!isPermissionGranted(permission)) {
             checkRationalePermission(
-                permission, onRequestPermission, onShowRationaleUi
+                permission,
+                onRequestPermission,
+                onShowRationaleUi
             )
         } else {
             true

@@ -52,7 +52,8 @@ class PlatformViewHolder(
     }
 
     fun onBindContent(
-        platform: Platform, selectedPlatform: Platform?
+        platform: Platform,
+        selectedPlatform: Platform?
     ) = with(binding) {
         this@PlatformViewHolder.platform = platform
         tvPlatform.text = platform.detailName

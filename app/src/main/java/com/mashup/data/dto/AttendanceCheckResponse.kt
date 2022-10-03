@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class AttendanceCheckResponse(
     @field:Json(name = "status")
-    val status: String,
+    val status: String
 ) {
     fun isAttendance() = status.uppercase() == "ATTENDANCE"
 }

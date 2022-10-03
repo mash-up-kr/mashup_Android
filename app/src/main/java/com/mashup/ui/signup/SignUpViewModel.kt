@@ -7,7 +7,13 @@ import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.model.Platform
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,8 +44,8 @@ class SignUpViewModel @Inject constructor(
             name = name,
             platform = platform.detailName,
             isValidationName = validationName,
-            isValidationState = validationName == Validation.SUCCESS
-                && validationPlatform(platform.detailName) == Validation.SUCCESS
+            isValidationState = validationName == Validation.SUCCESS &&
+                validationPlatform(platform.detailName) == Validation.SUCCESS
         )
     }.debounce(250)
 
@@ -138,11 +144,11 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun isDataEmpty(): Boolean {
-        return id.value.isEmpty()
-            && pwd.value.isEmpty()
-            && pwdCheck.value.isEmpty()
-            && platform.value == Platform.NONE
-            && signUpCode.value.isEmpty()
+        return id.value.isEmpty() &&
+            pwd.value.isEmpty() &&
+            pwdCheck.value.isEmpty() &&
+            platform.value == Platform.NONE &&
+            signUpCode.value.isEmpty()
     }
 }
 

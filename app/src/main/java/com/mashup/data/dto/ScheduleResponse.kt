@@ -21,7 +21,7 @@ data class ScheduleResponse(
     @field:Json(name = "startedAt")
     val startedAt: Date,
     @field:Json(name = "endedAt")
-    val endedAt: Date,
+    val endedAt: Date
 ) {
 
     @SuppressLint("SimpleDateFormat")

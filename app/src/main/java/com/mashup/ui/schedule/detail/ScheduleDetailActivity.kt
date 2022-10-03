@@ -77,5 +77,4 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
                 putExtra(EXTRA_SCHEDULE_ID, scheduleId)
             }
     }
-
 }

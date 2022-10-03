@@ -96,8 +96,8 @@ class ScheduleViewModel @Inject constructor(
         )
 
         return when {
-            !attendResponse.isSuccess() || attendResponse.data == null
-                || attendResponse.data.attendanceInfos.isEmpty() -> {
+            !attendResponse.isSuccess() || attendResponse.data == null ||
+                attendResponse.data.attendanceInfos.isEmpty() -> {
                 ScheduleCard.InProgressSchedule(
                     scheduleResponse = scheduleResponse,
                     attendanceInfo = attendResponse.data
@@ -118,8 +118,8 @@ class ScheduleViewModel @Inject constructor(
 
     private fun showCoachMark(schedules: List<ScheduleResponse>) {
         mashUpScope {
-            val showCoachMark = schedules.any { it.dateCount >= 0 }
-                && !attendanceDataSource.coachMark
+            val showCoachMark = schedules.any { it.dateCount >= 0 } &&
+                !attendanceDataSource.coachMark
             if (showCoachMark) {
                 attendanceDataSource.coachMark = true
                 _showCoachMark.emit(Unit)

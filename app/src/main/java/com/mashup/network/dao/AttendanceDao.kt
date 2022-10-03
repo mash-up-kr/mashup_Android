@@ -1,8 +1,16 @@
 package com.mashup.network.dao
 
-import com.mashup.data.dto.*
+import com.mashup.data.dto.AttendanceCheckRequest
+import com.mashup.data.dto.AttendanceCheckResponse
+import com.mashup.data.dto.AttendanceInfoResponse
+import com.mashup.data.dto.PlatformAttendanceResponse
+import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.network.Response
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AttendanceDao {
 

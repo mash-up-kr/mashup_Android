@@ -10,7 +10,15 @@ import com.mashup.ui.signup.validationId
 import com.mashup.ui.signup.validationPwd
 import com.mashup.ui.signup.validationPwdCheck
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -65,8 +73,8 @@ class SignUpAuthViewModel @Inject constructor(
             val validId = (idState as? SignUpIdState.Success)?.validId == true
             val newButtonState = if (validId) {
                 if (
-                    pwdState == SignUpPwdState.Success
-                    && pwdCheckState == SignUpPwdCheckState.Success
+                    pwdState == SignUpPwdState.Success &&
+                    pwdCheckState == SignUpPwdCheckState.Success
                 ) {
                     SignUpButtonState.Enable
                 } else {
@@ -132,9 +140,9 @@ class SignUpAuthViewModel @Inject constructor(
     }
 
     fun onClickNextButton() = mashUpScope {
-        if (authScreenState.value.idState is SignUpIdState.Success
-            && authScreenState.value.pwdState is SignUpPwdState.Success
-            && authScreenState.value.pwdCheckState is SignUpPwdCheckState.Success
+        if (authScreenState.value.idState is SignUpIdState.Success &&
+            authScreenState.value.pwdState is SignUpPwdState.Success &&
+            authScreenState.value.pwdCheckState is SignUpPwdCheckState.Success
         ) {
             _moveToNextScreen.emit(Unit)
         } else {

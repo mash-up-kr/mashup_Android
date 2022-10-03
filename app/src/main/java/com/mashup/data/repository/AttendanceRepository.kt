@@ -1,6 +1,10 @@
 package com.mashup.data.repository
 
-import com.mashup.data.dto.*
+import com.mashup.data.dto.AttendanceCheckRequest
+import com.mashup.data.dto.AttendanceCheckResponse
+import com.mashup.data.dto.AttendanceInfoResponse
+import com.mashup.data.dto.PlatformAttendanceResponse
+import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.network.Response
 import com.mashup.network.dao.AttendanceDao
 import javax.inject.Inject

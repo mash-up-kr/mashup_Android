@@ -43,11 +43,16 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
         savedInstanceState: Bundle?
     ): View? {
         _rootViewBinding = DialogBaseBottomSheetBinding.inflate(
-            LayoutInflater.from(context), null, false
+            LayoutInflater.from(context),
+            null,
+            false
         )
         _childViewBinding =
             DataBindingUtil.inflate<V>(
-                LayoutInflater.from(requireContext()), layoutId, rootViewBinding.content, true
+                LayoutInflater.from(requireContext()),
+                layoutId,
+                rootViewBinding.content,
+                true
             )
         rootViewBinding.lifecycleOwner = this
         return rootViewBinding.root
@@ -60,28 +65,29 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
 
         addGlobalLayoutListener()
 
-        behavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                onStateChangedBottomSheet(bottomSheet, newState)
-            }
+        behavior?.addBottomSheetCallback(
+            object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    onStateChangedBottomSheet(bottomSheet, newState)
+                }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                onSlideStateBottomSheet(bottomSheet, slideOffset)
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    onSlideStateBottomSheet(bottomSheet, slideOffset)
+                }
             }
-        }
         )
     }
 
     private fun addGlobalLayoutListener() {
         rootViewBinding.root.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                val parent = rootViewBinding.root
-                parent.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior?.peekHeight = viewBinding.root.height
-            }
-        })
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val parent = rootViewBinding.root
+                    parent.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior?.peekHeight = viewBinding.root.height
+                }
+            })
     }
 
     open fun initViews() {

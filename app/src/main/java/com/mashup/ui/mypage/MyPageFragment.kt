@@ -58,7 +58,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                         (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItemPosition == 0) {
                         viewBinding.layoutTitle.visibility = View.GONE
-
                     } else {
                         viewBinding.layoutTitle.visibility = View.VISIBLE
                         viewBinding.layoutTitle.setOnClickListener {
@@ -90,7 +89,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     private fun showAttendanceInfoDialog() {
         AttendanceExplainDialog().show(
-            childFragmentManager, null
+            childFragmentManager,
+            null
         )
     }
 

@@ -10,7 +10,7 @@ plugins {
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/yangmin-ug/Desktop/mashupKey')
+            storeFile file('mashupKey')
             storePassword 'REMOVED'
             keyPassword 'REMOVED'
             keyAlias 'key'

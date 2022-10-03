@@ -12,7 +12,12 @@ import android.os.Build
 import android.os.RemoteException
 import com.mashup.network.NetworkStatusState
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class NetworkStatusDetector(
@@ -34,8 +39,11 @@ class NetworkStatusDetector(
             .map { count -> count > 0 } // map count into active/inactive flag
             .distinctUntilChanged()
             .onEach { isActive ->
-                if (isActive) subscribe()
-                else unsubscribe()
+                if (isActive) {
+                    subscribe()
+                } else {
+                    unsubscribe()
+                }
             }
             .launchIn(coroutineScope)
     }
@@ -47,8 +55,11 @@ class NetworkStatusDetector(
             cm.getNetworkCapabilities(cm.activeNetwork)
                 ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 .let { connected ->
-                    if (connected == true) NetworkStatusState.NetworkConnected
-                    else NetworkStatusState.NetworkDisconnected
+                    if (connected == true) {
+                        NetworkStatusState.NetworkConnected
+                    } else {
+                        NetworkStatusState.NetworkDisconnected
+                    }
                 }
         } catch (e: RemoteException) {
             NetworkStatusState.NetworkDisconnected
@@ -70,7 +81,6 @@ class NetworkStatusDetector(
     }
 
     private fun unsubscribe() {
-
         if (callback == null && receiver == null) return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -95,8 +105,11 @@ class NetworkStatusDetector(
                 .getParcelableExtra<NetworkInfo>(ConnectivityManager.EXTRA_NETWORK_INFO)
                 ?.isConnectedOrConnecting
                 .let { connected ->
-                    if (connected == true) emitNetworkState(NetworkStatusState.NetworkConnected)
-                    else emitNetworkState(getCurrentNetwork())
+                    if (connected == true) {
+                        emitNetworkState(NetworkStatusState.NetworkConnected)
+                    } else {
+                        emitNetworkState(getCurrentNetwork())
+                    }
                 }
         }
     }

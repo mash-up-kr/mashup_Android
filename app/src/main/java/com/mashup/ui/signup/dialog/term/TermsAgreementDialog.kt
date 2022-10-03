@@ -70,7 +70,6 @@ class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementB
         }
     }
 
-
     override val layoutId: Int
         get() = R.layout.dialog_terms_agreement
 }

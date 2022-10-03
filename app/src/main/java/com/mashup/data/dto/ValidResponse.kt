@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class ValidResponse(
     @field:Json(name = "valid")
-    val valid: Boolean,
+    val valid: Boolean
 )

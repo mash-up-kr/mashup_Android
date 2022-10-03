@@ -12,5 +12,5 @@ class QrCreateRequest(
     @field:Json(name = "start")
     val start: String,
     @field:Json(name = "end")
-    val end: String,
+    val end: String
 )

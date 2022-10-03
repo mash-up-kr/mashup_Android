@@ -4,7 +4,15 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
@@ -19,10 +27,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
-import com.mashup.compose.colors.*
+import com.mashup.compose.colors.Gray100
+import com.mashup.compose.colors.Gray500
+import com.mashup.compose.colors.Gray700
+import com.mashup.compose.colors.Gray800
+import com.mashup.compose.colors.Green600
+import com.mashup.compose.colors.Red600
+import com.mashup.compose.colors.Yellow600
 import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
-import com.mashup.compose.typography.*
+import com.mashup.compose.typography.Caption3
+import com.mashup.compose.typography.MashTextView
+import com.mashup.compose.typography.SubTitle1
+import com.mashup.compose.typography.SubTitle2
+import com.mashup.compose.typography.Title3
 import com.mashup.data.model.Platform
 import com.mashup.data.model.PlatformInfo
 import kotlin.math.max
@@ -37,8 +55,12 @@ fun PlatformListItem(
     val attendCount = remember(platformInfo) {
         max(
             0,
-            platformInfo.totalCount - ((platformInfo.attendanceCount ?: 0) + (platformInfo.lateCount
-                ?: 0))
+            platformInfo.totalCount - (
+                (platformInfo.attendanceCount ?: 0) + (
+                    platformInfo.lateCount
+                        ?: 0
+                    )
+                )
         )
     }
 
@@ -89,7 +111,6 @@ fun PlatformListItem(
         }
     }
 }
-
 
 @Composable
 fun PlatformIcon(
@@ -152,7 +173,7 @@ fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
 fun PlatformStatus(
     modifier: Modifier = Modifier,
     numberOfAttend: Int = 0,
-    numberOfMaxAttend: Int = 0,
+    numberOfMaxAttend: Int = 0
 ) {
     Column(
         modifier = modifier,
@@ -194,7 +215,7 @@ fun PlatformAttendanceStatus(
 ) {
     Row(
         modifier = modifier.height(IntrinsicSize.Min),
-        verticalAlignment = CenterVertically,
+        verticalAlignment = CenterVertically
     ) {
         PlatformAttendanceStatusItem(
             label = "출석",

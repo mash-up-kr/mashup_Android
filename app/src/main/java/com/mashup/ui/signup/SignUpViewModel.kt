@@ -2,9 +2,9 @@ package com.mashup.ui.signup
 
 import com.mashup.base.BaseViewModel
 import com.mashup.common.model.Validation
+import com.mashup.core.model.Platform
 import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
-import com.mashup.ui.model.Platform
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,7 +25,7 @@ class SignUpViewModel @Inject constructor(
     private val pwd = MutableStateFlow("")
     private val pwdCheck = MutableStateFlow("")
 
-    private val _platform = MutableStateFlow(Platform.NONE)
+    private val _platform = MutableStateFlow(Platform.UNKNOWN)
     val platform: StateFlow<Platform> = _platform
 
     private val _isCheckedTerm = MutableStateFlow(false)
@@ -147,7 +147,7 @@ class SignUpViewModel @Inject constructor(
         return id.value.isEmpty() &&
             pwd.value.isEmpty() &&
             pwdCheck.value.isEmpty() &&
-            platform.value == Platform.NONE &&
+            platform.value == Platform.UNKNOWN &&
             signUpCode.value.isEmpty()
     }
 }

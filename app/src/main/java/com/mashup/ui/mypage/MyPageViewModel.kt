@@ -8,7 +8,7 @@ import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.MyPageRepository
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
-import com.mashup.ui.model.Platform
+import com.mashup.core.model.Platform
 import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

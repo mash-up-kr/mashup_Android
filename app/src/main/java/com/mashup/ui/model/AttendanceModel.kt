@@ -1,6 +1,7 @@
 package com.mashup.ui.model
 
 import android.annotation.SuppressLint
+import com.mashup.core.model.Platform
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
 import java.text.SimpleDateFormat

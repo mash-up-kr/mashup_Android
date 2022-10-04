@@ -1,4 +1,4 @@
-package com.mashup.ui.model
+package com.mashup.core.model
 
 enum class Platform(val detailName: String) {
     DESIGN("Product Design"),
@@ -7,11 +7,11 @@ enum class Platform(val detailName: String) {
     WEB("Web"),
     SPRING("Spring"),
     NODE("Node"),
-    NONE("");
+    UNKNOWN("Unknown");
 
     companion object {
         fun getPlatform(platformName: String?): Platform {
-            return Platform.values().find { it.name == platformName?.uppercase() } ?: NONE
+            return values().find { it.name == platformName?.uppercase() } ?: UNKNOWN
         }
     }
 }

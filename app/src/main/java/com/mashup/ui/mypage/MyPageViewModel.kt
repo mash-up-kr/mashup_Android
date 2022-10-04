@@ -3,12 +3,12 @@ package com.mashup.ui.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.base.BaseViewModel
+import com.mashup.core.model.Platform
 import com.mashup.data.dto.ScoreHistoryResponse
 import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.MyPageRepository
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
-import com.mashup.core.model.Platform
 import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

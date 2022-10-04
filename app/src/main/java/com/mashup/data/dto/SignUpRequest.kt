@@ -1,6 +1,6 @@
 package com.mashup.data.dto
 
-import com.mashup.data.model.Platform
+import com.mashup.core.model.Platform
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

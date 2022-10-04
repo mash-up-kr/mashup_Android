@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdk compileSdk
+    compileSdk compileVersion
 
     defaultConfig {
-        minSdk minSdk
-        targetSdk targetSdk
+        minSdk minVersion
+        targetSdk targetVersion
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

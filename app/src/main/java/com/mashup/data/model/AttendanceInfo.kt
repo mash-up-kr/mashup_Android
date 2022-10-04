@@ -1,5 +1,6 @@
 package com.mashup.data.model
 
+import com.mashup.core.model.AttendanceStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.*
@@ -9,5 +10,5 @@ data class AttendanceInfo(
     @field:Json(name = "attendanceAt")
     val attendanceAt: Date?,
     @field:Json(name = "status")
-    val status: String
+    val status: AttendanceStatus
 )

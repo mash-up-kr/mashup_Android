@@ -1,7 +1,6 @@
 package com.mashup.ui.attendance.platform
 
 import android.annotation.SuppressLint
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +31,7 @@ import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.Caption1
 import com.mashup.compose.typography.Caption3
 import com.mashup.compose.typography.MashTextView
-import com.mashup.ui.attendance.model.AttendanceStatus
+import com.mashup.core.model.AttendanceStatus
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,33 +41,45 @@ fun AttendanceSeminarItem(
     modifier: Modifier = Modifier,
     index: Int,
     timeStamp: Date?,
-    attendanceStatus: String,
-    @DrawableRes iconRes: Int,
+    attendanceStatus: AttendanceStatus,
     iconSize: Int
 ) {
-    val (attendanceColor, label) = when (attendanceStatus) {
-        AttendanceStatus.ATTENDANCE.name -> {
-            Green500 to "출석"
+    val (attendanceColor, label) = remember(attendanceStatus) {
+        when (attendanceStatus) {
+            AttendanceStatus.ATTENDANCE -> {
+                Green500 to "출석"
+            }
+            AttendanceStatus.ABSENT -> {
+                Red500 to "결석"
+            }
+            AttendanceStatus.LATE -> {
+                Yellow500 to "지각"
+            }
+            else -> {
+                Gray200 to if (index == 2) "최종" else "${index + 1}부"
+            }
         }
-        AttendanceStatus.ABSENT.name -> {
-            Red500 to "결석"
-        }
-        AttendanceStatus.LATE.name -> {
-            Yellow500 to "지각"
-        }
-        else -> {
-            Gray200 to if (index == 2) "최종" else "${index + 1}부"
+    }
+    val attendanceIconRes = remember(attendanceStatus, index) {
+        when {
+            index < 2 -> R.drawable.ic_circle
+            attendanceStatus == AttendanceStatus.ATTENDANCE -> R.drawable.ic_check
+            attendanceStatus == AttendanceStatus.ABSENT -> R.drawable.ic_xmark
+            attendanceStatus == AttendanceStatus.LATE -> R.drawable.ic_triangle
+            else -> R.drawable.ic_circle
         }
     }
 
-    val timeString = if (timeStamp != null) {
-        try {
-            SimpleDateFormat("hh:mm", Locale.KOREA).format(timeStamp)
-        } catch (ignore: Exception) {
+    val timeString = remember(timeStamp) {
+        if (timeStamp != null) {
+            try {
+                SimpleDateFormat("hh:mm", Locale.KOREA).format(timeStamp)
+            } catch (ignore: Exception) {
+                if (index < 2) "-" else ""
+            }
+        } else {
             if (index < 2) "-" else ""
         }
-    } else {
-        if (index < 2) "-" else ""
     }
 
     Column(
@@ -84,7 +96,7 @@ fun AttendanceSeminarItem(
                 modifier = Modifier
                     .size(iconSize.dp)
                     .align(Alignment.Center),
-                painter = painterResource(id = iconRes),
+                painter = painterResource(id = attendanceIconRes),
                 contentDescription = null,
                 tint = Color.White
             )
@@ -112,8 +124,7 @@ fun AttendanceSeminarPrev() {
         AttendanceSeminarItem(
             timeStamp = Date(),
             index = 1,
-            attendanceStatus = AttendanceStatus.ATTENDANCE.name,
-            iconRes = R.drawable.ic_circle,
+            attendanceStatus = AttendanceStatus.ATTENDANCE,
             iconSize = 8
         )
     }

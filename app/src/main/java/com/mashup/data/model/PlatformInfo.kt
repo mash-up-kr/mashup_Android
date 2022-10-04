@@ -1,5 +1,6 @@
 package com.mashup.data.model
 
+import com.mashup.core.model.Platform
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable

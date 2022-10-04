@@ -41,7 +41,7 @@ import com.mashup.compose.typography.MashTextView
 import com.mashup.compose.typography.SubTitle1
 import com.mashup.compose.typography.SubTitle2
 import com.mashup.compose.typography.Title3
-import com.mashup.data.model.Platform
+import com.mashup.core.model.Platform
 import com.mashup.data.model.PlatformInfo
 import kotlin.math.max
 
@@ -162,7 +162,7 @@ fun PlatformInfo(platform: Platform, modifier: Modifier = Modifier) {
 
         MashTextView(
             modifier = Modifier.padding(top = 6.dp),
-            text = platform.getName(),
+            text = platform.detailName,
             style = SubTitle1,
             color = Gray800
         )

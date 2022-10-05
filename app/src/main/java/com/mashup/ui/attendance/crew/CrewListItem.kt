@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.R
 import com.mashup.compose.colors.Gray100
 import com.mashup.compose.colors.Gray200
 import com.mashup.compose.colors.Gray800
@@ -27,11 +26,11 @@ import com.mashup.compose.shape.CardListShape
 import com.mashup.compose.theme.MashUpTheme
 import com.mashup.compose.typography.MashTextView
 import com.mashup.compose.typography.SubTitle1
+import com.mashup.core.model.AttendanceStatus
 import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
-import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
-import java.util.Date
+import java.util.*
 
 @Composable
 fun CrewListItem(
@@ -95,8 +94,7 @@ fun SeminarItems(
             modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = memberInfo.attendanceInfos.getOrNull(0)?.attendanceAt,
             attendanceStatus = memberInfo.attendanceInfos.getOrNull(0)?.status
-                ?: AttendanceStatus.NOT_YET.name,
-            iconRes = R.drawable.ic_circle,
+                ?: AttendanceStatus.NOT_YET,
             iconSize = 8,
             index = 0
         )
@@ -105,8 +103,7 @@ fun SeminarItems(
             modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = memberInfo.attendanceInfos.getOrNull(1)?.attendanceAt,
             attendanceStatus = memberInfo.attendanceInfos.getOrNull(1)?.status
-                ?: AttendanceStatus.NOT_YET.name,
-            iconRes = R.drawable.ic_circle,
+                ?: AttendanceStatus.NOT_YET,
             iconSize = 8,
             index = 1
         )
@@ -114,8 +111,7 @@ fun SeminarItems(
         AttendanceSeminarItem(
             modifier = Modifier.padding(vertical = 14.dp),
             timeStamp = null,
-            attendanceStatus = finalAttendance.name,
-            iconRes = finalAttendance.iconRes,
+            attendanceStatus = finalAttendance,
             iconSize = 16,
             index = 2
         )
@@ -146,11 +142,11 @@ fun SeminarItemsPrev() {
                 name = "가길동",
                 attendanceInfos = listOf(
                     AttendanceInfo(
-                        status = "ATTENDANCE",
+                        status = AttendanceStatus.ATTENDANCE,
                         attendanceAt = Date()
                     ),
                     AttendanceInfo(
-                        status = "ATTENDANCE",
+                        status = AttendanceStatus.ATTENDANCE,
                         attendanceAt = Date()
                     )
                 )
@@ -169,11 +165,11 @@ fun CrewListItemPrev() {
                 name = "가길동",
                 attendanceInfos = listOf(
                     AttendanceInfo(
-                        status = "ATTEND",
+                        status = AttendanceStatus.ATTENDANCE,
                         attendanceAt = Date()
                     ),
                     AttendanceInfo(
-                        status = "ATTEND",
+                        status = AttendanceStatus.ATTENDANCE,
                         attendanceAt = Date()
                     )
                 )

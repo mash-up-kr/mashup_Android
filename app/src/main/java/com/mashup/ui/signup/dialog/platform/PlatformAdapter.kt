@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
+import com.mashup.core.model.Platform
 import com.mashup.databinding.ItemPlatformBinding
-import com.mashup.ui.model.Platform
 
 class PlatformAdapter(
     private val platformList: List<Platform>,

@@ -1,7 +1,7 @@
 package com.mashup.data.dto
 
+import com.mashup.core.model.AttendanceStatus
 import com.mashup.data.model.AttendanceInfo
-import com.mashup.ui.attendance.model.AttendanceStatus
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.*
@@ -14,7 +14,7 @@ data class AttendanceInfoResponse(
     val memberName: String
 ) {
     fun getAttendanceStatus(position: Int): AttendanceStatus {
-        return AttendanceStatus.getAttendanceStatus(attendanceInfos.getOrNull(position)?.status)
+        return attendanceInfos.getOrNull(position)?.status ?: AttendanceStatus.NOT_YET
     }
 
     fun getAttendanceAt(position: Int): Date? {

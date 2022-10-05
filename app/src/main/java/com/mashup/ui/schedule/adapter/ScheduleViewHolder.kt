@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
 import com.mashup.common.extensions.fromHtml
 import com.mashup.common.extensions.gone
+import com.mashup.core.model.AttendanceStatus
 import com.mashup.data.dto.AttendanceInfoResponse
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
-import com.mashup.ui.attendance.model.AttendanceStatus
 import com.mashup.ui.schedule.model.ScheduleCard
 import java.text.SimpleDateFormat
 import java.util.*

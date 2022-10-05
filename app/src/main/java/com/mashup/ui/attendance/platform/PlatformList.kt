@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.compose.theme.MashUpTheme
+import com.mashup.core.model.Platform
 import com.mashup.data.dto.TotalAttendanceResponse
-import com.mashup.data.model.Platform
 import com.mashup.data.model.PlatformInfo
 
 @Composable

@@ -54,7 +54,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
         super.initObserves()
         viewModel.platformAttendance.observe(this) {
             viewBinding.toolbar.setTitle(
-                "${it.platform.getName()}(${it.totalCount}명)"
+                "${it.platform.detailName}(${it.totalCount}명)"
             )
         }
         flowLifecycleScope {

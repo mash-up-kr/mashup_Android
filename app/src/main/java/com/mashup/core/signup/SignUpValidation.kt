@@ -1,6 +1,6 @@
 package com.mashup.core.signup
 
-import com.mashup.common.model.Validation
+import com.mashup.core.common.model.Validation
 
 fun validationId(id: String): Validation {
     if (id.isEmpty()) return Validation.EMPTY

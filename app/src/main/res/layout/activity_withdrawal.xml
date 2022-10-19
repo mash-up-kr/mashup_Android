@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.mashup.common.widget.TextFieldView.TextFieldInputType" />
+        <import type="com.mashup.core.common.widget.TextFieldView.TextFieldInputType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@color/gray50">
 
-        <com.mashup.common.widget.ToolbarView
+        <com.mashup.core.common.widget.ToolbarView
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="56dp"
@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.mashup.common.widget.ButtonView
+            <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_withdrawal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                     android:textSize="24sp"
                     tools:ignore="HardcodedText" />
 
-                <com.mashup.common.widget.TextFieldView
+                <com.mashup.core.common.widget.TextFieldView
                     android:id="@+id/text_field_code"
                     text_field_description='@{"위 문구를 입력해주세요."}'
                     text_field_hint='@{"탈퇴할게요"}'

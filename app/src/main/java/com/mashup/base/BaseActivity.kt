@@ -12,11 +12,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mashup.common.model.NavigationAnimationType
-import com.mashup.common.utils.ProgressbarUtil
-import com.mashup.common.utils.ToastUtil
-import com.mashup.common.utils.keyboard.RootViewDeferringInsetsCallback
-import com.mashup.common.widget.CommonDialog
+import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.ProgressbarUtil
+import com.mashup.core.common.utils.ToastUtil
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector

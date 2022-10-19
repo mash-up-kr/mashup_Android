@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.extensions.setStatusBarColorRes
-import com.mashup.common.extensions.setStatusBarDarkTextColor
+import com.mashup.core.common.extensions.setStatusBarColorRes
+import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.core.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.mashup.common.widget.TextFieldView.TextFieldInputType" />
+        <import type="com.mashup.core.common.widget.TextFieldView.TextFieldInputType" />
     </data>
 
     <ScrollView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             tools:context=".core.login.LoginActivity">
 
-            <com.mashup.common.widget.TextFieldView
+            <com.mashup.core.common.widget.TextFieldView
                 android:id="@+id/text_field_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:text_field_hint='@{"아이디"}' />
 
-            <com.mashup.common.widget.TextFieldView
+            <com.mashup.core.common.widget.TextFieldView
                 android:id="@+id/text_field_pwd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 app:text_field_hint='@{"비밀번호"}'
                 app:text_field_input_type="@{TextFieldInputType.PASSWORD}" />
 
-            <com.mashup.common.widget.ButtonView
+            <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

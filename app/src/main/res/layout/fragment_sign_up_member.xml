@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.mashup.common.widget.ButtonView
+            <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText" />
 
-                <com.mashup.common.widget.TextFieldView
+                <com.mashup.core.common.widget.TextFieldView
                     android:id="@+id/text_field_name"
                     text_field_hint='@{"이름"}'
                     android:layout_width="0dp"
@@ -64,7 +64,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
-                <com.mashup.common.widget.TextSelectionView
+                <com.mashup.core.common.widget.TextSelectionView
                     android:id="@+id/text_field_platform"
                     text_section_hint='@{"플랫폼"}'
                     android:layout_width="0dp"

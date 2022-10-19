@@ -10,10 +10,10 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
-import com.mashup.common.extensions.fromHtml
-import com.mashup.common.extensions.gone
-import com.mashup.common.extensions.onThrottleFirstClick
-import com.mashup.common.extensions.visible
+import com.mashup.core.common.extensions.fromHtml
+import com.mashup.core.common.extensions.gone
+import com.mashup.core.common.extensions.onThrottleFirstClick
+import com.mashup.core.common.extensions.visible
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.core.attendance.platform.PlatformAttendanceActivity
 import com.mashup.core.schedule.adapter.OnItemClickListener

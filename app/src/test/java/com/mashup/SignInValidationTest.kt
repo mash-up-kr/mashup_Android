@@ -1,10 +1,10 @@
 package com.mashup
 
-import com.mashup.common.model.Validation
 import com.mashup.core.signup.validationId
 import com.mashup.core.signup.validationName
 import com.mashup.core.signup.validationPlatform
 import com.mashup.core.signup.validationPwd
+import com.mashup.core.common.model.Validation
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

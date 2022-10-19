@@ -6,9 +6,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.extensions.onThrottleFirstClick
-import com.mashup.common.model.NavigationAnimationType
-import com.mashup.common.widget.CommonDialog
+import com.mashup.core.common.extensions.onThrottleFirstClick
+import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.core.login.LoginActivity

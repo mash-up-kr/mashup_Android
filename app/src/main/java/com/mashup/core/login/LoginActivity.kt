@@ -6,8 +6,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.extensions.onThrottleFirstClick
-import com.mashup.common.model.Validation
+import com.mashup.core.common.extensions.onThrottleFirstClick
+import com.mashup.core.common.model.Validation
 import com.mashup.constant.EXTRA_LOGOUT
 import com.mashup.constant.EXTRA_WITH_DRAWL
 import com.mashup.databinding.ActivityLoginBinding

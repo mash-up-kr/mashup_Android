@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.model.NavigationAnimationType
-import com.mashup.common.utils.PermissionHelper
-import com.mashup.common.widget.CommonDialog
+import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.PermissionHelper
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityQrScanBinding
 import com.mashup.network.errorcode.ATTENDANCE_ALREADY_CHECKED

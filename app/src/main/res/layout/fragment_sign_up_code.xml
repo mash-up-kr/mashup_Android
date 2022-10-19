@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.mashup.common.widget.TextFieldView.TextFieldInputType" />
+        <import type="com.mashup.core.common.widget.TextFieldView.TextFieldInputType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.mashup.common.widget.ButtonView
+            <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText" />
 
-                <com.mashup.common.widget.TextFieldView
+                <com.mashup.core.common.widget.TextFieldView
                     android:id="@+id/text_field_code"
                     text_field_hint='@{"가입코드"}'
                     text_field_input_type="@{TextFieldInputType.TEXT_CAP_CHARACTERS}"

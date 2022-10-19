@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation project(":common")
+    implementation project(":core:common")
 
     api "androidx.compose.ui:ui:$composeVersion"
     api "androidx.compose.material:material:$composeVersion"

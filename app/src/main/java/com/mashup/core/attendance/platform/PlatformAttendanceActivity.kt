@@ -5,8 +5,7 @@ import android.content.Intent
 import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.model.NavigationAnimationType
-import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.data.model.PlatformInfo
@@ -14,6 +13,7 @@ import com.mashup.databinding.ActivityPlatformAttendanceBinding
 import com.mashup.network.errorcode.EVENT_NOT_FOUND
 import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
 import com.mashup.core.attendance.crew.CrewAttendanceActivity
+import com.mashup.core.ui.theme.MashUpTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

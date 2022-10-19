@@ -1,7 +1,7 @@
 package com.mashup.core.withdrawl
 
 import com.mashup.base.BaseViewModel
-import com.mashup.common.model.Validation
+import com.mashup.core.common.model.Validation
 import com.mashup.data.repository.MemberRepository
 import com.mashup.core.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel

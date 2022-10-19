@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mashup.common.utils.ProgressbarUtil
-import com.mashup.common.utils.ToastUtil
-import com.mashup.common.widget.CommonDialog
+import com.mashup.core.common.utils.ProgressbarUtil
+import com.mashup.core.common.utils.ToastUtil
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.network.errorcode.BAD_REQUEST

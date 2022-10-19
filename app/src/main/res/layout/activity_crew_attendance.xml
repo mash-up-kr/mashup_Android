@@ -13,7 +13,7 @@
         android:background="@color/white"
         tools:context=".core.attendance.platform.PlatformAttendanceActivity">
 
-        <com.mashup.common.widget.ToolbarView
+        <com.mashup.core.common.widget.ToolbarView
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

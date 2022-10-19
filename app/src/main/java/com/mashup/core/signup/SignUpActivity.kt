@@ -6,8 +6,8 @@ import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.common.model.NavigationAnimationType
-import com.mashup.common.widget.CommonDialog
+import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivitySignUpBinding
 import dagger.hilt.android.AndroidEntryPoint

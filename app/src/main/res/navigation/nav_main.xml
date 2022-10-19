@@ -5,10 +5,10 @@
     app:startDestination="@id/eventFragment">
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.mashup.ui.mypage.MyPageFragment"
+        android:name="com.mashup.core.mypage.MyPageFragment"
         android:label="MyPageFragment" />
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.mashup.ui.schedule.ScheduleFragment"
+        android:name="com.mashup.core.schedule.ScheduleFragment"
         android:label="EventFragment" />
 </navigation>

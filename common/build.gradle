@@ -10,15 +10,6 @@ android {
     defaultConfig {
         minSdk minVersion
         targetSdk targetVersion
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
     }
     buildFeatures {
         dataBinding true

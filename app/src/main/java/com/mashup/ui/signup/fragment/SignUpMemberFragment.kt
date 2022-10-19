@@ -11,6 +11,7 @@ import com.mashup.common.extensions.setFailedUiOfTextField
 import com.mashup.common.extensions.setSuccessUiOfTextField
 import com.mashup.common.model.Validation
 import com.mashup.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
+import com.mashup.core.model.Platform
 import com.mashup.databinding.FragmentSignUpMemberBinding
 import com.mashup.ui.signup.MemberState
 import com.mashup.ui.signup.SignUpViewModel
@@ -58,7 +59,9 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
 
     private fun setUiOfMemberState(memberState: MemberState) = with(viewBinding) {
         setUiOfNameState(memberState)
-        textFieldPlatform.setText(memberState.platform)
+        if (memberState.platform != Platform.UNKNOWN.detailName) {
+            textFieldPlatform.setText(memberState.platform)
+        }
         btnSignUp.setButtonEnabled(memberState.isValidationState)
     }
 
@@ -66,15 +69,12 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
         viewBinding.textFieldName.setText(memberState.name)
         when (memberState.isValidationName) {
             Validation.EMPTY -> {
-                textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setEmptyUIOfTextField()
             }
             Validation.SUCCESS -> {
-                textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setSuccessUiOfTextField()
             }
             Validation.FAILED -> {
-                textFieldName.setDescriptionText("한글 이름(실명)을 입력해주세요.")
                 textFieldName.setFailedUiOfTextField()
             }
         }

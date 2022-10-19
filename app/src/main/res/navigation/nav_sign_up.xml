@@ -6,11 +6,11 @@
 
     <dialog
         android:id="@+id/platFormSelectionDialog"
-        android:name="com.mashup.ui.signup.dialog.platform.PlatformDialog"
+        android:name="com.mashup.core.signup.dialog.platform.PlatformDialog"
         android:label="PlatFormSelectionDialog" />
     <fragment
         android:id="@+id/signUpAuthFragment"
-        android:name="com.mashup.ui.signup.fragment.auth.SignUpAuthFragment"
+        android:name="com.mashup.core.signup.fragment.auth.SignUpAuthFragment"
         android:label="SignUpAuthFragment">
         <action
             android:id="@+id/action_signUpAuthFragment_to_signUpMemberFragment"
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpMemberFragment"
-        android:name="com.mashup.ui.signup.fragment.SignUpMemberFragment"
+        android:name="com.mashup.core.signup.fragment.SignUpMemberFragment"
         android:label="SignUpMemberFragment">
         <action
             android:id="@+id/action_signUpMemberFragment_to_platFormSelectionDialog"
@@ -29,11 +29,11 @@
     </fragment>
     <fragment
         android:id="@+id/signUpCodeFragment"
-        android:name="com.mashup.ui.signup.fragment.SignUpCodeFragment"
+        android:name="com.mashup.core.signup.fragment.SignUpCodeFragment"
         android:label="SignUpCodeFragment" />
     <dialog
         android:id="@+id/termsAgreementDialog"
-        android:name="com.mashup.ui.signup.dialog.term.TermsAgreementDialog"
+        android:name="com.mashup.core.signup.dialog.term.TermsAgreementDialog"
         android:label="TermsAgreementDialog">
         <action
             android:id="@+id/action_termsAgreementDialog_to_signUpCodeFragment"

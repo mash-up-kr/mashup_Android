@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.mashup.ui.model.AttendanceModel" />
+            type="com.mashup.core.model.AttendanceModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

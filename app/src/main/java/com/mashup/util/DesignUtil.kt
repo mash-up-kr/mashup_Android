@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.mashup.R
 import com.mashup.core.model.Platform
-import com.mashup.core.mypage.AttendanceType
+import com.mashup.ui.mypage.AttendanceType
 
 object DesignUtil {
     @JvmStatic

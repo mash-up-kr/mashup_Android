@@ -26,7 +26,7 @@
             tools:ignore="ContentDescription"
             tools:src="@drawable/img_attendance" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -35,14 +35,43 @@
             app:layout_constraintStart_toEndOf="@id/iv_attendance_list"
             app:layout_constraintTop_toTopOf="@id/iv_attendance_list">
 
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:gravity="start"
+                android:text="@{model.activityHistory.scoreName}"
+                android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+                android:textColor="@color/red500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="취소" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/gray200"
+                app:layout_constraintStart_toEndOf="@id/tv_cancel"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_seminar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:gravity="start"
                 android:text="@{model.activityHistory.scoreName}"
                 android:textAppearance="@style/TextAppearance.Mashup.Subtitle1_16_B"
-                android:textColor="@color/gray800" />
+                android:textColor="@color/gray800"
+                app:layout_constraintStart_toEndOf="@id/divider"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginStart="0dp"
+                tools:text="아이템 제목" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_title"
@@ -52,8 +81,10 @@
                 android:text="@{model.activityHistory.getAttendanceDetail}"
                 android:textAppearance="@style/TextAppearance.Mashup.Caption1_12_R"
                 android:textColor="@color/gray500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_seminar_title"
                 tools:text="2022.02.03 | 3차 전체 세미나" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"

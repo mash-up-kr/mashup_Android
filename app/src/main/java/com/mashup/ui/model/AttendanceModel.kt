@@ -10,6 +10,7 @@ import java.util.*
 data class AttendanceModel(
     val id: Int,
     val myPageType: MyPageAdapterType,
+    val isCancel: Boolean = false,
     val profile: Profile? = null,
     val generationNum: Int? = null,
     val activityHistory: ActivityHistory? = null

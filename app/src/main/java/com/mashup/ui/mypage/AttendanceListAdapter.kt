@@ -5,6 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mashup.core.common.extensions.addCancelLine
+import com.mashup.core.common.extensions.gone
+import com.mashup.core.common.extensions.removeCancelLine
+import com.mashup.core.common.extensions.visible
 import com.mashup.databinding.ItemMypageAttendanceHistoryLevelBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
@@ -71,6 +75,18 @@ class AttendanceListAdapter :
 
         fun bind(item: AttendanceModel) {
             binding?.model = item
+
+            if (item.isCancel) {
+                binding?.tvSeminarTitle?.addCancelLine()
+                binding?.tvSeminarAttendanceCount?.addCancelLine()
+                binding?.tvCancel?.visible()
+                binding?.divider?.visible()
+            } else {
+                binding?.tvSeminarTitle?.removeCancelLine()
+                binding?.tvSeminarAttendanceCount?.removeCancelLine()
+                binding?.tvCancel?.gone()
+                binding?.divider?.gone()
+            }
         }
     }
 

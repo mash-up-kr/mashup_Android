@@ -76,7 +76,7 @@ class AttendanceListAdapter :
         fun bind(item: AttendanceModel) {
             binding?.model = item
 
-            if (item.isCancel) {
+            if (item.isCancelled) {
                 binding?.tvSeminarTitle?.addCancelLine()
                 binding?.tvSeminarAttendanceCount?.addCancelLine()
                 binding?.tvCancel?.visible()

@@ -88,6 +88,7 @@ class MyPageViewModel @Inject constructor(
                     id = attendanceItem.size,
                     myPageType = MyPageAdapterType.LIST_ITEM,
                     generationNum = it.generationNumber,
+                    isCancelled = score.isCancelled,
                     activityHistory = ActivityHistory(
                         scoreName = score.scoreName,
                         attendanceType = AttendanceType.getAttendanceType(score.scoreType),
@@ -103,8 +104,8 @@ class MyPageViewModel @Inject constructor(
     }
 
     private fun myPageHeader(profile: Profile) = listOf(
-        AttendanceModel(0, MyPageAdapterType.TITLE, profile),
-        AttendanceModel(1, MyPageAdapterType.SCORE, profile)
+        AttendanceModel(id = 0, MyPageAdapterType.TITLE, profile),
+        AttendanceModel(id = 1, MyPageAdapterType.SCORE, profile)
     )
 
     private fun attendanceEmpty(profile: Profile): List<AttendanceModel> {

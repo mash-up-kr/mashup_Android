@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.mashup.core.setting.SettingViewModel" />
+            type="com.mashup.ui.setting.SettingViewModel" />
     </data>
 
     <FrameLayout

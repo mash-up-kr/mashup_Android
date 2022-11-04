@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.mashup.core.schedule.model.EventDetail" />
+            type="com.mashup.ui.schedule.model.EventDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

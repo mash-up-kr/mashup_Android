@@ -24,8 +24,8 @@ import com.mashup.network.errorcode.BAD_REQUEST
 import com.mashup.network.errorcode.DISCONNECT_NETWORK
 import com.mashup.network.errorcode.INTERNAL_SERVER_ERROR
 import com.mashup.network.errorcode.UNAUTHORIZED
-import com.mashup.core.error.NetworkDisconnectActivity
-import com.mashup.core.login.LoginActivity
+import com.mashup.ui.error.NetworkDisconnectActivity
+import com.mashup.ui.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

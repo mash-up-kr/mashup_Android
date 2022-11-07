@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.model.Platform
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.data.model.PlatformInfo
 

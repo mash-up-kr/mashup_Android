@@ -5,11 +5,11 @@ import android.content.Intent
 import android.webkit.WebViewClient
 import com.mashup.R
 import com.mashup.base.BaseActivity
-import com.mashup.core.common.extensions.setStatusBarColorRes
-import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
+import com.mashup.core.common.extensions.setStatusBarColorRes
+import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.databinding.ActivityWebViewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -5,9 +5,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.mashup.R
 import com.mashup.base.BaseBottomSheetDialogFragment
+import com.mashup.constant.POLICY_URL
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.setUnderLine
-import com.mashup.constant.POLICY_URL
 import com.mashup.databinding.DialogTermsAgreementBinding
 import com.mashup.ui.signup.SignUpViewModel
 import com.mashup.ui.webview.WebViewActivity

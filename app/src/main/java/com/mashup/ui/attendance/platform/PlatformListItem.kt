@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
+import com.mashup.core.model.Platform
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray700
@@ -41,7 +42,6 @@ import com.mashup.core.ui.typography.MashTextView
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.SubTitle2
 import com.mashup.core.ui.typography.Title3
-import com.mashup.core.model.Platform
 import com.mashup.data.model.PlatformInfo
 import kotlin.math.max
 

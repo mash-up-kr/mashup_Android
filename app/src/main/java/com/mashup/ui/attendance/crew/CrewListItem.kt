@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.core.model.AttendanceStatus
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray800
@@ -26,7 +27,6 @@ import com.mashup.core.ui.shape.CardListShape
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.MashTextView
 import com.mashup.core.ui.typography.SubTitle1
-import com.mashup.core.model.AttendanceStatus
 import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem

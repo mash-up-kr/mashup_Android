@@ -29,7 +29,6 @@ subprojects {
             ktlint()
             trimTrailingWhitespace()
             indentWithSpaces()
-            endWithNewline()
         }
     }
 }

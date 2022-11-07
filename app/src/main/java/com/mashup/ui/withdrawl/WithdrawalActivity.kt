@@ -7,13 +7,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.extensions.setEmptyUIOfTextField
 import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.model.Validation
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
-import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.databinding.ActivityWithdrawalBinding
 import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.signup.state.CodeState

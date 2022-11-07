@@ -44,17 +44,6 @@ class TurbineTest {
     }
 
     @Test
-    fun test_exception_in_order() = runTest {
-        flow<Any> {
-            emit("data is first")
-            throw RuntimeException("broken!")
-        }.test {
-            assertEquals("broken!", awaitError().message)
-            assertEquals("data is first", awaitItem())
-        }
-    }
-
-    @Test
     fun test_delay() = runTest {
         flowOf("one", "two", "three")
             .map {

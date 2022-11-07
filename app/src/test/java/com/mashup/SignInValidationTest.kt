@@ -1,10 +1,10 @@
 package com.mashup
 
-import com.mashup.core.signup.validationId
-import com.mashup.core.signup.validationName
-import com.mashup.core.signup.validationPlatform
-import com.mashup.core.signup.validationPwd
 import com.mashup.core.common.model.Validation
+import com.mashup.ui.signup.validationId
+import com.mashup.ui.signup.validationName
+import com.mashup.ui.signup.validationPlatform
+import com.mashup.ui.signup.validationPwd
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -42,8 +42,8 @@ class SignInValidationTest {
 
     @Test
     fun validation_pwd_number_or_character_great_than_8() {
-        val id = "abce"
-        assertEquals(validationId(id), Validation.SUCCESS)
+        val pwd = "abcdefgh123"
+        assertEquals(validationPwd(pwd), Validation.SUCCESS)
     }
 
     @Test
@@ -53,9 +53,9 @@ class SignInValidationTest {
     }
 
     @Test
-    fun validation_name_not_empty() {
+    fun validation_name_is_alphabet() {
         val name = "name"
-        assertEquals(validationName(name), Validation.SUCCESS)
+        assertEquals(validationName(name), Validation.FAILED)
     }
 
     @Test

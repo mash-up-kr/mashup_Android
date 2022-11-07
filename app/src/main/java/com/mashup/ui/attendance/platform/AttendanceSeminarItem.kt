@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.R
+import com.mashup.core.model.AttendanceStatus
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray600
@@ -31,7 +32,6 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.Caption3
 import com.mashup.core.ui.typography.MashTextView
-import com.mashup.core.model.AttendanceStatus
 import java.text.SimpleDateFormat
 import java.util.*
 

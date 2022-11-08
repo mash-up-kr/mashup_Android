@@ -118,27 +118,27 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val drawableRes = when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
                     if (isFinal) {
-                        R.drawable.ic_absent_final
+                        com.mashup.core.common.R.drawable.ic_absent_final
                     } else {
-                        R.drawable.ic_absent_default
+                        com.mashup.core.common.R.drawable.ic_absent_default
                     }
                 }
                 AttendanceStatus.ATTENDANCE -> {
                     if (isFinal) {
-                        R.drawable.ic_attendance_final
+                        com.mashup.core.common.R.drawable.ic_attendance_final
                     } else {
-                        R.drawable.ic_attendance_default
+                        com.mashup.core.common.R.drawable.ic_attendance_default
                     }
                 }
                 AttendanceStatus.LATE -> {
                     if (isFinal) {
-                        R.drawable.ic_late_final
+                        com.mashup.core.common.R.drawable.ic_late_final
                     } else {
-                        R.drawable.ic_late_default
+                        com.mashup.core.common.R.drawable.ic_late_default
                     }
                 }
                 else -> {
-                    R.drawable.ic_attendance_not_yet
+                    com.mashup.core.common.R.drawable.ic_attendance_not_yet
                 }
             }
             view.setImageResource(drawableRes)
@@ -260,7 +260,12 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private fun onBindEmptyContent() {
             binding.tvTitle.text = itemView.context.getString(R.string.title_content_empty_schedule)
-            binding.tvTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray400))
+            binding.tvTitle.setTextColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    com.mashup.core.common.R.color.gray400
+                )
+            )
             binding.tvDDay.text = itemView.context.getString(R.string.unknown_content_d_day)
             binding.tvCalender.text = "-"
             binding.tvTimeLine.text = "-"
@@ -268,20 +273,25 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private fun onBindContent(data: ScheduleResponse) {
             binding.tvTitle.text = data.name
-            binding.tvTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray900))
+            binding.tvTitle.setTextColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    com.mashup.core.common.R.color.gray900
+                )
+            )
             binding.tvDDay.text = data.getDDay()
             binding.tvCalender.text = data.getDate()
             binding.tvTimeLine.text = data.getTimeLine()
         }
 
         private fun onBindEmptyImage() {
-            binding.ivSchedule.setImageResource(R.drawable.img_placeholder_sleeping)
+            binding.ivSchedule.setImageResource(com.mashup.core.common.R.drawable.img_placeholder_sleeping)
             binding.tvDescription.text =
                 itemView.context.getString(R.string.description_empty_schedule)
         }
 
         private fun onBindStandbyImage(data: AttendanceInfoResponse?) {
-            binding.ivSchedule.setImageResource(R.drawable.img_standby)
+            binding.ivSchedule.setImageResource(com.mashup.core.common.R.drawable.img_standby)
             binding.tvDescription.text =
                 itemView.context.getString(
                     R.string.description_standby_schedule,

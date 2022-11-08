@@ -23,7 +23,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
 
     override fun initViews() {
         super.initViews()
-        setStatusBarColorRes(R.color.white)
+        setStatusBarColorRes(com.mashup.core.common.R.color.white)
         initWindowInset()
 
         initToolbar()

@@ -25,7 +25,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
     override fun initViews() {
         super.initViews()
 
-        setStatusBarColorRes(R.color.white)
+        setStatusBarColorRes(com.mashup.core.common.R.color.white)
         initButton()
         initCompose()
     }

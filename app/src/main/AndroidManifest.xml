@@ -18,17 +18,17 @@
         tools:ignore="DataExtractionRules">
 
         <activity
-            android:name=".core.signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".core.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".core.splash.SplashActivity"
+        <activity android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
@@ -40,28 +40,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".core.attendance.crew.CrewAttendanceActivity"
+            android:name=".ui.attendance.crew.CrewAttendanceActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".core.attendance.platform.PlatformAttendanceActivity"
+            android:name=".ui.attendance.platform.PlatformAttendanceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".core.withdrawl.WithdrawalActivity"
+            android:name=".ui.withdrawl.WithdrawalActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".core.webview.WebViewActivity"
+            android:name=".ui.webview.WebViewActivity"
             android:exported="false" />
 
         <activity
-            android:name=".core.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
@@ -69,22 +69,22 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".core.schedule.detail.ScheduleDetailActivity"
+            android:name=".ui.schedule.detail.ScheduleDetailActivity"
             android:exported="false" />
 
         <activity
-            android:name=".core.qrscan.QRScanActivity"
+            android:name=".ui.qrscan.QRScanActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".core.setting.SettingActivity"
+            android:name=".ui.setting.SettingActivity"
             android:exported="false"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".core.error.NetworkDisconnectActivity"
+            android:name=".ui.error.NetworkDisconnectActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

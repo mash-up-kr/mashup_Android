@@ -60,9 +60,9 @@ class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementB
             viewModel.isCheckedTerm.collectLatest { isChecked ->
                 viewBinding.icPersonalAgreement.setImageResource(
                     if (isChecked) {
-                        R.drawable.ic_circle_checked
+                        com.mashup.core.common.R.drawable.ic_circle_checked
                     } else {
-                        R.drawable.ic_circle_not_checked
+                        com.mashup.core.common.R.drawable.ic_circle_not_checked
                     }
                 )
                 viewBinding.btnConfirm.setButtonEnabled(isChecked)

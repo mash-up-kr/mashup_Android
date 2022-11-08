@@ -96,11 +96,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun setUIOfTab(tab: MainTab) = with(viewBinding.layoutMainTab) {
-        val selectedColor = ContextCompat.getColor(this@MainActivity, R.color.gray800)
-        val selectedColorList = ContextCompat.getColorStateList(this@MainActivity, R.color.gray800)
-        val unSelectedColor = ContextCompat.getColor(this@MainActivity, R.color.gray500)
+        val selectedColor =
+            ContextCompat.getColor(this@MainActivity, com.mashup.core.common.R.color.gray800)
+        val selectedColorList = ContextCompat.getColorStateList(
+            this@MainActivity,
+            com.mashup.core.common.R.color.gray800
+        )
+        val unSelectedColor =
+            ContextCompat.getColor(this@MainActivity, com.mashup.core.common.R.color.gray500)
         val unSelectedColorList =
-            ContextCompat.getColorStateList(this@MainActivity, R.color.gray500)
+            ContextCompat.getColorStateList(
+                this@MainActivity,
+                com.mashup.core.common.R.color.gray500
+            )
 
         when (tab) {
             MainTab.EVENT -> {
@@ -121,11 +129,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun updateStatusBarColor(tab: MainTab) {
         when (tab) {
             MainTab.EVENT -> {
-                setStatusBarColorRes(R.color.gray50)
+                setStatusBarColorRes(com.mashup.core.common.R.color.gray50)
                 setStatusBarDarkTextColor(true)
             }
             MainTab.MY_PAGE -> {
-                setStatusBarColorRes(R.color.gray950)
+                setStatusBarColorRes(com.mashup.core.common.R.color.gray950)
                 setStatusBarDarkTextColor(false)
             }
         }

@@ -73,7 +73,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                 viewBinding.layoutSwipe.isRefreshing = false
             }
             setColorSchemeColors(
-                ContextCompat.getColor(requireContext(), R.color.brand500)
+                ContextCompat.getColor(requireContext(), com.mashup.core.common.R.color.brand500)
             )
         }
     }

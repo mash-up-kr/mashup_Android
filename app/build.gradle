@@ -8,6 +8,10 @@ plugins {
 }
 
 android {
+    lintOptions {
+        disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation",
+                "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
+    }
     signingConfigs {
         release {
             storeFile file('mashupKey')

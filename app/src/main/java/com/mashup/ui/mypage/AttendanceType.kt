@@ -1,7 +1,7 @@
 package com.mashup.ui.mypage
 
 import androidx.annotation.DrawableRes
-import com.mashup.R
+import com.mashup.core.common.R
 
 enum class AttendanceType(val title: String, val score: Double, @DrawableRes val resourceId: Int) {
     ETC("플레이스홀더", 0.0, R.drawable.img_placeholder_history),

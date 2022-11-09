@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.R
+import com.mashup.core.common.R
 import com.mashup.core.model.Platform
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray500

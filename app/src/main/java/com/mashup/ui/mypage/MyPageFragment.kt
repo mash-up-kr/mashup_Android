@@ -41,7 +41,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
         viewBinding.layoutSwipe.apply {
             setOnRefreshListener { viewModel.getMember() }
             setColorSchemeColors(
-                ContextCompat.getColor(requireContext(), R.color.brand500)
+                ContextCompat.getColor(requireContext(), com.mashup.core.common.R.color.brand500)
             )
         }
     }

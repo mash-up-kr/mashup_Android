@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.R
+import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray800
 import com.mashup.core.ui.shape.CardListShape

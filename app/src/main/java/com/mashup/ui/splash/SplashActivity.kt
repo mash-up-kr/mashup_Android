@@ -30,7 +30,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun setUi() {
-        setStatusBarColorRes(R.color.brand500)
+        setStatusBarColorRes(com.mashup.core.common.R.color.brand500)
         setStatusBarDarkTextColor(false)
     }
 

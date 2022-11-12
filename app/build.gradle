@@ -52,6 +52,7 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix ".debug"
             minifyEnabled false
             buildConfigField "Boolean", "DEBUG_MODE", "true"
             signingConfig signingConfigs.debug

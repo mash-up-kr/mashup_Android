@@ -1,5 +1,7 @@
 <resources>
 	<string name="app_name">MashUp</string>
+	<string name="app_name_debug">DMashUp</string>
+
 
 	<string name="denied_camera_permission">출석 체크를 위해 카메라 권한이 필요합니다</string>
 

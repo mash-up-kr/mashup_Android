@@ -2,7 +2,7 @@ name: Lint Check
 
 on:
   pull_request:
-    branches: [ "*", "!develop", "!main" ]
+    branches: [ "feature*", "hotfix*", "release*" ]
 
 jobs:
   build:

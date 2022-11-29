@@ -19,6 +19,15 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
+    - name: Cache Gradle Packages
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hasFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew

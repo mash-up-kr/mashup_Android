@@ -1,0 +1,24 @@
+name: pr check
+
+on: pull_request
+
+jobs:
+  prCheck:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - run: yarn install
+
+      - run: yarn lint
+
+      - uses: getsentry/action-git-diff-suggestions@main
+        with:
+          message: eslint
+
+      - run: yarn test

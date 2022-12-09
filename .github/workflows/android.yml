@@ -33,5 +33,5 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew app:assembleDebug
-    - name: Print Hello World
-      run: echo "Hello World"
+      
+

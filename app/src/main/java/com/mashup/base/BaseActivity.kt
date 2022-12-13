@@ -26,9 +26,11 @@ import com.mashup.network.errorcode.INTERNAL_SERVER_ERROR
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.util.AnalyticsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutId: Int
@@ -41,6 +43,9 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     }
 
     private var animationType: NavigationAnimationType? = null
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
     val isConnectedNetwork: Boolean
         get() = networkStateDetector.hasNetworkConnection()

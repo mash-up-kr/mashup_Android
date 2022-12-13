@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.common.R
+import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.SubTitle2
 
@@ -45,7 +48,7 @@ fun BasicSettingItem(
                 .fillMaxWidth()
                 .height(1.dp)
                 .align(Alignment.BottomCenter),
-            color = colorResource(id = R.color.gray100)
+            color = Gray100
         )
     }
 }
@@ -84,7 +87,7 @@ fun RightArrowSettingItem(
                 .fillMaxWidth()
                 .height(1.dp)
                 .align(Alignment.BottomCenter),
-            color = colorResource(id = R.color.gray100)
+            color = Gray100
         )
     }
 }
@@ -93,11 +96,13 @@ fun RightArrowSettingItem(
 @Composable
 fun BasicSettingItemPrev() {
     MashUpTheme {
-        BasicSettingItem(
-            text = "설정",
-            textColorRes = R.color.black,
-            onClickItem = { }
-        )
+        Surface(color = MaterialTheme.colors.onBackground) {
+            BasicSettingItem(
+                text = "설정",
+                textColorRes = R.color.black,
+                onClickItem = { }
+            )
+        }
     }
 }
 
@@ -105,10 +110,12 @@ fun BasicSettingItemPrev() {
 @Composable
 fun ArrowSettingItemPrev() {
     MashUpTheme {
-        RightArrowSettingItem(
-            text = "설정",
-            textColorRes = R.color.black,
-            onClickItem = { }
-        )
+        Surface(color = MaterialTheme.colors.onBackground) {
+            RightArrowSettingItem(
+                text = "설정",
+                textColorRes = R.color.black,
+                onClickItem = { }
+            )
+        }
     }
 }

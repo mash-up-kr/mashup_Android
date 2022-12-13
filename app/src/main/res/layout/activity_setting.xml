@@ -37,7 +37,7 @@
                 android:id="@+id/btn_withdrawal"
                 style="@style/SettingTextBtn"
                 android:drawableEnd="@drawable/ic_chevron_right"
-                android:text="@string/sign_out"
+                android:text="@string/delete_account"
                 android:textColor="@color/red500" />
 
             <LinearLayout

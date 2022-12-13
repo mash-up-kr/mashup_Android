@@ -28,17 +28,10 @@
                 app:toolbar_back_button_visible="@{true}"
                 app:toolbar_title='@{"설정"}' />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_logout"
-                style="@style/SettingTextBtn"
-                android:text="@string/logout" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_withdrawal"
-                style="@style/SettingTextBtn"
-                android:drawableEnd="@drawable/ic_chevron_right"
-                android:text="@string/delete_account"
-                android:textColor="@color/red500" />
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/settingScreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

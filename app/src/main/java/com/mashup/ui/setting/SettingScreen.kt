@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.R
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.common.R as CR
 
 @Composable
 fun SettingScreen(
@@ -20,12 +21,12 @@ fun SettingScreen(
     Column(modifier = modifier) {
         BasicSettingItem(
             text = stringResource(id = R.string.logout),
-            textColorRes = com.mashup.core.common.R.color.gray800,
+            textColorRes = CR.color.gray800,
             onClickItem = onLogout
         )
         RightArrowSettingItem(
             text = stringResource(id = R.string.delete_account),
-            textColorRes = com.mashup.core.common.R.color.red500,
+            textColorRes = CR.color.red500,
             onClickItem = onDeleteUser
         )
     }

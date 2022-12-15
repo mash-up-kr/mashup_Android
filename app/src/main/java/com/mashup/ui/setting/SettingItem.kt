@@ -19,10 +19,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.SubTitle2
+import com.mashup.core.common.R as CR
 
 @Composable
 fun BasicSettingItem(
@@ -78,7 +78,7 @@ fun RightArrowSettingItem(
             )
             Image(
                 modifier = Modifier.padding(end = 20.dp),
-                painter = painterResource(id = R.drawable.ic_chevron_right),
+                painter = painterResource(id = CR.drawable.ic_chevron_right),
                 contentDescription = "$text setting right arrow"
             )
         }
@@ -99,7 +99,7 @@ fun BasicSettingItemPrev() {
         Surface(color = MaterialTheme.colors.onBackground) {
             BasicSettingItem(
                 text = "설정",
-                textColorRes = R.color.black,
+                textColorRes = CR.color.black,
                 onClickItem = { }
             )
         }
@@ -113,7 +113,7 @@ fun ArrowSettingItemPrev() {
         Surface(color = MaterialTheme.colors.onBackground) {
             RightArrowSettingItem(
                 text = "설정",
-                textColorRes = R.color.black,
+                textColorRes = CR.color.black,
                 onClickItem = { }
             )
         }

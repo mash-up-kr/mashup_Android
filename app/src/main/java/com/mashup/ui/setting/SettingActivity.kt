@@ -11,6 +11,7 @@ import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.ui.login.LoginActivity
+import com.mashup.ui.setting.sns.SNSListScreen
 import com.mashup.ui.withdrawl.WithdrawalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +30,12 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     onLogout = this::showLogoutDialog,
                     onDeleteUser = this::moveToDeleteAccount
                 )
+            }
+        }
+
+        viewBinding.snsScreen.setContent {
+            MashUpTheme {
+                SNSListScreen()
             }
         }
     }

@@ -1,0 +1,67 @@
+package com.mashup.ui.setting.sns
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mashup.R
+import com.mashup.URL
+import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.ui.model.SNSModel
+import com.mashup.ui.setting.SettingViewModel
+import com.mashup.core.common.R as CR
+
+@Composable
+fun SNSListScreen(
+    viewModel: SettingViewModel = viewModel()
+) {
+    val context = LocalContext.current
+
+    val snsList = listOf(
+        SNSModel(stringResource(R.string.facebook), CR.drawable.ic_facebook, URL.FACEBOOK),
+        SNSModel(stringResource(R.string.instagram), CR.drawable.img_instagram, URL.INSTAGRAM),
+        SNSModel(stringResource(R.string.tistory), CR.drawable.ic_tistory, URL.TISTORY),
+        SNSModel(stringResource(R.string.youtube), CR.drawable.ic_youtube, URL.YOUTUBE),
+        SNSModel(stringResource(R.string.mHome), CR.drawable.ic_mashup, URL.MASHUP_UP_HOME),
+        SNSModel(stringResource(R.string.mRecruit), CR.drawable.ic_mashup_dark, URL.MASHUP_UP_RECRUIT),
+    )
+
+    Box(
+        contentAlignment = Alignment.BottomCenter,
+        modifier = Modifier.padding(12.dp)
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2)
+        ) {
+            items(snsList) { item ->
+                SNSItem(
+                    name = item.name,
+                    snsImageRes = item.iconRes,
+                    onClickItem = { viewModel.onClickSNS(context, item.link) }
+                )
+            }
+        }
+    }
+}
+
+@Preview("DarkMode", widthDp = 360)
+@Preview(widthDp = 360)
+@Composable
+fun SNSListScreenPrev() {
+    MashUpTheme {
+        Surface(color = MaterialTheme.colors.onBackground) {
+            SNSListScreen()
+        }
+    }
+}

@@ -4,11 +4,6 @@
 
     <data>
 
-        <import type="com.mashup.URL" />
-
-        <variable
-            name="viewModel"
-            type="com.mashup.ui.setting.SettingViewModel" />
     </data>
 
     <FrameLayout

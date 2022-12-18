@@ -2,7 +2,6 @@ package com.mashup.ui.setting
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -18,10 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
-    private val viewModel: SettingViewModel by viewModels()
-
     override fun initViews() {
-        initDataBinding()
         initButton()
 
         viewBinding.settingScreen.setContent {
@@ -38,10 +34,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 SNSListScreen()
             }
         }
-    }
-
-    private fun initDataBinding() {
-        viewBinding.viewModel = viewModel
     }
 
     private fun initButton() {

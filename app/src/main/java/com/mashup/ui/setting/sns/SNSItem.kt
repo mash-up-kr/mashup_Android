@@ -2,16 +2,17 @@ package com.mashup.ui.setting.sns
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -19,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
+import com.mashup.extensions.shadow
 import com.mashup.core.common.R as CR
 
 @Composable
@@ -28,19 +30,24 @@ fun SNSItem(
     onClickItem: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        backgroundColor = Color.White,
-        elevation = 2.dp,
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(4.dp)
+            .shadow(
+                Color(0f, 0f, 0f, 0.05f), // #000000 + alpha 5%
+                borderRadius = 12.dp,
+                offsetY = 2.dp,
+                blurRadius = 4.dp
+            )
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = modifier
+                .fillMaxWidth()
                 .height(78.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.White)
                 .clickable(onClick = onClickItem)
         ) {
             Image(

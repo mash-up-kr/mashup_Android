@@ -8,6 +8,8 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_LOGOUT
 import com.mashup.constant.EXTRA_WITH_DRAWL
+import com.mashup.constant.LOG_LOGIN
+import com.mashup.constant.LOG_SIGN_UP
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.Validation
 import com.mashup.databinding.ActivityLoginBinding
@@ -100,13 +102,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun initButtons() {
         viewBinding.btnLogin.setOnButtonThrottleFirstClickListener(this) {
+            sendEvent(name = LOG_LOGIN)
             viewModel.requestLogin(
                 id = viewBinding.textFieldId.inputtedText,
                 pwd = viewBinding.textFieldPwd.inputtedText
             )
         }
 
-        viewBinding.tvSignIn.onThrottleFirstClick(lifecycleScope) {
+        viewBinding.tvSignUp.onThrottleFirstClick(lifecycleScope) {
+            sendEvent(name = LOG_SIGN_UP)
             startActivity(
                 SignUpActivity.newIntent(this)
             )

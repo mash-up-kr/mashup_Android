@@ -22,20 +22,20 @@ import com.mashup.ui.model.SNSModel
 import com.mashup.ui.setting.SettingViewModel
 import com.mashup.core.common.R as CR
 
+val snsList = listOf(
+    SNSModel(R.string.facebook, CR.drawable.ic_facebook, URL.FACEBOOK),
+    SNSModel(R.string.instagram, CR.drawable.img_instagram, URL.INSTAGRAM),
+    SNSModel(R.string.tistory, CR.drawable.ic_tistory, URL.TISTORY),
+    SNSModel(R.string.youtube, CR.drawable.ic_youtube, URL.YOUTUBE),
+    SNSModel(R.string.mHome, CR.drawable.ic_mashup, URL.MASHUP_UP_HOME),
+    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, URL.MASHUP_UP_RECRUIT),
+)
+
 @Composable
 fun SNSListScreen(
     viewModel: SettingViewModel = viewModel()
 ) {
     val context = LocalContext.current
-
-    val snsList = listOf(
-        SNSModel(stringResource(R.string.facebook), CR.drawable.ic_facebook, URL.FACEBOOK),
-        SNSModel(stringResource(R.string.instagram), CR.drawable.img_instagram, URL.INSTAGRAM),
-        SNSModel(stringResource(R.string.tistory), CR.drawable.ic_tistory, URL.TISTORY),
-        SNSModel(stringResource(R.string.youtube), CR.drawable.ic_youtube, URL.YOUTUBE),
-        SNSModel(stringResource(R.string.mHome), CR.drawable.ic_mashup, URL.MASHUP_UP_HOME),
-        SNSModel(stringResource(R.string.mRecruit), CR.drawable.ic_mashup_dark, URL.MASHUP_UP_RECRUIT),
-    )
 
     Box(
         contentAlignment = Alignment.BottomCenter,
@@ -46,8 +46,8 @@ fun SNSListScreen(
         ) {
             items(snsList) { item ->
                 SNSItem(
-                    name = item.name,
-                    snsImageRes = item.iconRes,
+                    name = stringResource(id = item.name),
+                    snsIconRes = item.iconRes,
                     onClickItem = { viewModel.onClickSNS(context, item.link) }
                 )
             }

@@ -133,4 +133,7 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+    // compose webview
+    implementation "com.google.accompanist:accompanist-webview:$composeWebView"
 }

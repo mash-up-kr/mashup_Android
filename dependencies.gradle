@@ -11,6 +11,7 @@ ext {
 
     // compose
     composeVersion = '1.1.1'
+    composeWebView = "0.24.13-rc"
 
     // androidx
     appcompatVersion = "1.5.0"

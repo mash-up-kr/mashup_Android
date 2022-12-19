@@ -184,4 +184,15 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
             )
         }
     }
+
+    protected fun sendEvent(name: String, params: Map<String, String> = emptyMap()) {
+        analyticsManager.addEvent(
+            eventName = name,
+            params = Bundle().apply {
+                for (key in params.keys) {
+                    putString(key, params[key])
+                }
+            }
+        )
+    }
 }

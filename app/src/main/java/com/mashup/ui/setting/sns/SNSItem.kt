@@ -26,7 +26,7 @@ import com.mashup.core.common.R as CR
 @Composable
 fun SNSItem(
     name: String,
-    @DrawableRes snsImageRes: Int,
+    @DrawableRes snsIconRes: Int,
     onClickItem: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -51,7 +51,7 @@ fun SNSItem(
                 .clickable(onClick = onClickItem)
         ) {
             Image(
-                painter = painterResource(id = snsImageRes),
+                painter = painterResource(id = snsIconRes),
                 contentDescription = "$name icon",
                 modifier = Modifier.size(24.dp)
             )
@@ -73,7 +73,7 @@ fun SNSItemPrev() {
         Surface(color = MaterialTheme.colors.onBackground) {
             SNSItem(
                 name = "FaceBook",
-                snsImageRes = CR.drawable.ic_facebook,
+                snsIconRes = CR.drawable.ic_facebook,
                 onClickItem = { }
             )
         }

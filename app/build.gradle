@@ -134,6 +134,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
-    // Compose ViewModel
+    // compose webview
+    implementation "com.google.accompanist:accompanist-webview:$composeWebView"
+
+    // lifecycle viewmodel compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
 }

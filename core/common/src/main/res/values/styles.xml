@@ -176,33 +176,6 @@
 		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_R</item>
 	</style>
 
-	<style name="SettingBtn" parent="Widget.AppCompat.TextView">
-		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">74dp</item>
-		<item name="android:layout_margin">4dp</item>
-		<item name="android:layout_weight">1</item>
-        <item name="android:elevation">2dp</item>
-		<item name="android:background">@drawable/bg_common_dialog</item>
-		<item name="android:drawablePadding">5dp</item>
-		<item name="android:paddingTop">10dp</item>
-		<item name="android:paddingBottom">10dp</item>
-		<item name="android:gravity">center</item>
-		<item name="android:textColor">@color/gray700</item>
-		<item name="android:textAppearance">@style/TextAppearance.Mashup.Body3_14_M</item>
-	</style>
-
-    <style name="SettingTextBtn" parent="Widget.AppCompat.Button">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:background">@drawable/border_bottom</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:gravity">center|start</item>
-        <item name="android:textAppearance">@style/TextAppearance.Mashup.Subtitle2_16_SB</item>
-        <item name="android:textColor">@color/gray700</item>
-    </style>
-
     <style name="NoDimDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>

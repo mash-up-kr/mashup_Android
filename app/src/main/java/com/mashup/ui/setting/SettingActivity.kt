@@ -2,7 +2,6 @@ package com.mashup.ui.setting
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -11,16 +10,14 @@ import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.ui.login.LoginActivity
+import com.mashup.ui.setting.sns.SNSListScreen
 import com.mashup.ui.withdrawl.WithdrawalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
-    private val viewModel: SettingViewModel by viewModels()
-
     override fun initViews() {
-        initDataBinding()
         initButton()
 
         viewBinding.settingScreen.setContent {
@@ -31,10 +28,12 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 )
             }
         }
-    }
 
-    private fun initDataBinding() {
-        viewBinding.viewModel = viewModel
+        viewBinding.snsScreen.setContent {
+            MashUpTheme {
+                SNSListScreen()
+            }
+        }
     }
 
     private fun initButton() {

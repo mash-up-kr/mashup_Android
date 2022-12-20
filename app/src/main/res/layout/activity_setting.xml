@@ -4,11 +4,6 @@
 
     <data>
 
-        <import type="com.mashup.URL" />
-
-        <variable
-            name="viewModel"
-            type="com.mashup.ui.setting.SettingViewModel" />
     </data>
 
     <FrameLayout
@@ -31,80 +26,12 @@
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/settingScreen"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
-            <LinearLayout
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/snsScreen"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="12dp"
-                android:gravity="bottom"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_facebook"
-                        style="@style/SettingBtn"
-                        android:drawableTop="@drawable/ic_facebook"
-                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.FACEBOOK)}"
-                        android:text="@string/facebook" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_instagram"
-                        style="@style/SettingBtn"
-                        android:drawableTop="@drawable/layout_instagrame_icon"
-                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.INSTAGRAM)}"
-                        android:text="@string/instagram" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_tistory"
-                        style="@style/SettingBtn"
-                        android:drawableTop="@drawable/ic_tistory"
-                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.TISTORY)}"
-                        android:text="@string/tistory" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_youtube"
-                        style="@style/SettingBtn"
-                        android:drawableTop="@drawable/ic_youtube"
-                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.YOUTUBE)}"
-                        android:text="@string/youtube" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_m_home"
-                        style="@style/SettingBtn"
-                        android:drawableTop="@drawable/ic_mashup_dark"
-                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.MASHUP_UP_HOME)}"
-                        android:text="@string/mHome" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btn_m_recruit"
-                        style="@style/SettingBtn"
-                        android:drawableTop="@drawable/ic_mashup"
-                        android:onClick="@{() -> viewModel.onClickSNS(context,URL.MASHUP_UP_RECRUIT)}"
-                        android:text="@string/mRecruit" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <FrameLayout

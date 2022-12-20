@@ -136,4 +136,7 @@ dependencies {
 
     // compose webview
     implementation "com.google.accompanist:accompanist-webview:$composeWebView"
+
+    // lifecycle viewmodel compose
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
 }

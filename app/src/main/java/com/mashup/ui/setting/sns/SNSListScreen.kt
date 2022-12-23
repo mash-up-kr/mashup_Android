@@ -10,16 +10,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.R
 import com.mashup.URL
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.ui.model.SNSModel
-import com.mashup.ui.setting.SettingViewModel
 import com.mashup.core.common.R as CR
 
 val snsList = listOf(
@@ -33,10 +30,8 @@ val snsList = listOf(
 
 @Composable
 fun SNSListScreen(
-    viewModel: SettingViewModel = viewModel()
+    onClickSNS: (link: String) -> Unit
 ) {
-    val context = LocalContext.current
-
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier.padding(12.dp)
@@ -48,7 +43,7 @@ fun SNSListScreen(
                 SNSItem(
                     name = stringResource(id = item.name),
                     snsIconRes = item.iconRes,
-                    onClickItem = { viewModel.onClickSNS(context, item.link) }
+                    onClickItem = { onClickSNS(item.link) }
                 )
             }
         }
@@ -61,7 +56,7 @@ fun SNSListScreen(
 fun SNSListScreenPrev() {
     MashUpTheme {
         Surface(color = MaterialTheme.colors.onBackground) {
-            SNSListScreen()
+            SNSListScreen {}
         }
     }
 }

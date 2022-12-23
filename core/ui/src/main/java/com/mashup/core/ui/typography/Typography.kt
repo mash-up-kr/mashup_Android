@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.White
@@ -34,98 +35,98 @@ val Header1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Bold,
     fontSize = 24.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Header2 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Bold,
     fontSize = 20.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Title1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.SemiBold,
     fontSize = 20.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Title2 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 20.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Title3 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.SemiBold,
     fontSize = 18.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val SubTitle1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Bold,
     fontSize = 16.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val SubTitle2 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.SemiBold,
     fontSize = 16.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Body1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 16.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Body2 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Normal,
     fontSize = 16.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Body3 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 14.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Body4 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Normal,
     fontSize = 14.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Caption1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 13.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Caption2 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 12.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 val Caption3 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Normal,
     fontSize = 12.sp,
-    letterSpacing = (-1).sp
+    letterSpacing = (-0.01).em
 )
 
 @Composable
@@ -171,6 +172,33 @@ fun PrevMashupTextView() {
             MashTextView(text = "Medium 테스트", fontWeight = FontWeight.Medium)
             MashTextView(text = "SemiBold 테스트", fontWeight = FontWeight.SemiBold)
             MashTextView(text = "Bold 테스트", fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PrevTypography() {
+    MaterialTheme {
+        Column(modifier = Modifier.background(color = White)) {
+            MashTextView(text = "매시업 출첵앱 배포!", style = Header1)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Header2)
+
+            MashTextView(text = "매시업 출첵앱 배포!", style = Title1)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Title2)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Title3)
+
+            MashTextView(text = "매시업 출첵앱 배포!", style = SubTitle1)
+            MashTextView(text = "매시업 출첵앱 배포!", style = SubTitle2)
+
+            MashTextView(text = "매시업 출첵앱 배포!", style = Body1)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Body2)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Body3)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Body4)
+
+            MashTextView(text = "매시업 출첵앱 배포!", style = Caption1)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Caption2)
+            MashTextView(text = "매시업 출첵앱 배포!", style = Caption3)
         }
     }
 }

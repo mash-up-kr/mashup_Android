@@ -27,11 +27,6 @@
                 android:id="@+id/settingScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <androidx.compose.ui.platform.ComposeView
-                android:id="@+id/snsScreen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
 
         <FrameLayout

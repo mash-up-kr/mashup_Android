@@ -2,6 +2,7 @@ package com.mashup.ui.setting
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -31,7 +32,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
         viewBinding.snsScreen.setContent {
             MashUpTheme {
-                SNSListScreen()
+                SNSListScreen(
+                    onClickSNS = this::onClickSNS
+                )
             }
         }
     }
@@ -63,6 +66,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         startActivity(
             WithdrawalActivity.newInstance(this)
         )
+    }
+
+    private fun onClickSNS(link: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
     }
 
     companion object {

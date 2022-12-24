@@ -3,6 +3,8 @@ package com.mashup.ui.setting
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -11,7 +13,6 @@ import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.ui.login.LoginActivity
-import com.mashup.ui.setting.sns.SNSListScreen
 import com.mashup.ui.withdrawl.WithdrawalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,15 +25,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         viewBinding.settingScreen.setContent {
             MashUpTheme {
                 SettingScreen(
+                    modifier = Modifier.fillMaxSize(),
                     onLogout = this::showLogoutDialog,
-                    onDeleteUser = this::moveToDeleteAccount
-                )
-            }
-        }
-
-        viewBinding.snsScreen.setContent {
-            MashUpTheme {
-                SNSListScreen(
+                    onDeleteUser = this::moveToDeleteAccount,
                     onClickSNS = this::onClickSNS
                 )
             }

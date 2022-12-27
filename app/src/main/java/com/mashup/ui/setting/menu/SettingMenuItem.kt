@@ -1,4 +1,4 @@
-package com.mashup.ui.setting
+package com.mashup.ui.setting.menu
 
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image

@@ -58,7 +58,9 @@ class UserDataSource @Inject constructor(
 
     private fun <T> write(key: Preferences.Key<T>, value: T?) = runBlocking {
         userDataStore.edit { preference ->
-            value?.let {
+            if (value == null) {
+                preference.remove(key)
+            } else {
                 preference[key] = value
             }
         }

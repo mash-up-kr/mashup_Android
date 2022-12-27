@@ -1,6 +1,6 @@
 package com.mashup.network.interceptor
 
-import com.mashup.data.datastore.UserDataSource
+import com.mashup.data.repository.UserRepository
 import com.mashup.network.errorcode.UNAUTHORIZED
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -11,7 +11,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
-    private val userDataSource: UserDataSource
+    private val userRepository: UserRepository
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(
@@ -19,7 +19,7 @@ class AuthInterceptor @Inject constructor(
                 .newBuilder()
                 .apply {
                     runBlocking(Dispatchers.IO) {
-                        userDataSource.token?.let { token ->
+                        userRepository.getUserToken()?.let { token ->
                             header(AUTHORIZATION_KEY, "Bearer $token")
                         }
                     }
@@ -42,7 +42,7 @@ class AuthInterceptor @Inject constructor(
     private fun checkApiStatusCode(jsonObject: JSONObject) {
         when (jsonObject.get("code")) {
             UNAUTHORIZED -> {
-                userDataSource.token = ""
+                userRepository.clearUserData()
             }
         }
     }

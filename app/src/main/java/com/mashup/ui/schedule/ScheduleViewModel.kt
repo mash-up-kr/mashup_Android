@@ -2,11 +2,11 @@ package com.mashup.ui.schedule
 
 import com.mashup.base.BaseViewModel
 import com.mashup.data.datastore.AttendanceDataSource
-import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
 import com.mashup.data.repository.AttendanceRepository
 import com.mashup.data.repository.ScheduleRepository
+import com.mashup.data.repository.UserRepository
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.schedule.model.ScheduleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val userDataSource: UserDataSource,
+    private val userRepository: UserRepository,
     private val attendanceDataSource: AttendanceDataSource,
     private val scheduleRepository: ScheduleRepository,
     private val attendanceRepository: AttendanceRepository
@@ -36,7 +36,7 @@ class ScheduleViewModel @Inject constructor(
     fun getScheduleList() {
         mashUpScope {
             _scheduleState.emit(ScheduleState.Loading)
-            val generateNumber = userDataSource.generateNumbers?.lastOrNull()
+            val generateNumber = userRepository.getUserGenerationNumbers()?.lastOrNull()
             if (generateNumber == null) {
                 handleErrorCode(UNAUTHORIZED)
                 return@mashUpScope

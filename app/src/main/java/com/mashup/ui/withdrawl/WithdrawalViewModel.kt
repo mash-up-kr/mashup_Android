@@ -3,6 +3,7 @@ package com.mashup.ui.withdrawl
 import com.mashup.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.data.repository.MemberRepository
+import com.mashup.data.repository.UserRepository
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WithdrawalViewModel @Inject constructor(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
     private val withdrawalCode = MutableStateFlow("")
     val codeState = withdrawalCode
@@ -47,6 +49,7 @@ class WithdrawalViewModel @Inject constructor(
             handleErrorCode(result.code)
         }
 
+        userRepository.clearUserData()
         _withdrawalState.emit(WithdrawalState.Success)
     }
 

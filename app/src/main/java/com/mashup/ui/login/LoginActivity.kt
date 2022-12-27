@@ -134,11 +134,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         fun newIntent(
             context: Context,
-            isLogOut: Boolean = false,
+            isLogout: Boolean = false,
             isWithDrawl: Boolean = false
         ): Intent {
             return Intent(context, LoginActivity::class.java).apply {
-                putExtra(EXTRA_LOGOUT, isLogOut)
+                putExtra(EXTRA_LOGOUT, isLogout)
                 putExtra(EXTRA_WITH_DRAWL, isWithDrawl)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }

@@ -1,6 +1,5 @@
 package com.mashup.ui.setting.sns
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -8,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,23 +27,20 @@ val snsList = listOf(
 )
 
 @Composable
-fun SNSListScreen(
+fun SNSList(
+    modifier: Modifier = Modifier,
     onClickSNS: (link: String) -> Unit
 ) {
-    Box(
-        contentAlignment = Alignment.BottomCenter,
-        modifier = Modifier.padding(12.dp)
+    LazyVerticalGrid(
+        modifier = modifier.padding(12.dp),
+        columns = GridCells.Fixed(2)
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2)
-        ) {
-            items(snsList) { item ->
-                SNSItem(
-                    name = stringResource(id = item.name),
-                    snsIconRes = item.iconRes,
-                    onClickItem = { onClickSNS(item.link) }
-                )
-            }
+        items(snsList) { item ->
+            SNSItem(
+                name = stringResource(id = item.name),
+                snsIconRes = item.iconRes,
+                onClickItem = { onClickSNS(item.link) }
+            )
         }
     }
 }
@@ -56,7 +51,7 @@ fun SNSListScreen(
 fun SNSListScreenPrev() {
     MashUpTheme {
         Surface(color = MaterialTheme.colors.onBackground) {
-            SNSListScreen {}
+            SNSList {}
         }
     }
 }

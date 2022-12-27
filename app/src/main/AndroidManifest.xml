@@ -82,8 +82,9 @@
         <activity
             android:name=".ui.setting.SettingActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"
-            android:windowSoftInputMode="adjustNothing" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            tools:ignore="LockedOrientationActivity"/>
 
         <activity
             android:name=".ui.error.NetworkDisconnectActivity"

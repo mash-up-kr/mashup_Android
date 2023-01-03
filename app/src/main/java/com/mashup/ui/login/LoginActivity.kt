@@ -32,10 +32,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         val isRequestLogOut = intent.getBooleanExtra(EXTRA_LOGOUT, false)
         val isRequestWithDrawl = intent.getBooleanExtra(EXTRA_WITH_DRAWL, false)
 
-        if (isRequestLogOut || isRequestWithDrawl) {
-            viewModel.clearUserData()
-        }
-
         when {
             isRequestWithDrawl -> {
                 showToast("회원탈퇴 완료되었어요")

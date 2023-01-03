@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -15,11 +16,15 @@ import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.withdrawl.WithdrawalActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
+    private val viewModel: SettingViewModel by viewModels()
+
     override fun initViews() {
+        super.initViews()
         initButton()
 
         viewBinding.settingScreen.setContent {
@@ -30,6 +35,15 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     onDeleteUser = this::moveToDeleteAccount,
                     onClickSNS = this::onClickSNS
                 )
+            }
+        }
+    }
+
+    override fun initObserves() {
+        super.initObserves()
+        flowLifecycleScope {
+            viewModel.onSuccessLogout.collectLatest {
+                moveToLoginActivityOnLogout()
             }
         }
     }
@@ -45,16 +59,20 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             setTitle(text = "로그아웃 하시겠습니까?")
             setNegativeButton()
             setPositiveButton {
-                startActivity(
-                    LoginActivity.newIntent(
-                        context = this@SettingActivity,
-                        isLogOut = true
-                    )
-                )
-                finish()
+                viewModel.requestLogout()
             }
             show()
         }
+    }
+
+    private fun moveToLoginActivityOnLogout() {
+        finish()
+        startActivity(
+            LoginActivity.newIntent(
+                context = this@SettingActivity,
+                isLogout = true
+            )
+        )
     }
 
     private fun moveToDeleteAccount() {

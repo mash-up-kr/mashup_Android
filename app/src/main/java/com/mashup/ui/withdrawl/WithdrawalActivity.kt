@@ -84,13 +84,13 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                     }
                     is WithdrawalState.Success -> {
                         hideLoading()
+                        finish()
                         startActivity(
                             LoginActivity.newIntent(
                                 context = this@WithdrawalActivity,
                                 isWithDrawl = true
                             )
                         )
-                        finish()
                     }
                 }
             }

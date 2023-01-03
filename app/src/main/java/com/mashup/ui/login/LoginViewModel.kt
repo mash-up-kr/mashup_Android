@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun checkAutoLogin() = mashUpScope {
-        if (!userRepository.getUserToken().isNullOrBlank()) {
+        if (userRepository.getUserToken().isNullOrBlank().not()) {
             _loginUiState.emit(LoginState.Success)
         }
     }

@@ -3,8 +3,8 @@ package com.mashup.ui.signup
 import com.mashup.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.core.model.Platform
-import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
+import com.mashup.data.repository.UserRepository
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val userDataSource: UserDataSource
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
@@ -76,9 +76,11 @@ class SignUpViewModel @Inject constructor(
             return@mashUpScope
         }
 
-        userDataSource.token = response.data?.token
-        userDataSource.memberId = response.data?.memberId
-        userDataSource.generateNumbers = response.data?.generationNumbers
+        userRepository.setUserData(
+            token = response.data?.token,
+            memberId = response.data?.memberId,
+            generationNumbers = response.data?.generationNumbers
+        )
         _signUpState.emit(SignUpState.Success)
     }
 

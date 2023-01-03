@@ -2,8 +2,8 @@ package com.mashup.ui.login
 
 import com.mashup.base.BaseViewModel
 import com.mashup.core.common.model.Validation
-import com.mashup.data.datastore.UserDataSource
 import com.mashup.data.repository.MemberRepository
+import com.mashup.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val userDataSource: UserDataSource
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
     private val _loginUiState = MutableStateFlow<LoginState>(LoginState.Empty)
     val loginUiState: SharedFlow<LoginState> = _loginUiState
@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun checkAutoLogin() = mashUpScope {
-        if (!userDataSource.token.isNullOrBlank()) {
+        if (userRepository.getUserToken().isNullOrBlank().not()) {
             _loginUiState.emit(LoginState.Success)
         }
     }
@@ -45,12 +45,6 @@ class LoginViewModel @Inject constructor(
 
     fun setPwd(pwd: String) {
         this.pwd.value = pwd
-    }
-
-    fun clearUserData() {
-        userDataSource.token = ""
-        userDataSource.memberId = null
-        userDataSource.generateNumbers = null
     }
 
     fun requestLogin(id: String, pwd: String) = mashUpScope {
@@ -65,9 +59,12 @@ class LoginViewModel @Inject constructor(
             return@mashUpScope
         }
 
-        userDataSource.token = response.data?.token
-        userDataSource.generateNumbers = response.data?.generationNumbers
-        userDataSource.memberId = response.data?.memberId
+        userRepository.setUserData(
+            token = response.data?.token,
+            memberId = response.data?.memberId,
+            generationNumbers = response.data?.generationNumbers
+
+        )
         _loginUiState.emit(LoginState.Success)
     }
 

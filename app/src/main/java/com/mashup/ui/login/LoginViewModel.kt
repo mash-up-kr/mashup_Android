@@ -47,10 +47,6 @@ class LoginViewModel @Inject constructor(
         this.pwd.value = pwd
     }
 
-    fun clearUserData() {
-        userRepository.clearUserData()
-    }
-
     fun requestLogin(id: String, pwd: String) = mashUpScope {
         _loginUiState.emit(LoginState.Loading)
         val response = memberRepository.login(

@@ -30,7 +30,6 @@ import com.mashup.util.AnalyticsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutId: Int
@@ -43,9 +42,6 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     }
 
     private var animationType: NavigationAnimationType? = null
-
-    @Inject
-    lateinit var analyticsManager: AnalyticsManager
 
     val isConnectedNetwork: Boolean
         get() = networkStateDetector.hasNetworkConnection()
@@ -186,7 +182,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
     }
 
     protected fun sendEvent(name: String, params: Map<String, String> = emptyMap()) {
-        analyticsManager.addEvent(
+        AnalyticsManager.addEvent(
             eventName = name,
             params = Bundle().apply {
                 for (key in params.keys) {

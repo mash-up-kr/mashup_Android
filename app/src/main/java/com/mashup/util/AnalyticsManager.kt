@@ -4,23 +4,15 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.mashup.data.repository.UserRepository
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class AnalyticsManager @Inject constructor(
-    userRepository: UserRepository
-) {
+object AnalyticsManager {
     private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
 
-    companion object {
-        private const val KEY_USER_TOKEN = "token"
-    }
+    private const val KEY_USER_TOKEN = "token"
 
-    init {
-        firebaseAnalytics.setUserId(userRepository.getUserMemberId()?.toString())
-        firebaseAnalytics.setUserProperty(KEY_USER_TOKEN, userRepository.getUserToken())
+    fun setUserInfo(userId: String?, userToken: String?) {
+        firebaseAnalytics.setUserId(userId)
+        firebaseAnalytics.setUserProperty(KEY_USER_TOKEN, userToken)
     }
 
     fun addEvent(eventName: String, params: Bundle) {

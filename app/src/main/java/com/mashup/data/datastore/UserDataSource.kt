@@ -51,8 +51,8 @@ class UserDataSource @Inject constructor(
             write(KEY_GENERATE_NUMBERS, adapter.toJson(value))
         }
 
-    var fcmToken: String?
-        get() = read(KEY_FCM_TOKEN, null)
+    var fcmToken: String
+        get() = read(KEY_FCM_TOKEN, null) ?: ""
         set(value) {
             write(KEY_FCM_TOKEN, value)
         }

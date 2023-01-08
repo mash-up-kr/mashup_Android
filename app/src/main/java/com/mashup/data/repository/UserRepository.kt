@@ -8,6 +8,8 @@ class UserRepository @Inject constructor(
 ) {
     fun getUserToken(): String? = userDataSource.token
 
+    fun getFcmToken(): String = userDataSource.fcmToken
+
     fun getUserGenerationNumbers(): List<Int>? = userDataSource.generateNumbers
 
     fun getUserMemberId(): Int? = userDataSource.memberId

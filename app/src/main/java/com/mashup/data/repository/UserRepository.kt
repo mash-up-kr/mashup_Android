@@ -22,6 +22,10 @@ class UserRepository @Inject constructor(
         userDataSource.token = token
     }
 
+    fun setUserFcmToken(fcmToken: String) {
+        userDataSource.fcmToken = fcmToken
+    }
+
     fun setUserData(
         token: String?,
         memberId: Int?,

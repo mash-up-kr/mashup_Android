@@ -17,6 +17,7 @@ import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpActivity
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -98,7 +99,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun initButtons() {
         viewBinding.btnLogin.setOnButtonThrottleFirstClickListener(this) {
-            sendEvent(name = LOG_LOGIN)
+            AnalyticsManager.addEvent(eventName = LOG_LOGIN)
             viewModel.requestLogin(
                 id = viewBinding.textFieldId.inputtedText,
                 pwd = viewBinding.textFieldPwd.inputtedText
@@ -106,7 +107,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
 
         viewBinding.tvSignUp.onThrottleFirstClick(lifecycleScope) {
-            sendEvent(name = LOG_SIGN_UP)
+            AnalyticsManager.addEvent(eventName = LOG_SIGN_UP)
             startActivity(
                 SignUpActivity.newIntent(this)
             )

@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:69430728306:android:9150994ecdf81c212254eb",
         "android_client_info": {
-          "package_name": "com.mashup.debug"
+          "package_name": "com.mashup"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "69430728306-l0eiqc1sgum6q7mav6ufpruj1vvrrm4o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mashup.debug",
+            "package_name": "com.mashup",
             "certificate_hash": "f91475d4e5c37b9c3a7e646a2e616ec1940e818d"
           }
         },
@@ -37,6 +37,49 @@
             {
               "client_id": "69430728306-qb67guj56d2068tjch5m6qg1ler7hg63.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "69430728306-64ah8di5nu6p0cuthp545svcfmetpmhj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kr.mash-up.MashUp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69430728306:android:e994c1f139437ea52254eb",
+        "android_client_info": {
+          "package_name": "com.mashup.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69430728306-qb67guj56d2068tjch5m6qg1ler7hg63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFcqTFHlgzLtYclBMMh7AEvPgccPKvs6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69430728306-qb67guj56d2068tjch5m6qg1ler7hg63.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "69430728306-64ah8di5nu6p0cuthp545svcfmetpmhj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kr.mash-up.MashUp"
+              }
             }
           ]
         }

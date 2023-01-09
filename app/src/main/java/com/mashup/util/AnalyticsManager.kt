@@ -1,29 +1,25 @@
 package com.mashup.util
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.mashup.data.repository.UserRepository
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class AnalyticsManager @Inject constructor(
-    userRepository: UserRepository
-) {
+object AnalyticsManager {
     private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
 
-    companion object {
-        private const val KEY_USER_TOKEN = "token"
+    private const val KEY_USER_TOKEN = "token"
+
+    fun setUserId(userId: Int? = null) {
+        firebaseAnalytics.setUserId(userId?.toString())
     }
 
-    init {
-        firebaseAnalytics.setUserId(userRepository.getUserMemberId()?.toString())
-        firebaseAnalytics.setUserProperty(KEY_USER_TOKEN, userRepository.getUserToken())
+    fun setUserToken(userToken: String? = null) {
+        firebaseAnalytics.setUserProperty(KEY_USER_TOKEN, userToken)
     }
 
-    fun addEvent(eventName: String, params: Bundle) {
+    fun addEvent(eventName: String, params: Bundle = bundleOf()) {
         firebaseAnalytics.logEvent(eventName, params)
     }
 }

@@ -10,6 +10,9 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.constant.LOG_SCHEDULE_EVENT_DETAIL
+import com.mashup.constant.LOG_SCHEDULE_LIST_REFRESH
+import com.mashup.constant.LOG_SCHEDULE_STATUS_CONFIRM
 import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.common.extensions.gone
 import com.mashup.core.common.extensions.onThrottleFirstClick
@@ -19,6 +22,7 @@ import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import com.mashup.ui.schedule.detail.ScheduleDetailActivity
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -37,7 +41,8 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                     showToast("볼 수 있는 일정이 없어요..!")
                 }
 
-                override fun onClickAttendanceList(scheduleId: Int) {
+                override fun onClickScheduleInformation(scheduleId: Int) {
+                    AnalyticsManager.addEvent(eventName = LOG_SCHEDULE_EVENT_DETAIL)
                     startActivity(
                         ScheduleDetailActivity.newIntent(
                             requireContext(),
@@ -46,7 +51,8 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                     )
                 }
 
-                override fun onClickCrewAttendanceActivity(scheduleId: Int) {
+                override fun onClickAttendanceInfoButton(scheduleId: Int) {
+                    AnalyticsManager.addEvent(eventName = LOG_SCHEDULE_STATUS_CONFIRM)
                     hideCoachMark()
                     startActivity(
                         PlatformAttendanceActivity.newIntent(
@@ -80,6 +86,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
 
     private fun initRefreshButton() {
         viewBinding.btnRefresh.onThrottleFirstClick(viewLifecycleOwner.lifecycleScope) {
+            AnalyticsManager.addEvent(eventName = LOG_SCHEDULE_LIST_REFRESH)
             viewModel.getScheduleList()
         }
     }

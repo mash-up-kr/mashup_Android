@@ -26,7 +26,6 @@ import com.mashup.network.errorcode.INTERNAL_SERVER_ERROR
 import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
-import com.mashup.util.AnalyticsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -179,16 +178,5 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
                 exitOut
             )
         }
-    }
-
-    protected fun sendEvent(name: String, params: Map<String, String> = emptyMap()) {
-        AnalyticsManager.addEvent(
-            eventName = name,
-            params = Bundle().apply {
-                for (key in params.keys) {
-                    putString(key, params[key])
-                }
-            }
-        )
     }
 }

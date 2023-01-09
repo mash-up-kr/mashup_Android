@@ -5,3 +5,11 @@ const val LOG_SIGN_UP = "signup"
 
 const val LOG_POPUP_SIGNUP_CONFIRM = "popup_signup_confirm"
 const val LOG_POPUP_SIGNUP_CANCEL = "popup_signup_cancel"
+
+const val LOG_QR = "qr"
+const val LOG_QR_SUCCESS = "qr_success"
+const val LOG_QR_DONE = "qr_done"
+const val LOG_QR_TIME_FAIL = "qr_time_fail"
+const val LOG_QR_WRONG = "qr_wrong"
+
+const val LOG_DELETE_USER = "delete_user_success"

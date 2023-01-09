@@ -8,6 +8,11 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.constant.LOG_QR
+import com.mashup.constant.LOG_QR_DONE
+import com.mashup.constant.LOG_QR_SUCCESS
+import com.mashup.constant.LOG_QR_TIME_FAIL
+import com.mashup.constant.LOG_QR_WRONG
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.widget.CommonDialog
@@ -20,6 +25,7 @@ import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
 import com.mashup.network.errorcode.MEMBER_NOT_FOUND
 import com.mashup.ui.qrscan.camera.CameraManager
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -35,6 +41,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     }
 
     override fun initViews() {
+        AnalyticsManager.addEvent(LOG_QR)
         initButtons()
         initCamera()
     }
@@ -84,6 +91,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     private fun createCardAnalyzer() {
         qrCodeAnalyzer = QRCodeAnalyzer(
             onQRCodeRecognitionSuccess = { qrcode ->
+                AnalyticsManager.addEvent(LOG_QR_SUCCESS)
                 viewModel.requestAttendance(qrcode)
             },
             onQRCodeRecognitionFailure = { throwable ->
@@ -113,18 +121,21 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     private fun handleAttendanceErrorCode(error: QRCodeState.Error) {
         val codeMessage = when (error.code) {
             ATTENDANCE_ALREADY_CHECKED -> {
+                AnalyticsManager.addEvent(LOG_QR_DONE)
                 "이미 출석 체크를 했어요"
             }
             ATTENDANCE_CODE_DUPLICATED -> {
                 "이미 사용된 코드입니다."
             }
             ATTENDANCE_TIME_OVER -> {
+                AnalyticsManager.addEvent(LOG_QR_TIME_FAIL)
                 "출석 마감 시간이 지나서 결석이에요"
             }
             ATTENDANCE_TIME_BEFORE -> {
                 "아직 출석할 수 없어요"
             }
             ATTENDANCE_CODE_INVALID, ATTENDANCE_CODE_NOT_FOUND -> {
+                AnalyticsManager.addEvent(LOG_QR_WRONG)
                 "올바르지 않은 QR 코드입니다"
             }
             MEMBER_NOT_FOUND -> {

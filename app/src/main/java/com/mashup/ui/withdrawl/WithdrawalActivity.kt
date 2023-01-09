@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.constant.LOG_DELETE_USER
 import com.mashup.core.common.extensions.setEmptyUIOfTextField
 import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
@@ -17,6 +18,7 @@ import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCa
 import com.mashup.databinding.ActivityWithdrawalBinding
 import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.signup.state.CodeState
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -84,6 +86,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                     }
                     is WithdrawalState.Success -> {
                         hideLoading()
+                        AnalyticsManager.addEvent(LOG_DELETE_USER)
                         finish()
                         startActivity(
                             LoginActivity.newIntent(

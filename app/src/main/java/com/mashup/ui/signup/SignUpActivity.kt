@@ -7,9 +7,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.constant.LOG_POPUP_SIGNUP_CANCEL
+import com.mashup.constant.LOG_POPUP_SIGNUP_CONFIRM
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySignUpBinding
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -76,8 +79,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         CommonDialog(this).apply {
             setTitle(text = "회원가입을 그만두시겠어요?")
             setMessage(text = "입력한 전체 내용이 삭제됩니다.")
-            setNegativeButton()
+            setNegativeButton() {
+                AnalyticsManager.addEvent(eventName = LOG_POPUP_SIGNUP_CANCEL)
+            }
             setPositiveButton {
+                AnalyticsManager.addEvent(eventName = LOG_POPUP_SIGNUP_CONFIRM)
                 action()
             }
             show()

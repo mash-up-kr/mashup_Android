@@ -32,7 +32,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
-                    listener.onClickAttendanceList(
+                    listener.onClickScheduleInformation(
                         scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
@@ -42,7 +42,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
-                    listener.onClickCrewAttendanceActivity(
+                    listener.onClickAttendanceInfoButton(
                         scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
@@ -208,7 +208,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
-                    listener.onClickAttendanceList(
+                    listener.onClickScheduleInformation(
                         scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
@@ -218,7 +218,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
-                    listener.onClickCrewAttendanceActivity(
+                    listener.onClickAttendanceInfoButton(
                         scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }

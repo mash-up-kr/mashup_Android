@@ -1,6 +1,7 @@
 package com.mashup.data.repository
 
 import com.mashup.data.datastore.UserDataSource
+import com.mashup.util.AnalyticsManager
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -16,10 +17,13 @@ class UserRepository @Inject constructor(
         userDataSource.memberId = null
         userDataSource.token = null
         userDataSource.generateNumbers = null
+        AnalyticsManager.setUserToken(null)
+        AnalyticsManager.setUserId(null)
     }
 
     fun setUserToken(token: String?) {
         userDataSource.token = token
+        AnalyticsManager.setUserToken(token)
     }
 
     fun setUserData(
@@ -30,5 +34,7 @@ class UserRepository @Inject constructor(
         userDataSource.token = token
         userDataSource.memberId = memberId
         userDataSource.generateNumbers = generationNumbers
+        AnalyticsManager.setUserToken(token)
+        AnalyticsManager.setUserId(memberId)
     }
 }

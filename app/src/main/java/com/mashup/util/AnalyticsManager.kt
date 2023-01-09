@@ -10,8 +10,11 @@ object AnalyticsManager {
 
     private const val KEY_USER_TOKEN = "token"
 
-    fun setUserInfo(userId: String?, userToken: String?) {
-        firebaseAnalytics.setUserId(userId)
+    fun setUserId(userId: Int? = null) {
+        firebaseAnalytics.setUserId(userId?.toString())
+    }
+
+    fun setUserToken(userToken: String? = null) {
         firebaseAnalytics.setUserProperty(KEY_USER_TOKEN, userToken)
     }
 

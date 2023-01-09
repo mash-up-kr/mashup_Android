@@ -78,6 +78,6 @@ class ScheduleViewPagerAdapter(private val listener: OnItemClickListener) :
 
 interface OnItemClickListener {
     fun onClickEmptySchedule()
-    fun onClickAttendanceList(scheduleId: Int)
-    fun onClickCrewAttendanceActivity(scheduleId: Int)
+    fun onClickScheduleInformation(scheduleId: Int)
+    fun onClickAttendanceInfoButton(scheduleId: Int)
 }

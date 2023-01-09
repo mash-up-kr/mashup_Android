@@ -6,6 +6,10 @@ const val LOG_SIGN_UP = "signup"
 const val LOG_POPUP_SIGNUP_CONFIRM = "popup_signup_confirm"
 const val LOG_POPUP_SIGNUP_CANCEL = "popup_signup_cancel"
 
+const val LOG_SCHEDULE_LIST_REFRESH = "refresh"
+const val LOG_SCHEDULE_STATUS_CONFIRM = "status_confirm"
+const val LOG_SCHEDULE_EVENT_DETAIL = "event_detail"
+
 const val LOG_QR = "qr"
 const val LOG_QR_SUCCESS = "qr_success"
 const val LOG_QR_DONE = "qr_done"

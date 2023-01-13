@@ -47,11 +47,15 @@ class LoginViewModel @Inject constructor(
         this.pwd.value = pwd
     }
 
-    fun requestLogin(id: String, pwd: String) = mashUpScope {
+    fun requestLogin(
+        id: String,
+        pwd: String
+    ) = mashUpScope {
         _loginUiState.emit(LoginState.Loading)
         val response = memberRepository.login(
             identification = id,
-            password = pwd
+            password = pwd,
+            fcmToken = userRepository.getFcmToken()
         )
 
         if (!response.isSuccess()) {

@@ -1,7 +1,14 @@
-package com.mashup.constant
+package com.mashup.constant.log
+
+const val LOG_BACK = "back"
+const val LOG_CLOSE = "close"
 
 const val LOG_LOGIN = "login"
 const val LOG_SIGN_UP = "signup"
+
+const val LOG_PLACE_SIGN_CODE = "signup_code"
+const val LOG_PLACE_SIGN_MEMBER_INFO = "signup_info"
+const val LOG_PLACE_SIGN_PLATFORM = "signup_platform"
 
 const val LOG_POPUP_SIGNUP_CONFIRM = "popup_signup_confirm"
 const val LOG_POPUP_SIGNUP_CANCEL = "popup_signup_cancel"

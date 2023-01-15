@@ -8,8 +8,8 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_LOGOUT
 import com.mashup.constant.EXTRA_WITH_DRAWL
-import com.mashup.constant.LOG_LOGIN
-import com.mashup.constant.LOG_SIGN_UP
+import com.mashup.constant.log.LOG_LOGIN
+import com.mashup.constant.log.LOG_SIGN_UP
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.Validation
 import com.mashup.databinding.ActivityLoginBinding

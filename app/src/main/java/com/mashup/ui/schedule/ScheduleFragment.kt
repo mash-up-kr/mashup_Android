@@ -10,9 +10,9 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
-import com.mashup.constant.LOG_SCHEDULE_EVENT_DETAIL
-import com.mashup.constant.LOG_SCHEDULE_LIST_REFRESH
-import com.mashup.constant.LOG_SCHEDULE_STATUS_CONFIRM
+import com.mashup.constant.log.LOG_SCHEDULE_EVENT_DETAIL
+import com.mashup.constant.log.LOG_SCHEDULE_LIST_REFRESH
+import com.mashup.constant.log.LOG_SCHEDULE_STATUS_CONFIRM
 import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.common.extensions.gone
 import com.mashup.core.common.extensions.onThrottleFirstClick

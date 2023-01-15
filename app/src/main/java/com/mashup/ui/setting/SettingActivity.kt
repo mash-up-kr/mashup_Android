@@ -24,6 +24,7 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.withdrawl.WithdrawalActivity
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -64,7 +65,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     }
 
     private fun onClickLogoutButton() {
-        sendEvent(LOG_LOGOUT)
+        AnalyticsManager.addEvent(LOG_LOGOUT)
         showLogoutDialog()
     }
 
@@ -90,7 +91,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     }
 
     private fun moveToDeleteAccount() {
-        sendEvent(LOG_DELETE_USER)
+        AnalyticsManager.addEvent(LOG_DELETE_USER)
         startActivity(
             WithdrawalActivity.newInstance(this)
         )
@@ -120,7 +121,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 null
             }
         }
-        eventLog?.run { sendEvent(this) }
+        eventLog?.run { AnalyticsManager.addEvent(this) }
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
     }
 

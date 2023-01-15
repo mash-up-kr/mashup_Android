@@ -25,5 +25,5 @@ const val LOG_QR_DONE = "qr_done"
 const val LOG_QR_TIME_FAIL = "qr_time_fail"
 const val LOG_QR_WRONG = "qr_wrong"
 
-const val LOG_DELETE_USER = "delete_user_success"
+const val LOG_DELETE_SUCCESS_USER = "delete_user_success"
 

@@ -51,12 +51,6 @@ class UserDataSource @Inject constructor(
             write(KEY_GENERATE_NUMBERS, adapter.toJson(value))
         }
 
-    var fcmToken: String
-        get() = read(KEY_FCM_TOKEN, null) ?: ""
-        set(value) {
-            write(KEY_FCM_TOKEN, value)
-        }
-
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {
         userDataStore.data.map {
             it[key] ?: default

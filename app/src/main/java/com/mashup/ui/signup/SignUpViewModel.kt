@@ -3,6 +3,7 @@ package com.mashup.ui.signup
 import com.mashup.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.core.model.Platform
+import com.mashup.data.repository.FirebaseRepository
 import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.UserRepository
 import com.mashup.ui.signup.state.CodeState
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
@@ -63,6 +65,7 @@ class SignUpViewModel @Inject constructor(
 
     private fun requestSignup() = mashUpScope {
         val response = memberRepository.signup(
+            fcmToken = firebaseRepository.getFcmToken(),
             identification = id.value,
             inviteCode = signUpCode.value,
             name = userName.value,

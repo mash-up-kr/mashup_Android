@@ -56,8 +56,10 @@ fun MashUpButton(
             .background(if (isEnabled) buttonStyle.backgroundColor else ButtonStyle.DISABLE.backgroundColor)
             .clickable(
                 indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { if (isEnabled) onClick() },
+                interactionSource = remember { MutableInteractionSource() },
+                enabled = isEnabled,
+                onClick = onClick,
+            ),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -92,6 +94,7 @@ fun ButtonCircularProgressbar(
     progressBarWidth: Dp = 3.dp,
     progressBarColor: Color = Color(0xFFFFFFFF),
     backgroundProgressBarColor: Color = Color(0x80FFFFFF),
+    progressDuration: Int = 500,
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val angle by infiniteTransition.animateFloat(
@@ -99,7 +102,7 @@ fun ButtonCircularProgressbar(
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
             animation = keyframes {
-                durationMillis = 500
+                durationMillis = progressDuration
             }
         )
     )

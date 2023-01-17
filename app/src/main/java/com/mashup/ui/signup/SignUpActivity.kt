@@ -42,12 +42,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     private fun initToolbar() {
         viewBinding.toolbar.setOnBackButtonClickListener {
-            getPlaceGALog()?.run {
-                AnalyticsManager.addEvent(
-                    LOG_BACK,
-                    bundleOf(KEY_PLACE to this)
-                )
-            }
             navigationAnimationType = NavigationAnimationType.SLIDE
             onBackPressed()
         }
@@ -89,6 +83,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun onBackPressed() {
+        getPlaceGALog()?.run {
+            AnalyticsManager.addEvent(
+                LOG_BACK,
+                bundleOf(KEY_PLACE to this)
+            )
+        }
         if (!navController.popBackStack()) {
             finish()
         }

@@ -98,7 +98,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         CommonDialog(this).apply {
             setTitle(text = "회원가입을 그만두시겠어요?")
             setMessage(text = "입력한 전체 내용이 삭제됩니다.")
-            setNegativeButton() {
+            setNegativeButton {
                 AnalyticsManager.addEvent(eventName = LOG_POPUP_SIGNUP_CANCEL)
             }
             setPositiveButton {
@@ -124,15 +124,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     private fun getPlaceGALog() = when (navController.currentDestination?.id) {
-        R.id.signUpCodeFragment -> {
-            LOG_PLACE_SIGN_CODE
-        }
-        R.id.signUpMemberFragment -> {
-            LOG_PLACE_SIGN_PLATFORM
-        }
-        R.id.signUpAuthFragment -> {
-            LOG_PLACE_SIGN_MEMBER_INFO
-        }
+        R.id.signUpCodeFragment -> LOG_PLACE_SIGN_CODE
+        R.id.signUpMemberFragment -> LOG_PLACE_SIGN_PLATFORM
+        R.id.signUpAuthFragment -> LOG_PLACE_SIGN_MEMBER_INFO
         else -> null
     }
 

@@ -44,7 +44,7 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun notifyPushMessage(title: String, body: String) {
         val notificationBuild = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher) // TODO: 추후 push 메세지용 아이콘으로 교체
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(body)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

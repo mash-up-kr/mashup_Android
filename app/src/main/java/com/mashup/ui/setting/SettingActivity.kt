@@ -99,27 +99,13 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     private fun onClickSNS(link: String) {
         val eventLog = when (link) {
-            URL.FACEBOOK -> {
-                LOG_SNS_FACEBOOK
-            }
-            URL.INSTAGRAM -> {
-                LOG_SNS_INSTAGRAM
-            }
-            URL.TISTORY -> {
-                LOG_SNS_TISTORY
-            }
-            URL.YOUTUBE -> {
-                LOG_SNS_YOUTUBE
-            }
-            URL.MASHUP_UP_HOME -> {
-                LOG_SNS_MASHUP_HOME
-            }
-            URL.MASHUP_UP_RECRUIT -> {
-                LOG_SNS_MASHUP_RECRUIT
-            }
-            else -> {
-                null
-            }
+            URL.FACEBOOK -> LOG_SNS_FACEBOOK
+            URL.INSTAGRAM -> LOG_SNS_INSTAGRAM
+            URL.TISTORY -> LOG_SNS_TISTORY
+            URL.YOUTUBE -> LOG_SNS_YOUTUBE
+            URL.MASHUP_UP_HOME -> LOG_SNS_MASHUP_HOME
+            URL.MASHUP_UP_RECRUIT -> LOG_SNS_MASHUP_RECRUIT
+            else -> null
         }
         eventLog?.run { AnalyticsManager.addEvent(this) }
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))

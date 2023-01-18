@@ -8,11 +8,11 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
-import com.mashup.constant.LOG_QR
-import com.mashup.constant.LOG_QR_DONE
-import com.mashup.constant.LOG_QR_SUCCESS
-import com.mashup.constant.LOG_QR_TIME_FAIL
-import com.mashup.constant.LOG_QR_WRONG
+import com.mashup.constant.log.LOG_QR
+import com.mashup.constant.log.LOG_QR_DONE
+import com.mashup.constant.log.LOG_QR_SUCCESS
+import com.mashup.constant.log.LOG_QR_TIME_FAIL
+import com.mashup.constant.log.LOG_QR_WRONG
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.widget.CommonDialog

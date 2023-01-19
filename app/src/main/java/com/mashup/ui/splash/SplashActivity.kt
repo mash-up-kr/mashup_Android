@@ -42,6 +42,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun initAnalyticsManager() {
+        AnalyticsManager.init(this)
         AnalyticsManager.setUserId(
             userId = userRepository.getUserMemberId(),
         )

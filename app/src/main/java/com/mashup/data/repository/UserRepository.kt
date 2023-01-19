@@ -9,6 +9,8 @@ class UserRepository @Inject constructor(
 ) {
     fun getUserToken(): String? = userDataSource.token
 
+    fun getFcmToken(): String = userDataSource.fcmToken
+
     fun getUserGenerationNumbers(): List<Int>? = userDataSource.generateNumbers
 
     fun getUserMemberId(): Int? = userDataSource.memberId
@@ -24,6 +26,10 @@ class UserRepository @Inject constructor(
     fun setUserToken(token: String?) {
         userDataSource.token = token
         AnalyticsManager.setUserToken(token)
+    }
+
+    fun setUserFcmToken(fcmToken: String) {
+        userDataSource.fcmToken = fcmToken
     }
 
     fun setUserData(

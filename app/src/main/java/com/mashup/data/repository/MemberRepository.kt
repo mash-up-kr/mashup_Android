@@ -16,12 +16,14 @@ class MemberRepository @Inject constructor(
 ) {
     suspend fun login(
         identification: String,
-        password: String
+        password: String,
+        fcmToken: String,
     ): Response<AccessResponse> {
         return memberDao.postLogin(
             LoginRequest(
                 identification = identification,
-                password = password
+                password = password,
+                fcmToken = fcmToken
             )
         )
     }

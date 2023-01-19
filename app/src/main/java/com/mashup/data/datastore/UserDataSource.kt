@@ -24,6 +24,7 @@ class UserDataSource @Inject constructor(
 
     companion object {
         private val KEY_TOKEN = stringPreferencesKey("accessToken")
+        private val KEY_FCM_TOKEN = stringPreferencesKey("fcmToken")
         private val KEY_MEMBER_ID = stringPreferencesKey("memberId")
         private val KEY_GENERATE_NUMBERS = stringPreferencesKey("generateNumber")
     }
@@ -48,6 +49,12 @@ class UserDataSource @Inject constructor(
         set(value) {
             val adapter = moshi.getListTypeAdapter<Int>(Int::class)
             write(KEY_GENERATE_NUMBERS, adapter.toJson(value))
+        }
+
+    var fcmToken: String
+        get() = read(KEY_FCM_TOKEN, null) ?: ""
+        set(value) {
+            write(KEY_FCM_TOKEN, value)
         }
 
     private fun <T> read(key: Preferences.Key<T>, default: T? = null) = runBlocking {

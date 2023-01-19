@@ -9,7 +9,7 @@ data class EventResponse(
     @field:Json(name = "eventId")
     val eventId: Int,
     @field:Json(name = "attendanceCode")
-    val attendanceCode: AttendanceCodeResponse,
+    val attendanceCode: AttendanceCodeResponse?,
     @field:Json(name = "contentList")
     val contentList: List<ContentResponse>,
     @field:Json(name = "startedAt")

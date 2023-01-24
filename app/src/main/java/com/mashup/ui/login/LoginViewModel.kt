@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
 
     private fun checkAutoLogin() = mashUpScope {
         if (userRepository.getUserToken().isNullOrBlank().not()) {
-            _loginUiState.emit(LoginState.Success)
+            _loginUiState.emit(LoginState.Success(LoginType.AUTO))
         }
     }
 
@@ -71,7 +71,7 @@ class LoginViewModel @Inject constructor(
             generationNumbers = response.data?.generationNumbers
 
         )
-        _loginUiState.emit(LoginState.Success)
+        _loginUiState.emit(LoginState.Success(LoginType.LOGIN))
     }
 
     override fun handleErrorCode(code: String) {
@@ -84,6 +84,6 @@ class LoginViewModel @Inject constructor(
 sealed interface LoginState {
     object Empty : LoginState
     object Loading : LoginState
-    object Success : LoginState
+    data class Success(val loginType: LoginType) : LoginState
     data class Error(val code: String) : LoginState
 }

@@ -53,9 +53,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                         is LoginState.Loading -> {
                             viewBinding.btnLogin.showLoading()
                         }
-                        LoginState.Success -> {
+                        is LoginState.Success -> {
                             viewBinding.btnLogin.hideLoading()
-                            moveToMainScreen()
+                            moveToMainScreen(state.loginType)
                         }
                         is LoginState.Error -> {
                             viewBinding.btnLogin.hideLoading()
@@ -76,9 +76,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-    private fun moveToMainScreen() {
+    private fun moveToMainScreen(loginType: LoginType) {
         startActivity(
-            Intent(this, MainActivity::class.java)
+            MainActivity.newIntent(
+                context = this,
+                loginType = loginType
+            )
         )
         finish()
     }

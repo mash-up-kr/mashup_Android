@@ -15,6 +15,7 @@ import com.mashup.databinding.FragmentSignUpCodeBinding
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
 import com.mashup.network.errorcode.INVALID_PLATFORM_NAME
 import com.mashup.network.errorcode.MEMBER_INVALID_INVITE
+import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState
 import com.mashup.ui.signup.SignUpViewModel
@@ -66,7 +67,10 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
                         requireActivity().run {
                             showToast("회원가입 성공했습니다!")
                             startActivity(
-                                Intent(requireContext(), MainActivity::class.java).apply {
+                                MainActivity.newIntent(
+                                    context = this,
+                                    loginType = LoginType.REGISTER
+                                ).apply {
                                     flags =
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                 }

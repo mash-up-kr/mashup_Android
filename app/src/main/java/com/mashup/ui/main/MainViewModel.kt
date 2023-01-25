@@ -5,8 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.base.BaseViewModel
 import com.mashup.constant.EXTRA_LOGIN_TYPE
+import com.mashup.core.model.Platform
 import com.mashup.data.repository.MemberRepository
-import com.mashup.data.repository.UserRepository
+import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainTab
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val userRepository: UserRepository,
+    private val userPreferenceRepository: UserPreferenceRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     private val _isShowCongratsAttendanceScreen = mutableStateOf(false)
@@ -46,8 +47,8 @@ class MainViewModel @Inject constructor(
 
     private fun refreshToken() = mashUpScope {
         val result = memberRepository.refreshToken()
-        if (result.isSuccess()) {
-            userRepository.setUserToken(result.data?.token)
+        if (result.isSuccess() && result.data != null) {
+            userPreferenceRepository.updateUserToken(result.data.token)
         }
     }
 
@@ -63,8 +64,14 @@ class MainViewModel @Inject constructor(
     }
 
     private fun refreshUserData() = mashUpScope {
-        val userInfo = memberRepository.getMember()
-        if (userInfo.isSuccess()) {
+        val result = memberRepository.getMember()
+        if (result.isSuccess() && result.data != null) {
+            userPreferenceRepository.updateUserPreference(
+                name = result.data.name,
+                platform = Platform.getPlatform(result.data.platform),
+                generationNumbers = result.data.generationNumbers,
+                pushNotificationAgreed = result.data.pushNotificationAgreed
+            )
         }
     }
 

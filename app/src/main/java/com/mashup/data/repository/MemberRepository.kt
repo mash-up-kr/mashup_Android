@@ -33,6 +33,7 @@ class MemberRepository @Inject constructor(
     }
 
     suspend fun signup(
+        fcmToken: String,
         identification: String,
         inviteCode: String,
         name: String,
@@ -42,6 +43,7 @@ class MemberRepository @Inject constructor(
     ): Response<AccessResponse> {
         return memberDao.postSignUp(
             SignUpRequest(
+                fcmToken = fcmToken,
                 identification = identification,
                 inviteCode = inviteCode,
                 name = name,

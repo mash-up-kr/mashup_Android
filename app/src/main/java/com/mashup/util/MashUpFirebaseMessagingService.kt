@@ -20,7 +20,6 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, token)
         }
-        userRepository.setUserFcmToken(token)
     }
 
     override fun onMessageReceived(messae: RemoteMessage) {

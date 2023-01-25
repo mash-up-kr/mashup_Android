@@ -3,12 +3,19 @@ package com.mashup.ui.signup
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
-import com.mashup.constant.LOG_POPUP_SIGNUP_CANCEL
-import com.mashup.constant.LOG_POPUP_SIGNUP_CONFIRM
+import com.mashup.constant.log.KEY_PLACE
+import com.mashup.constant.log.LOG_BACK
+import com.mashup.constant.log.LOG_CLOSE
+import com.mashup.constant.log.LOG_PLACE_SIGN_CODE
+import com.mashup.constant.log.LOG_PLACE_SIGN_MEMBER_INFO
+import com.mashup.constant.log.LOG_PLACE_SIGN_PLATFORM
+import com.mashup.constant.log.LOG_POPUP_SIGNUP_CANCEL
+import com.mashup.constant.log.LOG_POPUP_SIGNUP_CONFIRM
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySignUpBinding
@@ -39,6 +46,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             onBackPressed()
         }
         viewBinding.toolbar.setOnCloseButtonClickListener {
+            getPlaceGALog()?.run {
+                AnalyticsManager.addEvent(
+                    LOG_CLOSE,
+                    bundleOf(KEY_PLACE to this)
+                )
+            }
             navigationAnimationType = NavigationAnimationType.PULL
             if (!viewModel.isDataEmpty()) {
                 showExitPopup {
@@ -70,6 +83,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun onBackPressed() {
+        getPlaceGALog()?.run {
+            AnalyticsManager.addEvent(
+                LOG_BACK,
+                bundleOf(KEY_PLACE to this)
+            )
+        }
         if (!navController.popBackStack()) {
             finish()
         }
@@ -79,7 +98,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         CommonDialog(this).apply {
             setTitle(text = "회원가입을 그만두시겠어요?")
             setMessage(text = "입력한 전체 내용이 삭제됩니다.")
-            setNegativeButton() {
+            setNegativeButton {
                 AnalyticsManager.addEvent(eventName = LOG_POPUP_SIGNUP_CANCEL)
             }
             setPositiveButton {
@@ -102,6 +121,13 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         fun newIntent(context: Context) = Intent(context, SignUpActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
+    }
+
+    private fun getPlaceGALog() = when (navController.currentDestination?.id) {
+        R.id.signUpCodeFragment -> LOG_PLACE_SIGN_CODE
+        R.id.signUpMemberFragment -> LOG_PLACE_SIGN_PLATFORM
+        R.id.signUpAuthFragment -> LOG_PLACE_SIGN_MEMBER_INFO
+        else -> null
     }
 
     override val layoutId: Int

@@ -12,9 +12,7 @@ import java.io.OutputStream
 
 class AppPreferenceSerializer : Serializer<AppPreference> {
     override val defaultValue: AppPreference
-        get() = AppPreference(
-            showCoachMarkInScheduleList = true
-        )
+        get() = AppPreference.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): AppPreference =
         try {

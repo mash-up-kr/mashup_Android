@@ -2,6 +2,7 @@ package com.mashup.ui.login
 
 import com.mashup.base.BaseViewModel
 import com.mashup.core.common.model.Validation
+import com.mashup.data.repository.FirebaseRepository
 import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
     private val _loginUiState = MutableStateFlow<LoginState>(LoginState.Empty)
     val loginUiState: SharedFlow<LoginState> = _loginUiState
@@ -55,7 +57,7 @@ class LoginViewModel @Inject constructor(
         val response = memberRepository.login(
             identification = id,
             password = pwd,
-            fcmToken = userRepository.getFcmToken()
+            fcmToken = firebaseRepository.getFcmToken()
         )
 
         if (!response.isSuccess()) {

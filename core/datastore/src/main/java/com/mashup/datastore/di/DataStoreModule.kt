@@ -20,7 +20,8 @@ import javax.inject.Singleton
 class DataStoreModule {
 
     companion object {
-        private const val PATH_PB = "mashup.preferences_pb"
+        private const val PATH_PB_USER = "mashup_user.preferences_pb"
+        private const val PATH_PB_APP = "mashup_app.preferences_pb"
     }
 
     @Provides
@@ -31,7 +32,7 @@ class DataStoreModule {
         return DataStoreFactory.create(
             serializer = UserPreferenceSerializer()
         ) {
-            File("${context.cacheDir.path}/$PATH_PB")
+            File("${context.cacheDir.path}/$PATH_PB_USER")
         }
     }
 
@@ -43,7 +44,7 @@ class DataStoreModule {
         return DataStoreFactory.create(
             serializer = AppPreferenceSerializer()
         ) {
-            File("${context.cacheDir.path}/$PATH_PB")
+            File("${context.cacheDir.path}/$PATH_PB_APP")
         }
     }
 }

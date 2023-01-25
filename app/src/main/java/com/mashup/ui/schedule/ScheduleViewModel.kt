@@ -115,10 +115,9 @@ class ScheduleViewModel @Inject constructor(
 
     private fun showCoachMark(schedules: List<ScheduleResponse>) {
         mashUpScope {
-            val savedCoachMark =
-                !appPreferenceRepository.getAppPreference().first().showCoachMarkInScheduleList
-            val showCoachMark = schedules.any { it.dateCount >= 0 } &&
-                !savedCoachMark
+            val isShowCoachMark =
+                appPreferenceRepository.getAppPreference().first().isShowCoachMarkInScheduleList
+            val showCoachMark = schedules.any { it.dateCount >= 0 } && isShowCoachMark
             if (showCoachMark) {
                 appPreferenceRepository.updateCoachMarkScheduleList(false)
                 _showCoachMark.emit(Unit)

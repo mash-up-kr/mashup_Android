@@ -4,5 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppPreference(
-    val showCoachMarkInScheduleList: Boolean
-)
+    val isShowCoachMarkInScheduleList: Boolean
+) {
+    companion object {
+        fun getDefaultInstance() = AppPreference(
+            isShowCoachMarkInScheduleList = true
+        )
+    }
+}

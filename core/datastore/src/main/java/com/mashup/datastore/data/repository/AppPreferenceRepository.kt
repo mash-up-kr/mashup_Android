@@ -12,11 +12,11 @@ class AppPreferenceRepository @Inject constructor(
     fun getAppPreference() = appPreferenceDataSource.data
 
     suspend fun updateCoachMarkScheduleList(
-        showCoachMarkInScheduleList: Boolean
+        isShowCoachMarkInScheduleList: Boolean
     ) {
         appPreferenceDataSource.updateData { savedAppPreferences ->
             savedAppPreferences.copy(
-                showCoachMarkInScheduleList = showCoachMarkInScheduleList
+                isShowCoachMarkInScheduleList = isShowCoachMarkInScheduleList
             )
         }
     }

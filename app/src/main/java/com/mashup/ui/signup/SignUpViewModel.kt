@@ -85,7 +85,7 @@ class SignUpViewModel @Inject constructor(
                 name = name,
                 platform = Platform.getPlatform(platform),
                 generationNumbers = generationNumbers,
-                pushNotificationAgreed = true
+                pushNotificationAgreed = pushNotificationAgreed
             )
         }
         _signUpState.emit(SignUpState.Success)

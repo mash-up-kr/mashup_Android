@@ -3,9 +3,11 @@ package com.mashup.ui.setting
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -33,6 +35,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     modifier = Modifier.fillMaxSize(),
                     onLogout = this::showLogoutDialog,
                     onDeleteUser = this::moveToDeleteAccount,
+                    onToggleFcm = this::onToggleFcm,
                     onClickSNS = this::onClickSNS
                 )
             }
@@ -83,6 +86,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     private fun onClickSNS(link: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+    }
+
+    private fun onToggleFcm() {
+        // 서버 요청날리기
     }
 
     companion object {

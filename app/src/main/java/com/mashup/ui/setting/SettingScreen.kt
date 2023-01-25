@@ -19,6 +19,8 @@ fun SettingScreen(
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
+    onToggleFcm: () -> Unit,
+    switchState: Boolean,
     onClickSNS: (String) -> Unit
 ) {
     Column(
@@ -28,7 +30,9 @@ fun SettingScreen(
         SettingMenuList(
             modifier = Modifier.fillMaxWidth(),
             onLogout = onLogout,
-            onDeleteUser = onDeleteUser
+            onDeleteUser = onDeleteUser,
+            onToggleFcm = onToggleFcm,
+            switchState = switchState
         )
 
         SNSList(
@@ -48,6 +52,7 @@ fun SettingScreenPrev() {
                 modifier = Modifier.fillMaxSize(),
                 onLogout = {},
                 onDeleteUser = {},
+                onToggleFcm = {},
                 onClickSNS = {}
             )
         }

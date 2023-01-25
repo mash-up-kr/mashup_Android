@@ -1,6 +1,6 @@
 package com.mashup.constant
 
-const val EXTRA_MAIN_TYPE = "EXTRA_MAIN_TYPE"
+const val EXTRA_LOGIN_TYPE = "EXTRA_MAIN_TYPE"
 
 const val EXTRA_TITLE_KEY = "EXTRA_TITLE_KEY"
 const val EXTRA_URL_KEY = "EXTRA_URL_KEY"

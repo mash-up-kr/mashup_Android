@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
-import com.mashup.constant.EXTRA_MAIN_TYPE
+import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
@@ -147,7 +147,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             loginType: LoginType
         ) = Intent(context, MainActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
-            putExtra(EXTRA_MAIN_TYPE, loginType)
+            putExtra(EXTRA_LOGIN_TYPE, loginType)
         }
     }
 }

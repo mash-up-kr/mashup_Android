@@ -3,6 +3,9 @@ package com.mashup.util
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -14,6 +17,7 @@ import com.mashup.data.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.mashup.R
+import java.net.URL
 
 @AndroidEntryPoint
 class MashUpFirebaseMessagingService : FirebaseMessagingService() {
@@ -34,19 +38,31 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
 
         val title = message.notification?.title
         val body = message.notification?.body
+        val imageUrl = message.notification?.imageUrl
 
         if (title != null && body != null) {
             createNotificationChannel()
-            notifyPushMessage(title, body)
+            notifyPushMessage(title, body, imageUrl)
         }
     }
 
-    private fun notifyPushMessage(title: String, body: String) {
+    private fun notifyPushMessage(title: String, body: String, imageUrl: Uri?) {
         val notificationBuild = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(body)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        // 이미지가 전달된 경우
+        getBitmapFromUrl(imageUrl)?.let { bitmapImage ->
+            notificationBuild
+                .setLargeIcon(bitmapImage)
+                .setStyle(
+                    NotificationCompat.BigPictureStyle()
+                        .bigPicture(bitmapImage)
+                        .bigLargeIcon(null)
+                )
+        }
 
         NotificationManagerCompat.from(this)
             .notify(NOTIFICATION_ID++, notificationBuild.build())
@@ -62,6 +78,15 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
             )
 
             manager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun getBitmapFromUrl(imageUrl: Uri?): Bitmap? {
+        return try {
+            val url = URL(imageUrl?.toString())
+            BitmapFactory.decodeStream(url.openConnection().inputStream)
+        } catch (e: Exception) {
+            null
         }
     }
 

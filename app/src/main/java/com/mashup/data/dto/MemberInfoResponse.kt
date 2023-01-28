@@ -14,5 +14,7 @@ data class MemberInfoResponse(
     @field:Json(name = "name")
     val name: String,
     @field:Json(name = "platform")
-    val platform: String
+    val platform: String,
+    @field:Json(name = "pushNotificationAgreed")
+    val pushNotificationAgreed: Boolean
 )

@@ -10,16 +10,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.R
+import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.common.R as CR
 
 @Composable
 fun SettingMenuList(
+    userPreference: UserPreference,
+    onToggleFcm: () -> Unit,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Column(modifier = modifier) {
+        FcmToggleSettingItem(
+            title = stringResource(id = R.string.mash_up_alarm_title),
+            titleColorRes = CR.color.black,
+            description = stringResource(id = R.string.mash_up_alarm_description),
+            descriptionRes = CR.color.gray500,
+            onClickItem = onToggleFcm,
+            switch = userPreference.pushNotificationAgreed
+        )
         BasicSettingItem(
             text = stringResource(id = R.string.logout),
             textColorRes = CR.color.gray800,
@@ -34,7 +46,6 @@ fun SettingMenuList(
 }
 
 @Preview(name = "DarkMode", uiMode = UI_MODE_NIGHT_YES)
-@Preview
 @Composable
 fun SettingMenuListPrev() {
     MashUpTheme {
@@ -42,7 +53,9 @@ fun SettingMenuListPrev() {
             SettingMenuList(
                 modifier = Modifier.fillMaxWidth(),
                 onLogout = {},
-                onDeleteUser = {}
+                onDeleteUser = {},
+                onToggleFcm = {},
+                userPreference = UserPreference.getDefaultInstance()
             )
         }
     }

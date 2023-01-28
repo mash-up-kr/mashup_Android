@@ -4,11 +4,13 @@ import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle2
 import com.mashup.core.common.R as CR
 
@@ -92,6 +95,60 @@ fun RightArrowSettingItem(
     }
 }
 
+@Composable
+fun FcmToggleSettingItem(
+    title: String,
+    @ColorRes titleColorRes: Int,
+    description: String,
+    @ColorRes descriptionRes: Int,
+    onClickItem: () -> Unit,
+    switch: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .clickable(onClick = onClickItem)
+    ) {
+        Column(
+            modifier = Modifier.padding(vertical = 18.dp)
+        ) {
+            Row(
+                modifier = Modifier.padding(end = 20.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .padding(bottom = 6.5.dp)
+                        .weight(1f),
+                    color = colorResource(id = titleColorRes),
+                    style = SubTitle2,
+                    text = title
+                )
+                /**
+                 * switchState 동기화 요망
+                 */
+                Switch(checked = switch, onCheckedChange = null)
+            }
+            Text(
+                modifier = Modifier
+                    .padding(start = 20.dp),
+                text = description,
+                color = colorResource(id = descriptionRes),
+                style = Body4
+            )
+
+        }
+        Divider(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .align(Alignment.BottomCenter),
+            color = Gray100
+        )
+    }
+}
+
 @Preview
 @Composable
 fun BasicSettingItemPrev() {
@@ -117,5 +174,23 @@ fun ArrowSettingItemPrev() {
                 onClickItem = { }
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun FcmToggleSettingItemPrev() {
+    MashUpTheme {
+        Surface(color = MaterialTheme.colors.onBackground) {
+            FcmToggleSettingItem(
+                title = "매시업 소식 알림",
+                titleColorRes = CR.color.black,
+                description = "출석 시간과 세미나 일정, 그리고 활동점수 \n 업데이트 소식을 받을 수 있어요",
+                descriptionRes = CR.color.gray500,
+                onClickItem = { },
+                switch = true
+            )
+        }
+
     }
 }

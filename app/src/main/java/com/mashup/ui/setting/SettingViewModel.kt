@@ -11,6 +11,8 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
+    val userPreference = userPreferenceRepository.getUserPreference()
+
     private val _onSuccessLogout = MutableSharedFlow<Unit>()
     val onSuccessLogout: SharedFlow<Unit> = _onSuccessLogout
 

@@ -6,6 +6,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SignUpRequest(
+    @field:Json(name = "fcmToken")
+    val fcmToken: String,
     @field:Json(name = "identification")
     val identification: String,
     @field:Json(name = "inviteCode")
@@ -17,5 +19,7 @@ data class SignUpRequest(
     @field:Json(name = "platform")
     val platform: Platform,
     @field:Json(name = "privatePolicyAgreed")
-    val privatePolicyAgreed: Boolean
+    val privatePolicyAgreed: Boolean,
+    @field:Json(name = "osType")
+    val osType: String = "ANDROID"
 )

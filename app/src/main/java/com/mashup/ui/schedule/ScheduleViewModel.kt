@@ -1,25 +1,25 @@
 package com.mashup.ui.schedule
 
 import com.mashup.base.BaseViewModel
-import com.mashup.data.datastore.AttendanceDataSource
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
 import com.mashup.data.repository.AttendanceRepository
 import com.mashup.data.repository.ScheduleRepository
-import com.mashup.data.repository.UserRepository
-import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.datastore.data.repository.AppPreferenceRepository
+import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.schedule.model.ScheduleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val attendanceDataSource: AttendanceDataSource,
+    private val userPreferenceRepository: UserPreferenceRepository,
+    private val appPreferenceRepository: AppPreferenceRepository,
     private val scheduleRepository: ScheduleRepository,
     private val attendanceRepository: AttendanceRepository
 ) : BaseViewModel() {
@@ -36,11 +36,8 @@ class ScheduleViewModel @Inject constructor(
     fun getScheduleList() {
         mashUpScope {
             _scheduleState.emit(ScheduleState.Loading)
-            val generateNumber = userRepository.getUserGenerationNumbers()?.lastOrNull()
-            if (generateNumber == null) {
-                handleErrorCode(UNAUTHORIZED)
-                return@mashUpScope
-            }
+            val generateNumber =
+                userPreferenceRepository.getUserPreference().first().generationNumbers.last()
 
             val response = scheduleRepository.getScheduleList(generateNumber)
 
@@ -118,10 +115,11 @@ class ScheduleViewModel @Inject constructor(
 
     private fun showCoachMark(schedules: List<ScheduleResponse>) {
         mashUpScope {
-            val showCoachMark = schedules.any { it.dateCount >= 0 } &&
-                !attendanceDataSource.coachMark
+            val isShowCoachMark =
+                appPreferenceRepository.getAppPreference().first().isShowCoachMarkInScheduleList
+            val showCoachMark = schedules.any { it.dateCount >= 0 } && isShowCoachMark
             if (showCoachMark) {
-                attendanceDataSource.coachMark = true
+                appPreferenceRepository.updateCoachMarkScheduleList(false)
                 _showCoachMark.emit(Unit)
             }
         }

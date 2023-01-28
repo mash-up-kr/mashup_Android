@@ -7,8 +7,8 @@ import android.os.Parcelable
 import android.text.InputFilter
 import android.text.InputType.TYPE_CLASS_TEXT
 import android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-import android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+import android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -76,6 +76,7 @@ class TextFieldView @JvmOverloads constructor(
 
     private fun initViews() {
         initEditText()
+        setInputType(TextFieldInputType.TEXT)
     }
 
     fun setText(text: String) {
@@ -165,15 +166,17 @@ class TextFieldView @JvmOverloads constructor(
     fun setInputType(inputType: TextFieldInputType) {
         viewBinding.etText.inputType = when (inputType) {
             TextFieldInputType.PASSWORD -> {
-                TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD or TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
             }
             TextFieldInputType.TEXT_CAP_CHARACTERS -> {
-                viewBinding.etText.privateImeOptions = "defaultInputmode=english"
-                viewBinding.etText.filters += arrayOf<InputFilter>(InputFilter.AllCaps())
-                TYPE_TEXT_FLAG_CAP_CHARACTERS or TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                with(viewBinding.etText) {
+                    privateImeOptions = "defaultInputmode=english"
+                    filters += arrayOf<InputFilter>(InputFilter.AllCaps())
+                }
+                TYPE_TEXT_FLAG_CAP_CHARACTERS
             }
             else -> {
-                TYPE_CLASS_TEXT or TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             }
         }
     }

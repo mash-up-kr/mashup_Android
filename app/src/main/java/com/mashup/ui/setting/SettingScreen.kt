@@ -21,7 +21,7 @@ fun SettingScreen(
     userPreference: UserPreference,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
-    onToggleFcm: () -> Unit,
+    onToggleFcm: (Boolean) -> Unit,
     onClickSNS: (String) -> Unit
 ) {
     Column(

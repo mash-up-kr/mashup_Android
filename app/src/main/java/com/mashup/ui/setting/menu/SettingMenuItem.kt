@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Switch
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,12 +19,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle2
+import com.mashup.ui.widget.MashUpSwitch
 import com.mashup.core.common.R as CR
 
 @Composable
@@ -101,13 +103,17 @@ fun FcmToggleSettingItem(
     @ColorRes titleColorRes: Int,
     description: String,
     @ColorRes descriptionRes: Int,
-    onClickItem: () -> Unit,
-    switch: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    checked: Boolean,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .clickable(onClick = onClickItem)
+            .toggleable(
+                value = checked,
+                onValueChange = onCheckedChange,
+                role = Role.Switch
+            )
     ) {
         Column(
             modifier = Modifier.padding(vertical = 18.dp)
@@ -125,10 +131,12 @@ fun FcmToggleSettingItem(
                     style = SubTitle2,
                     text = title
                 )
-                /**
-                 * switchState 동기화 요망
-                 */
-                Switch(checked = switch, onCheckedChange = null)
+
+                MashUpSwitch(
+                    checked = checked,
+                    onCheckedChange = {},
+                    enabled = false
+                )
             }
             Text(
                 modifier = Modifier
@@ -187,8 +195,8 @@ fun FcmToggleSettingItemPrev() {
                 titleColorRes = CR.color.black,
                 description = "출석 시간과 세미나 일정, 그리고 활동점수 \n 업데이트 소식을 받을 수 있어요",
                 descriptionRes = CR.color.gray500,
-                onClickItem = { },
-                switch = true
+                onCheckedChange = { },
+                checked = true
             )
         }
 

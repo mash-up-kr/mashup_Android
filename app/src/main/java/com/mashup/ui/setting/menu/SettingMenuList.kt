@@ -17,7 +17,7 @@ import com.mashup.core.common.R as CR
 @Composable
 fun SettingMenuList(
     userPreference: UserPreference,
-    onToggleFcm: () -> Unit,
+    onToggleFcm: (Boolean) -> Unit,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
     modifier: Modifier = Modifier
@@ -29,8 +29,8 @@ fun SettingMenuList(
             titleColorRes = CR.color.black,
             description = stringResource(id = R.string.mash_up_alarm_description),
             descriptionRes = CR.color.gray500,
-            onClickItem = onToggleFcm,
-            switch = userPreference.pushNotificationAgreed
+            onCheckedChange = onToggleFcm,
+            checked = userPreference.pushNotificationAgreed
         )
         BasicSettingItem(
             text = stringResource(id = R.string.logout),

@@ -120,7 +120,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
     }
 
-    private fun onToggleFcm() {
+    private fun onToggleFcm(isChecked: Boolean) {
         // 서버 요청날리기
     }
 

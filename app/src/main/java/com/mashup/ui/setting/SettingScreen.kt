@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.ui.setting.menu.SettingMenuList
 import com.mashup.ui.setting.sns.SNSList
@@ -17,8 +18,10 @@ import com.mashup.ui.setting.sns.SNSList
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
+    userPreference: UserPreference,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
+    onToggleFcm: () -> Unit,
     onClickSNS: (String) -> Unit
 ) {
     Column(
@@ -28,7 +31,9 @@ fun SettingScreen(
         SettingMenuList(
             modifier = Modifier.fillMaxWidth(),
             onLogout = onLogout,
-            onDeleteUser = onDeleteUser
+            onDeleteUser = onDeleteUser,
+            onToggleFcm = onToggleFcm,
+            userPreference = userPreference
         )
 
         SNSList(
@@ -48,7 +53,9 @@ fun SettingScreenPrev() {
                 modifier = Modifier.fillMaxSize(),
                 onLogout = {},
                 onDeleteUser = {},
-                onClickSNS = {}
+                onToggleFcm = {},
+                onClickSNS = {},
+                userPreference = UserPreference.getDefaultInstance()
             )
         }
     }

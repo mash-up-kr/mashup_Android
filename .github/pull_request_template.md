@@ -7,9 +7,4 @@
 |input your previous image|input your current image|
 
 
-- [ ] Optimize import 실행
-- [ ] Code Clean 실행
-- [ ] gradlew spotlessCheck, gradlew spotlessApply
-
-
 close #<issue_number> 🦕

@@ -3,21 +3,21 @@ package com.mashup.ui.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mashup.base.BaseViewModel
-import com.mashup.core.model.Platform
 import com.mashup.data.dto.ScoreHistoryResponse
-import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.MyPageRepository
+import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val memberRepository: MemberRepository,
+    private val userPreferenceRepository: UserPreferenceRepository,
     private val myPageRepository: MyPageRepository
 ) : BaseViewModel() {
 
@@ -32,19 +32,15 @@ class MyPageViewModel @Inject constructor(
     }
 
     fun getMember() = mashUpScope {
-        val response = memberRepository.getMember()
-        if (response.isSuccess()) {
-            getScore(
-                Profile(
-                    platform = Platform.getPlatform(response.data?.platform),
-                    name = response.data?.name.toString(),
-                    score = 0.0,
-                    generationNumber = response.data?.generationNumbers?.lastOrNull() ?: 0
-                )
+        val userPreference = userPreferenceRepository.getUserPreference().first()
+        getScore(
+            Profile(
+                platform = userPreference.platform,
+                name = userPreference.name,
+                score = 0.0,
+                generationNumber = userPreference.generationNumbers.last()
             )
-        } else {
-            handleErrorCode(response.code)
-        }
+        )
     }
 
     private fun getScore(profile: Profile) = mashUpScope {

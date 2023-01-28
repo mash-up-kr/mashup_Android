@@ -5,7 +5,7 @@ import com.mashup.core.common.model.Validation
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.FirebaseRepository
 import com.mashup.data.repository.MemberRepository
-import com.mashup.data.repository.UserRepository
+import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.signup.state.CodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,8 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val userRepository: UserRepository,
-    private val firebaseRepository: FirebaseRepository
+    private val firebaseRepository: FirebaseRepository,
+    private val userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
@@ -79,11 +79,15 @@ class SignUpViewModel @Inject constructor(
             return@mashUpScope
         }
 
-        userRepository.setUserData(
-            token = response.data?.token,
-            memberId = response.data?.memberId,
-            generationNumbers = response.data?.generationNumbers
-        )
+        response.data?.run {
+            userPreferenceRepository.updateUserPreference(
+                token = token,
+                name = name,
+                platform = Platform.getPlatform(platform),
+                generationNumbers = generationNumbers,
+                pushNotificationAgreed = pushNotificationAgreed
+            )
+        }
         _signUpState.emit(SignUpState.Success)
     }
 

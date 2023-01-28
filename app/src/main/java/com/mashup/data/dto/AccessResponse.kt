@@ -14,5 +14,7 @@ class AccessResponse(
     @field:Json(name = "platform")
     val platform: String,
     @field:Json(name = "token")
-    val token: String
+    val token: String,
+    @field:Json(name = "pushNotificationAgreed")
+    val pushNotificationAgreed: Boolean
 )

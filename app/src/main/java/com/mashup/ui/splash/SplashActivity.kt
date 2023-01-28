@@ -7,12 +7,14 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
-import com.mashup.data.repository.UserRepository
 import com.mashup.databinding.ActivitySplashBinding
+import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.login.LoginActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -23,7 +25,7 @@ import javax.inject.Inject
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     @Inject
-    lateinit var userRepository: UserRepository
+    lateinit var userPreferenceRepository: UserPreferenceRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +45,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private fun initAnalyticsManager() {
         AnalyticsManager.init(this)
-        AnalyticsManager.setUserId(
-            userId = userRepository.getUserMemberId(),
-        )
-        AnalyticsManager.setUserToken(
-            userToken = userRepository.getUserToken()
-        )
+        lifecycleScope.launch {
+            AnalyticsManager.setUserToken(
+                userToken = userPreferenceRepository.getUserPreference().first().token
+            )
+        }
     }
 
     override val layoutId: Int = R.layout.activity_splash

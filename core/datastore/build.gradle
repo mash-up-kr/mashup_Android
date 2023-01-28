@@ -2,10 +2,11 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlinx-serialization'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
+    namespace 'com.mashup.datastore'
     compileSdk compileVersion
 
     defaultConfig {
@@ -22,5 +23,12 @@ android {
 }
 
 dependencies {
+    implementation project(':core:model')
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerialization")
 }

@@ -8,6 +8,7 @@ ext {
 
     // kotlin
     kotlinVersion = "1.6.10"
+    kotlinSerialization = "1.4.1"
 
     // compose
     composeVersion = '1.1.1'

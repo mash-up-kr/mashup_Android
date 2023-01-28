@@ -7,10 +7,12 @@ import com.mashup.data.dto.MemberInfoResponse
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
 import com.mashup.data.dto.ValidResponse
+import com.mashup.data.dto.PushNotificationRequest
 import com.mashup.network.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -46,4 +48,9 @@ interface MemberDao {
 
     @DELETE("/api/v1/members")
     suspend fun deleteMember(): Response<Any>
+
+    @PATCH("/api/v1/members/push-notification")
+    suspend fun patchPushNotification(
+        @Body pushNotificationRequest: PushNotificationRequest
+    ): Response<Boolean>
 }

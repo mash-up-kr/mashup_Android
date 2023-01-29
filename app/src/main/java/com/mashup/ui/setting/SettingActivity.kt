@@ -121,7 +121,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     }
 
     private fun onToggleFcm(isChecked: Boolean) {
-        // 서버 요청날리기
+        viewModel.patchPushNotification(isChecked)
     }
 
     companion object {

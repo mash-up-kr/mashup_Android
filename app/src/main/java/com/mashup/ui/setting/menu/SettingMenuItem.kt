@@ -134,8 +134,7 @@ fun FcmToggleSettingItem(
 
                 MashUpSwitch(
                     checked = checked,
-                    onCheckedChange = {},
-                    enabled = false
+                    onCheckedChange = onCheckedChange,
                 )
             }
             Text(

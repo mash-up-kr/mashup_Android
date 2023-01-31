@@ -1,4 +1,4 @@
-package com.mashup.ui.widget
+package com.mashup.core.ui.widget
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState

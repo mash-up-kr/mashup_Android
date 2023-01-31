@@ -96,6 +96,7 @@ dependencies {
     implementation project(":core:testing")
     implementation project(":core:common")
     implementation project(":core:datastore")
+    implementation project(":feature:setting")
 
     // ml Kit
     implementation "com.google.mlkit:barcode-scanning:$barcodeSacnnerVersion"

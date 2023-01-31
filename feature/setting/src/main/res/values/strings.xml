@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="tistory">Tistory</string>
+    <string name="youtube">Youtube</string>
+    <string name="mHome">Mash-Up Home</string>
+    <string name="mRecruit">Mash-Up Recruit</string>
+    <string name="logout">로그아웃</string>
+    <string name="delete_account">회원탈퇴</string>
+    <string name="mash_up_alarm_title">매시업 소식 알림</string>
+    <string name="mash_up_alarm_description">출석 시간과 세미나 일정, 그리고 활동 점수\n업데이트 소식을 받을 수 있어요</string>
+</resources>

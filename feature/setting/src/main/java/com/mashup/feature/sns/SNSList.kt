@@ -1,4 +1,4 @@
-package com.mashup.ui.setting.sns
+package com.mashup.feature.sns
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -11,19 +11,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.R
-import com.mashup.URL
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.ui.model.SNSModel
+import com.mashup.feature.R
+import com.mashup.feature.constant.FACEBOOK
+import com.mashup.feature.constant.INSTAGRAM
+import com.mashup.feature.constant.MASHUP_UP_HOME
+import com.mashup.feature.constant.MASHUP_UP_RECRUIT
+import com.mashup.feature.constant.TISTORY
+import com.mashup.feature.constant.YOUTUBE
+import com.mashup.feature.model.SNSModel
 import com.mashup.core.common.R as CR
 
 val snsList = listOf(
-    SNSModel(R.string.facebook, CR.drawable.ic_facebook, URL.FACEBOOK),
-    SNSModel(R.string.instagram, CR.drawable.img_instagram, URL.INSTAGRAM),
-    SNSModel(R.string.tistory, CR.drawable.ic_tistory, URL.TISTORY),
-    SNSModel(R.string.youtube, CR.drawable.ic_youtube, URL.YOUTUBE),
-    SNSModel(R.string.mHome, CR.drawable.ic_mashup, URL.MASHUP_UP_HOME),
-    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, URL.MASHUP_UP_RECRUIT),
+    SNSModel(R.string.facebook, CR.drawable.ic_facebook, FACEBOOK),
+    SNSModel(R.string.instagram, CR.drawable.img_instagram, INSTAGRAM),
+    SNSModel(R.string.tistory, CR.drawable.ic_tistory, TISTORY),
+    SNSModel(R.string.youtube, CR.drawable.ic_youtube, YOUTUBE),
+    SNSModel(R.string.mHome, CR.drawable.ic_mashup, MASHUP_UP_HOME),
+    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, MASHUP_UP_RECRUIT),
 )
 
 @Composable

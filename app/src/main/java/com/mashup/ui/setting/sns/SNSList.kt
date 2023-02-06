@@ -23,7 +23,7 @@ val snsList = listOf(
     SNSModel(R.string.tistory, CR.drawable.ic_tistory, URL.TISTORY),
     SNSModel(R.string.youtube, CR.drawable.ic_youtube, URL.YOUTUBE),
     SNSModel(R.string.mHome, CR.drawable.ic_mashup, URL.MASHUP_UP_HOME),
-    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, URL.MASHUP_UP_RECRUIT),
+    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, URL.MASHUP_UP_RECRUIT)
 )
 
 @Composable

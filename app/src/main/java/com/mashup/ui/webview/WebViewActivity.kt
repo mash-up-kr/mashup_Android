@@ -80,7 +80,7 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
                         }
                     }
                 }
-            },
+            }
         )
 
         BackHandler(enabled = true) {

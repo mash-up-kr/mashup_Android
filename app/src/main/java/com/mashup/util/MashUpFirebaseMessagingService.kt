@@ -13,8 +13,8 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mashup.BuildConfig
-import dagger.hilt.android.AndroidEntryPoint
 import com.mashup.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.net.URL
 
 @AndroidEntryPoint

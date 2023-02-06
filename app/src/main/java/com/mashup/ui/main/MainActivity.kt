@@ -16,8 +16,8 @@ import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.databinding.ActivityMainBinding
-import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
 import dagger.hilt.android.AndroidEntryPoint

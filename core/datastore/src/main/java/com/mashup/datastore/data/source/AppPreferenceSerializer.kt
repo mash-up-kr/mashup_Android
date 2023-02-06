@@ -17,7 +17,8 @@ class AppPreferenceSerializer : Serializer<AppPreference> {
     override suspend fun readFrom(input: InputStream): AppPreference =
         try {
             Json.decodeFromString(
-                AppPreference.serializer(), input.readBytes().decodeToString()
+                AppPreference.serializer(),
+                input.readBytes().decodeToString()
             )
         } catch (serialization: SerializationException) {
             throw CorruptionException("Unable to read UserPreference", serialization)

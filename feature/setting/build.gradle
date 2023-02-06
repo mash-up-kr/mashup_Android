@@ -10,6 +10,7 @@ android {
     defaultConfig {
         minSdk minVersion
         targetSdk targetVersion
+        testInstrumentationRunner "com.mashup.core.testing.MashUpTestRunner"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -31,5 +32,5 @@ dependencies {
     implementation project(":core:common")
     implementation project(':core:ui')
     implementation project(":core:model")
-    implementation project(':core:testing')
+    debugImplementation project(':core:testing')
 }

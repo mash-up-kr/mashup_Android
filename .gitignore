@@ -51,6 +51,9 @@ out/
 .gradle/
 build/
 
+# idea files
+.idea/
+
 # Signing files
 .signing/
 

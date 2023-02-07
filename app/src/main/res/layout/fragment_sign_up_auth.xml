@@ -74,7 +74,7 @@
 
                 <com.mashup.core.common.widget.TextFieldView
                     android:id="@+id/text_field_pwd"
-                    text_field_description='@{"영문, 숫자를 조합하여 8자 이상으로 입력해주세요."}'
+                    text_field_description='@{"영문, 숫자, 특수문자를 조합하여 8자 이상으로 입력해주세요."}'
                     text_field_hint='@{"비밀번호"}'
                     text_field_input_type="@{TextFieldInputType.PASSWORD}"
                     android:layout_width="0dp"

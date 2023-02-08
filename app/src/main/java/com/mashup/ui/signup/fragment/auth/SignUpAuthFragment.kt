@@ -132,13 +132,14 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
     }
 
     private fun setUiOfIdState(idState: SignUpIdState) = with(viewBinding) {
+        val idDescription = requireContext().getString(R.string.desc_sign_up_id)
         when (idState) {
             SignUpIdState.Empty -> {
-                textFieldId.setDescriptionText("영문 대소문자를 조합하여 5자에서 15자 이내로 입력해주세요.")
+                textFieldId.setDescriptionText(idDescription)
                 textFieldId.setEmptyUIOfTextField()
             }
             is SignUpIdState.Success -> {
-                textFieldId.setDescriptionText("영문 대소문자를 조합하여 5자에서 15자 이내로 입력해주세요.")
+                textFieldId.setDescriptionText(idDescription)
                 textFieldId.setSuccessUiOfTextField()
             }
             is SignUpIdState.Error -> {
@@ -147,7 +148,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                         "이미 사용 중인 아이디예요."
                     }
                     else -> {
-                        "영문 대소문자를 조합하여 5자에서 15자 이내로 입력해주세요."
+                        idDescription
                     }
                 }
                 textFieldId.setDescriptionText(errorMessage)

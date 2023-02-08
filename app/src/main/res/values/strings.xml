@@ -58,6 +58,8 @@
 	<string name="title_content_empty_schedule">등록된 일정이 없어요</string>
 	<string name="coach_mark">매시업 크루들의 출석현황이 궁금하다면?</string>
 
+	<string name="desc_sign_up_id">영문과 숫자를 조합하여 5자에서 15자 이내로 입력해주세요.</string>
+
 	<string name="mash_up_alarm_title">매시업 소식 알림</string>
 	<string name="mash_up_alarm_description">출석 시간과 세미나 일정, 그리고 활동 점수\n업데이트 소식을 받을 수 있어요</string>
 </resources>

@@ -2,7 +2,9 @@ package com.mashup.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -15,6 +17,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.mashup.BuildConfig
 import dagger.hilt.android.AndroidEntryPoint
 import com.mashup.R
+import com.mashup.ui.splash.SplashActivity
 import java.net.URL
 
 @AndroidEntryPoint
@@ -42,11 +45,24 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun notifyPushMessage(title: String, body: String, imageUrl: Uri?) {
+        val splashIntent = Intent(this, SplashActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            0,
+            splashIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notificationBuild = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(body)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
 
         // 이미지가 전달된 경우
         getBitmapFromUrl(imageUrl)?.let { bitmapImage ->

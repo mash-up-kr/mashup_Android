@@ -14,8 +14,6 @@ data class ScoreDetails(
     val scheduleName: String,
     @Json(name = "scoreType")
     val scoreType: String,
-    @Json(name = "isCancelled")
-    val isCancelled: Boolean,
     @Json(name = "scoreName")
     val scoreName: String,
     @Json(name = "score")

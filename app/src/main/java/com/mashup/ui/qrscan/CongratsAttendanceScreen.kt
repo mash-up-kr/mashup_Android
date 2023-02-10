@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.common.R
+import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.theme.MashUpTheme
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -30,6 +32,7 @@ fun CongratsAttendanceScreen(
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
+                .background(color = Black.copy(alpha = 0.8f))
         ) {
             CongratsImage(
                 modifier = Modifier.align(Alignment.Center)

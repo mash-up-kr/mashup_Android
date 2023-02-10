@@ -2,6 +2,7 @@ package com.mashup.ui.schedule
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -63,6 +64,11 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                 }
             }
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getScheduleList()
     }
 
     override fun initViews() {
@@ -194,11 +200,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                     gone()
                 }
             })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getScheduleList()
     }
 
     private fun showRefreshSpinner() {

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
@@ -20,6 +21,7 @@ import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.visible
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
+import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import com.mashup.ui.schedule.detail.ScheduleDetailActivity
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.debounce
 class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
 
     private val viewModel: ScheduleViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override val layoutId: Int = R.layout.fragment_schedule
 
@@ -157,6 +160,12 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                 .collectLatest {
                     showCoachMark()
                 }
+        }
+
+        flowViewLifecycleScope {
+            mainViewModel.successAttendance.collectLatest {
+                viewModel.getScheduleList()
+            }
         }
     }
 

@@ -37,7 +37,7 @@ class MainViewModel @Inject constructor(
 
     fun successAttendance() = mashUpScope {
         _isShowCongratsAttendanceScreen.value = true
-        delay(1000L)
+        delay(2000L)
         _isShowCongratsAttendanceScreen.value = false
     }
 

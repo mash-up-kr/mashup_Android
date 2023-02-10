@@ -13,7 +13,6 @@ data class AttendanceModel(
     val profile: Profile? = null,
     val generationNum: Int? = null,
     val activityHistory: ActivityHistory? = null,
-    val isCancelled: Boolean = false
 ) {
     fun getGeneration() = "${generationNum}기"
 }

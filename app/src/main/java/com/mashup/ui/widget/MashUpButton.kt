@@ -11,7 +11,15 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +37,10 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.mashup.core.ui.colors.*
+import com.mashup.core.ui.colors.Brand300
+import com.mashup.core.ui.colors.Brand500
+import com.mashup.core.ui.colors.Gray100
+import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body1
 
@@ -46,7 +57,7 @@ fun MashUpButton(
     text: String,
     onClick: () -> Unit,
     isEnabled: Boolean = true,
-    showLoading: Boolean = false,
+    showLoading: Boolean = false
 ) {
     Box(
         modifier = modifier
@@ -58,18 +69,18 @@ fun MashUpButton(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
                 enabled = isEnabled,
-                onClick = onClick,
+                onClick = onClick
             ),
         contentAlignment = Alignment.Center
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AnimatedVisibility(
                 visible = showLoading,
                 enter = fadeIn(),
-                exit = fadeOut(),
+                exit = fadeOut()
             ) {
                 ButtonCircularProgressbar(
                     modifier = Modifier
@@ -94,7 +105,7 @@ fun ButtonCircularProgressbar(
     progressBarWidth: Dp = 3.dp,
     progressBarColor: Color = Color(0xFFFFFFFF),
     backgroundProgressBarColor: Color = Color(0x80FFFFFF),
-    progressDuration: Int = 500,
+    progressDuration: Int = 500
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val angle by infiniteTransition.animateFloat(
@@ -163,14 +174,14 @@ fun PrevMashUpButton() {
                 modifier = Modifier.padding(16.dp),
                 buttonStyle = ButtonStyle.PRIMARY,
                 text = "다음",
-                onClick = {},
+                onClick = {}
             )
 
             MashUpButton(
                 modifier = Modifier.padding(16.dp),
                 buttonStyle = ButtonStyle.DEFAULT,
                 text = "다음",
-                onClick = {},
+                onClick = {}
             )
 
             MashUpButton(

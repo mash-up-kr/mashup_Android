@@ -28,7 +28,7 @@ fun MashUpSwitch(
     modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit),
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     val trackBackgroundColor by animateColorAsState(
         targetValue = if (checked) Brand500 else Color(0xFFD9D9D9)
@@ -65,7 +65,7 @@ fun MashUpSwitch(
     ) {
         drawRoundRect(
             color = trackBackgroundColor,
-            cornerRadius = CornerRadius(x = 12.dp.toPx(), y = 12.dp.toPx()),
+            cornerRadius = CornerRadius(x = 12.dp.toPx(), y = 12.dp.toPx())
         )
 
         drawCircle(

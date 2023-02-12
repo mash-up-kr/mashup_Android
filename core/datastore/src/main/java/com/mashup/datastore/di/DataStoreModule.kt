@@ -27,7 +27,7 @@ class DataStoreModule {
     @Provides
     @Singleton
     fun providesUserPreferencesDataStore(
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): DataStore<UserPreference> {
         return DataStoreFactory.create(
             serializer = UserPreferenceSerializer()
@@ -39,7 +39,7 @@ class DataStoreModule {
     @Provides
     @Singleton
     fun providesAppPreferencesDataStore(
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): DataStore<AppPreference> {
         return DataStoreFactory.create(
             serializer = AppPreferenceSerializer()

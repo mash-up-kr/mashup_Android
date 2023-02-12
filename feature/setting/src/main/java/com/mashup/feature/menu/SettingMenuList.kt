@@ -22,7 +22,6 @@ fun SettingMenuList(
     onDeleteUser: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     Column(modifier = modifier) {
         FcmToggleSettingItem(
             title = stringResource(id = R.string.mash_up_alarm_title),

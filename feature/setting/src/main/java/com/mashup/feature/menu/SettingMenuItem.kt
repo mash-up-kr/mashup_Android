@@ -67,7 +67,7 @@ fun RightArrowSettingItem(
 ) {
     Box(
         modifier = modifier
-            .clickable(onClick = onClickItem),
+            .clickable(onClick = onClickItem)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -120,7 +120,7 @@ fun FcmToggleSettingItem(
         ) {
             Row(
                 modifier = Modifier.padding(end = 20.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     modifier = Modifier
@@ -134,7 +134,7 @@ fun FcmToggleSettingItem(
 
                 MashUpSwitch(
                     checked = checked,
-                    onCheckedChange = onCheckedChange,
+                    onCheckedChange = onCheckedChange
                 )
             }
             Text(
@@ -144,7 +144,6 @@ fun FcmToggleSettingItem(
                 color = colorResource(id = descriptionRes),
                 style = Body4
             )
-
         }
         Divider(
             modifier = modifier
@@ -198,6 +197,5 @@ fun FcmToggleSettingItemPrev() {
                 checked = true
             )
         }
-
     }
 }

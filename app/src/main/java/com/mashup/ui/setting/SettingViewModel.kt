@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
-    private val memberRepository: MemberRepository,
+    private val memberRepository: MemberRepository
 ) : BaseViewModel() {
     val userPreference = userPreferenceRepository.getUserPreference()
 

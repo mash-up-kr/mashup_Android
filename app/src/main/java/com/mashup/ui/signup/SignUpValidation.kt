@@ -4,7 +4,7 @@ import com.mashup.core.common.model.Validation
 
 fun validationId(id: String): Validation {
     if (id.isEmpty()) return Validation.EMPTY
-    return if ("[a-zA-Z]{5,15}".toRegex().matches(id)) {
+    return if ("[a-zA-Z0-9]{5,15}".toRegex().matches(id)) {
         Validation.SUCCESS
     } else {
         Validation.FAILED
@@ -14,7 +14,7 @@ fun validationId(id: String): Validation {
 fun validationPwd(pwd: String): Validation {
     if (pwd.isEmpty()) return Validation.EMPTY
     return if ("""
-  ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$
+        [A-Za-z\d@$!%^#*?&]{8,}$
         """.trimIndent().toRegex().matches(pwd)
     ) {
         Validation.SUCCESS

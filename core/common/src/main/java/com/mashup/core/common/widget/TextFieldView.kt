@@ -12,6 +12,7 @@ import android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -195,7 +196,13 @@ class TextFieldView @JvmOverloads constructor(
     }
 
     fun setFocus() {
-        viewBinding.etText.requestFocus()
+        with(viewBinding.etText) {
+            requestFocus()
+            isFocusableInTouchMode = true
+            val imm: InputMethodManager =
+                context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(this, 0)
+        }
     }
 
     fun clearTextFieldFocus() {

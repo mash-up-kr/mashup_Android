@@ -255,7 +255,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             onBindContent(data.scheduleResponse)
             onBindStandbyImage(data.attendanceInfo)
-            onBindButton(data.scheduleResponse)
+            onBindButton(data)
         }
 
         private fun onBindEmptyContent() {
@@ -299,8 +299,8 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 ).fromHtml()
         }
 
-        private fun onBindButton(scheduleResponse: ScheduleResponse) {
-            binding.btnAttendanceList.isVisible = scheduleResponse.dateCount > 0
+        private fun onBindButton(data: ScheduleCard.InProgressSchedule) {
+            binding.btnAttendanceList.isVisible = data.attendanceInfo != null
         }
     }
 }

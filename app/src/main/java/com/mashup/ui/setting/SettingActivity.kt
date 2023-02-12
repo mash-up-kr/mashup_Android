@@ -25,6 +25,7 @@ import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
+import com.mashup.feature.SettingScreen
 import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.withdrawl.WithdrawalActivity
 import com.mashup.util.AnalyticsManager

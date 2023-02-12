@@ -29,10 +29,6 @@ class ScheduleViewModel @Inject constructor(
     private val _showCoachMark = MutableSharedFlow<Unit>()
     val showCoachMark: SharedFlow<Unit> = _showCoachMark
 
-    init {
-        getScheduleList()
-    }
-
     fun getScheduleList() {
         mashUpScope {
             _scheduleState.emit(ScheduleState.Loading)

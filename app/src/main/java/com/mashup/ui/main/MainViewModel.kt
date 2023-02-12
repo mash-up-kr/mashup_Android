@@ -12,7 +12,9 @@ import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
@@ -26,6 +28,9 @@ class MainViewModel @Inject constructor(
     val isShowCongratsAttendanceScreen: State<Boolean>
         get() = _isShowCongratsAttendanceScreen
 
+    private val _successAttendance = MutableSharedFlow<Unit>()
+    val successAttendance: SharedFlow<Unit> = _successAttendance
+
     init {
         savedStateHandle.get<LoginType>(EXTRA_LOGIN_TYPE)?.run {
             handleLoginType(this)
@@ -37,7 +42,8 @@ class MainViewModel @Inject constructor(
 
     fun successAttendance() = mashUpScope {
         _isShowCongratsAttendanceScreen.value = true
-        delay(1000L)
+        _successAttendance.emit(Unit)
+        delay(2000L)
         _isShowCongratsAttendanceScreen.value = false
     }
 

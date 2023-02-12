@@ -1,4 +1,4 @@
-package com.mashup.ui.setting.menu
+package com.mashup.feature.menu
 
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
@@ -26,7 +26,7 @@ import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle2
-import com.mashup.ui.widget.MashUpSwitch
+import com.mashup.core.ui.widget.MashUpSwitch
 import com.mashup.core.common.R as CR
 
 @Composable

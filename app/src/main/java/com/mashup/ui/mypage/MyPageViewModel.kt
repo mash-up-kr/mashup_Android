@@ -84,7 +84,6 @@ class MyPageViewModel @Inject constructor(
                     id = attendanceItem.size,
                     myPageType = MyPageAdapterType.LIST_ITEM,
                     generationNum = it.generationNumber,
-                    isCancelled = score.isCancelled,
                     activityHistory = ActivityHistory(
                         scoreName = score.scoreName,
                         attendanceType = AttendanceType.getAttendanceType(score.scoreType),

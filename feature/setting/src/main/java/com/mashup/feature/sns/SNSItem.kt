@@ -1,4 +1,4 @@
-package com.mashup.ui.setting.sns
+package com.mashup.feature.sns
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -24,9 +24,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.core.ui.extenstions.shadow
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
-import com.mashup.extensions.shadow
 import com.mashup.core.common.R as CR
 
 @Composable

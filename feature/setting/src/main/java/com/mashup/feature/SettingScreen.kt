@@ -1,4 +1,4 @@
-package com.mashup.ui.setting
+package com.mashup.feature
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.ui.setting.menu.SettingMenuList
-import com.mashup.ui.setting.sns.SNSList
+import com.mashup.feature.menu.SettingMenuList
+import com.mashup.feature.sns.SNSList
 
 @Composable
 fun SettingScreen(

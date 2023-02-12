@@ -1,4 +1,4 @@
-package com.mashup.ui.widget
+package com.mashup.core.ui.widget
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -17,6 +17,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Brand500
@@ -48,6 +50,9 @@ fun MashUpSwitch(
 
     Canvas(
         modifier = modifier
+            .semantics {
+                contentDescription = "MashUpSwitch"
+            }
             .size(width = trackWidthDp, height = trackHeightDp)
             .toggleable(
                 value = checked,

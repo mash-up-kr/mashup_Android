@@ -1,10 +1,16 @@
-package com.mashup.ui.setting.sns
+package com.mashup.feature.sns
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,9 +24,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.core.ui.extenstions.shadow
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
-import com.mashup.extensions.shadow
 import com.mashup.core.common.R as CR
 
 @Composable

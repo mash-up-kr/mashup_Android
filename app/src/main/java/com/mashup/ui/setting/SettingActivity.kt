@@ -46,7 +46,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                 val userPreference by viewModel.userPreference.collectAsState(
                     initial = UserPreference.getDefaultInstance()
                 )
-                
+
                 SettingScreen(
                     modifier = Modifier.fillMaxSize(),
                     onLogout = this::onClickLogoutButton,

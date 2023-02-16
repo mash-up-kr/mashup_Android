@@ -3,7 +3,12 @@ package com.mashup.ui.qrscan
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -40,10 +45,29 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         PermissionHelper(this)
     }
 
+    override fun initWindowInset() {
+        // do nothing
+    }
+
     override fun initViews() {
+        window.statusBarColor = Color.TRANSPARENT
         AnalyticsManager.addEvent(LOG_QR)
+        initStatusBarMargin()
         initButtons()
         initCamera()
+    }
+
+
+    private fun initStatusBarMargin() {
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { _, insets ->
+            val systemInset = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+
+            val marginTop = viewBinding.btnClose.marginTop
+            (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
+                marginTop + (systemInset.top / 2)
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun initObserves() {

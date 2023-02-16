@@ -6,7 +6,8 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.view.ViewGroup
 import androidx.activity.viewModels
-import androidx.core.view.marginEnd
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
@@ -56,23 +57,17 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         initCamera()
     }
 
-    private fun getStatusBarHeightDP(context: Context): Int {
-        var result = 0
-        val resourceId: Int =
-            context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = context.resources.getDimension(resourceId).toInt()
-        }
-        return result
-    }
 
     private fun initStatusBarMargin() {
-        val marginTop = viewBinding.btnClose.marginTop
-        val marginEnd = viewBinding.btnClose.marginEnd
-        (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
-            marginTop + (getStatusBarHeightDP(this) / 2)
-        (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).marginEnd =
-            marginEnd + (getStatusBarHeightDP(this) / 2)
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { _, insets ->
+            val systemInset = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+
+            val marginTop = viewBinding.btnClose.marginTop
+            (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
+                marginTop + (systemInset.top / 2)
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun initObserves() {

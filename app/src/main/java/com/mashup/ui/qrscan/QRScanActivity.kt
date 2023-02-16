@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.core.view.marginEnd
+import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -48,8 +51,28 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     override fun initViews() {
         window.statusBarColor = Color.TRANSPARENT
         AnalyticsManager.addEvent(LOG_QR)
+        initStatusBarMargin()
         initButtons()
         initCamera()
+    }
+
+    private fun getStatusBarHeightDP(context: Context): Int {
+        var result = 0
+        val resourceId: Int =
+            context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimension(resourceId).toInt()
+        }
+        return result
+    }
+
+    private fun initStatusBarMargin() {
+        val marginTop = viewBinding.btnClose.marginTop
+        val marginEnd = viewBinding.btnClose.marginEnd
+        (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
+            marginTop + (getStatusBarHeightDP(this) / 2)
+        (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).marginEnd =
+            marginEnd + (getStatusBarHeightDP(this) / 2)
     }
 
     override fun initObserves() {

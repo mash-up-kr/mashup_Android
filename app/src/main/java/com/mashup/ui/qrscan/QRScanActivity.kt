@@ -3,6 +3,7 @@ package com.mashup.ui.qrscan
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.activity.viewModels
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
@@ -40,7 +41,12 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         PermissionHelper(this)
     }
 
+    override fun initWindowInset() {
+        // do nothing
+    }
+
     override fun initViews() {
+        window.statusBarColor = Color.TRANSPARENT
         AnalyticsManager.addEvent(LOG_QR)
         initButtons()
         initCamera()

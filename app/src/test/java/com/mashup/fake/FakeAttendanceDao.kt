@@ -9,7 +9,12 @@ class FakeAttendanceDao : AttendanceDao {
     var eventNum = 1
 
     override suspend fun postAttendanceCheck(attendanceCheckRequest: AttendanceCheckRequest): Response<AttendanceCheckResponse> {
-        TODO("Not yet implemented")
+        return Response(
+            code = "",
+            message = null,
+            page = null,
+            data = null
+        )
     }
 
     override suspend fun getAttendancePlatforms(scheduleId: Int): Response<TotalAttendanceResponse> {
@@ -28,10 +33,20 @@ class FakeAttendanceDao : AttendanceDao {
     override suspend fun getAttendancePlatformCrew(
         platformName: String, scheduleId: Int
     ): Response<PlatformAttendanceResponse> {
-        TODO("Not yet implemented")
+        return Response(
+            code = "",
+            message = null,
+            page = null,
+            data = null
+        )
     }
 
     override suspend fun getAttendanceInSchedule(scheduleId: Int): Response<AttendanceInfoResponse> {
-        TODO("Not yet implemented")
+        return Response(
+            code = "",
+            message = null,
+            page = null,
+            data = null
+        )
     }
 }

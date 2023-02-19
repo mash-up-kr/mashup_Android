@@ -67,7 +67,7 @@ class PlatformAttendanceViewModelTest {
     }
 
     @Test
-    fun `when isEnd is true & eventNum is 1, notice message is 중간 집계 중이에요`() {
+    fun `when isEnd is true & eventNum is 1, notice message is 1부 출석이 완료되었어요`() {
         // Given
         val fakeAttendanceDao = FakeAttendanceDao().also {
             it.isEnd = true
@@ -88,7 +88,7 @@ class PlatformAttendanceViewModelTest {
         coroutineRule.testDispatcher.scheduler.runCurrent()
 
         // Then
-        assertEquals(viewModel.notice.value, "중간 집계 중이에요")
+        assertEquals(viewModel.notice.value, "1부 출석이 완료되었어요.")
     }
 
     @Test

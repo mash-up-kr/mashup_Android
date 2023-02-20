@@ -11,7 +11,7 @@ data class ScoreDetails(
     @Json(name = "date")
     val date: Date,
     @Json(name = "scheduleName")
-    val scheduleName: String,
+    val scheduleName: String?,
     @Json(name = "scoreType")
     val scoreType: String,
     @Json(name = "scoreName")

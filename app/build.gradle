@@ -142,4 +142,7 @@ dependencies {
 
     // lifecycle viewmodel compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
+
+    // coroutine test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
 }

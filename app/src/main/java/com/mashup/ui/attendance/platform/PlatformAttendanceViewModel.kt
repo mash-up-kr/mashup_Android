@@ -40,11 +40,14 @@ class PlatformAttendanceViewModel @Inject constructor(
 
         response.data?.run {
             _notice.value = when {
-                eventNum == 1 && !isEnd -> {
+                eventNum == 0 -> {
+                    "아직 일정 시작 전이예요."
+                }
+                (eventNum == 1 || eventNum == 2) && !isEnd -> {
                     "출석체크가 실시간으로 진행되고 있어요"
                 }
-                (eventNum == 1 && isEnd) || (eventNum == 2 && !isEnd) -> {
-                    "중간 집계 중이이에요"
+                eventNum == 1 && isEnd -> {
+                    "1부 출석이 완료되었어요."
                 }
                 eventNum == 2 && isEnd -> {
                     "출석체크가 완료되었어요"

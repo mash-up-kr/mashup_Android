@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.first
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,6 +79,19 @@ class MyPageViewModel @Inject constructor(
                 id = attendanceItem.size,
                 myPageType = MyPageAdapterType.LIST_LEVEL,
                 generationNum = it.generationNumber
+            )
+            attendanceItem +=  AttendanceModel(
+                id = attendanceItem.size + 1,
+                myPageType = MyPageAdapterType.LIST_ITEM,
+                generationNum = it.generationNumber,
+                activityHistory = ActivityHistory(
+                    scoreName = "기본 출석",
+                    attendanceType = AttendanceType.DEFAULT,
+                    cumulativeScore = 3.0,
+                    score = 3.0,
+                    detail = null,
+                    date = Date()
+                )
             )
             attendanceItem += it.scoreDetails.map { score ->
                 AttendanceModel(

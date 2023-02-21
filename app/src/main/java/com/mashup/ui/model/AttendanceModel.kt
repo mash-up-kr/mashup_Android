@@ -33,7 +33,7 @@ data class ActivityHistory(
         } catch (ignore: Exception) {
             "????-??-??"
         }
-        return "$dateFormat | $detail"
+        return "$dateFormat | ${detail ?: ""}"
     }
 
     fun getTotalScoreText(): String {

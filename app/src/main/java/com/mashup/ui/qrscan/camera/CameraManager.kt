@@ -1,9 +1,7 @@
 package com.mashup.ui.qrscan.camera
 
 import android.content.Context
-import android.util.DisplayMetrics
 import android.util.Log
-import android.util.Size
 import android.view.ScaleGestureDetector
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
@@ -31,7 +29,6 @@ class CameraManager<T>(
 
     lateinit var cameraExecutor: ExecutorService
     lateinit var imageCapture: ImageCapture
-    lateinit var metrics: DisplayMetrics
 
     companion object {
         private val TAG = CameraManager::class.java.name
@@ -108,11 +105,8 @@ class CameraManager<T>(
                     .requireLensFacing(CAMERA_SELECTOR_OPTION)
                     .build()
 
-                metrics = DisplayMetrics().also { finderView.display.getRealMetrics(it) }
-
                 imageCapture =
                     ImageCapture.Builder()
-                        .setTargetResolution(Size(metrics.widthPixels, metrics.heightPixels))
                         .build()
 
                 setUpPinchToZoom()

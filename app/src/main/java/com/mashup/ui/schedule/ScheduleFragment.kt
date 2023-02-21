@@ -163,7 +163,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
         }
 
         flowViewLifecycleScope {
-            mainViewModel.successAttendance.collectLatest {
+            mainViewModel.onAttendance.collectLatest {
                 viewModel.getScheduleList()
             }
         }

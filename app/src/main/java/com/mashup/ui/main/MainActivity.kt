@@ -38,8 +38,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val qrcodeLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == QRScanActivity.RESULT_CONFIRM_QR) {
-            viewModel.successAttendance()
+        when (result.resultCode) {
+            QRScanActivity.RESULT_CONFIRM_SUCCESS_QR -> {
+                viewModel.confirmAttendance()
+                viewModel.successAttendance()
+            }
+            QRScanActivity.RESULT_CONFIRM_QR -> {
+                viewModel.confirmAttendance()
+            }
         }
     }
 

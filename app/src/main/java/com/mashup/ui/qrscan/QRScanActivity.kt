@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
@@ -51,6 +52,8 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
 
     override fun initViews() {
         window.statusBarColor = Color.TRANSPARENT
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+
         AnalyticsManager.addEvent(LOG_QR)
         initStatusBarMargin()
         initButtons()

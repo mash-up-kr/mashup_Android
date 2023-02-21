@@ -79,7 +79,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                     }
                     QRCodeState.Success -> {
                         hideLoading()
-                        setResult(RESULT_CONFIRM_QR)
+                        setResult(RESULT_CONFIRM_SUCCESS_QR)
                         finish()
                     }
                     is QRCodeState.Error -> {
@@ -241,7 +241,8 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     companion object {
         private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
         private const val REQUEST_CODE_CAMERA = 200
-        const val RESULT_CONFIRM_QR = 202
+        const val RESULT_CONFIRM_QR = 201
+        const val RESULT_CONFIRM_SUCCESS_QR = 202
 
         fun newIntent(context: Context) = Intent(context, QRScanActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)

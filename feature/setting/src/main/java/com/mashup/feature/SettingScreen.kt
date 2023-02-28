@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.menu.SettingMenuList
 import com.mashup.feature.sns.SNSList
 
@@ -19,6 +20,7 @@ import com.mashup.feature.sns.SNSList
 fun SettingScreen(
     modifier: Modifier = Modifier,
     userPreference: UserPreference,
+    onClickBackButton: () -> Unit,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
     onToggleFcm: (Boolean) -> Unit,
@@ -28,6 +30,12 @@ fun SettingScreen(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        MashUpToolbar(
+            title = "설정",
+            showBackButton = true,
+            onClickBackButton = onClickBackButton
+        )
+
         SettingMenuList(
             modifier = Modifier.fillMaxWidth(),
             onLogout = onLogout,
@@ -55,7 +63,8 @@ fun SettingScreenPrev() {
                 onDeleteUser = {},
                 onToggleFcm = {},
                 onClickSNS = {},
-                userPreference = UserPreference.getDefaultInstance()
+                userPreference = UserPreference.getDefaultInstance(),
+                onClickBackButton = {}
             )
         }
     }

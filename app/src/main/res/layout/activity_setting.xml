@@ -15,14 +15,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.mashup.core.common.widget.ToolbarView
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:toolbar_back_button_visible="@{true}"
-                app:toolbar_title='@{"설정"}' />
-
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/settingScreen"
                 android:layout_width="match_parent"

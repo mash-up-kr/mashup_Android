@@ -2,15 +2,11 @@ package com.mashup.ui.webview
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.compose.BackHandler
-import androidx.compose.runtime.Composable
-import com.google.accompanist.web.AccompanistWebChromeClient
-import com.google.accompanist.web.AccompanistWebViewClient
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.WebViewNavigator
-import com.google.accompanist.web.WebViewState
-import com.google.accompanist.web.rememberWebViewNavigator
-import com.google.accompanist.web.rememberWebViewState
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -24,74 +20,31 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
 
-    private val title: String?
-        get() = intent.getStringExtra(EXTRA_TITLE_KEY)
-    private val webViewUrl: String?
-        get() = intent.getStringExtra(EXTRA_URL_KEY)
-
-    private val webViewClient = AccompanistWebViewClient()
-    private val webChromeClient = AccompanistWebChromeClient()
+    private val viewModel: WebViewViewModel by viewModels()
 
     override fun initViews() {
         super.initViews()
         setStatusBarColorRes(com.mashup.core.common.R.color.white)
         initWindowInset()
 
-        initToolbar()
-        initWebView()
+        initCompose()
     }
 
-    private fun initToolbar() {
-        viewBinding.toolbar.run {
-            title?.run { setTitle(this) }
-            setOnCloseButtonClickListener {
-                finish()
-            }
-        }
-    }
-
-    private fun initWebView() {
+    private fun initCompose() {
         viewBinding.webView.setContent {
-            val webViewState = rememberWebViewState(url = webViewUrl ?: "")
-            val webViewNavigator = rememberWebViewNavigator()
-            WebViewSetting(webViewState, webViewNavigator)
-        }
-    }
+            val webViewUiState by viewModel.webViewUiState.collectAsState(WebViewUiState.Loading)
 
-    @Composable
-    private fun WebViewSetting(webViewState: WebViewState, webViewNavigator: WebViewNavigator) {
-        WebView(
-            state = webViewState,
-            client = webViewClient,
-            chromeClient = webChromeClient,
-            navigator = webViewNavigator,
-            onCreated = { webView ->
-                with(webView) {
-                    settings.run {
-                        domStorageEnabled = true
-                        loadWithOverviewMode = true
-                        defaultTextEncodingName = "UTF-8"
-                    }
-                    setOnScrollChangeListener { view, _, _, _, _ ->
-                        if (view.canScrollVertically(-1)) {
-                            viewBinding.toolbar.showDivider()
-                        } else {
-                            viewBinding.toolbar.hideDivider()
-                        }
-                    }
+            WebViewScreen(
+                modifier = Modifier.fillMaxSize(),
+                webViewUiState = webViewUiState,
+                onBackPressed = { finish() },
+                isScrollTop = {
+                    viewModel.onWebViewScroll(it)
                 }
-            }
-        )
-
-        BackHandler(enabled = true) {
-            // 페이지가 단 한개라서... 뒤로가기 기능도 넣긴 했습니다 큰 기능이 없어서 언제나 뒤로가기 가능하게끔
-            if (webViewNavigator.canGoBack) {
-                finish()
-            } else {
-                finish()
-            }
+            )
         }
     }
+
 
     override val layoutId: Int
         get() = R.layout.activity_web_view

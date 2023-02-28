@@ -3,7 +3,10 @@ package com.mashup.ui.attendance.crew
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -24,27 +27,22 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
 
     override fun initViews() {
         super.initViews()
-
         setStatusBarColorRes(com.mashup.core.common.R.color.white)
-        initButton()
         initCompose()
-    }
-
-    private fun initButton() {
-        viewBinding.toolbar.setOnBackButtonClickListener {
-            finish()
-        }
     }
 
     private fun initCompose() {
         viewBinding.viewCompose.setContent {
             MashUpTheme {
-                val crewState = viewModel.crewAttendanceState.collectAsState(
+                val crewState by viewModel.crewAttendanceState.collectAsState(
                     CrewAttendanceState.Empty
                 )
-                CrewList(
-                    crewAttendanceList =
-                    (crewState.value as? CrewAttendanceState.Success)?.data?.members ?: emptyList()
+                CrewScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    crewAttendanceState = crewState,
+                    onClickBackButton = {
+                        finish()
+                    }
                 )
             }
         }
@@ -52,11 +50,6 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
 
     override fun initObserves() {
         super.initObserves()
-        viewModel.platformAttendance.observe(this) {
-            viewBinding.toolbar.setTitle(
-                "${it.platform.detailName}(${it.totalCount}명)"
-            )
-        }
         flowLifecycleScope {
             viewModel.crewAttendanceState.collectLatest { state ->
                 when (state) {
@@ -97,7 +90,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
             platformInfo: PlatformInfo,
             scheduleId: Int
         ) = Intent(context, CrewAttendanceActivity::class.java).apply {
-            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
             putExtra(EXTRA_PLATFORM_KEY, platformInfo)
             putExtra(EXTRA_SCHEDULE_ID, scheduleId)
         }

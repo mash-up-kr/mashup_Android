@@ -19,9 +19,6 @@ class PlatformAttendanceViewModel @Inject constructor(
     val scheduleId
         get() = savedStateHandle.get<Int>(EXTRA_SCHEDULE_ID)
 
-    private val _notice = mutableStateOf("")
-    val notice: State<String> = _notice
-
     private val _platformAttendanceState = mutableStateOf<PlatformAttendanceState>(
         PlatformAttendanceState.Empty
     )
@@ -39,26 +36,27 @@ class PlatformAttendanceViewModel @Inject constructor(
         }
 
         response.data?.run {
-            _notice.value = when {
-                eventNum == 0 -> {
-                    "아직 일정 시작 전이예요."
-                }
-                (eventNum == 1 || eventNum == 2) && !isEnd -> {
-                    "출석체크가 실시간으로 진행되고 있어요"
-                }
-                eventNum == 1 && isEnd -> {
-                    "1부 출석이 완료되었어요."
-                }
-                eventNum == 2 && isEnd -> {
-                    "출석체크가 완료되었어요"
-                }
-                else -> {
-                    "서버에서 이상한 일이 발생했어요 ㅜ"
-                }
-            }
-
             _platformAttendanceState.value =
-                PlatformAttendanceState.Success(response.data)
+                PlatformAttendanceState.Success(
+                    notice = when {
+                        eventNum == 0 -> {
+                            "아직 일정 시작 전이예요."
+                        }
+                        (eventNum == 1 || eventNum == 2) && !isEnd -> {
+                            "출석체크가 실시간으로 진행되고 있어요"
+                        }
+                        eventNum == 1 && isEnd -> {
+                            "1부 출석이 완료되었어요."
+                        }
+                        eventNum == 2 && isEnd -> {
+                            "출석체크가 완료되었어요"
+                        }
+                        else -> {
+                            "서버에서 이상한 일이 발생했어요 ㅜ"
+                        }
+                    },
+                    totalAttendance = response.data
+                )
         }
     }
 
@@ -72,6 +70,10 @@ class PlatformAttendanceViewModel @Inject constructor(
 sealed interface PlatformAttendanceState {
     object Empty : PlatformAttendanceState
     object Loading : PlatformAttendanceState
-    data class Success(val data: TotalAttendanceResponse) : PlatformAttendanceState
+    data class Success(
+        val notice: String,
+        val totalAttendance: TotalAttendanceResponse
+    ) : PlatformAttendanceState
+
     data class Error(val code: String) : PlatformAttendanceState
 }

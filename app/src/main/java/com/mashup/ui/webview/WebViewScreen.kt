@@ -64,12 +64,6 @@ private fun MashUpWebView(
     )
 
     BackHandler(enabled = true) {
-//        // 페이지가 단 한개라서... 뒤로가기 기능도 넣긴 했습니다 큰 기능이 없어서 언제나 뒤로가기 가능하게끔
-//        if (webViewNavigator.canGoBack) {
-//            onBackPressed()
-//        } else {
-//            onBackPressed()
-//        }
         onBackPressed()
     }
 }

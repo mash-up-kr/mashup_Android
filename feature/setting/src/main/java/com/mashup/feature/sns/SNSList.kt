@@ -1,5 +1,7 @@
 package com.mashup.feature.sns
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -7,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,25 +34,31 @@ val snsList = listOf(
     SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, MASHUP_UP_RECRUIT),
 )
 
+@ExperimentalFoundationApi
 @Composable
 fun SNSList(
     modifier: Modifier = Modifier,
     onClickSNS: (link: String) -> Unit
 ) {
-    LazyVerticalGrid(
-        modifier = modifier.padding(12.dp),
-        columns = GridCells.Fixed(2)
+    CompositionLocalProvider(
+        LocalOverscrollConfiguration provides null
     ) {
-        items(snsList) { item ->
-            SNSItem(
-                name = stringResource(id = item.name),
-                snsIconRes = item.iconRes,
-                onClickItem = { onClickSNS(item.link) }
-            )
+        LazyVerticalGrid(
+            modifier = modifier.padding(12.dp),
+            columns = GridCells.Fixed(2)
+        ) {
+            items(snsList) { item ->
+                SNSItem(
+                    name = stringResource(id = item.name),
+                    snsIconRes = item.iconRes,
+                    onClickItem = { onClickSNS(item.link) }
+                )
+            }
         }
     }
 }
 
+@ExperimentalFoundationApi
 @Preview("DarkMode", widthDp = 360)
 @Preview(widthDp = 360)
 @Composable

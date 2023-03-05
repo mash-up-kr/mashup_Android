@@ -1,6 +1,7 @@
 package com.mashup.feature
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.feature.menu.SettingMenuList
 import com.mashup.feature.sns.SNSList
 
+@ExperimentalFoundationApi
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
@@ -43,6 +45,7 @@ fun SettingScreen(
     }
 }
 
+@ExperimentalFoundationApi
 @Preview(name = "DarkMode", uiMode = UI_MODE_NIGHT_YES)
 @Preview
 @Composable

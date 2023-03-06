@@ -17,10 +17,9 @@ class CrewAttendanceViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    val platformAttendance
-        get() = savedStateHandle.getLiveData<PlatformInfo>(EXTRA_PLATFORM_KEY)
+    private val platformAttendance = savedStateHandle.get<PlatformInfo>(EXTRA_PLATFORM_KEY)
 
-    val scheduleId
+    private val scheduleId
         get() = savedStateHandle.get<Int>(EXTRA_SCHEDULE_ID)
 
     private val _crewAttendanceState =
@@ -32,9 +31,9 @@ class CrewAttendanceViewModel @Inject constructor(
         getCrewAttendanceList()
     }
 
-    fun getCrewAttendanceList() = mashUpScope {
+    private fun getCrewAttendanceList() = mashUpScope {
         _crewAttendanceState.emit(CrewAttendanceState.Loading)
-        val platformName = platformAttendance.value?.platform?.name?.uppercase()
+        val platformName = platformAttendance?.platform?.name?.uppercase()
         val scheduleId = scheduleId
         if (platformName == null || scheduleId == null) {
             handleErrorCode(BAD_REQUEST)
@@ -50,9 +49,12 @@ class CrewAttendanceViewModel @Inject constructor(
             return@mashUpScope
         }
 
-        response.data?.run {
+        if (platformAttendance != null && response.data != null) {
             _crewAttendanceState.emit(
-                CrewAttendanceState.Success(response.data)
+                CrewAttendanceState.Success(
+                    title = "${platformAttendance.platform.detailName}(${platformAttendance.totalCount}명)",
+                    crewAttendance = response.data
+                )
             )
         }
     }
@@ -72,6 +74,10 @@ class CrewAttendanceViewModel @Inject constructor(
 sealed interface CrewAttendanceState {
     object Empty : CrewAttendanceState
     object Loading : CrewAttendanceState
-    data class Success(val data: PlatformAttendanceResponse) : CrewAttendanceState
+    data class Success(
+        val title: String,
+        val crewAttendance: PlatformAttendanceResponse
+    ) : CrewAttendanceState
+
     data class Error(val code: String) : CrewAttendanceState
 }

@@ -3,6 +3,8 @@ package com.mashup.ui.attendance.platform
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -23,24 +25,18 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
     override fun initViews() {
         super.initViews()
         initCompose()
-        initButton()
     }
 
     private fun initCompose() {
         viewBinding.viewCompose.setContent {
             MashUpTheme {
-                when (val state = viewModel.platformAttendanceState.value) {
+                val state = viewModel.platformAttendanceState.value
+                when (state) {
                     PlatformAttendanceState.Loading -> {
                         showLoading()
                     }
                     is PlatformAttendanceState.Success -> {
                         hideLoading()
-                        PlatformList(
-                            notice = viewModel.notice.value,
-                            totalAttendanceResponse = state.data,
-                            isAttendingEvent = state.data.eventNum != 2 || !state.data.isEnd,
-                            onClickPlatform = ::moveToCrewAttendance
-                        )
                     }
                     is PlatformAttendanceState.Error -> {
                         hideLoading()
@@ -51,13 +47,15 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
                         hideLoading()
                     }
                 }
+                PlatformAttendanceScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    platformAttendanceState = state,
+                    onClickPlatform = ::moveToCrewAttendance,
+                    onClickBackButton = {
+                        finish()
+                    }
+                )
             }
-        }
-    }
-
-    private fun initButton() {
-        viewBinding.toolbar.setOnBackButtonClickListener {
-            finish()
         }
     }
 
@@ -99,7 +97,7 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
     companion object {
         fun newIntent(context: Context, scheduleId: Int) =
             Intent(context, PlatformAttendanceActivity::class.java).apply {
-                putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+                putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
                 putExtra(EXTRA_SCHEDULE_ID, scheduleId)
             }
     }

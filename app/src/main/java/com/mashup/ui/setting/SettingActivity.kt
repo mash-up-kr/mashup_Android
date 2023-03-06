@@ -39,7 +39,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     override fun initViews() {
         super.initViews()
-        initButton()
 
         viewBinding.settingScreen.setContent {
             MashUpTheme {
@@ -53,7 +52,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     onDeleteUser = this::moveToDeleteAccount,
                     onToggleFcm = this::onToggleFcm,
                     onClickSNS = this::onClickSNS,
-                    userPreference = userPreference
+                    userPreference = userPreference,
+                    onClickBackButton = {
+                        onBackPressed()
+                    }
                 )
             }
         }
@@ -65,12 +67,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             viewModel.onSuccessLogout.collectLatest {
                 moveToLoginActivityOnLogout()
             }
-        }
-    }
-
-    private fun initButton() {
-        viewBinding.toolbar.setOnBackButtonClickListener {
-            onBackPressed()
         }
     }
 

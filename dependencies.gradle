@@ -2,7 +2,7 @@ ext {
     // Android
     androidBuildToolsVersion = "7.2.1"
 
-    minVersion = 23
+    minVersion = 24
     targetVersion = 32
     compileVersion = 32
 

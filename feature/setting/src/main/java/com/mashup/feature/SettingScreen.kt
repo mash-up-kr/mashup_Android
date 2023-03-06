@@ -27,8 +27,7 @@ fun SettingScreen(
     onClickSNS: (String) -> Unit
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween
+        modifier = modifier
     ) {
         MashUpToolbar(
             title = "설정",
@@ -36,18 +35,23 @@ fun SettingScreen(
             onClickBackButton = onClickBackButton
         )
 
-        SettingMenuList(
-            modifier = Modifier.fillMaxWidth(),
-            onLogout = onLogout,
-            onDeleteUser = onDeleteUser,
-            onToggleFcm = onToggleFcm,
-            userPreference = userPreference
-        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            SettingMenuList(
+                modifier = Modifier.fillMaxWidth(),
+                onLogout = onLogout,
+                onDeleteUser = onDeleteUser,
+                onToggleFcm = onToggleFcm,
+                userPreference = userPreference
+            )
 
-        SNSList(
-            modifier = Modifier.fillMaxWidth(),
-            onClickSNS = onClickSNS
-        )
+            SNSList(
+                modifier = Modifier.fillMaxWidth(),
+                onClickSNS = onClickSNS
+            )
+        }
     }
 }
 

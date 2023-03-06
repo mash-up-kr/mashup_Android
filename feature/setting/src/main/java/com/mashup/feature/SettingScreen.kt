@@ -1,6 +1,7 @@
 package com.mashup.feature
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,37 +13,51 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.menu.SettingMenuList
 import com.mashup.feature.sns.SNSList
 
+@ExperimentalFoundationApi
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
     userPreference: UserPreference,
+    onClickBackButton: () -> Unit,
     onLogout: () -> Unit,
     onDeleteUser: () -> Unit,
     onToggleFcm: (Boolean) -> Unit,
     onClickSNS: (String) -> Unit
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween
+        modifier = modifier
     ) {
-        SettingMenuList(
-            modifier = Modifier.fillMaxWidth(),
-            onLogout = onLogout,
-            onDeleteUser = onDeleteUser,
-            onToggleFcm = onToggleFcm,
-            userPreference = userPreference
+        MashUpToolbar(
+            title = "설정",
+            showBackButton = true,
+            onClickBackButton = onClickBackButton
         )
 
-        SNSList(
-            modifier = Modifier.fillMaxWidth(),
-            onClickSNS = onClickSNS
-        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            SettingMenuList(
+                modifier = Modifier.fillMaxWidth(),
+                onLogout = onLogout,
+                onDeleteUser = onDeleteUser,
+                onToggleFcm = onToggleFcm,
+                userPreference = userPreference
+            )
+
+            SNSList(
+                modifier = Modifier.fillMaxWidth(),
+                onClickSNS = onClickSNS
+            )
+        }
     }
 }
 
+@ExperimentalFoundationApi
 @Preview(name = "DarkMode", uiMode = UI_MODE_NIGHT_YES)
 @Preview
 @Composable
@@ -55,7 +70,8 @@ fun SettingScreenPrev() {
                 onDeleteUser = {},
                 onToggleFcm = {},
                 onClickSNS = {},
-                userPreference = UserPreference.getDefaultInstance()
+                userPreference = UserPreference.getDefaultInstance(),
+                onClickBackButton = {}
             )
         }
     }

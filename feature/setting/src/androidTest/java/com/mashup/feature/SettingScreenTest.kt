@@ -1,6 +1,7 @@
 package com.mashup.feature
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
@@ -12,6 +13,7 @@ import com.mashup.core.model.data.local.UserPreference
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalFoundationApi
 internal class SettingScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

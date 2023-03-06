@@ -19,9 +19,6 @@ class PlatformAttendanceViewModel @Inject constructor(
     val scheduleId
         get() = savedStateHandle.get<Int>(EXTRA_SCHEDULE_ID)
 
-    private val _notice = mutableStateOf("")
-    val notice: State<String> = _notice
-
     private val _platformAttendanceState = mutableStateOf<PlatformAttendanceState>(
         PlatformAttendanceState.Empty
     )
@@ -39,7 +36,7 @@ class PlatformAttendanceViewModel @Inject constructor(
         }
 
         response.data?.run {
-            _notice.value = when {
+            val notice = when {
                 eventNum == 0 -> {
                     "아직 일정 시작 전이예요."
                 }
@@ -58,7 +55,10 @@ class PlatformAttendanceViewModel @Inject constructor(
             }
 
             _platformAttendanceState.value =
-                PlatformAttendanceState.Success(response.data)
+                PlatformAttendanceState.Success(
+                    notice = notice,
+                    totalAttendance = response.data
+                )
         }
     }
 
@@ -72,6 +72,10 @@ class PlatformAttendanceViewModel @Inject constructor(
 sealed interface PlatformAttendanceState {
     object Empty : PlatformAttendanceState
     object Loading : PlatformAttendanceState
-    data class Success(val data: TotalAttendanceResponse) : PlatformAttendanceState
+    data class Success(
+        val notice: String,
+        val totalAttendance: TotalAttendanceResponse
+    ) : PlatformAttendanceState
+
     data class Error(val code: String) : PlatformAttendanceState
 }

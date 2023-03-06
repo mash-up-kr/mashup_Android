@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
@@ -51,6 +52,8 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
 
     override fun initViews() {
         window.statusBarColor = Color.TRANSPARENT
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+
         AnalyticsManager.addEvent(LOG_QR)
         initStatusBarMargin()
         initButtons()
@@ -79,7 +82,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                     }
                     QRCodeState.Success -> {
                         hideLoading()
-                        setResult(RESULT_CONFIRM_QR)
+                        setResult(RESULT_CONFIRM_SUCCESS_QR)
                         finish()
                     }
                     is QRCodeState.Error -> {
@@ -241,7 +244,8 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     companion object {
         private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
         private const val REQUEST_CODE_CAMERA = 200
-        const val RESULT_CONFIRM_QR = 202
+        const val RESULT_CONFIRM_QR = 201
+        const val RESULT_CONFIRM_SUCCESS_QR = 202
 
         fun newIntent(context: Context) = Intent(context, QRScanActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)

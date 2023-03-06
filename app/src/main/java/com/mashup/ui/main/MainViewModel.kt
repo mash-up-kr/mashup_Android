@@ -28,6 +28,9 @@ class MainViewModel @Inject constructor(
     val isShowCongratsAttendanceScreen: State<Boolean>
         get() = _isShowCongratsAttendanceScreen
 
+    private val _onAttendance = MutableSharedFlow<Unit>()
+    val onAttendance: SharedFlow<Unit> = _onAttendance
+
     private val _successAttendance = MutableSharedFlow<Unit>()
     val successAttendance: SharedFlow<Unit> = _successAttendance
 
@@ -39,6 +42,10 @@ class MainViewModel @Inject constructor(
 
     private val _mainTab = MutableStateFlow(MainTab.EVENT)
     val mainTab: StateFlow<MainTab> = _mainTab
+
+    fun confirmAttendance() = mashUpScope {
+        _onAttendance.emit(Unit)
+    }
 
     fun successAttendance() = mashUpScope {
         _isShowCongratsAttendanceScreen.value = true

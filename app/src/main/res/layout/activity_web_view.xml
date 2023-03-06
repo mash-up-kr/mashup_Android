@@ -13,20 +13,11 @@
         android:background="@color/white"
         tools:context=".core.webview.WebViewActivity">
 
-        <com.mashup.core.common.widget.ToolbarView
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            toolbar_close_button_visible="@{true}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/web_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

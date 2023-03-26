@@ -77,7 +77,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
     override fun initViews() {
         super.initViews()
         initSwipeRefreshLayout()
-        initRefreshButton()
         initViewPager()
     }
 
@@ -90,13 +89,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
             setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), com.mashup.core.common.R.color.brand500)
             )
-        }
-    }
-
-    private fun initRefreshButton() {
-        viewBinding.btnRefresh.onThrottleFirstClick(viewLifecycleOwner.lifecycleScope) {
-            AnalyticsManager.addEvent(eventName = LOG_SCHEDULE_LIST_REFRESH)
-            viewModel.getScheduleList()
         }
     }
 
@@ -179,6 +171,9 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
             }
             is ScheduleTitleState.DateCount -> {
                 getString(R.string.event_list_title, scheduleTitleState.dataCount).fromHtml()
+            }
+            is ScheduleTitleState.SchedulePreparing -> {
+                getString(R.string.preparing_attendance)
             }
         }
     }

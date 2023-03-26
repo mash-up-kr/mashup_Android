@@ -1,5 +1,6 @@
 package com.mashup.ui.schedule
 
+import androidx.compose.runtime.isTraceInProgress
 import com.mashup.base.BaseViewModel
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
@@ -50,15 +51,19 @@ class ScheduleViewModel @Inject constructor(
             }
             _scheduleState.emit(
                 ScheduleState.Success(
-                    scheduleTitleState = when (response.data.progress) {
-                        SchedulesProgress.DONE -> {
+                    scheduleTitleState = when {
+                        response.data.progress == SchedulesProgress.DONE -> {
                             ScheduleTitleState.End(generateNumber)
                         }
-                        SchedulesProgress.NOT_REGISTERED -> {
+                        response.data.progress == SchedulesProgress.NOT_REGISTERED -> {
                             ScheduleTitleState.Empty
                         }
-                        SchedulesProgress.ON_GOING -> {
-                            ScheduleTitleState.DateCount(response.data.dateCount ?: 0)
+                        response.data.progress == SchedulesProgress.ON_GOING &&
+                            response.data.dateCount != null -> {
+                            ScheduleTitleState.DateCount(response.data.dateCount)
+                        }
+                        else -> {
+                            ScheduleTitleState.SchedulePreparing
                         }
                     },
                     scheduleList = if (response.data.scheduleList.isEmpty()) {
@@ -126,6 +131,7 @@ sealed interface ScheduleTitleState {
     data class DateCount(val dataCount: Int) : ScheduleTitleState
     data class End(val generatedNumber: Int) : ScheduleTitleState
     object Empty : ScheduleTitleState
+    object SchedulePreparing : ScheduleTitleState
 }
 
 sealed interface ScheduleState {

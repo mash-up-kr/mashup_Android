@@ -1,6 +1,5 @@
 package com.mashup.ui.schedule
 
-import androidx.compose.runtime.isTraceInProgress
 import com.mashup.base.BaseViewModel
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress

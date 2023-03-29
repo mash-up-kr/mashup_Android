@@ -1,9 +1,12 @@
-# recruit_android
-
-##Description
-매쉬업 브랜딩팀 출석체크 앱
+MashUp Official App
 
 ## Developer
+
+> 🏆 명예 멤버
+>
+> [김유정](https://github.com/YuChocopie)
+
+
 양민욱
 정민지
 안석주

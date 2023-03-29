@@ -1,8 +1,7 @@
 package com.mashup.core.ui.widget
 
-import android.util.Log
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.OverscrollEffect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,18 +11,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.overscroll
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
@@ -31,8 +29,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,55 +47,51 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.Caption3
 import com.mashup.core.ui.typography.Title2
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MashUpTextField(
     modifier: Modifier = Modifier,
     text: String,
     onTextChanged: (String) -> Unit,
     placeHolderText: String,
-    label: String,
     focusBool: Boolean,
     codeState: Validation
 ) {
+    var focus by remember { mutableStateOf(focusBool) }
     val focusRequester = remember { FocusRequester() }
-    val rememberCoroutineScope = rememberCoroutineScope()
-    var focus by remember {
-        mutableStateOf(focusBool)
-    }
-    val scrollState = rememberScrollState(0)
+    var textFieldValue = remember { TextFieldValue(text = text) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column(
         modifier = Modifier
     ) {
-        BasicTextField(modifier = modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-            .height(84.dp)
-            .focusRequester(focusRequester)
-            .clip(RoundedCornerShape(12.dp))
-            .border(
-                shape = RoundedCornerShape(12.dp),
-                width = 1.dp,
-                color = when (codeState) {
-                    Validation.EMPTY -> Color.White
-                    Validation.SUCCESS -> Brand500
-                    else -> Red500
+        BasicTextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(4.dp)
+                .height(84.dp)
+                .animateContentSize()
+                .clip(RoundedCornerShape(12.dp))
+                .border(
+                    shape = RoundedCornerShape(12.dp),
+                    width = 1.dp,
+                    color = when (codeState) {
+                        Validation.EMPTY -> Color.White
+                        Validation.SUCCESS -> Brand500
+                        else -> Red500
+                    }
+                )
+                .background(Color.White)
+                .onFocusChanged {
+                    focus = it.hasFocus
                 }
-            )
-            .background(Color.White)
-            .onFocusChanged {
-                rememberCoroutineScope.launch {
-                    Log.d("tjrwn", "MashUpTextField: ${text.length}")
-                    scrollState.scrollTo(text.length)
-                }
-                focus = it.hasFocus
-            },
-            value = text,
+                .focusRequester(focusRequester),
+            value = textFieldValue.copy(text = text, selection = TextRange(text.length)),
             textStyle = Title2,
             singleLine = true,
-            onValueChange = onTextChanged,
+            onValueChange = { onTextChanged(it.text) },
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier
@@ -107,9 +103,10 @@ fun MashUpTextField(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.Start
                         ) {
+                            // 탈퇴할게요 라벨
                             Text(
                                 modifier = Modifier.padding(top = 18.dp),
-                                text = label,
+                                text = placeHolderText,
                                 style = Caption1,
                                 color = Gray600
                             )
@@ -126,7 +123,9 @@ fun MashUpTextField(
                                 if (text.isEmpty().not()) {
                                     Image(
                                         modifier = Modifier.padding(start = 12.dp),
-                                        painter = if (codeState == Validation.FAILED) painterResource(id = R.drawable.ic_question_mark)
+                                        painter = if (codeState == Validation.FAILED) painterResource(
+                                            id = R.drawable.ic_question_mark
+                                        )
                                         else painterResource(id = R.drawable.ic_check),
                                         contentDescription = null,
                                         colorFilter = if (codeState == Validation.FAILED) ColorFilter.tint(
@@ -138,6 +137,7 @@ fun MashUpTextField(
                         }
                     } else {
                         if (text.isEmpty()) {
+                            // 탈퇴할게요 placeHolder
                             Text(
                                 modifier = Modifier.align(Alignment.CenterStart),
                                 text = placeHolderText,
@@ -155,6 +155,14 @@ fun MashUpTextField(
             style = Caption3,
             color = if (codeState == Validation.FAILED) Red500 else Gray600
         )
+        if (text.isNotEmpty()) {
+            // delay를 줘야만 키보드가 올라옴 놀라운건 10L 보다 100L이 더 빨리올라옴;;
+            LaunchedEffect(key1 = Unit) {
+                focusRequester.requestFocus()
+                delay(100L)
+                keyboardController?.show()
+            }
+        }
     }
 }
 
@@ -174,9 +182,8 @@ private fun setDescriptionText(codeState: Validation): String {
 
 @Preview("기본 텍스트 필드")
 @Composable
-fun MashUpTextFieldPrev() {
+fun MashUpTextFieldPrev(validation: Validation = Validation.FAILED) {
     var text by remember { mutableStateOf("") }
-    val validation = Validation.FAILED
     MashUpTheme {
         MashUpTextField(
             modifier = Modifier,
@@ -184,7 +191,6 @@ fun MashUpTextFieldPrev() {
             onTextChanged = { newText ->
                 text = newText
             },
-            label = "label",
             placeHolderText = "탈퇴할게요",
             focusBool = false,
             codeState = validation
@@ -197,9 +203,8 @@ fun MashUpTextFieldPrev() {
  */
 @Preview("reverse - 기본 텍스트 필드")
 @Composable
-fun MashUpTextFieldPrevReverse() {
-    var text by remember { mutableStateOf("ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890") }
-    val validation = Validation.SUCCESS
+fun MashUpTextFieldPrevReverse(validation: Validation = Validation.SUCCESS) {
+    var text by remember { mutableStateOf("정민지 진짜 바보래요 메넝메냐에ㅑㅐㄴ머에ㅓㄴ멩") }
     MashUpTheme {
         MashUpTextField(
             modifier = Modifier,
@@ -207,7 +212,6 @@ fun MashUpTextFieldPrevReverse() {
             onTextChanged = { newText ->
                 text = newText
             },
-            label = "label",
             placeHolderText = "탈퇴할게요",
             focusBool = true,
             codeState = validation

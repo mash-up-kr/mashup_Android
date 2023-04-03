@@ -15,10 +15,19 @@ class ShakeDetector @Inject constructor(
     private val acceleration = FloatArray(3)
     private var lastAcceleration = FloatArray(3)
     private var lastUpdateTime: Long = 0
-    private var shakeListener: ((Float) -> Unit)? = null
+    private var shakeListener: (() -> Unit)? = null
 
-    fun startListening(listener: (Float) -> Unit) {
-        shakeListener = listener
+    private var shakeIntervalTime: Long = SHAKE_INTERVAL_TIME
+    private var shakeThreshold: Int = SHAKE_THRESHOLD
+
+    fun startListening(
+        threshold: Int = SHAKE_THRESHOLD,
+        interval: Long = SHAKE_INTERVAL_TIME,
+        onShakeDevice: () -> Unit
+    ) {
+        shakeThreshold = threshold
+        shakeIntervalTime = interval
+        shakeListener = onShakeDevice
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
@@ -31,7 +40,7 @@ class ShakeDetector @Inject constructor(
     override fun onSensorChanged(event: SensorEvent) {
         val currentTime = System.currentTimeMillis()
         val timeDifference = currentTime - lastUpdateTime
-        if (timeDifference > SHAKE_INTERVAL_TIME) {
+        if (timeDifference > shakeIntervalTime) {
             lastUpdateTime = currentTime
             val x = event.values[0]
             val y = event.values[1]
@@ -47,8 +56,8 @@ class ShakeDetector @Inject constructor(
                     delta[0].pow(2) + delta[1].pow(2) + delta[2].pow(2)
                 ) / timeDifference * 10000
 
-                if (speed > SHAKE_THRESHOLD) {
-                    shakeListener?.invoke(speed)
+                if (speed > shakeThreshold) {
+                    shakeListener?.invoke()
                 }
             }
             System.arraycopy(acceleration, 0, lastAcceleration, 0, acceleration.size)

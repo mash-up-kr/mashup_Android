@@ -46,6 +46,7 @@ class ShakeDetector @Inject constructor(
                 val speed = sqrt(
                     delta[0].pow(2) + delta[1].pow(2) + delta[2].pow(2)
                 ) / timeDifference * 10000
+
                 if (speed > SHAKE_THRESHOLD) {
                     shakeListener?.invoke(speed)
                 }

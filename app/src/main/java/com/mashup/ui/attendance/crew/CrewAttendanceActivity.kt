@@ -15,7 +15,7 @@ import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
-import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
+import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID
 import dagger.hilt.android.AndroidEntryPoint

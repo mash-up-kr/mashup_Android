@@ -1,7 +1,7 @@
 package com.mashup.network.interceptor
 
 import com.mashup.datastore.data.repository.UserPreferenceRepository
-import com.mashup.network.errorcode.UNAUTHORIZED
+import com.mashup.core.common.constant.UNAUTHORIZED
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

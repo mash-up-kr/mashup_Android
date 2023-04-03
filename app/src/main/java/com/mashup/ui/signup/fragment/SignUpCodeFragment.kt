@@ -13,8 +13,8 @@ import com.mashup.core.common.model.Validation
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import com.mashup.databinding.FragmentSignUpCodeBinding
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
-import com.mashup.network.errorcode.INVALID_PLATFORM_NAME
-import com.mashup.network.errorcode.MEMBER_INVALID_INVITE
+import com.mashup.core.common.constant.INVALID_PLATFORM_NAME
+import com.mashup.core.common.constant.MEMBER_INVALID_INVITE
 import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState

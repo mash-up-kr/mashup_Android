@@ -3,7 +3,7 @@ package com.mashup.ui.main
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.MemberRepository

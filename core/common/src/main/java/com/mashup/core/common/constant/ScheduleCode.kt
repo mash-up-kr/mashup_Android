@@ -1,4 +1,4 @@
-package com.mashup.network.errorcode
+package com.mashup.core.common.constant
 
 /**
  * 일정이 존재하지 않습니다.

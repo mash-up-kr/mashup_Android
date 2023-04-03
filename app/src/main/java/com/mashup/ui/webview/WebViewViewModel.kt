@@ -2,7 +2,7 @@ package com.mashup.ui.webview
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel

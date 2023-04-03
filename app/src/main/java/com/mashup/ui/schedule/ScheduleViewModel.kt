@@ -1,6 +1,6 @@
 package com.mashup.ui.schedule
 
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
 import com.mashup.data.repository.AttendanceRepository

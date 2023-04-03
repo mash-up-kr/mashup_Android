@@ -1,7 +1,7 @@
 package com.mashup.ui.qrscan
 
 import androidx.lifecycle.viewModelScope
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.repository.AttendanceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

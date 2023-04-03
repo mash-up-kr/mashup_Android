@@ -13,6 +13,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.core.common.constant.BAD_REQUEST
+import com.mashup.core.common.constant.DISCONNECT_NETWORK
+import com.mashup.core.common.constant.INTERNAL_SERVER_ERROR
+import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.ProgressbarUtil
 import com.mashup.core.common.utils.ToastUtil
@@ -20,10 +24,6 @@ import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
-import com.mashup.network.errorcode.BAD_REQUEST
-import com.mashup.network.errorcode.DISCONNECT_NETWORK
-import com.mashup.network.errorcode.INTERNAL_SERVER_ERROR
-import com.mashup.network.errorcode.UNAUTHORIZED
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope

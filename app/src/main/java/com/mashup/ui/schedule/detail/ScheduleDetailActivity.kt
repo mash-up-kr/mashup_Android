@@ -7,7 +7,7 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.databinding.ActivityScheduleDetailBinding
-import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
+import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

@@ -1,6 +1,8 @@
 package com.mashup.core.ui.widget
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,6 +36,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.core.common.R
@@ -44,7 +48,6 @@ import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.Green500
 import com.mashup.core.ui.colors.Red500
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.Caption3
 import com.mashup.core.ui.typography.Title2
 import kotlinx.coroutines.delay
@@ -55,39 +58,38 @@ fun MashUpTextField(
     modifier: Modifier = Modifier,
     text: String,
     onTextChanged: (String) -> Unit,
-    placeHolderText: String,
+    labelText: String,
     focusBool: Boolean,
-    codeState: Validation
+    validation: Validation
 ) {
     var focus by remember { mutableStateOf(focusBool) }
     val focusRequester = remember { FocusRequester() }
-    var textFieldValue = remember { TextFieldValue(text = text) }
+    val textFieldValue = remember { TextFieldValue(text = text) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
-        modifier = Modifier
+        modifier = modifier
     ) {
-        BasicTextField(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .height(84.dp)
-                .animateContentSize()
-                .clip(RoundedCornerShape(12.dp))
-                .border(
-                    shape = RoundedCornerShape(12.dp),
-                    width = 1.dp,
-                    color = when (codeState) {
-                        Validation.EMPTY -> Color.White
-                        Validation.SUCCESS -> Brand500
-                        else -> Red500
-                    }
-                )
-                .background(Color.White)
-                .onFocusChanged {
-                    focus = it.hasFocus
+        BasicTextField(modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .height(84.dp)
+            .animateContentSize()
+            .clip(RoundedCornerShape(12.dp))
+            .border(
+                shape = RoundedCornerShape(12.dp),
+                width = 1.dp,
+                color = when (validation) {
+                    Validation.EMPTY -> Color.White
+                    Validation.SUCCESS -> Brand500
+                    else -> Red500
                 }
-                .focusRequester(focusRequester),
+            )
+            .background(Color.White)
+            .onFocusChanged {
+                focus = it.hasFocus
+            }
+            .focusRequester(focusRequester),
             value = textFieldValue.copy(text = text, selection = TextRange(text.length)),
             textStyle = Title2,
             singleLine = true,
@@ -98,52 +100,41 @@ fun MashUpTextField(
                         .padding(start = 20.dp, end = 20.dp)
                         .fillMaxWidth()
                 ) {
-                    if (focus || text.isNotEmpty()) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            // 탈퇴할게요 라벨
-                            Text(
-                                modifier = Modifier.padding(top = 18.dp),
-                                text = placeHolderText,
-                                style = Caption1,
-                                color = Gray600
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(end = 14.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(modifier = Modifier.weight(1f)) {
-                                    innerTextField()
-                                }
-                                if (text.isEmpty().not()) {
-                                    Image(
-                                        modifier = Modifier.padding(start = 12.dp),
-                                        painter = if (codeState == Validation.FAILED) painterResource(
-                                            id = R.drawable.ic_question_mark
-                                        )
-                                        else painterResource(id = R.drawable.ic_check),
-                                        contentDescription = null,
-                                        colorFilter = if (codeState == Validation.FAILED) ColorFilter.tint(
-                                            color = Red500
-                                        ) else ColorFilter.tint(color = Green500)
-                                    )
-                                }
-                            }
+                    val textFieldState = text.isEmpty() && focus || text.isNotEmpty()
+                    val paddingState by animateDpAsState(targetValue = if (textFieldState) 18.dp else 30.dp)
+                    val textSizeState by animateFloatAsState(targetValue = if (textFieldState) 13f else 20f)
+                    // 탈퇴할게요 힌트, 라벨
+                    Text(
+                        modifier = Modifier.padding(top = paddingState),
+                        text = labelText,
+                        fontSize = textSizeState.sp,
+                        color = if (textFieldState) Gray600 else Gray400
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 36.dp, end = 14.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            innerTextField()
                         }
-                    } else {
-                        if (text.isEmpty()) {
-                            // 탈퇴할게요 placeHolder
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterStart),
-                                text = placeHolderText,
-                                style = Title2,
-                                color = Gray400,
-                                lineHeight = 24.sp
+                        val validationPainter: Int? = when (validation) {
+                            Validation.FAILED -> R.drawable.ic_question_mark
+                            Validation.SUCCESS -> R.drawable.ic_check
+                            else -> null
+                        }
+                        validationPainter?.let {
+                            Image(
+                                modifier = Modifier
+                                    .padding(start = 12.dp)
+                                    .align(alignment = Alignment.CenterVertically),
+                                painter = painterResource(id = validationPainter),
+                                contentDescription = null,
+                                colorFilter = if (validation == Validation.FAILED) ColorFilter.tint(
+                                    color = Red500
+                                ) else ColorFilter.tint(color = Green500)
                             )
                         }
                     }
@@ -151,9 +142,9 @@ fun MashUpTextField(
             })
         Text(
             modifier = Modifier.padding(top = 8.dp, start = 4.dp),
-            text = setDescriptionText(codeState),
+            text = setDescriptionText(validation),
             style = Caption3,
-            color = if (codeState == Validation.FAILED) Red500 else Gray600
+            color = if (validation == Validation.FAILED) Red500 else Gray600
         )
         if (text.isNotEmpty()) {
             // delay를 줘야만 키보드가 올라옴 놀라운건 10L 보다 100L이 더 빨리올라옴;;
@@ -180,45 +171,49 @@ private fun setDescriptionText(codeState: Validation): String {
     }
 }
 
-@Preview("기본 텍스트 필드")
-@Composable
-fun MashUpTextFieldPrev(validation: Validation = Validation.FAILED) {
-    var text by remember { mutableStateOf("") }
-    MashUpTheme {
-        MashUpTextField(
-            modifier = Modifier,
-            text = text,
-            onTextChanged = { newText ->
-                text = newText
-            },
-            placeHolderText = "탈퇴할게요",
-            focusBool = false,
-            codeState = validation
-        )
-    }
-}
-
 /**
  * 테스트를 위해서 focusBool을 넣어서 두개다 테스트
  */
 @Preview("reverse - 기본 텍스트 필드")
 @Composable
-fun MashUpTextFieldPrevReverse(validation: Validation = Validation.SUCCESS) {
-    var text by remember { mutableStateOf("정민지 진짜 바보래요 메넝메냐에ㅑㅐㄴ머에ㅓㄴ멩") }
+fun MashUpTextFieldPrev(
+    @PreviewParameter(MashUpTextFieldParameterProvider::class) parameter: MashUpTextFieldEntity
+) {
+    var text by remember { mutableStateOf(parameter.previousText) }
     MashUpTheme {
         MashUpTextField(
             modifier = Modifier,
             text = text,
-            onTextChanged = { newText ->
-                text = newText
-            },
-            placeHolderText = "탈퇴할게요",
-            focusBool = true,
-            codeState = validation
+            onTextChanged = { newText -> text = newText },
+            labelText = "탈퇴할게요",
+            focusBool = false,
+            validation = parameter.validation
         )
     }
 }
 
-// 매개변수
-// 애니메이션
-// modifier 알기
+class MashUpTextFieldParameterProvider : PreviewParameterProvider<MashUpTextFieldEntity> {
+    override val values: Sequence<MashUpTextFieldEntity> = sequenceOf(
+        MashUpTextFieldEntity(
+            labelText = "탈퇴할게요",
+            validation = Validation.EMPTY,
+            previousText = ""
+        ),
+        MashUpTextFieldEntity(
+            labelText = "탈퇴할게요",
+            validation = Validation.SUCCESS,
+            previousText = "abasdasdsa"
+        ),
+        MashUpTextFieldEntity(
+            labelText = "탈퇴할게요",
+            validation = Validation.FAILED,
+            previousText = "asfpasfsapoaspfojaspfoapsfo"
+        )
+    )
+}
+
+data class MashUpTextFieldEntity(
+    val labelText: String = "",
+    val validation: Validation = Validation.EMPTY,
+    val previousText: String = ""
+)

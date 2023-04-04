@@ -1,4 +1,4 @@
-package com.mashup.network.errorcode
+package com.mashup.core.common.constant
 
 /**
  * 회원을 찾을 수 없습니다.

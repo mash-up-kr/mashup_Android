@@ -29,7 +29,7 @@ import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
 import com.mashup.network.errorcode.ATTENDANCE_CODE_NOT_FOUND
 import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
-import com.mashup.network.errorcode.MEMBER_NOT_FOUND
+import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint

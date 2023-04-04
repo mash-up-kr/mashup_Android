@@ -2,7 +2,7 @@ package com.mashup.ui.mypage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.dto.ScoreHistoryResponse
 import com.mashup.data.repository.MyPageRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository

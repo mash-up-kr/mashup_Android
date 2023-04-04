@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mashup.datastore'
+    namespace 'com.mashup.shake'
     compileSdk compileVersion
 
     defaultConfig {

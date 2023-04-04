@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mashup.shake'
+    namespace 'com.mashup.core.shake'
     compileSdk compileVersion
 
     defaultConfig {

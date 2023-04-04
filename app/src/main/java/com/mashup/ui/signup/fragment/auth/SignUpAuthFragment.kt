@@ -14,7 +14,7 @@ import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import com.mashup.databinding.FragmentSignUpAuthBinding
-import com.mashup.network.errorcode.MEMBER_DUPLICATED_IDENTIFICATION
+import com.mashup.core.common.constant.MEMBER_DUPLICATED_IDENTIFICATION
 import com.mashup.ui.signup.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

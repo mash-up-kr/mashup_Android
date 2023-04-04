@@ -13,8 +13,8 @@ import com.mashup.constant.log.LOG_SIGN_UP
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.Validation
 import com.mashup.databinding.ActivityLoginBinding
-import com.mashup.network.errorcode.MEMBER_NOT_FOUND
-import com.mashup.network.errorcode.MEMBER_NOT_MATCH_PASSWORD
+import com.mashup.core.common.constant.MEMBER_NOT_FOUND
+import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpActivity
 import com.mashup.util.AnalyticsManager

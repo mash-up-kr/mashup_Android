@@ -1,6 +1,6 @@
 package com.mashup.ui.login
 
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.FirebaseRepository

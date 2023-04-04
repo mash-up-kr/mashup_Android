@@ -1,10 +1,10 @@
-package com.mashup.base
+package com.mashup.core.common.base
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.network.errorcode.BAD_REQUEST
-import com.mashup.network.errorcode.DISCONNECT_NETWORK
+import com.mashup.core.common.constant.BAD_REQUEST
+import com.mashup.core.common.constant.DISCONNECT_NETWORK
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart

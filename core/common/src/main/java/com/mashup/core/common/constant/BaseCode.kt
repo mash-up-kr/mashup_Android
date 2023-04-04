@@ -1,4 +1,4 @@
-package com.mashup.network.errorcode
+package com.mashup.core.common.constant
 
 /**
  * 요청에 오류가 있습니다.

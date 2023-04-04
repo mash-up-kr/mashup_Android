@@ -1,4 +1,4 @@
-package com.mashup.shake
+package com.mashup.core.shake
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent

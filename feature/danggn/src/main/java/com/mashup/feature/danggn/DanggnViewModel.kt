@@ -1,7 +1,7 @@
-package com.mashup.danggn
+package com.mashup.feature.danggn
 
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.shake.ShakeDetector
+import com.mashup.core.shake.ShakeDetector
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

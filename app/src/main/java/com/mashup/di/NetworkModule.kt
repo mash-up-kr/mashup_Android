@@ -4,6 +4,7 @@ import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
 import com.mashup.network.dao.AttendanceDao
+import com.mashup.network.dao.DanggnRankDao
 import com.mashup.network.dao.MemberDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
@@ -97,6 +98,14 @@ class NetworkModule {
     fun provideScoreDao(
         retrofit: Retrofit
     ): ScoreDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDanggnRankDao(
+        retrofit: Retrofit
+    ): DanggnRankDao {
         return retrofit.create()
     }
 }

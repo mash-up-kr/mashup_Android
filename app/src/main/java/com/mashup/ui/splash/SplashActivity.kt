@@ -50,25 +50,26 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                splashViewModel.onLowerAppVersion.collectLatest {
-                    CommonDialog(this@SplashActivity).apply {
-                        setTitle("업데이트")
-                        setMessage("정상적인 이용을 위해\n업데이트가 필요합니다.")
-                        setNegativeButton(text = "확인") {
-                            moveNextScreen()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    splashViewModel.onLowerAppVersion.collectLatest {
+                        CommonDialog(this@SplashActivity).apply {
+                            setTitle("업데이트")
+                            setMessage("정상적인 이용을 위해\n업데이트가 필요합니다.")
+                            setNegativeButton(text = "확인") {
+                                moveNextScreen()
+                            }
+                            setPositiveButton(text = "업데이트 하기") {
+                                moveGooglePayForUpdate()
+                            }
+                            show()
                         }
-                        setPositiveButton(text = "업데이트 하기") {
-                            moveGooglePayForUpdate()
-                        }
-                        show()
                     }
                 }
-            }
-
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                splashViewModel.onFinishInit.collectLatest {
-                    moveNextScreen()
+                launch {
+                    splashViewModel.onFinishInit.collectLatest {
+                        moveNextScreen()
+                    }
                 }
             }
         }

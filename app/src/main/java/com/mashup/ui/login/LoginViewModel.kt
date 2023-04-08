@@ -2,8 +2,8 @@ package com.mashup.ui.login
 
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.model.Validation
+import com.mashup.core.firebase.FirebaseRepository
 import com.mashup.core.model.Platform
-import com.mashup.data.repository.FirebaseRepository
 import com.mashup.data.repository.MemberRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

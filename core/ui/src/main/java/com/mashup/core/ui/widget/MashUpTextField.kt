@@ -59,10 +59,10 @@ fun MashUpTextField(
     text: String,
     onTextChanged: (String) -> Unit,
     labelText: String,
-    focusBool: Boolean,
+    requestFocus: Boolean,
     validation: Validation
 ) {
-    var focus by remember { mutableStateOf(focusBool) }
+    var focus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val textFieldValue = remember { TextFieldValue(text = text) }
     val cornerShape = RoundedCornerShape(12.dp)
@@ -149,9 +149,9 @@ fun MashUpTextField(
             style = Caption3,
             color = if (validation == Validation.FAILED) Red500 else Gray600
         )
-        if (text.isNotEmpty()) {
-            // delay를 줘야만 키보드가 올라옴 놀라운건 10L 보다 100L이 더 빨리올라옴;;
-            LaunchedEffect(key1 = Unit) {
+        LaunchedEffect(key1 = Unit) {
+            if (requestFocus) {
+                // delay를 줘야만 키보드가 올라옴 놀라운건 10L 보다 100L이 더 빨리올라옴;;
                 focusRequester.requestFocus()
                 delay(100L)
                 keyboardController?.show()
@@ -189,7 +189,7 @@ fun MashUpTextFieldPrev(
             text = text,
             onTextChanged = { newText -> text = newText },
             labelText = "탈퇴할게요",
-            focusBool = false,
+            requestFocus = parameter.requestFocus,
             validation = parameter.validation
         )
     }
@@ -200,17 +200,20 @@ class MashUpTextFieldParameterProvider : PreviewParameterProvider<MashUpTextFiel
         MashUpTextFieldEntity(
             labelText = "탈퇴할게요",
             validation = Validation.EMPTY,
-            previousText = ""
+            previousText = "",
+            requestFocus = false
         ),
         MashUpTextFieldEntity(
             labelText = "탈퇴할게요",
             validation = Validation.SUCCESS,
-            previousText = "abasdasdsa"
+            previousText = "abasdasdsa",
+            requestFocus = true
         ),
         MashUpTextFieldEntity(
             labelText = "탈퇴할게요",
             validation = Validation.FAILED,
-            previousText = "asfpasfsapoaspfojaspfoapsfo"
+            previousText = "asfpasfsapoaspfojaspfoapsfo",
+            requestFocus = true
         )
     )
 }
@@ -218,5 +221,6 @@ class MashUpTextFieldParameterProvider : PreviewParameterProvider<MashUpTextFiel
 data class MashUpTextFieldEntity(
     val labelText: String = "",
     val validation: Validation = Validation.EMPTY,
-    val previousText: String = ""
+    val previousText: String = "",
+    val requestFocus: Boolean = false
 )

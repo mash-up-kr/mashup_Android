@@ -1,11 +1,15 @@
-# recruit_android
-
-##Description
-매쉬업 브랜딩팀 출석체크 앱
+MashUp Official App
 
 ## Developer
-김유정
+
+> 🏆 명예 멤버
+>
+> [김유정](https://github.com/YuChocopie)
+
+
 양민욱
+정민지
+안석주
 
 ## Commit Rule
 - 🛠refactor : 새로운 기능이 아닌 코드를 재정비 하였을 때 (변수 이름 바꾸기)

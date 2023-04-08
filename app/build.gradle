@@ -96,6 +96,7 @@ dependencies {
     implementation project(":core:testing")
     implementation project(":core:common")
     implementation project(":core:datastore")
+    implementation project(":core:firebase")
     implementation project(":feature:setting")
 
     // ml Kit
@@ -105,12 +106,6 @@ dependencies {
     implementation "androidx.camera:camera-camera2:$cameraVersion"
     implementation "androidx.camera:camera-lifecycle:$cameraVersion"
     implementation "androidx.camera:camera-view:$cameraVersion"
-
-    // google firebase
-    implementation platform("com.google.firebase:firebase-bom:$firebaseVersion")
-    implementation "com.google.firebase:firebase-analytics-ktx"
-    implementation "com.google.firebase:firebase-crashlytics-ktx"
-    implementation "com.google.firebase:firebase-messaging-ktx"
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"

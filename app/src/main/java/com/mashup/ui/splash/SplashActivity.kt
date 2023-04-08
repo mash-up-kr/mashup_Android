@@ -1,18 +1,24 @@
 package com.mashup.ui.splash
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.login.LoginActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,20 +33,66 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     @Inject
     lateinit var userPreferenceRepository: UserPreferenceRepository
 
+    private val splashViewModel: SplashViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launchWhenResumed {
-            delay(2000)
-            startActivity(LoginActivity.newIntent(this@SplashActivity))
-        }
         setUi()
+        observeViewModel()
         initAnalyticsManager()
     }
 
     private fun setUi() {
         setStatusBarColorRes(com.mashup.core.common.R.color.brand500)
         setStatusBarDarkTextColor(false)
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    splashViewModel.onLowerAppVersion.collectLatest {
+                        CommonDialog(this@SplashActivity).apply {
+                            setTitle("업데이트")
+                            setMessage("정상적인 이용을 위해\n업데이트가 필요합니다.")
+                            setNegativeButton(text = "확인") {
+                                moveNextScreen()
+                            }
+                            setPositiveButton(text = "업데이트 하기") {
+                                moveGooglePayForUpdate()
+                            }
+                            show()
+                        }
+                    }
+                }
+                launch {
+                    splashViewModel.onFinishInit.collectLatest {
+                        moveNextScreen()
+                    }
+                }
+            }
+        }
+        splashViewModel.checkAppVersion(this)
+    }
+
+    private fun moveNextScreen() {
+        startActivity(LoginActivity.newIntent(this@SplashActivity))
+        finish()
+    }
+
+    private fun moveGooglePayForUpdate() {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/details?id=com.mashup"
+                )
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
+            finish()
+        } catch (ignore: Exception) {
+        }
     }
 
     private fun initAnalyticsManager() {

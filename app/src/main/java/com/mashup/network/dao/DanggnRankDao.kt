@@ -26,5 +26,5 @@ interface DanggnRankDao {
     @GET("api/v1/danggn/rank/platform")
     suspend fun getDanggnPlatformRank(
         @Query("generationNumber") generationNumber: Int
-    ): Response<DanggnPlatformRankResponse>
+    ): Response<List<DanggnPlatformRankResponse>>
 }

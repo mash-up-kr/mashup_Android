@@ -24,7 +24,7 @@ class DanggnRankRepository @Inject constructor(
 
     suspend fun getPlatformDanggnRank(
         generationNumber: Int
-    ): Response<DanggnPlatformRankResponse> {
+    ): Response<List<DanggnPlatformRankResponse>> {
         return danggnRankDao.getDanggnPlatformRank(generationNumber)
     }
 }

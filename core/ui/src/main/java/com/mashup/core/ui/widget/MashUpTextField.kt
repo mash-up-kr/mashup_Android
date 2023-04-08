@@ -132,9 +132,11 @@ fun MashUpTextField(
                                     .align(alignment = Alignment.CenterVertically),
                                 painter = painterResource(id = validationPainter),
                                 contentDescription = null,
-                                colorFilter = if (validation == Validation.FAILED) ColorFilter.tint(
-                                    color = Red500
-                                ) else ColorFilter.tint(color = Green500)
+                                colorFilter = if (validation == Validation.FAILED) {
+                                    ColorFilter.tint(color = Red500)
+                                } else {
+                                    ColorFilter.tint(color = Green500)
+                                }
                             )
                         }
                     }

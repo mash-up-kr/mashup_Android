@@ -77,15 +77,20 @@ fun MashUpTextField(
             .height(84.dp)
             .animateContentSize()
             .clip(cornerShape)
-            .border(
-                shape = cornerShape,
-                width = 1.dp,
-                color = when (validation) {
-                    Validation.EMPTY -> Color.White
-                    Validation.SUCCESS -> Brand500
-                    else -> Red500
+            .run {
+                if (validation == Validation.EMPTY) {
+                    this
+                } else {
+                    border(
+                        shape = cornerShape,
+                        width = 1.dp,
+                        color = when (validation) {
+                            Validation.SUCCESS -> Brand500
+                            else -> Red500
+                        }
+                    )
                 }
-            )
+            }
             .background(Color.White)
             .onFocusChanged {
                 focus = it.hasFocus

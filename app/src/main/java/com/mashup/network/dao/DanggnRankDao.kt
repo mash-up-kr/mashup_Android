@@ -1,6 +1,5 @@
 package com.mashup.network.dao
 
-import com.mashup.data.dto.DanggnAllMemberRankResponse
 import com.mashup.data.dto.DanggnMemberRankResponse
 import com.mashup.data.dto.DanggnPlatformRankResponse
 import com.mashup.network.Response
@@ -21,7 +20,7 @@ interface DanggnRankDao {
     @GET("api/v1/danggn/rank/member/all")
     suspend fun getDanggnAllMemberRank(
         @Query("generationNumber") generationNumber: Int
-    ): Response<DanggnAllMemberRankResponse>
+    ): Response<List<DanggnMemberRankResponse>>
 
     // 당근 흔들기 플랫폼별 랭킹
     @GET("api/v1/danggn/rank/platform")

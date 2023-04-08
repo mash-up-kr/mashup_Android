@@ -65,6 +65,7 @@ fun MashUpTextField(
     var focus by remember { mutableStateOf(focusBool) }
     val focusRequester = remember { FocusRequester() }
     val textFieldValue = remember { TextFieldValue(text = text) }
+    val cornerShape = RoundedCornerShape(12.dp)
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
@@ -75,9 +76,9 @@ fun MashUpTextField(
             .padding(4.dp)
             .height(84.dp)
             .animateContentSize()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(cornerShape)
             .border(
-                shape = RoundedCornerShape(12.dp),
+                shape = cornerShape,
                 width = 1.dp,
                 color = when (validation) {
                     Validation.EMPTY -> Color.White

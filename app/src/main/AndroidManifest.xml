@@ -6,6 +6,14 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.android.vending" />
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https" android:host="play.google.com" />
+        </intent>
+    </queries>
+
     <application
         android:name=".MashUpApplication"
         android:icon="@mipmap/ic_launcher"
@@ -90,6 +98,7 @@
         <activity
             android:name=".ui.error.NetworkDisconnectActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 

@@ -39,5 +39,5 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    abstract fun handleErrorCode(code: String)
+    open fun handleErrorCode(code: String) {}
 }

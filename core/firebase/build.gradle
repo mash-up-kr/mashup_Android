@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.mashup.core.firebase'
+    compileSdk compileVersion
+
+    defaultConfig {
+        minSdk minVersion
+        targetSdk targetVersion
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    // google firebase
+    api platform("com.google.firebase:firebase-bom:$firebaseVersion")
+    api "com.google.firebase:firebase-analytics-ktx"
+    api "com.google.firebase:firebase-crashlytics-ktx"
+    api "com.google.firebase:firebase-messaging-ktx"
+    api 'com.google.firebase:firebase-firestore-ktx'
+}

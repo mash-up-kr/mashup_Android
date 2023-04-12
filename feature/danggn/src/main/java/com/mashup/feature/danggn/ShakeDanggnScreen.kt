@@ -11,11 +11,13 @@ import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.shake.DanggnShakeContent
+import com.mashup.core.common.R as CR
 
 @Composable
 fun ShakeDanggnScreen(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit,
+    onClickDanggnGuideButton: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -23,7 +25,10 @@ fun ShakeDanggnScreen(
         MashUpToolbar(
             title = "당근 흔들기",
             showBackButton = true,
-            onClickBackButton = onClickBackButton
+            onClickBackButton = onClickBackButton,
+            showActionButton = true,
+            onClickActionButton = onClickDanggnGuideButton,
+            actionButtonDrawableRes = CR.drawable.ic_info
         )
 
         // 당근 흔들기 UI

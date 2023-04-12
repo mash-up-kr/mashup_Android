@@ -1,23 +1,25 @@
 package com.mashup.feature.danggn
 
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.shake.ShakeDetector
+import com.mashup.feature.danggn.data.DanggnShaker
+import com.mashup.feature.danggn.data.DanggnShakerState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import javax.inject.Inject
 
 @HiltViewModel
 class DanggnViewModel @Inject constructor(
-    private val shakeDetector: ShakeDetector
+    private val danggnShaker: DanggnShaker
 ) : BaseViewModel() {
 
-    fun subscribeShakeSensor() {
-        shakeDetector.startListening(
-            interval = DANGGN_SHAKE_INTERVAL_TIME,
-            threshold = DANGGN_SHAKE_THRESHOLD,
-            onShakeDevice = {
+    private val danggnState: Flow<DanggnShakerState> = danggnShaker.getDanggnShakeState()
 
-            }
-        )
+    val danggnComboState = danggnShaker.getDanggnShakeState()
+        .filter { it is DanggnShakerState.Combo }
+
+    fun subscribeShakeSensor() {
+        danggnShaker.start()
     }
 
     override fun handleErrorCode(code: String) {
@@ -25,7 +27,7 @@ class DanggnViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        shakeDetector.stopListening()
+        danggnShaker.stop()
     }
 
     companion object {

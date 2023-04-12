@@ -4,37 +4,57 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import javax.inject.Inject
+import android.os.Handler
+import android.os.HandlerThread
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class ShakeDetector @Inject constructor(
-    private val sensorManager: SensorManager
-) : SensorEventListener {
+class ShakeDetector : SensorEventListener {
 
     private val acceleration = FloatArray(3)
     private var lastAcceleration = FloatArray(3)
     private var lastUpdateTime: Long = 0
+
+    private var sensorManager: SensorManager? = null
+
     private var shakeListener: (() -> Unit)? = null
 
     private var shakeIntervalTime: Long = SHAKE_INTERVAL_TIME
     private var shakeThreshold: Int = SHAKE_THRESHOLD
 
+    // ShakeDetector를 Background에서 탐지하기 위한 변수
+    private var sensorThread: HandlerThread? = null
+    private var sensorHandler: Handler? = null
+
     fun startListening(
+        sensorManager: SensorManager,
         threshold: Int = SHAKE_THRESHOLD,
         interval: Long = SHAKE_INTERVAL_TIME,
         onShakeDevice: () -> Unit
     ) {
+        this.sensorManager = sensorManager
         shakeThreshold = threshold
         shakeIntervalTime = interval
         shakeListener = onShakeDevice
+
+        sensorThread = HandlerThread("Sensor thread", Thread.MAX_PRIORITY).also { thread ->
+            sensorHandler = Handler(thread.looper)
+        }
+
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(
+            this,
+            sensor,
+            SensorManager.SENSOR_DELAY_NORMAL,
+            sensorHandler
+        )
     }
 
     fun stopListening() {
         shakeListener = null
-        sensorManager.unregisterListener(this)
+        sensorManager?.unregisterListener(this)
+        sensorThread?.quitSafely()
+        sensorHandler = null
     }
 
     override fun onSensorChanged(event: SensorEvent) {

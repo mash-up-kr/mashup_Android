@@ -20,7 +20,8 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
             MashUpTheme {
                 ShakeDanggnScreen(
                     modifier = Modifier.fillMaxSize(),
-                    onClickBackButton = { onBackPressed() }
+                    onClickBackButton = { onBackPressed() },
+                    onClickDanggnGuideButton = {}
                 )
             }
         }

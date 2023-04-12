@@ -1,5 +1,6 @@
 package com.mashup.core.ui.widget
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,10 +32,11 @@ fun MashUpToolbar(
     modifier: Modifier = Modifier,
     title: String,
     showBackButton: Boolean = false,
-    showCloseButton: Boolean = false,
+    showActionButton: Boolean = false,
     showBottomDivider: Boolean = false,
     onClickBackButton: () -> Unit = {},
-    onClickCloseButton: () -> Unit = {}
+    onClickActionButton: () -> Unit = {},
+    @DrawableRes actionButtonDrawableRes: Int? = null,
 ) {
     Column(modifier = modifier) {
         Row(
@@ -67,13 +69,13 @@ fun MashUpToolbar(
                 textAlign = TextAlign.Center
             )
 
-            if (showCloseButton) {
+            if (showActionButton) {
                 Icon(
                     modifier = Modifier
                         .size(40.dp)
-                        .noRippleClickable { onClickCloseButton() }
+                        .noRippleClickable { onClickActionButton() }
                         .padding(8.dp),
-                    painter = painterResource(id = R.drawable.ic_close),
+                    painter = painterResource(id = actionButtonDrawableRes ?: R.drawable.ic_close),
                     contentDescription = null
                 )
             } else {
@@ -127,7 +129,7 @@ fun MashupToolbarIncludeCloseButtonPrev() {
             MashUpToolbar(
                 modifier = Modifier.fillMaxWidth(),
                 title = "테스트",
-                showCloseButton = true
+                showActionButton = true
             )
         }
     }
@@ -141,7 +143,7 @@ fun MashupToolbarIncludeAllButtonPrev() {
             MashUpToolbar(
                 modifier = Modifier.fillMaxWidth(),
                 title = "테스트",
-                showCloseButton = true,
+                showActionButton = true,
                 showBackButton = true
             )
         }
@@ -157,6 +159,21 @@ fun MashupToolbarIncludeDividerPrev() {
                 modifier = Modifier.fillMaxWidth(),
                 title = "테스트",
                 showBottomDivider = true
+            )
+        }
+    }
+}
+
+@Preview("actionButton 아이콘을 변경한 toolbar")
+@Composable
+fun MashupToolbarActionButtonPrev() {
+    MashUpTheme {
+        Surface {
+            MashUpToolbar(
+                modifier = Modifier.fillMaxWidth(),
+                title = "테스트",
+                showActionButton = true,
+                actionButtonDrawableRes = R.drawable.ic_info
             )
         }
     }

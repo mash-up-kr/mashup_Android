@@ -37,9 +37,8 @@ fun ShakeDanggnScreen(
         // 중간 Divider
         Divider(
             color = Gray100,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(4.dp)
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 4.dp
         )
 
         // 당근 흔들기 랭킹 UI

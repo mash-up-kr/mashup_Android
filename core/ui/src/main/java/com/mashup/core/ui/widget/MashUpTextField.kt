@@ -36,8 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.core.common.R
@@ -185,47 +183,20 @@ private fun setDescriptionText(codeState: Validation): String {
 @Preview("reverse - 기본 텍스트 필드")
 @Composable
 fun MashUpTextFieldPrev(
-    @PreviewParameter(MashUpTextFieldParameterProvider::class) parameter: MashUpTextFieldEntity
+    labelText: String = "탈퇴할게요",
+    validation: Validation = Validation.EMPTY,
+    previousText: String = "",
+    requestFocus: Boolean = false
 ) {
-    var text by remember { mutableStateOf(parameter.previousText) }
+    var text by remember { mutableStateOf(previousText) }
     MashUpTheme {
         MashUpTextField(
             modifier = Modifier,
             text = text,
             onTextChanged = { newText -> text = newText },
             labelText = "탈퇴할게요",
-            requestFocus = parameter.requestFocus,
-            validation = parameter.validation
+            requestFocus = requestFocus,
+            validation = validation
         )
     }
 }
-
-class MashUpTextFieldParameterProvider : PreviewParameterProvider<MashUpTextFieldEntity> {
-    override val values: Sequence<MashUpTextFieldEntity> = sequenceOf(
-        MashUpTextFieldEntity(
-            labelText = "탈퇴할게요",
-            validation = Validation.EMPTY,
-            previousText = "",
-            requestFocus = false
-        ),
-        MashUpTextFieldEntity(
-            labelText = "탈퇴할게요",
-            validation = Validation.SUCCESS,
-            previousText = "abasdasdsa",
-            requestFocus = true
-        ),
-        MashUpTextFieldEntity(
-            labelText = "탈퇴할게요",
-            validation = Validation.FAILED,
-            previousText = "asfpasfsapoaspfojaspfoapsfo",
-            requestFocus = true
-        )
-    )
-}
-
-data class MashUpTextFieldEntity(
-    val labelText: String = "",
-    val validation: Validation = Validation.EMPTY,
-    val previousText: String = "",
-    val requestFocus: Boolean = false
-)

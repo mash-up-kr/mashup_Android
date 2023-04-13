@@ -36,7 +36,7 @@ fun MashUpToolbar(
     showBottomDivider: Boolean = false,
     onClickBackButton: () -> Unit = {},
     onClickActionButton: () -> Unit = {},
-    @DrawableRes actionButtonDrawableRes: Int? = null,
+    @DrawableRes actionButtonDrawableRes: Int = R.drawable.ic_close,
 ) {
     Column(modifier = modifier) {
         Row(
@@ -75,7 +75,7 @@ fun MashUpToolbar(
                         .size(40.dp)
                         .noRippleClickable { onClickActionButton() }
                         .padding(8.dp),
-                    painter = painterResource(id = actionButtonDrawableRes ?: R.drawable.ic_close),
+                    painter = painterResource(id = actionButtonDrawableRes),
                     contentDescription = null
                 )
             } else {

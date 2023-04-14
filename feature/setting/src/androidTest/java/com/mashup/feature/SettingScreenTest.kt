@@ -34,7 +34,8 @@ internal class SettingScreenTest {
                 onLogout = {},
                 onDeleteUser = {},
                 onToggleFcm = {},
-                onClickSNS = {}
+                onClickSNS = {},
+                onClickBackButton = {}
             )
         }
 
@@ -56,7 +57,8 @@ internal class SettingScreenTest {
                 onLogout = {},
                 onDeleteUser = {},
                 onToggleFcm = {},
-                onClickSNS = {}
+                onClickSNS = {},
+                onClickBackButton = {}
             )
         }
 
@@ -78,7 +80,8 @@ internal class SettingScreenTest {
                 onLogout = {},
                 onDeleteUser = {},
                 onToggleFcm = {},
-                onClickSNS = {}
+                onClickSNS = {},
+                onClickBackButton = {}
             )
         }
 

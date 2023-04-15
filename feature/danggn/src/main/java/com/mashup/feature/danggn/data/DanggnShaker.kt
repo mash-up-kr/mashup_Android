@@ -1,6 +1,6 @@
 package com.mashup.feature.danggn.data
 
-import android.hardware.SensorManager
+import android.util.Log
 import com.mashup.core.shake.ShakeDetector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,6 @@ import javax.inject.Inject
  * ShakeDetector의 shake 이벤트를 탐지하여 콤보 카운트를 계산합니다.
  */
 class DanggnShaker @Inject constructor(
-    private val sensorManager: SensorManager,
     private val shakeDetector: ShakeDetector
 ) {
     private val shakerStateChannel = Channel<DanggnShakerState>(Channel.UNLIMITED)
@@ -31,14 +30,20 @@ class DanggnShaker @Inject constructor(
     private var lastShakeTime: Long = 0
     private var comboCount = AtomicInteger()
 
-    fun start() {
+    /**
+     *
+     */
+    fun start(
+        threshold: Int,
+        interval: Long,
+    ) {
         danggnShakerScope = CoroutineScope(Dispatchers.Default)
         collectComboFlow()
         shakeDetector.startListening(
-            sensorManager = sensorManager,
-            threshold = 0,
-            interval = 0,
+            threshold = threshold,
+            interval = interval,
             onShakeDevice = {
+                Log.d("DanggnShake", "onShake")
                 danggnShakerScope?.launch {
                     val comboCount = comboCount.incrementAndGet()
                     shakerStateChannel.send(
@@ -67,6 +72,7 @@ class DanggnShaker @Inject constructor(
                     shakerStateChannel.send(
                         DanggnShakerState.End(lastScore = lastScore)
                     )
+                    shakerStateChannel.send(DanggnShakerState.Idle)
                 }
         }
     }
@@ -82,6 +88,7 @@ class DanggnShaker @Inject constructor(
 }
 
 sealed interface DanggnShakerState {
+    object Idle : DanggnShakerState
     data class Combo(val score: Int) : DanggnShakerState
     data class End(val lastScore: Int) : DanggnShakerState
 }

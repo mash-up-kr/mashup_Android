@@ -1,5 +1,6 @@
 package com.mashup.data.repository
 
+import com.mashup.data.dto.DanggnAllMemberRankResponse
 import com.mashup.data.dto.DanggnMemberRankResponse
 import com.mashup.data.dto.DanggnPlatformRankResponse
 import com.mashup.network.Response
@@ -18,7 +19,7 @@ class DanggnRankRepository @Inject constructor(
 
     suspend fun getAllDanggnRank(
         generationNumber: Int
-    ): Response<List<DanggnMemberRankResponse>> {
+    ): Response<DanggnAllMemberRankResponse> {
         return danggnRankDao.getDanggnAllMemberRank(generationNumber)
     }
 

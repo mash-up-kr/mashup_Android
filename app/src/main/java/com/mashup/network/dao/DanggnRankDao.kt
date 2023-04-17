@@ -1,5 +1,6 @@
 package com.mashup.network.dao
 
+import com.mashup.data.dto.DanggnAllMemberRankResponse
 import com.mashup.data.dto.DanggnMemberRankResponse
 import com.mashup.data.dto.DanggnPlatformRankResponse
 import com.mashup.network.Response
@@ -11,6 +12,7 @@ import retrofit2.http.Query
  */
 interface DanggnRankDao {
     // 당근 흔들기 개인별 랭킹
+    @Deprecated("동시성 문제로 사용하지 않는 API 입니다")
     @GET("api/v1/danggn/rank/member")
     suspend fun getDanggnMemberRank(
         @Query("generationNumber") generationNumber: Int, @Query("limit") limit: Int
@@ -20,7 +22,7 @@ interface DanggnRankDao {
     @GET("api/v1/danggn/rank/member/all")
     suspend fun getDanggnAllMemberRank(
         @Query("generationNumber") generationNumber: Int
-    ): Response<List<DanggnMemberRankResponse>>
+    ): Response<DanggnAllMemberRankResponse>
 
     // 당근 흔들기 플랫폼별 랭킹
     @GET("api/v1/danggn/rank/platform")

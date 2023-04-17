@@ -5,6 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class PushNotificationRequest(
-    @field:Json(name = "pushNotificationAgreed")
-    val pushNotificationAgreed: Boolean
+    @field:Json(name = "newsPushNotificationAgreed")
+    val pushNotificationAgreed: Boolean,
+    @field:Json(name = "danggnPushNotificationAgreed")
+    val danggnPushNotificationAgreed: Boolean
 )

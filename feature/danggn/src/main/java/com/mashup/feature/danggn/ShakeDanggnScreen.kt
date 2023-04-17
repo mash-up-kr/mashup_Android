@@ -26,7 +26,7 @@ fun ShakeDanggnScreen(
     onClickDanggnGuideButton: () -> Unit,
 ) {
 
-    val danggnComboState by viewModel.danggnComboState.collectAsState(DanggnShakerState.Idle)
+    val danggnComboState by viewModel.danggnState.collectAsState(DanggnShakerState.Idle)
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()

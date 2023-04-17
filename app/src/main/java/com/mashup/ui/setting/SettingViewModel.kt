@@ -34,7 +34,7 @@ class SettingViewModel @Inject constructor(
         if (result.isSuccess()) {
             userPreferenceRepository.updateUserPushNotificationAgreed(
                 pushNotificationAgreed = pushNotificationAgreed,
-                danggnPushNotificationAgreed = pushNotificationAgreed
+                danggnPushNotificationAgreed = danggnPushNotificationAgreed
             )
         }
     }

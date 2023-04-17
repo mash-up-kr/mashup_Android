@@ -1,14 +1,16 @@
 package com.mashup.feature.danggn.ranking
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -16,11 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -29,7 +32,10 @@ import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.ui.typography.Caption1
+import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
+import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
@@ -79,9 +85,71 @@ fun DanggnRankingContent(
                     })
             }
         }
-        HorizontalPager(count = pages.size, state = pagerState) { page ->
-            // ranking ui
+        HorizontalPager(
+            modifier = Modifier.fillMaxWidth(),
+            count = pages.size,
+            state = pagerState,
+            verticalAlignment = Alignment.Top
+        ) { _ ->
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                itemsIndexed(
+                    items = mockAllDanggnRanking.allMemberRankList.slice(0..2),
+                    key = { _, item ->
+                        item.memberId
+                    }) { index, item ->
+                    // composable 하나 만들자
+                    RankingContent(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        index = index,
+                        name = item.memberName,
+                        shakeCount = item.totalShakeScore,
+                    )
+                }
+            }
+        }
+    }
+}
 
+@Composable
+private fun RankingContent(
+    modifier: Modifier,
+    index: Int,
+    name: String,
+    shakeCount: Int,
+) {
+    val imageResourceList =
+        listOf(R.drawable.img_rank_1, R.drawable.img_rank_2, R.drawable.img_rank_3)
+    Row(
+        modifier = modifier.padding(start = 20.dp, bottom = 25.dp, end = 20.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row {
+            Image(
+                painter = painterResource(id = imageResourceList[index]),
+                contentDescription = null
+            )
+            Text(
+                // 색깔 얘기해보기
+                modifier = Modifier
+                    .padding(start = 12.dp),
+                text = name,
+                style = SubTitle1,
+                textAlign = TextAlign.Center
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                modifier = Modifier.size(10.dp),
+                painter = painterResource(id = R.drawable.ic_img_carrot_2),
+                contentDescription = null
+            )
+            Text(
+                modifier = Modifier.padding(start = 4.dp),
+                text = shakeCount.toString(), // 컴마 표시 유틸 추가하기
+                style = Caption1
+            )
         }
     }
 }
@@ -108,3 +176,38 @@ fun MashUpRankingPreview() {
         DanggnRankingContent()
     }
 }
+
+val mockAllDanggnRanking = DanggnAllMemberRankResponse(
+    listOf(
+        DanggnMemberRankResponse(
+            39, "정종노드", 150
+        ),
+        DanggnMemberRankResponse(
+            40, "정종드투", 151
+        ),
+        DanggnMemberRankResponse(
+            41, "정종민", 152
+        ),
+        DanggnMemberRankResponse(
+            42, "정종웹", 153
+        ),
+        DanggnMemberRankResponse(
+            43, "정종오스", 154
+        ),
+        DanggnMemberRankResponse(
+            44, "정종자인", 155
+        ),
+    ),
+    limit = 11
+)
+
+data class DanggnMemberRankResponse(
+    val memberId: Int,
+    val memberName: String,
+    val totalShakeScore: Int
+)
+
+data class DanggnAllMemberRankResponse(
+    val allMemberRankList: List<DanggnMemberRankResponse>,
+    val limit: Int,
+)

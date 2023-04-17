@@ -63,6 +63,9 @@ ext {
     // Navigation
     navVersion = "2.4.2"
 
+    // composeViewPager
+    composeViewPagerVersion = "0.20.1"
+
     // Test
     junit4Version = "4.13.2"
     turbine = "app.cash.turbine:turbine:0.12.0"

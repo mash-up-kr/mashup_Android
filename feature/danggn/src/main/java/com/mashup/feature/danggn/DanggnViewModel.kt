@@ -5,10 +5,9 @@ import com.mashup.core.common.base.BaseViewModel
 import com.mashup.feature.danggn.data.DanggnShaker
 import com.mashup.feature.danggn.data.DanggnShakerState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,16 +16,11 @@ class DanggnViewModel @Inject constructor(
     private val danggnShaker: DanggnShaker
 ) : BaseViewModel() {
 
-    val danggnComboState: Flow<DanggnShakerState> = danggnShaker.getDanggnShakeState()
-        .filter { it is DanggnShakerState.Combo }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            DanggnShakerState.Idle
-        )
+    private val _danggnState = MutableStateFlow<DanggnShakerState>(DanggnShakerState.Idle)
+    val danggnState: StateFlow<DanggnShakerState> = _danggnState.asStateFlow()
 
     init {
-        sendDanggnScoreWhenComboEnd()
+        collectDanggnState()
     }
 
     fun subscribeShakeSensor() {
@@ -44,12 +38,18 @@ class DanggnViewModel @Inject constructor(
         danggnShaker.stop()
     }
 
-    private fun sendDanggnScoreWhenComboEnd() {
+    private fun collectDanggnState() {
         viewModelScope.launch {
             danggnShaker.getDanggnShakeState()
-                .filter { it is DanggnShakerState.End }
                 .collect {
-
+                    when (it) {
+                        is DanggnShakerState.End -> {
+                            // run
+                        }
+                        else -> {
+                            _danggnState.emit(it)
+                        }
+                    }
                 }
         }
     }

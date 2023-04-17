@@ -8,11 +8,10 @@ import com.mashup.feature.danggn.data.DanggnShakerState
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,16 +22,11 @@ class DanggnViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : BaseViewModel() {
 
-    val danggnComboState: Flow<DanggnShakerState> = danggnShaker.getDanggnShakeState()
-        .filter { it is DanggnShakerState.Combo }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            DanggnShakerState.Idle
-        )
+    private val _danggnState = MutableStateFlow<DanggnShakerState>(DanggnShakerState.Idle)
+    val danggnState: StateFlow<DanggnShakerState> = _danggnState.asStateFlow()
 
     init {
-        sendDanggnScoreWhenComboEnd()
+        collectDanggnState()
     }
 
     fun subscribeShakeSensor() {
@@ -50,12 +44,18 @@ class DanggnViewModel @Inject constructor(
         danggnShaker.stop()
     }
 
-    private fun sendDanggnScoreWhenComboEnd() {
+    private fun collectDanggnState() {
         viewModelScope.launch {
             danggnShaker.getDanggnShakeState()
-                .filter { it is DanggnShakerState.End }
                 .collect {
-                    sendDanggnScore(it as DanggnShakerState.End)
+                    when (it) {
+                        is DanggnShakerState.End -> {
+                            sendDanggnScore(it)
+                        }
+                        else -> {
+                            _danggnState.emit(it)
+                        }
+                    }
                 }
         }
     }

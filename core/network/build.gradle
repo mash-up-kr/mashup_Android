@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlinx-serialization'
+}
+
+android {
+    namespace 'com.mashup.network'
+    compileSdk compileVersion
+
+    defaultConfig {
+        minSdk minVersion
+        targetSdk targetVersion
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    // network
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttpInterceptorVerison"
+}

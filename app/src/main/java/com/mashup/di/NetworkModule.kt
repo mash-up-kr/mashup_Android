@@ -10,6 +10,7 @@ import com.mashup.network.dao.ScoreDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +31,7 @@ class NetworkModule {
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, CustomDateAdapter().nullSafe())
+        .addLast(KotlinJsonAdapterFactory())
         .build()
 
     @Provides

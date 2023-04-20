@@ -2,9 +2,7 @@ package com.mashup.feature.danggn
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,7 +24,7 @@ fun ShakeDanggnScreen(
     onClickDanggnGuideButton: () -> Unit,
 ) {
 
-    val danggnComboState by viewModel.danggnState.collectAsState(DanggnShakerState.Idle)
+    val uiState by viewModel.uiState.collectAsState(DanggnShakerState.Idle)
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()
@@ -46,11 +44,6 @@ fun ShakeDanggnScreen(
 
         // 당근 흔들기 UI
         DanggnShakeContent()
-        
-        Text(
-            modifier = Modifier.padding(12.dp),
-            text = danggnComboState.toString()
-        )
 
         // 중간 Divider
         Divider(

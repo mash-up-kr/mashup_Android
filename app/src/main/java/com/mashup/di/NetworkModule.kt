@@ -4,13 +4,13 @@ import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
 import com.mashup.network.dao.AttendanceDao
-import com.mashup.network.dao.DanggnRankDao
 import com.mashup.network.dao.MemberDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +31,7 @@ class NetworkModule {
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, CustomDateAdapter().nullSafe())
+        .addLast(KotlinJsonAdapterFactory())
         .build()
 
     @Provides
@@ -98,14 +99,6 @@ class NetworkModule {
     fun provideScoreDao(
         retrofit: Retrofit
     ): ScoreDao {
-        return retrofit.create()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDanggnRankDao(
-        retrofit: Retrofit
-    ): DanggnRankDao {
         return retrofit.create()
     }
 }

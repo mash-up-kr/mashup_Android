@@ -2,6 +2,7 @@ package com.mashup.feature.danggn
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.DanggnShaker
 import com.mashup.feature.danggn.data.DanggnShakerState
@@ -11,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,8 +23,8 @@ class DanggnViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : BaseViewModel() {
 
-    private val _danggnState = MutableStateFlow<DanggnShakerState>(DanggnShakerState.Idle)
-    val danggnState: StateFlow<DanggnShakerState> = _danggnState.asStateFlow()
+    private val _uiState = MutableStateFlow<DanggnUiState>(DanggnUiState.Loading)
+    val uiState: StateFlow<DanggnUiState> = _uiState.asStateFlow()
 
     init {
         collectDanggnState()
@@ -37,6 +38,13 @@ class DanggnViewModel @Inject constructor(
     }
 
     override fun handleErrorCode(code: String) {
+        mashUpScope {
+            when (code) {
+                UNAUTHORIZED -> {
+                    _uiState.emit(DanggnUiState.Error(code))
+                }
+            }
+        }
     }
 
     override fun onCleared() {
@@ -53,7 +61,7 @@ class DanggnViewModel @Inject constructor(
                             sendDanggnScore(it)
                         }
                         else -> {
-                            _danggnState.emit(it)
+                            _uiState.emit(DanggnUiState.Success)
                         }
                     }
                 }
@@ -64,12 +72,16 @@ class DanggnViewModel @Inject constructor(
         danggnShakerState: DanggnShakerState.End
     ) = mashUpScope {
         val generateNumber =
-            userPreferenceRepository.getUserPreference().first().generationNumbers.last()
-
-        danggnRepository.postDanggnScore(
-            generationNumber = generateNumber,
-            scoreRequest = DanggnScoreRequest(danggnShakerState.lastScore)
-        )
+            userPreferenceRepository.getUserPreference()
+                .firstOrNull()?.generationNumbers?.lastOrNull()
+        if (generateNumber != null) {
+            danggnRepository.postDanggnScore(
+                generationNumber = generateNumber,
+                scoreRequest = DanggnScoreRequest(danggnShakerState.lastScore)
+            )
+        } else {
+            handleErrorCode(UNAUTHORIZED)
+        }
     }
 
     companion object {
@@ -77,3 +89,11 @@ class DanggnViewModel @Inject constructor(
         private const val DANGGN_SHAKE_THRESHOLD = 200
     }
 }
+
+sealed interface DanggnUiState {
+    object Loading : DanggnUiState
+    object Success : DanggnUiState
+
+    data class Error(val code: String) : DanggnUiState
+}
+

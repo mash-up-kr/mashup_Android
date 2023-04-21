@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.data
 
+import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
@@ -15,6 +16,7 @@ import retrofit2.http.Query
  */
 interface DanggnDao {
     // 당근 흔들기 개인별 랭킹
+    @Deprecated("동시성 문제로 사용하지 않는 API 입니다.")
     @GET("api/v1/danggn/rank/member")
     suspend fun getDanggnMemberRank(
         @Query("generationNumber") generationNumber: Int, @Query("limit") limit: Int
@@ -24,7 +26,7 @@ interface DanggnDao {
     @GET("api/v1/danggn/rank/member/all")
     suspend fun getDanggnAllMemberRank(
         @Query("generationNumber") generationNumber: Int
-    ): Response<List<DanggnMemberRankResponse>>
+    ): Response<DanggnAllMemberRankResponse>
 
     // 당근 흔들기 플랫폼별 랭킹
     @GET("api/v1/danggn/rank/platform")

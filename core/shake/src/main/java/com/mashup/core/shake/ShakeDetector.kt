@@ -4,32 +4,40 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class ShakeDetector @Inject constructor(
-    private val sensorManager: SensorManager
+    private val sensorManager: SensorManager,
 ) : SensorEventListener {
 
     private val acceleration = FloatArray(3)
     private var lastAcceleration = FloatArray(3)
     private var lastUpdateTime: Long = 0
+    private var lastShakeTime: Long = 0
+
     private var shakeListener: (() -> Unit)? = null
 
-    private var shakeIntervalTime: Long = SHAKE_INTERVAL_TIME
-    private var shakeThreshold: Int = SHAKE_THRESHOLD
+    private var shakeIntervalTime: Long = DEFAULT_SHAKE_INTERVAL_TIME
+    private var shakeThreshold: Int = DEFAULT_SHAKE_THRESHOLD
 
     fun startListening(
-        threshold: Int = SHAKE_THRESHOLD,
-        interval: Long = SHAKE_INTERVAL_TIME,
+        threshold: Int = DEFAULT_SHAKE_THRESHOLD,
+        interval: Long = DEFAULT_SHAKE_INTERVAL_TIME,
         onShakeDevice: () -> Unit
     ) {
         shakeThreshold = threshold
         shakeIntervalTime = interval
         shakeListener = onShakeDevice
+
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(
+            this,
+            sensor,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
     }
 
     fun stopListening() {
@@ -57,8 +65,10 @@ class ShakeDetector @Inject constructor(
                 ) / timeDifference * 10000
 
                 if (speed > shakeThreshold) {
+                    lastShakeTime = currentTime
                     shakeListener?.invoke()
                 }
+                Log.d("DanggnShake", "speed: $speed, timeDiff $timeDifference")
             }
             System.arraycopy(acceleration, 0, lastAcceleration, 0, acceleration.size)
         }
@@ -68,7 +78,7 @@ class ShakeDetector @Inject constructor(
     }
 
     companion object {
-        private const val SHAKE_INTERVAL_TIME = 100L
-        private const val SHAKE_THRESHOLD = 5000
+        private const val DEFAULT_SHAKE_INTERVAL_TIME = 100L
+        private const val DEFAULT_SHAKE_THRESHOLD = 200
     }
 }

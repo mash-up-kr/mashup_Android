@@ -41,11 +41,13 @@ class UserPreferenceRepository @Inject constructor(
     }
 
     suspend fun updateUserPushNotificationAgreed(
-        pushNotificationAgreed: Boolean
+        pushNotificationAgreed: Boolean,
+        danggnPushNotificationAgreed: Boolean
     ) {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
-                pushNotificationAgreed = pushNotificationAgreed
+                pushNotificationAgreed = pushNotificationAgreed,
+                danggnPushNotificationAgreed = danggnPushNotificationAgreed
             )
         }
     }

@@ -1,8 +1,8 @@
-package com.mashup.core.shake.di
+package com.mashup.feature.danggn.di
 
 import android.content.Context
 import android.hardware.SensorManager
-import com.mashup.core.shake.ShakeDetector
+import com.mashup.feature.danggn.data.ShakeDetector
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -4,7 +4,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -47,7 +46,6 @@ class ShakeDetector @Inject constructor(
                         lastShakeTime = currentTime
                         shakeListener?.invoke()
                     }
-                    Log.d("DanggnShake", "speed: $speed, timeDiff $timeDifference")
                 }
                 System.arraycopy(acceleration, 0, lastAcceleration, 0, acceleration.size)
             }

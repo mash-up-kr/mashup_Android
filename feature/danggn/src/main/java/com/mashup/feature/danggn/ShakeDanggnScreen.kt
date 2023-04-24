@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
-import com.mashup.feature.danggn.data.DanggnShakerState
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.core.common.R as CR
@@ -24,7 +23,7 @@ fun ShakeDanggnScreen(
     onClickDanggnGuideButton: () -> Unit,
 ) {
 
-    val uiState by viewModel.uiState.collectAsState(DanggnShakerState.Idle)
+    val uiState by viewModel.uiState.collectAsState(DanggnUiState.Loading)
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()

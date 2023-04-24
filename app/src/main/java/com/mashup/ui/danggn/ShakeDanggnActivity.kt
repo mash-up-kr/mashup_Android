@@ -28,10 +28,15 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     modifier = Modifier.fillMaxSize(),
                     viewModel = viewModel,
                     onClickBackButton = { onBackPressed() },
-                    onClickDanggnGuideButton = {}
+                    onClickDanggnInfoButton = { openDanggnInfoActivity() }
                 )
             }
         }
+    }
+
+    private fun openDanggnInfoActivity() {
+        val intent = DanggnInfoActivity.newIntent(this)
+        startActivity(intent)
     }
 
     companion object {

@@ -26,8 +26,12 @@ class DanggnViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<DanggnUiState>(DanggnUiState.Loading)
     val uiState: StateFlow<DanggnUiState> = _uiState.asStateFlow()
 
+    private val _randomMessage = MutableStateFlow("")
+    val randomMessage: StateFlow<String> = _randomMessage.asStateFlow()
+
     init {
         collectDanggnState()
+        getDanggnRandomTodayMessage()
     }
 
     fun subscribeShakeSensor() {
@@ -81,6 +85,14 @@ class DanggnViewModel @Inject constructor(
             )
         } else {
             handleErrorCode(UNAUTHORIZED)
+        }
+    }
+
+    private fun getDanggnRandomTodayMessage() = mashUpScope {
+        val response = danggnRepository.getDanggnRandomTodayMessage()
+
+        if(response.isSuccess()) {
+            _randomMessage.value = response.data?.todayMessage ?: ""
         }
     }
 

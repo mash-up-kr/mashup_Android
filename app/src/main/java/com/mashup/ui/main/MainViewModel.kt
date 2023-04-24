@@ -3,8 +3,8 @@ package com.mashup.ui.main
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
-import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_LOGIN_TYPE
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.MemberRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -31,9 +31,6 @@ class MainViewModel @Inject constructor(
     private val _onAttendance = MutableSharedFlow<Unit>()
     val onAttendance: SharedFlow<Unit> = _onAttendance
 
-    private val _successAttendance = MutableSharedFlow<Unit>()
-    val successAttendance: SharedFlow<Unit> = _successAttendance
-
     init {
         savedStateHandle.get<LoginType>(EXTRA_LOGIN_TYPE)?.run {
             handleLoginType(this)
@@ -49,7 +46,6 @@ class MainViewModel @Inject constructor(
 
     fun successAttendance() = mashUpScope {
         _isShowCongratsAttendanceScreen.value = true
-        _successAttendance.emit(Unit)
         delay(2000L)
         _isShowCongratsAttendanceScreen.value = false
     }

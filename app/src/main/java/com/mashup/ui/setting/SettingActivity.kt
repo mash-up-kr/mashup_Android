@@ -118,7 +118,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     }
 
     private fun onToggleFcm(isChecked: Boolean) {
-        viewModel.patchPushNotification(isChecked)
+        viewModel.patchPushNotification(isChecked, true)
     }
 
     companion object {

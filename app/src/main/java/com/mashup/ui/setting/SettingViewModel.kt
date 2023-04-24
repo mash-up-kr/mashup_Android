@@ -23,10 +23,19 @@ class SettingViewModel @Inject constructor(
         _onSuccessLogout.emit(Unit)
     }
 
-    fun patchPushNotification(pushNotificationAgreed: Boolean) = mashUpScope {
-        val result = memberRepository.patchPushNotification(pushNotificationAgreed)
+    fun patchPushNotification(
+        pushNotificationAgreed: Boolean,
+        danggnPushNotificationAgreed: Boolean
+    ) = mashUpScope {
+        val result = memberRepository.patchPushNotification(
+            pushNotificationAgreed = pushNotificationAgreed,
+            danggnPushNotificationAgreed = danggnPushNotificationAgreed
+        )
         if (result.isSuccess()) {
-            userPreferenceRepository.updateUserPushNotificationAgreed(pushNotificationAgreed)
+            userPreferenceRepository.updateUserPushNotificationAgreed(
+                pushNotificationAgreed = pushNotificationAgreed,
+                danggnPushNotificationAgreed = danggnPushNotificationAgreed
+            )
         }
     }
 

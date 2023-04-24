@@ -6,6 +6,7 @@ import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
+import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.network.Response
 import javax.inject.Inject
 
@@ -39,5 +40,9 @@ class DanggnRepository @Inject constructor(
             generationNumber = generationNumber,
             scoreRequest = scoreRequest
         )
+    }
+
+    suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse> {
+        return danggnDao.getDanggnRandomTodayMessage()
     }
 }

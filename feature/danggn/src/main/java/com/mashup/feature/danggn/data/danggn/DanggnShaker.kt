@@ -1,6 +1,5 @@
 package com.mashup.feature.danggn.data.danggn
 
-import android.util.Log
 import com.mashup.feature.danggn.data.ShakeDetector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +22,9 @@ import javax.inject.Inject
 class DanggnShaker @Inject constructor(
     private val shakeDetector: ShakeDetector
 ) {
-    private val danggnModeChannel = Channel<DanggnMode>(Channel.UNLIMITED)
-    private val shakerStateChannel = Channel<DanggnShakerState>(Channel.UNLIMITED)
-    private val comboScoreChannel = Channel<Int>(Channel.UNLIMITED)
+    private val danggnModeChannel = Channel<DanggnMode>()
+    private val shakerStateChannel = Channel<DanggnShakerState>()
+    private val comboScoreChannel = Channel<Int>()
 
     private var danggnShakerScope: CoroutineScope? = null
     private var debounceDetectorJob: Job? = null
@@ -48,9 +47,7 @@ class DanggnShaker @Inject constructor(
             threshold = threshold,
             interval = interval,
             onShakeDevice = {
-                Log.d("DanggnShake", "onShake")
                 danggnShakerScope?.launch {
-                    Log.d("shakerState", "thread: ${Thread.currentThread().name}")
                     val newComboScore = comboScore.updateAndGet(danggnMode::getNextScore)
                     shakerStateChannel.send(
                         DanggnShakerState.Combo(

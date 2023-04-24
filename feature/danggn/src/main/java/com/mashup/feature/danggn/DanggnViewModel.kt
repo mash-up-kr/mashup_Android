@@ -1,6 +1,5 @@
 package com.mashup.feature.danggn
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.constant.UNAUTHORIZED
@@ -57,7 +56,6 @@ class DanggnViewModel @Inject constructor(
         viewModelScope.launch {
             danggnShaker.getDanggnShakeState()
                 .collect {
-                    Log.d("danggnState", it.toString())
                     when (it) {
                         is DanggnShakerState.End -> {
                             sendDanggnScore(it)

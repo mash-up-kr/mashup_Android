@@ -43,7 +43,7 @@ fun ShakeDanggnScreen(
         )
 
         // 당근 흔들기 UI
-        DanggnShakeContent()
+        DanggnShakeContent(viewModel = viewModel)
 
         // 중간 Divider
         Divider(

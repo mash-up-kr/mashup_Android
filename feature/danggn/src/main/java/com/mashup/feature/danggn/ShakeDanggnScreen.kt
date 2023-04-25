@@ -21,7 +21,7 @@ fun ShakeDanggnScreen(
     modifier: Modifier = Modifier,
     viewModel: DanggnViewModel,
     onClickBackButton: () -> Unit,
-    onClickDanggnGuideButton: () -> Unit,
+    onClickDanggnInfoButton: () -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsState(DanggnShakerState.Idle)
@@ -38,7 +38,7 @@ fun ShakeDanggnScreen(
             showBackButton = true,
             onClickBackButton = onClickBackButton,
             showActionButton = true,
-            onClickActionButton = onClickDanggnGuideButton,
+            onClickActionButton = onClickDanggnInfoButton,
             actionButtonDrawableRes = CR.drawable.ic_info
         )
 

@@ -80,6 +80,13 @@ val SubTitle2 = TextStyle(
     letterSpacing = (-0.01).em
 )
 
+val SubTitle3 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 14.sp,
+    letterSpacing = (-0.01).em
+)
+
 val Body1 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Medium,

@@ -123,6 +123,7 @@ obj/
 .idea/gradle.xml
 .idea/jarRepositories.xml
 .idea/navEditor.xml
+.idea/codeStyles/Project.xml
 
 # OS-specific files
 .DS_Store

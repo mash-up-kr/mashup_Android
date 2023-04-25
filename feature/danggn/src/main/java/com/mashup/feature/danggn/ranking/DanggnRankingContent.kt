@@ -5,7 +5,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +34,7 @@ import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.ui.typography.Body3
 import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
@@ -85,19 +88,22 @@ fun DanggnRankingContent(
                     })
             }
         }
+        // TODO 내 랭킹 추가하기
         HorizontalPager(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             count = pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) { _ ->
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(top = 12.dp)
+            ) {
                 itemsIndexed(
                     items = mockAllDanggnRanking.allMemberRankList.slice(0..2),
                     key = { _, item ->
                         item.memberId
                     }) { index, item ->
-                    // composable 하나 만들자
                     RankingContent(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -131,7 +137,7 @@ private fun RankingContent(
                 contentDescription = null
             )
             Text(
-                // 색깔 얘기해보기
+                // TODO 색깔 그라데이션
                 modifier = Modifier
                     .padding(start = 12.dp),
                 text = name,
@@ -142,13 +148,13 @@ private fun RankingContent(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 modifier = Modifier.size(10.dp),
-                painter = painterResource(id = R.drawable.ic_img_carrot_2),
+                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
                 contentDescription = null
             )
             Text(
                 modifier = Modifier.padding(start = 4.dp),
                 text = shakeCount.toString(), // 컴마 표시 유틸 추가하기
-                style = Caption1
+                style = Body3
             )
         }
     }

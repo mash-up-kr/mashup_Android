@@ -90,9 +90,13 @@ class DanggnViewModel @Inject constructor(
 
     private fun getDanggnRandomTodayMessage() = mashUpScope {
         val response = danggnRepository.getDanggnRandomTodayMessage()
+        val defaultMessage = "힘들면 당근 흔들어잇!"
 
-        if(response.isSuccess()) {
-            _randomMessage.value = response.data?.todayMessage ?: ""
+        if (response.isSuccess()) {
+            _randomMessage.value = response.data?.todayMessage ?: defaultMessage
+        } else {
+            // 서버 에러시 기본 메시지
+            _randomMessage.value = defaultMessage
         }
     }
 

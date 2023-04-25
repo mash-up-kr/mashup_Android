@@ -13,6 +13,7 @@ import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.data.DanggnShakerState
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.core.common.R as CR
 
@@ -20,11 +21,13 @@ import com.mashup.core.common.R as CR
 fun ShakeDanggnScreen(
     modifier: Modifier = Modifier,
     viewModel: DanggnViewModel,
+    rankingViewModel: DanggnRankingViewModel,
     onClickBackButton: () -> Unit,
     onClickDanggnGuideButton: () -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsState(DanggnShakerState.Idle)
+    val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()
@@ -53,6 +56,6 @@ fun ShakeDanggnScreen(
         )
 
         // 당근 흔들기 랭킹 UI
-        DanggnRankingContent()
+        DanggnRankingContent(list = uiRankState)
     }
 }

@@ -35,16 +35,17 @@ import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
-import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
+import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse as DtoRankResponse
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun DanggnRankingContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    list: List<DtoRankResponse>
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -93,20 +94,20 @@ fun DanggnRankingContent(
             modifier = Modifier.fillMaxSize(),
             count = pages.size,
             state = pagerState,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
         ) { _ ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(top = 12.dp)
             ) {
-                itemsIndexed(
-                    items = mockAllDanggnRanking.allMemberRankList.slice(0..2),
-                    key = { _, item ->
-                        item.memberId
-                    }) { index, item ->
+                itemsIndexed(items = list
+                    .sortedByDescending {
+                        it.totalShakeScore
+                    }, key = { _, item ->
+                    item.memberId
+                }) { index, item ->
                     RankingContent(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         index = index,
                         name = item.memberName,
                         shakeCount = item.totalShakeScore,
@@ -138,8 +139,7 @@ private fun RankingContent(
             )
             Text(
                 // TODO 색깔 그라데이션
-                modifier = Modifier
-                    .padding(start = 12.dp),
+                modifier = Modifier.padding(start = 12.dp),
                 text = name,
                 style = SubTitle1,
                 textAlign = TextAlign.Center
@@ -162,8 +162,7 @@ private fun RankingContent(
 
 @Composable
 private fun MashUpPagerColorAnimator(
-    title: String,
-    selected: Boolean
+    title: String, selected: Boolean
 ) {
     val textColorAnimation by animateColorAsState(
         targetValue = if (selected) Black else Gray400
@@ -179,41 +178,6 @@ private fun MashUpPagerColorAnimator(
 @Composable
 fun MashUpRankingPreview() {
     MashUpTheme {
-        DanggnRankingContent()
+        DanggnRankingContent(list = listOf())
     }
 }
-
-val mockAllDanggnRanking = DanggnAllMemberRankResponse(
-    listOf(
-        DanggnMemberRankResponse(
-            39, "정종노드", 150
-        ),
-        DanggnMemberRankResponse(
-            40, "정종드투", 151
-        ),
-        DanggnMemberRankResponse(
-            41, "정종민", 152
-        ),
-        DanggnMemberRankResponse(
-            42, "정종웹", 153
-        ),
-        DanggnMemberRankResponse(
-            43, "정종오스", 154
-        ),
-        DanggnMemberRankResponse(
-            44, "정종자인", 155
-        ),
-    ),
-    limit = 11
-)
-
-data class DanggnMemberRankResponse(
-    val memberId: Int,
-    val memberName: String,
-    val totalShakeScore: Int
-)
-
-data class DanggnAllMemberRankResponse(
-    val allMemberRankList: List<DanggnMemberRankResponse>,
-    val limit: Int,
-)

@@ -13,9 +13,13 @@ import javax.inject.Inject
 class DanggnRepository @Inject constructor(
     private val danggnDao: DanggnDao
 ) {
+    companion object {
+        private const val LIMIT = 11
+    }
+
     suspend fun getPersonalDanggnRank(
         generationNumber: Int,
-        limit: Int
+        limit: Int = LIMIT,
     ): Response<DanggnMemberRankResponse> {
         return danggnDao.getDanggnMemberRank(generationNumber, limit)
     }

@@ -1,4 +1,4 @@
-package com.mashup.feature.sns
+package com.mashup.feature.setting.sns
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -15,14 +15,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.feature.R
-import com.mashup.feature.constant.FACEBOOK
-import com.mashup.feature.constant.INSTAGRAM
-import com.mashup.feature.constant.MASHUP_UP_HOME
-import com.mashup.feature.constant.MASHUP_UP_RECRUIT
-import com.mashup.feature.constant.TISTORY
-import com.mashup.feature.constant.YOUTUBE
-import com.mashup.feature.model.SNSModel
+import com.mashup.feature.setting.R
+import com.mashup.feature.setting.constant.FACEBOOK
+import com.mashup.feature.setting.constant.INSTAGRAM
+import com.mashup.feature.setting.constant.MASHUP_UP_HOME
+import com.mashup.feature.setting.constant.MASHUP_UP_RECRUIT
+import com.mashup.feature.setting.constant.TISTORY
+import com.mashup.feature.setting.constant.YOUTUBE
+import com.mashup.feature.setting.model.SNSModel
 import com.mashup.core.common.R as CR
 
 val snsList = listOf(

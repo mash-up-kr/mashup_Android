@@ -1,4 +1,4 @@
-package com.mashup.feature.menu
+package com.mashup.feature.setting.menu
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.feature.R
+import com.mashup.feature.setting.R
 import com.mashup.core.common.R as CR
 
 @Composable

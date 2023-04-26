@@ -34,11 +34,16 @@ class DanggnViewModel @Inject constructor(
         getDanggnRandomTodayMessage()
     }
 
-    fun subscribeShakeSensor() {
-        danggnShaker.start(
-            threshold = DANGGN_SHAKE_THRESHOLD,
-            interval = DANGGN_SHAKE_INTERVAL_TIME,
-        )
+    fun subscribeShakeSensor() = mashUpScope {
+        val result = danggnRepository.getGoldDanggnPercent()
+        if (result.isSuccess()) {
+            danggnShaker.start(
+                threshold = DANGGN_SHAKE_THRESHOLD,
+                interval = DANGGN_SHAKE_INTERVAL_TIME,
+                goldenDanggnPercent = result.data?.goldenDanggnPercent
+                    ?: DEFAULT_GOLD_DANGGN_PERCENT
+            )
+        }
     }
 
     override fun handleErrorCode(code: String) {
@@ -103,6 +108,7 @@ class DanggnViewModel @Inject constructor(
     companion object {
         private const val DANGGN_SHAKE_INTERVAL_TIME = 200L
         private const val DANGGN_SHAKE_THRESHOLD = 200
+        private const val DEFAULT_GOLD_DANGGN_PERCENT = 90
     }
 }
 

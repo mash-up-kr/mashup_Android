@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.core.common.R as CR
 
@@ -19,11 +20,12 @@ import com.mashup.core.common.R as CR
 fun ShakeDanggnScreen(
     modifier: Modifier = Modifier,
     viewModel: DanggnViewModel,
+    rankingViewModel: DanggnRankingViewModel,
     onClickBackButton: () -> Unit,
-    onClickDanggnGuideButton: () -> Unit,
+    onClickDanggnInfoButton: () -> Unit,
 ) {
-
     val uiState by viewModel.uiState.collectAsState(DanggnUiState.Loading)
+    val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()
@@ -37,12 +39,12 @@ fun ShakeDanggnScreen(
             showBackButton = true,
             onClickBackButton = onClickBackButton,
             showActionButton = true,
-            onClickActionButton = onClickDanggnGuideButton,
+            onClickActionButton = onClickDanggnInfoButton,
             actionButtonDrawableRes = CR.drawable.ic_info
         )
 
         // 당근 흔들기 UI
-        DanggnShakeContent()
+        DanggnShakeContent(viewModel = viewModel)
 
         // 중간 Divider
         Divider(
@@ -52,6 +54,6 @@ fun ShakeDanggnScreen(
         )
 
         // 당근 흔들기 랭킹 UI
-        DanggnRankingContent()
+        DanggnRankingContent(list = uiRankState)
     }
 }

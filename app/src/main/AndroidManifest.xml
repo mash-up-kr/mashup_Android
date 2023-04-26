@@ -29,6 +29,12 @@
         <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="false" />
 
         <activity
+            android:name=".ui.danggn.DanggnInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name=".ui.danggn.ShakeDanggnActivity"
             android:exported="false"
             android:screenOrientation="portrait"

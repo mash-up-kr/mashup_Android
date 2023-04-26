@@ -1,4 +1,4 @@
-package com.mashup.ui.widget
+package com.mashup.core.ui.widget
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloat

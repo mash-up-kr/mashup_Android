@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
-import androidx.compose.material3.Divider
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,7 +41,6 @@ import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
 import com.mashup.core.ui.typography.GilroyBold
-import com.mashup.core.ui.typography.GilroyNormal
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.feature.danggn.R
@@ -166,14 +164,17 @@ private fun RankingContent(
         Row {
             if (index in 0..2) {
                 Image(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier
+                        .size(20.dp)
+                        .align(Alignment.CenterVertically),
                     painter = painterResource(id = imageResourceList[index]),
                     contentDescription = null
                 )
             } else { //3 ~ 10
                 Text(
                     modifier = Modifier
-                        .size(20.dp),
+                        .size(20.dp)
+                        .align(Alignment.CenterVertically),
                     text = "${(index + 1)}",
                     textAlign = TextAlign.Center,
                     style = GilroyBold,

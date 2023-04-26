@@ -1,4 +1,4 @@
-package com.mashup.feature.menu
+package com.mashup.feature.setting.menu
 
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image

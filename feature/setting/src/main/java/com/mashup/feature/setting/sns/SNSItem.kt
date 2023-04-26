@@ -1,4 +1,4 @@
-package com.mashup.feature.sns
+package com.mashup.feature.setting.sns
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

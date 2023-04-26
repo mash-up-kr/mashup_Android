@@ -11,22 +11,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.MashUpToolbar
-import com.mashup.feature.setting.menu.SettingMenuList
-import com.mashup.feature.setting.sns.SNSList
+import com.mashup.feature.setting.ui.menu.SettingMenuList
+import com.mashup.feature.setting.ui.sns.SNSList
 
 @ExperimentalFoundationApi
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
-    userPreference: UserPreference,
-    onClickBackButton: () -> Unit,
-    onLogout: () -> Unit,
-    onDeleteUser: () -> Unit,
-    onToggleFcm: (Boolean) -> Unit,
-    onClickSNS: (String) -> Unit
+    onClickPush: () -> Unit = {},
+    onClickBackButton: () -> Unit = {},
+    onLogout: () -> Unit = {},
+    onDeleteUser: () -> Unit = {},
+    onClickSNS: (String) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -45,8 +43,7 @@ fun SettingScreen(
                 modifier = Modifier.fillMaxWidth(),
                 onLogout = onLogout,
                 onDeleteUser = onDeleteUser,
-                onToggleFcm = onToggleFcm,
-                userPreference = userPreference
+                onClickPush = onClickPush
             )
 
             SNSList(
@@ -65,13 +62,7 @@ fun SettingScreenPrev() {
     MashUpTheme {
         Surface(color = MaterialTheme.colors.onBackground) {
             SettingScreen(
-                modifier = Modifier.fillMaxSize(),
-                onLogout = {},
-                onDeleteUser = {},
-                onToggleFcm = {},
-                onClickSNS = {},
-                userPreference = UserPreference.getDefaultInstance(),
-                onClickBackButton = {}
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

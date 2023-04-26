@@ -21,7 +21,7 @@ fun SettingMenuList(
     onDeleteUser: () -> Unit = {},
 ) {
     Column(modifier = modifier) {
-        BasicSettingItem(
+        RightArrowSettingItem(
             text = "알림",
             textColorRes = CR.color.gray800,
             onClickItem = onClickPush

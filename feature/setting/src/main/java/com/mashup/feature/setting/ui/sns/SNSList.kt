@@ -1,4 +1,4 @@
-package com.mashup.feature.setting.sns
+package com.mashup.feature.setting.ui.sns
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration

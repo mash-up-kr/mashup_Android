@@ -5,6 +5,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,8 +26,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +41,11 @@ import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray400
+import com.mashup.core.ui.colors.Gray900
 import com.mashup.core.ui.colors.White
+import com.mashup.core.ui.colors.rankingOneGradient
+import com.mashup.core.ui.colors.rankingThreeGradient
+import com.mashup.core.ui.colors.rankingTwoGradient
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
 import com.mashup.core.ui.typography.GilroyBold
@@ -147,6 +155,7 @@ fun DanggnRankingContent(
     }
 }
 
+@OptIn(ExperimentalTextApi::class)
 @Composable
 private fun RankingContent(
     modifier: Modifier,
@@ -182,10 +191,19 @@ private fun RankingContent(
                 )
             }
             Text(
-                // TODO 색깔 그라데이션
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier
+                    .padding(start = 12.dp),
                 text = name,
-                style = SubTitle1,
+                style = SubTitle1.copy(
+                    brush = Brush.linearGradient(
+                        when (index) { // 반드시 2개 이상의 컬러가 필요해서 Gray900 넣어줬습니다
+                            0 -> rankingOneGradient
+                            1 -> rankingTwoGradient
+                            2 -> rankingThreeGradient
+                            else -> listOf(Gray900, Gray900)
+                        }
+                    )
+                ),
                 textAlign = TextAlign.Center
             )
         }

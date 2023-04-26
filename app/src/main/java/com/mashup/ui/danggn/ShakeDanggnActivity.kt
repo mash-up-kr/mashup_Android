@@ -11,6 +11,7 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityShakeDanggnBinding
 import com.mashup.feature.danggn.DanggnViewModel
 import com.mashup.feature.danggn.ShakeDanggnScreen
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,7 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
     override val layoutId: Int = R.layout.activity_shake_danggn
 
     private val viewModel: DanggnViewModel by viewModels()
+    private val rankingViewModel: DanggnRankingViewModel by viewModels()
 
     override fun initViews() {
         super.initViews()
@@ -27,6 +29,7 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                 ShakeDanggnScreen(
                     modifier = Modifier.fillMaxSize(),
                     viewModel = viewModel,
+                    rankingViewModel = rankingViewModel,
                     onClickBackButton = { onBackPressed() },
                     onClickDanggnInfoButton = { openDanggnInfoActivity() }
                 )

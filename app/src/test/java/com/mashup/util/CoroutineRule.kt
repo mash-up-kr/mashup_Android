@@ -13,6 +13,10 @@ import org.junit.runner.Description
 class CoroutineRule(
     val testDispatcher: TestDispatcher = StandardTestDispatcher()
 ) : TestWatcher() {
+    /**
+     * Dispatchers가 viewModel은 Main이고, test는 TestDispatcher 이기때문에
+     * testDispatcher를 Main 으로 변경해줍니다.
+     */
     override fun starting(description: Description?) {
         Dispatchers.setMain(testDispatcher)
     }

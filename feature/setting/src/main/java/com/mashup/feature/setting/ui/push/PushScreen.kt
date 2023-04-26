@@ -12,7 +12,7 @@ fun PushScreen(
     userPreference: UserPreference,
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit = {},
-    onToggleMashupPush: (Boolean) -> Unit = {},
+    onToggleMashUpPush: (Boolean) -> Unit = {},
     onToggleDanggnPush: (Boolean) -> Unit = {},
 ) {
     PushContent(
@@ -20,7 +20,7 @@ fun PushScreen(
         isSelectedMashUpPush = userPreference.pushNotificationAgreed,
         isSelectedDanggnPush = userPreference.danggnPushNotificationAgreed,
         onClickBackButton = onClickBackButton,
-        onToggleMashupPush = onToggleMashupPush,
+        onToggleMashupPush = onToggleMashUpPush,
         onToggleDanggnPush = onToggleDanggnPush
     )
 }

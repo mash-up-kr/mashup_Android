@@ -52,6 +52,6 @@ class DanggnRepository @Inject constructor(
     }
 
     suspend fun getGoldDanggnPercent(): Response<GoldenDanggnPercentResponse> {
-        return danggnDao.getGoldenDanggnPercent().copy()
+        return danggnDao.getGoldenDanggnPercent()
     }
 }

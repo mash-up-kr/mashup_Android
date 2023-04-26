@@ -66,7 +66,7 @@ fun TogglePushItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(end = 60.dp),
+                    .padding(top = 4.dp, end = 60.dp),
                 text = description,
                 color = colorResource(id = descriptionRes),
                 style = Body4

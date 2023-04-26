@@ -42,20 +42,13 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
         viewBinding.settingScreen.setContent {
             MashUpTheme {
-                val userPreference by viewModel.userPreference.collectAsState(
-                    initial = UserPreference.getDefaultInstance()
-                )
-
                 SettingScreen(
                     modifier = Modifier.fillMaxSize(),
                     onLogout = this::onClickLogoutButton,
                     onDeleteUser = this::moveToDeleteAccount,
-                    onToggleFcm = this::onToggleFcm,
                     onClickSNS = this::onClickSNS,
-                    userPreference = userPreference,
-                    onClickBackButton = {
-                        onBackPressed()
-                    }
+                    onClickPush = this::moveToPushActivity,
+                    onClickBackButton = this::onBackPressed
                 )
             }
         }
@@ -96,6 +89,14 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         )
     }
 
+    private fun moveToPushActivity() {
+        startActivity(
+            PushActivity.newIntent(
+                context = this@SettingActivity
+            )
+        )
+    }
+
     private fun moveToDeleteAccount() {
         AnalyticsManager.addEvent(LOG_DELETE_USER)
         startActivity(
@@ -115,10 +116,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         }
         eventLog?.run { AnalyticsManager.addEvent(this) }
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
-    }
-
-    private fun onToggleFcm(isChecked: Boolean) {
-        viewModel.patchPushNotification(isChecked, true)
     }
 
     companion object {

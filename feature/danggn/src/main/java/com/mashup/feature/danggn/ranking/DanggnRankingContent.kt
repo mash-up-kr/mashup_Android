@@ -5,7 +5,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -28,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.style.TextAlign
@@ -48,7 +46,7 @@ import com.mashup.core.ui.colors.rankingThreeGradient
 import com.mashup.core.ui.colors.rankingTwoGradient
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
-import com.mashup.core.ui.typography.GilroyBold
+import com.mashup.core.ui.typography.GilroyExtraBold
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.feature.danggn.R
@@ -186,7 +184,7 @@ private fun RankingContent(
                         .align(Alignment.CenterVertically),
                     text = "${(index + 1)}",
                     textAlign = TextAlign.Center,
-                    style = GilroyBold,
+                    style = GilroyExtraBold,
                     color = Gray400
                 )
             }

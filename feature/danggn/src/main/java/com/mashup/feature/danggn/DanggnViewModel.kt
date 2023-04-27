@@ -108,7 +108,7 @@ class DanggnViewModel @Inject constructor(
     companion object {
         private const val DANGGN_SHAKE_INTERVAL_TIME = 200L
         private const val DANGGN_SHAKE_THRESHOLD = 200
-        private const val DEFAULT_GOLD_DANGGN_PERCENT = 90
+        private const val DEFAULT_GOLD_DANGGN_PERCENT = 1
     }
 }
 

@@ -174,7 +174,7 @@ private fun RankingContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row {
-            if (index in 0..2) {
+            if (index in imageResourceList.indices) {
                 Image(
                     modifier = Modifier
                         .size(20.dp)

@@ -127,29 +127,34 @@ fun DanggnRankingContent(
                     )
 
                     if (index == 2) {
-                        val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
-                        Canvas(
-                            Modifier
-                                .fillMaxSize()
-                                .padding(
-                                    start = 20.dp,
-                                    end = 20.dp,
-                                    top = 6.dp,
-                                    bottom = 6.dp
-                                )
-                                .height(1.dp)
-                        ) {
-                            drawLine(
-                                color = Gray200,
-                                start = Offset(0f, 0f),
-                                end = Offset(size.width, 0f),
-                                pathEffect = pathEffect
-                            )
-                        }
+                        drawDottedLine()
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun drawDottedLine() {
+    val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
+    Canvas(
+        Modifier
+            .fillMaxSize()
+            .padding(
+                start = 20.dp,
+                end = 20.dp,
+                top = 6.dp,
+                bottom = 6.dp
+            )
+            .height(1.dp)
+    ) {
+        drawLine(
+            color = Gray200,
+            start = Offset(0f, 0f),
+            end = Offset(size.width, 0f),
+            pathEffect = pathEffect
+        )
     }
 }
 

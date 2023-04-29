@@ -13,7 +13,7 @@ object NormalDanggnMode : DanggnMode {
      * @param goldenDanggnPercent 0 util 100
      */
     fun canSwitchToGoldenDanggnMode(goldenDanggnPercent: Int): Boolean {
-        return Random.nextInt(1, 100) <= goldenDanggnPercent
+        return Random.nextInt(1, 100 + 1) <= goldenDanggnPercent
     }
 }
 

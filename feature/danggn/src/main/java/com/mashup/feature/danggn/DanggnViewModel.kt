@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.datastore.data.repository.UserPreferenceRepository
-import com.mashup.feature.danggn.data.danggn.DanggnShaker
+import com.mashup.feature.danggn.data.danggn.DanggnGameController
 import com.mashup.feature.danggn.data.danggn.DanggnShakerState
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DanggnViewModel @Inject constructor(
-    private val danggnShaker: DanggnShaker,
+    private val danggnGameController: DanggnGameController,
     private val danggnRepository: DanggnRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : BaseViewModel() {
@@ -37,7 +37,7 @@ class DanggnViewModel @Inject constructor(
     fun subscribeShakeSensor() = mashUpScope {
         val result = danggnRepository.getGoldDanggnPercent()
         if (result.isSuccess()) {
-            danggnShaker.start(
+            danggnGameController.start(
                 threshold = DANGGN_SHAKE_THRESHOLD,
                 interval = DANGGN_SHAKE_INTERVAL_TIME,
                 goldenDanggnPercent = result.data?.goldenDanggnPercent
@@ -58,12 +58,12 @@ class DanggnViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        danggnShaker.stop()
+        danggnGameController.stop()
     }
 
     private fun collectDanggnState() {
         viewModelScope.launch {
-            danggnShaker.getDanggnShakeState()
+            danggnGameController.getDanggnShakeState()
                 .collect {
                     when (it) {
                         is DanggnShakerState.End -> {

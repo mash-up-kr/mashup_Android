@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.constant.UNAUTHORIZED
@@ -37,6 +38,7 @@ class DanggnViewModel @Inject constructor(
     private fun initDanggnGame() {
         danggnGameController.setListener(
             frameCallbackListener = {
+                Log.d("test", "frame: ${it}")
                 viewModelScope.launch {
                     _uiState.emit(DanggnUiState.Success(it))
                 }
@@ -73,6 +75,7 @@ class DanggnViewModel @Inject constructor(
     }
 
     private fun sendDanggnScore(comboScore: Int) = mashUpScope {
+        Log.d("test", "send: ${comboScore}")
         val generateNumber =
             userPreferenceRepository.getUserPreference()
                 .firstOrNull()?.generationNumbers?.lastOrNull()

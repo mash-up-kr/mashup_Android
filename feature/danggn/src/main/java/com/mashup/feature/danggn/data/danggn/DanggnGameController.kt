@@ -19,7 +19,7 @@ class DanggnGameController @Inject constructor(
 ) {
 
     companion object {
-        private const val DEFAULT_FRAME_RATE = 200L
+        private const val DEFAULT_FRAME_RATE = 100L
     }
 
     private var danggnShakerScope: CoroutineScope? = null
@@ -51,7 +51,7 @@ class DanggnGameController @Inject constructor(
         danggnShakerScope?.launch {
             while (danggnShakerScope?.isActive == true) {
                 modeController.checkDanggnMode()
-                scoreController.checkRemainDanggnScore()
+                scoreController.checkDanggnScore()
 
                 val lastComboScore = scoreController.getLastCombonScore()
                 if (lastComboScore > 0) {

@@ -22,24 +22,28 @@ class DanggnScoreController @Inject constructor() {
             )
         )
         lastAddedScoreTimeMillis = System.currentTimeMillis()
-        if (isEndOfComboTimeEnd()) {
-            lastComboScore = comboScore
-            comboScore = 0
-        }
         comboScore = currentMode.getNextScore(comboScore)
     }
 
-    fun checkRemainDanggnScore() {
+    fun checkDanggnScore() {
         danggnScoreModelList.removeIf { score ->
             val timeDiff = System.currentTimeMillis() - score.initTimeMillis
             timeDiff >= SCORE_REMAIN_TIME
+        }
+        if (isEndOfComboTimeEnd()) {
+            lastComboScore = comboScore
+            comboScore = 0
         }
     }
 
     private fun isEndOfComboTimeEnd() =
         (System.currentTimeMillis() - lastAddedScoreTimeMillis) >= COMBO_TERM_DURATION
 
-    fun getLastCombonScore() = lastComboScore.also { lastComboScore = 0 }
+    fun getLastCombonScore(): Int {
+        val comboScore = lastComboScore
+        lastComboScore = 0
+        return comboScore
+    }
 
     fun getDanggnScoreList() = danggnScoreModelList
 

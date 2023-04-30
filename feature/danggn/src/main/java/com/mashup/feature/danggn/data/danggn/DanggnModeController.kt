@@ -34,9 +34,7 @@ class DanggnModeController @Inject constructor() {
         if (getDanggnMode() == NormalDanggnMode) return
 
         val timeDiff = System.currentTimeMillis() - danggnChangedTimeMillis
-        val timeDiffOfDay = timeDiff / 1000
-
-        if (timeDiffOfDay >= GOLDEN_MODE_TIME) {
+        if (timeDiff >= GOLDEN_MODE_TIME) {
             danggnChangedTimeMillis = 0
             currentMode = NormalDanggnMode
         }

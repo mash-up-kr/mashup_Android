@@ -9,39 +9,48 @@ class DanggnScoreController @Inject constructor() {
         private const val COMBO_TERM_DURATION = 2000L
     }
 
-    private val danggnScoreList = mutableListOf<DanggnScore>()
-
+    private val danggnScoreModelList = mutableListOf<DanggnScoreModel>()
+    private var comboScore: Int = 0
+    private var lastComboScore: Int = 0
     private var lastAddedScoreTimeMillis: Long = 0
 
     fun addScore(currentMode: DanggnMode) {
-        danggnScoreList.add(
-            DanggnScore(
+        danggnScoreModelList.add(
+            DanggnScoreModel(
                 initTimeMillis = System.currentTimeMillis(),
                 mode = currentMode
             )
         )
         lastAddedScoreTimeMillis = System.currentTimeMillis()
+        if (isEndOfComboTimeEnd()) {
+            lastComboScore = comboScore
+            comboScore = 0
+        }
+        comboScore = currentMode.getNextScore(comboScore)
     }
 
     fun checkRemainDanggnScore() {
-        danggnScoreList.removeIf { score ->
+        danggnScoreModelList.removeIf { score ->
             val timeDiff = System.currentTimeMillis() - score.initTimeMillis
             timeDiff >= SCORE_REMAIN_TIME
         }
     }
 
-    fun isComboTime() =
+    private fun isEndOfComboTimeEnd() =
         (System.currentTimeMillis() - lastAddedScoreTimeMillis) >= COMBO_TERM_DURATION
 
-    fun getDanggnScoreList() = danggnScoreList
+    fun getLastCombonScore() = lastComboScore.also { lastComboScore = 0 }
+
+    fun getDanggnScoreList() = danggnScoreModelList
 
     fun reset() {
+        comboScore = 0
         lastAddedScoreTimeMillis = 0
-        danggnScoreList.clear()
+        danggnScoreModelList.clear()
     }
 }
 
-data class DanggnScore(
+data class DanggnScoreModel(
     val initTimeMillis: Long,
     val mode: DanggnMode
 )

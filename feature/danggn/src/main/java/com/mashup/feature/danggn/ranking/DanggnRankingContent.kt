@@ -145,6 +145,7 @@ private fun PagerContents(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = listState,
+            contentPadding = PaddingValues(top = 12.dp)
         ) {
             item {
                 MyRanking(allRankList, personalRank)
@@ -195,7 +196,7 @@ private fun PagerContents(
                     text = "당근 더 흔들기",
                     onClick = {
                         coroutineScope.launch {
-                            listState.animateScrollToItem(index = 0)
+                            listState.scrollToItem(index = 0)
                         }
                     })
             }

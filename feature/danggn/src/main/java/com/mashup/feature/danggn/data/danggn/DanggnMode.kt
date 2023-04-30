@@ -1,7 +1,5 @@
 package com.mashup.feature.danggn.data.danggn
 
-import kotlin.random.Random
-
 sealed interface DanggnMode {
     fun getNextScore(currentScore: Int): Int
 }
@@ -9,12 +7,6 @@ sealed interface DanggnMode {
 object NormalDanggnMode : DanggnMode {
     override fun getNextScore(currentScore: Int) = currentScore + 1
 
-    /**
-     * @param goldenDanggnPercent 1 util 100
-     */
-    fun canSwitchToGoldenDanggnMode(goldenDanggnPercent: Int): Boolean {
-        return Random.nextInt(1, 100) <= goldenDanggnPercent
-    }
 }
 
 object GoldenDanggnMode : DanggnMode {

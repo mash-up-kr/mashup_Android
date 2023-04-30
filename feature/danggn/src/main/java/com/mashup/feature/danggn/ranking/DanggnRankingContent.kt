@@ -139,31 +139,8 @@ private fun PagerContents(list: List<DanggnMemberRankResponse>) {
                 name = item.memberName,
                 shakeCount = item.totalShakeScore,
             )
-
             if (index == 2) {
-                val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
-                Canvas(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(
-                            start = 20.dp,
-                            end = 20.dp,
-                            top = 6.dp,
-                            bottom = 6.dp
-                        )
-                        .height(1.dp)
-                ) {
-                    drawLine(
-                        color = Gray200,
-                        start = Offset(0f, 0f),
-                        end = Offset(size.width, 0f),
-                        pathEffect = pathEffect
-                    )
-
-                    if (index == 2) {
-                        drawDottedLine()
-                    }
-                }
+                drawDottedLine()
             }
         }
         // TODO index 11일때 가리는 것 추가해야됨 지금은 넣으면 안보이기 때문에 안넣음

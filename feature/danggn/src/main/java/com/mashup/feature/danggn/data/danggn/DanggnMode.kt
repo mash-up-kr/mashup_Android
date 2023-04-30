@@ -6,7 +6,6 @@ sealed interface DanggnMode {
 
 object NormalDanggnMode : DanggnMode {
     override fun getNextScore(currentScore: Int) = currentScore + 1
-
 }
 
 object GoldenDanggnMode : DanggnMode {

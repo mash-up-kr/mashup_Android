@@ -157,12 +157,15 @@ private fun PagerContents(
                 key = { _, item ->
                     item.memberId
                 }) { index, item ->
-                RankingContent(
-                    modifier = Modifier.fillMaxWidth(),
-                    index = index,
-                    name = item.memberName,
-                    shakeCount = item.totalShakeScore,
-                )
+                // 11개만 보여줍니다
+                if (index < 11) {
+                    RankingContent(
+                        modifier = Modifier.fillMaxWidth(),
+                        index = index,
+                        name = item.memberName,
+                        shakeCount = item.totalShakeScore,
+                    )
+                }
                 if (index == 2) {
                     DrawDottedLine()
                 }

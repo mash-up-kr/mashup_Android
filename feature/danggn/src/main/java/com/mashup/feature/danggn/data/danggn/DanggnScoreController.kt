@@ -4,32 +4,40 @@ import javax.inject.Inject
 
 class DanggnScoreController @Inject constructor() {
 
+    companion object {
+        private const val SCORE_REMAIN_TIME = 3000
+        private const val COMBO_TERM_DURATION = 2000L
+    }
+
     private val danggnScoreList = mutableListOf<DanggnScore>()
 
-    fun addScore(mode: DanggnMode) {
+    private var lastAddedScoreTimeMillis: Long = 0
+
+    fun addScore(currentMode: DanggnMode) {
         danggnScoreList.add(
             DanggnScore(
                 initTimeMillis = System.currentTimeMillis(),
-                mode = mode
+                mode = currentMode
             )
         )
+        lastAddedScoreTimeMillis = System.currentTimeMillis()
     }
 
     fun checkRemainDanggnScore() {
         danggnScoreList.removeIf { score ->
             val timeDiff = System.currentTimeMillis() - score.initTimeMillis
-            val timeDiffOfDay = timeDiff / 1000
-
-            timeDiffOfDay >= SCORE_REMAIN_TIME
+            timeDiff >= SCORE_REMAIN_TIME
         }
     }
 
-    fun reset() {
-        danggnScoreList.clear()
-    }
+    fun isComboTime() =
+        (System.currentTimeMillis() - lastAddedScoreTimeMillis) >= COMBO_TERM_DURATION
 
-    companion object {
-        private const val SCORE_REMAIN_TIME = 3000
+    fun getDanggnScoreList() = danggnScoreList
+
+    fun reset() {
+        lastAddedScoreTimeMillis = 0
+        danggnScoreList.clear()
     }
 }
 

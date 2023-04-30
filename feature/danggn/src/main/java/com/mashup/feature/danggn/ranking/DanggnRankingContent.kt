@@ -44,6 +44,7 @@ import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Brand200
 import com.mashup.core.ui.colors.Brand600
 import com.mashup.core.ui.colors.Gray200
+import com.mashup.core.ui.colors.Gray300
 import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray900
@@ -59,16 +60,14 @@ import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.feature.danggn.R
-import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import kotlinx.coroutines.launch
-import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse as DtoRankResponse
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    allRankList: List<DtoRankResponse>,
-    personalRank: DanggnMemberRankResponse
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -130,8 +129,8 @@ fun DanggnRankingContent(
 
 @Composable
 private fun PagerContents(
-    allRankList: List<DanggnMemberRankResponse>,
-    personalRank: DanggnMemberRankResponse
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState
 ) {
     if (allRankList.isEmpty()) {
         Text(
@@ -146,7 +145,6 @@ private fun PagerContents(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = listState,
-            contentPadding = PaddingValues(top = 12.dp)
         ) {
             item {
                 MyRanking(allRankList, personalRank)
@@ -161,8 +159,7 @@ private fun PagerContents(
                     RankingContent(
                         modifier = Modifier.fillMaxWidth(),
                         index = index,
-                        name = item.memberName,
-                        shakeCount = item.totalShakeScore,
+                        item = item,
                     )
                 }
                 if (index == 2) {
@@ -208,8 +205,8 @@ private fun PagerContents(
 
 @Composable
 private fun MyRanking(
-    allRankList: List<DanggnMemberRankResponse>,
-    personalRank: DanggnMemberRankResponse
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState
 ) {
     allRankList
         .firstOrNull {
@@ -288,8 +285,7 @@ private fun DrawDottedLine() {
 private fun RankingContent(
     modifier: Modifier,
     index: Int,
-    name: String,
-    shakeCount: Int,
+    item: DanggnRankingViewModel.RankingUiState,
 ) {
     val imageResourceList =
         listOf(R.drawable.img_rank_1, R.drawable.img_rank_2, R.drawable.img_rank_3)
@@ -318,34 +314,41 @@ private fun RankingContent(
                     color = Gray400
                 )
             }
+            val gradientGray300 = listOf(Gray300, Gray300)
+            val gradientGray900 = listOf(Gray900, Gray900)
             Text(
                 modifier = Modifier
                     .padding(start = 12.dp),
-                text = name,
+                text = when (item) {
+                    is DanggnRankingViewModel.RankingUiState.Ranking -> item.memberName
+                    is DanggnRankingViewModel.RankingUiState.EmptyRanking -> "아직 ${index + 1}위가 없어요"
+                },
                 style = SubTitle1.copy(
                     brush = Brush.linearGradient(
                         when (index) { // 반드시 2개 이상의 컬러가 필요해서 Gray900 넣어줬습니다
-                            0 -> rankingOneGradient
-                            1 -> rankingTwoGradient
-                            2 -> rankingThreeGradient
-                            else -> listOf(Gray900, Gray900)
+                            0 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingOneGradient else gradientGray300
+                            1 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingTwoGradient else gradientGray300
+                            2 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingThreeGradient else gradientGray300
+                            else -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) gradientGray900 else gradientGray300
                         }
                     )
                 ),
                 textAlign = TextAlign.Center
             )
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                modifier = Modifier.size(10.dp),
-                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
-                contentDescription = null
-            )
-            Text(
-                modifier = Modifier.padding(start = 4.dp),
-                text = thousandFormat(shakeCount),
-                style = Body3
-            )
+        if (item.totalShakeScore > 0) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    modifier = Modifier.size(10.dp),
+                    painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
+                    contentDescription = null
+                )
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = thousandFormat(item.totalShakeScore),
+                    style = Body3
+                )
+            }
         }
     }
 }
@@ -370,63 +373,24 @@ fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
             allRankList = listOf(
-                DanggnMemberRankResponse(
-                    39, "정종노드", 150
+                DanggnRankingViewModel.RankingUiState.Ranking(
+                    "39", "정종노드", 150
                 ),
-                DanggnMemberRankResponse(
-                    40, "정종드투", 151
+                DanggnRankingViewModel.RankingUiState.Ranking(
+                    "56", "정종드투", 1510
                 ),
-                DanggnMemberRankResponse(
-                    41, "정종민", 152
-                ),
-                DanggnMemberRankResponse(
-                    42, "정종웹", 153
-                ),
-                DanggnMemberRankResponse(
-                    43, "정종오스", 154
-                ),
-                DanggnMemberRankResponse(
-                    44, "정종자인", 155
-                ),
-                DanggnMemberRankResponse(
-                    45, "정종노드", 150
-                ),
-                DanggnMemberRankResponse(
-                    46, "정종드투", 151
-                ),
-                DanggnMemberRankResponse(
-                    47, "정종민", 152
-                ),
-                DanggnMemberRankResponse(
-                    48, "정종웹", 153
-                ),
-                DanggnMemberRankResponse(
-                    49, "정종오스", 154
-                ),
-                DanggnMemberRankResponse(
-                    50, "정종자인", 155
-                ),
-                DanggnMemberRankResponse(
-                    51, "정종노드", 150
-                ),
-                DanggnMemberRankResponse(
-                    52, "정종드투", 151
-                ),
-                DanggnMemberRankResponse(
-                    53, "정종민", 152
-                ),
-                DanggnMemberRankResponse(
-                    54, "정종웹", 153
-                ),
-                DanggnMemberRankResponse(
-                    55, "정종오스", 154
-                ),
-                DanggnMemberRankResponse(
-                    56, "정종자인", 155
-                ),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnMemberRankResponse(
-                56, "정종드투", 1510
+            personalRank = DanggnRankingViewModel.RankingUiState.Ranking(
+                "56", "정종드투", 1510
             )
         )
     }

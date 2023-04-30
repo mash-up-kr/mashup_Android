@@ -169,17 +169,21 @@ private fun PagerContents(
                     DrawDottedLine()
                 }
             }
-            // TODO index 11일때 가리는 것 추가해야됨 지금은 넣으면 안보이기 때문에 안넣음
-            item {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 28.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                    style = Body3,
-                    color = Gray500
-                )
+            /**
+             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
+             */
+            if (allRankList.count() <= 11) {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 28.dp)
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
+                        style = Body3,
+                        color = Gray500
+                    )
+                }
             }
 
             item {

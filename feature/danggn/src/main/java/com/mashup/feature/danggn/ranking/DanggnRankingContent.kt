@@ -1,6 +1,7 @@
 package com.mashup.feature.danggn.ranking
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,7 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,13 +37,20 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.ui.colors.Black
+import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray400
+import com.mashup.core.ui.colors.Gray900
 import com.mashup.core.ui.colors.White
+import com.mashup.core.ui.colors.rankingOneGradient
+import com.mashup.core.ui.colors.rankingThreeGradient
+import com.mashup.core.ui.colors.rankingTwoGradient
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
+import com.mashup.core.ui.typography.GilroyExtraBold
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.feature.danggn.R
+import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import kotlinx.coroutines.launch
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse as DtoRankResponse
 
@@ -112,12 +125,40 @@ fun DanggnRankingContent(
                         name = item.memberName,
                         shakeCount = item.totalShakeScore,
                     )
+
+                    if (index == 2) {
+                        drawDottedLine()
+                    }
                 }
             }
         }
     }
 }
 
+@Composable
+private fun drawDottedLine() {
+    val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
+    Canvas(
+        Modifier
+            .fillMaxSize()
+            .padding(
+                start = 20.dp,
+                end = 20.dp,
+                top = 6.dp,
+                bottom = 6.dp
+            )
+            .height(1.dp)
+    ) {
+        drawLine(
+            color = Gray200,
+            start = Offset(0f, 0f),
+            end = Offset(size.width, 0f),
+            pathEffect = pathEffect
+        )
+    }
+}
+
+@OptIn(ExperimentalTextApi::class)
 @Composable
 private fun RankingContent(
     modifier: Modifier,
@@ -128,20 +169,44 @@ private fun RankingContent(
     val imageResourceList =
         listOf(R.drawable.img_rank_1, R.drawable.img_rank_2, R.drawable.img_rank_3)
     Row(
-        modifier = modifier.padding(start = 20.dp, bottom = 25.dp, end = 20.dp),
+        modifier = modifier.padding(horizontal = 20.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row {
-            Image(
-                painter = painterResource(id = imageResourceList[index]),
-                contentDescription = null
-            )
+            if (index in imageResourceList.indices) {
+                Image(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .align(Alignment.CenterVertically),
+                    painter = painterResource(id = imageResourceList[index]),
+                    contentDescription = null
+                )
+            } else { //3 ~ 10
+                Text(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .align(Alignment.CenterVertically),
+                    text = "${(index + 1)}",
+                    textAlign = TextAlign.Center,
+                    style = GilroyExtraBold,
+                    color = Gray400
+                )
+            }
             Text(
-                // TODO 색깔 그라데이션
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier
+                    .padding(start = 12.dp),
                 text = name,
-                style = SubTitle1,
+                style = SubTitle1.copy(
+                    brush = Brush.linearGradient(
+                        when (index) { // 반드시 2개 이상의 컬러가 필요해서 Gray900 넣어줬습니다
+                            0 -> rankingOneGradient
+                            1 -> rankingTwoGradient
+                            2 -> rankingThreeGradient
+                            else -> listOf(Gray900, Gray900)
+                        }
+                    )
+                ),
                 textAlign = TextAlign.Center
             )
         }
@@ -178,6 +243,27 @@ private fun MashUpPagerColorAnimator(
 @Composable
 fun MashUpRankingPreview() {
     MashUpTheme {
-        DanggnRankingContent(list = listOf())
+        DanggnRankingContent(
+            list = listOf(
+                DanggnMemberRankResponse(
+                    39, "정종노드", 150
+                ),
+                DanggnMemberRankResponse(
+                    40, "정종드투", 151
+                ),
+                DanggnMemberRankResponse(
+                    41, "정종민", 152
+                ),
+                DanggnMemberRankResponse(
+                    42, "정종웹", 153
+                ),
+                DanggnMemberRankResponse(
+                    43, "정종오스", 154
+                ),
+                DanggnMemberRankResponse(
+                    44, "정종자인", 155
+                ),
+            )
+        )
     }
 }

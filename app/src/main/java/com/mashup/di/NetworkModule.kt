@@ -7,6 +7,7 @@ import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
+import com.mashup.network.dao.StorageDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
@@ -99,6 +100,14 @@ class NetworkModule {
     fun provideScoreDao(
         retrofit: Retrofit
     ): ScoreDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStorageDao(
+        retrofit: Retrofit
+    ): StorageDao {
         return retrofit.create()
     }
 }

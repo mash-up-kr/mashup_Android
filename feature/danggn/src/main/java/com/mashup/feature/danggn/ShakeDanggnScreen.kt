@@ -28,7 +28,7 @@ fun ShakeDanggnScreen(
     val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.subscribeShakeSensor()
+        viewModel.startDanggnGame()
     }
 
     Column(

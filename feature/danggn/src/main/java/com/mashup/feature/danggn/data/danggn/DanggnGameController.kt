@@ -49,7 +49,7 @@ class DanggnGameController @Inject constructor(
 
     private fun runDanggnGame() {
         danggnShakerScope?.launch {
-            while (danggnShakerScope?.isActive == null) {
+            while (danggnShakerScope?.isActive == true) {
                 modeController.checkDanggnMode()
                 scoreController.checkRemainDanggnScore()
 

@@ -59,12 +59,21 @@ class DanggnGameController @Inject constructor(
                 }
                 frameCallbackListener?.invoke(
                     DanggnGameState(
+                        currentMode = modeController.getDanggnMode(),
                         danggnScoreModelList = scoreController.getDanggnScoreList()
                     )
                 )
                 delay(DEFAULT_FRAME_RATE)
             }
         }
+    }
+
+    fun setListener(
+        frameCallbackListener: ((DanggnGameState) -> Unit),
+        comboEndCallbackListener: ((comboCount: Int) -> Unit)
+    ) {
+        this.frameCallbackListener = frameCallbackListener
+        this.comboEndCallbackListener = comboEndCallbackListener
     }
 
     fun stop() {

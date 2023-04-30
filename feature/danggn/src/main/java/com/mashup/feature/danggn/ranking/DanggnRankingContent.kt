@@ -39,6 +39,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import com.mashup.core.common.utils.thousandFormat
 import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Brand200
 import com.mashup.core.ui.colors.Brand600
@@ -60,7 +61,6 @@ import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.feature.danggn.R
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse as DtoRankResponse
 
 @OptIn(ExperimentalPagerApi::class)
@@ -251,7 +251,7 @@ private fun MyRanking(
                     )
                     Text(
                         modifier = Modifier.padding(end = 16.dp),
-                        text = DecimalFormat("#,###").format(matchedPersonalRanking.totalShakeScore),
+                        text = thousandFormat(matchedPersonalRanking.totalShakeScore),
                         color = Gray900,
                         style = Caption1
                     )
@@ -343,7 +343,7 @@ private fun RankingContent(
             )
             Text(
                 modifier = Modifier.padding(start = 4.dp),
-                text = DecimalFormat("#,###").format(shakeCount),
+                text = thousandFormat(shakeCount),
                 style = Body3
             )
         }

@@ -122,7 +122,7 @@ fun DanggnRankingContent(
             /**
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
-            PagerContents(emptyList(), personalRank)
+            PagerContents(allRankList, personalRank)
         }
     }
 }

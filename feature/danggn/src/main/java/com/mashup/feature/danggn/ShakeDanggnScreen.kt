@@ -55,6 +55,9 @@ fun ShakeDanggnScreen(
         )
 
         // 당근 흔들기 랭킹 UI
-        DanggnRankingContent(allRankList = uiRankState, personalRank = personalRankState)
+        DanggnRankingContent(
+            allRankList = uiRankState.sortedByDescending { it.totalShakeScore },
+            personalRank = personalRankState
+        )
     }
 }

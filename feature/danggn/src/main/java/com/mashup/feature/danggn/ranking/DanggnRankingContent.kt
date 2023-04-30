@@ -60,6 +60,7 @@ import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.feature.danggn.R
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse as DtoRankResponse
 
 @OptIn(ExperimentalPagerApi::class)
@@ -151,9 +152,7 @@ private fun PagerContents(
                 MyRanking(allRankList, personalRank)
             }
             itemsIndexed(
-                items = allRankList.sortedByDescending {
-                    it.totalShakeScore
-                },
+                items = allRankList,
                 key = { _, item ->
                     item.memberId
                 }) { index, item ->
@@ -248,7 +247,7 @@ private fun MyRanking(
                     )
                     Text(
                         modifier = Modifier.padding(end = 16.dp),
-                        text = matchedPersonalRanking.totalShakeScore.toString(),
+                        text = DecimalFormat("#,###").format(matchedPersonalRanking.totalShakeScore),
                         color = Gray900,
                         style = Caption1
                     )
@@ -340,7 +339,7 @@ private fun RankingContent(
             )
             Text(
                 modifier = Modifier.padding(start = 4.dp),
-                text = shakeCount.toString(), // 컴마 표시 유틸 추가하기
+                text = DecimalFormat("#,###").format(shakeCount),
                 style = Body3
             )
         }
@@ -421,9 +420,9 @@ fun MashUpRankingPreview() {
                 DanggnMemberRankResponse(
                     56, "정종자인", 155
                 ),
-            ),
+            ).sortedByDescending { it.totalShakeScore },
             personalRank = DanggnMemberRankResponse(
-                56, "정종드투", 151
+                56, "정종드투", 1510
             )
         )
     }

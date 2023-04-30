@@ -111,7 +111,7 @@ fun DanggnRankingContent(
                     })
             }
         }
-        // TODO 내 랭킹 추가하기
+
         HorizontalPager(
             modifier = Modifier
                 .fillMaxSize(),
@@ -119,7 +119,10 @@ fun DanggnRankingContent(
             state = pagerState,
             verticalAlignment = Alignment.Top,
         ) { _ ->
-            PagerContents(allRankList, personalRank)
+            /**
+             * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
+             */
+            PagerContents(emptyList(), personalRank)
         }
     }
 }
@@ -129,60 +132,70 @@ private fun PagerContents(
     allRankList: List<DanggnMemberRankResponse>,
     personalRank: DanggnMemberRankResponse
 ) {
-    val listState = rememberLazyListState()
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = listState,
-        contentPadding = PaddingValues(top = 12.dp)
-    ) {
-        item {
-            MyRanking(allRankList, personalRank)
-        }
-        itemsIndexed(
-            items = allRankList.sortedByDescending {
-                it.totalShakeScore
-            },
-            key = { _, item ->
-                item.memberId
-            }) { index, item ->
-            RankingContent(
-                modifier = Modifier.fillMaxWidth(),
-                index = index,
-                name = item.memberName,
-                shakeCount = item.totalShakeScore,
-            )
-            if (index == 2) {
-                DrawDottedLine()
+    if (allRankList.isEmpty()) {
+        Text(
+            modifier = Modifier,
+            textAlign = TextAlign.Center,
+            text = "아직 아무도 당근을 흔들지 않았어요\n바로 당근을 흔들어서 랭킹 안에 들어보세요!",
+            color = Gray400,
+            style = Caption1
+        )
+    } else {
+        val listState = rememberLazyListState()
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            contentPadding = PaddingValues(top = 12.dp)
+        ) {
+            item {
+                MyRanking(allRankList, personalRank)
             }
-        }
-        // TODO index 11일때 가리는 것 추가해야됨 지금은 넣으면 안보이기 때문에 안넣음
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(top = 28.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                style = Body3,
-                color = Gray500
-            )
-        }
+            itemsIndexed(
+                items = allRankList.sortedByDescending {
+                    it.totalShakeScore
+                },
+                key = { _, item ->
+                    item.memberId
+                }) { index, item ->
+                RankingContent(
+                    modifier = Modifier.fillMaxWidth(),
+                    index = index,
+                    name = item.memberName,
+                    shakeCount = item.totalShakeScore,
+                )
+                if (index == 2) {
+                    DrawDottedLine()
+                }
+            }
+            // TODO index 11일때 가리는 것 추가해야됨 지금은 넣으면 안보이기 때문에 안넣음
+            item {
+                Text(
+                    modifier = Modifier
+                        .padding(top = 28.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
+                    style = Body3,
+                    color = Gray500
+                )
+            }
 
-        item {
-            val coroutineScope = rememberCoroutineScope()
-            MashUpButton(
-                modifier = Modifier.padding(
-                    start = 20.dp,
-                    end = 20.dp,
-                    top = 28.dp,
-                    bottom = 20.dp
-                ),
-                text = "당근 더 흔들기",
-                onClick = {
-                    coroutineScope.launch {
-                        listState.animateScrollToItem(index = 0)
-                    }
-                })
+            item {
+                val coroutineScope = rememberCoroutineScope()
+                MashUpButton(
+                    modifier = Modifier.padding(
+                        start = 20.dp,
+                        end = 20.dp,
+                        top = 28.dp,
+                        bottom = 20.dp
+                    ),
+                    text = "당근 더 흔들기",
+                    onClick = {
+                        coroutineScope.launch {
+                            listState.animateScrollToItem(index = 0)
+                        }
+                    })
+            }
         }
     }
 }

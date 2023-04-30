@@ -48,7 +48,7 @@ import com.mashup.core.ui.colors.rankingThreeGradient
 import com.mashup.core.ui.colors.rankingTwoGradient
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
-import com.mashup.core.ui.typography.GilroyBold
+import com.mashup.core.ui.typography.GilroyExtraBold
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.core.ui.widget.MashUpButton
@@ -159,6 +159,10 @@ private fun PagerContents(list: List<DanggnMemberRankResponse>) {
                         end = Offset(size.width, 0f),
                         pathEffect = pathEffect
                     )
+
+                    if (index == 2) {
+                        drawDottedLine()
+                    }
                 }
             }
         }
@@ -194,6 +198,29 @@ private fun PagerContents(list: List<DanggnMemberRankResponse>) {
     }
 }
 
+@Composable
+private fun drawDottedLine() {
+    val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
+    Canvas(
+        Modifier
+            .fillMaxSize()
+            .padding(
+                start = 20.dp,
+                end = 20.dp,
+                top = 6.dp,
+                bottom = 6.dp
+            )
+            .height(1.dp)
+    ) {
+        drawLine(
+            color = Gray200,
+            start = Offset(0f, 0f),
+            end = Offset(size.width, 0f),
+            pathEffect = pathEffect
+        )
+    }
+}
+
 @OptIn(ExperimentalTextApi::class)
 @Composable
 private fun RankingContent(
@@ -210,7 +237,7 @@ private fun RankingContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row {
-            if (index in 0..2) {
+            if (index in imageResourceList.indices) {
                 Image(
                     modifier = Modifier
                         .size(20.dp)
@@ -225,7 +252,7 @@ private fun RankingContent(
                         .align(Alignment.CenterVertically),
                     text = "${(index + 1)}",
                     textAlign = TextAlign.Center,
-                    style = GilroyBold,
+                    style = GilroyExtraBold,
                     color = Gray400
                 )
             }

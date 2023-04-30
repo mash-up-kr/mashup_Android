@@ -140,7 +140,7 @@ private fun PagerContents(list: List<DanggnMemberRankResponse>) {
                 shakeCount = item.totalShakeScore,
             )
             if (index == 2) {
-                drawDottedLine()
+                DrawDottedLine()
             }
         }
         // TODO index 11일때 가리는 것 추가해야됨 지금은 넣으면 안보이기 때문에 안넣음
@@ -176,7 +176,7 @@ private fun PagerContents(list: List<DanggnMemberRankResponse>) {
 }
 
 @Composable
-private fun drawDottedLine() {
+private fun DrawDottedLine() {
     val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
     Canvas(
         Modifier

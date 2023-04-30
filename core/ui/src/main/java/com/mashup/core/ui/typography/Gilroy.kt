@@ -19,9 +19,9 @@ val GilroyNormal = TextStyle(
     letterSpacing = (-0.01).em
 )
 
-val GilroyBold = TextStyle(
+val GilroyExtraBold = TextStyle(
     fontFamily = gilroyFontFamily,
-    fontWeight = FontWeight.Bold,
+    fontWeight = FontWeight.ExtraBold,
     fontSize = 16.sp,
     letterSpacing = (-0.01).em
 )

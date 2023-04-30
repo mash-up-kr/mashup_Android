@@ -37,7 +37,7 @@ class DanggnShaker @Inject constructor(
     fun start(
         threshold: Int,
         interval: Long,
-        goldenDanggnPercent: Int = 50
+        goldenDanggnPercent: Int
     ) {
         danggnShakerScope = CoroutineScope(Dispatchers.Default)
         collectComboFlow()

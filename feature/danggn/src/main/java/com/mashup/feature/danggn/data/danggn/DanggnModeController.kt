@@ -5,6 +5,10 @@ import kotlin.random.Random
 
 class DanggnModeController @Inject constructor() {
 
+    companion object {
+        private const val GOLDEN_MODE_TIME = 3000
+    }
+
     private var currentMode: DanggnMode = NormalDanggnMode
     private var goldenDanggnPercent = 0
 
@@ -17,7 +21,7 @@ class DanggnModeController @Inject constructor() {
     }
 
     fun switchToGoldenDanggnMode() {
-        if (getDanggnMode() == NormalDanggnMode) return
+        if (getDanggnMode() == GoldenDanggnMode) return
         val changeAvailableDanggnMode = Random.nextInt(1, 100) <= goldenDanggnPercent
 
         if (changeAvailableDanggnMode) {
@@ -25,6 +29,25 @@ class DanggnModeController @Inject constructor() {
             currentMode = GoldenDanggnMode
         }
     }
+
+    private fun switchToNormalDanggnMode() {
+        if (getDanggnMode() == NormalDanggnMode) return
+
+        val timeDiff = System.currentTimeMillis() - danggnChangedTimeMillis
+        val timeDiffOfDay = timeDiff / 1000
+
+        if (timeDiffOfDay >= GOLDEN_MODE_TIME) {
+            danggnChangedTimeMillis = 0
+            currentMode = NormalDanggnMode
+        }
+    }
+
+    fun checkDanggnMode() {
+        if (getDanggnMode() == GoldenDanggnMode) {
+            switchToNormalDanggnMode()
+        }
+    }
+
 
     fun reset() {
         currentMode = NormalDanggnMode

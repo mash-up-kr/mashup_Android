@@ -1,6 +1,5 @@
 package com.mashup.ui.main.popup
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,10 +32,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.constant.EXTRA_POPUP_KEY
 import com.mashup.core.common.utils.getDrawableResIdByName
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray950
@@ -52,6 +53,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
+
+    companion object {
+        fun newInstance(popupKey: String) = MainBottomPopup().apply {
+            arguments = bundleOf(
+                EXTRA_POPUP_KEY to popupKey
+            )
+        }
+    }
+
 
     private val viewModel: MainBottomPopupViewModel by viewModels()
 
@@ -95,7 +105,7 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                 setBackgroundColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        R.color.transparent
+                        android.R.color.transparent
                     )
                 )
             }

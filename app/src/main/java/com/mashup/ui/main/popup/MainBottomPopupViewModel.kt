@@ -3,7 +3,9 @@ package com.mashup.ui.main.popup
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
+import com.mashup.constant.EXTRA_POPUP_KEY
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.data.repository.PopUpRepository
 import com.mashup.data.repository.StorageRepository
 import com.mashup.ui.main.model.MainPopupEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,17 +14,22 @@ import javax.inject.Inject
 @HiltViewModel
 class MainBottomPopupViewModel @Inject constructor(
     private val storageRepository: StorageRepository,
+    private val popUpRepository: PopUpRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+    private val popupKey = savedStateHandle.get<String>(EXTRA_POPUP_KEY)
+
     private val _uiState = mutableStateOf<MainBottomPopupUiState>(MainBottomPopupUiState.Loading)
     val uiState: State<MainBottomPopupUiState> = _uiState
 
     init {
+        patchPopupViewed()
         getStorage()
     }
 
-    fun getStorage() = mashUpScope {
-        val result = storageRepository.getStorage("DANGGN")
+    private fun getStorage() = mashUpScope {
+        if (popupKey.isNullOrBlank()) return@mashUpScope
+        val result = storageRepository.getStorage(popupKey)
 
         if (result.isSuccess()) {
             _uiState.value = MainBottomPopupUiState.Success(
@@ -35,6 +42,11 @@ class MainBottomPopupViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun patchPopupViewed() = mashUpScope {
+        if (popupKey.isNullOrBlank()) return@mashUpScope
+        popUpRepository.patchPopupViewed(popupKey)
     }
 }
 

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.PathEffect
@@ -37,8 +39,12 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import com.mashup.core.common.utils.thousandFormat
 import com.mashup.core.ui.colors.Black
+import com.mashup.core.ui.colors.Brand200
+import com.mashup.core.ui.colors.Brand600
 import com.mashup.core.ui.colors.Gray200
+import com.mashup.core.ui.colors.Gray300
 import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray900
@@ -49,19 +55,19 @@ import com.mashup.core.ui.colors.rankingTwoGradient
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
 import com.mashup.core.ui.typography.GilroyExtraBold
+import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.typography.Title1
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.feature.danggn.R
-import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import kotlinx.coroutines.launch
-import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse as DtoRankResponse
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    list: List<DtoRankResponse>
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -105,7 +111,7 @@ fun DanggnRankingContent(
                     })
             }
         }
-        // TODO 내 랭킹 추가하기
+
         HorizontalPager(
             modifier = Modifier
                 .fillMaxSize(),
@@ -113,68 +119,144 @@ fun DanggnRankingContent(
             state = pagerState,
             verticalAlignment = Alignment.Top,
         ) { _ ->
-            PagerContents(list)
+            /**
+             * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
+             */
+            PagerContents(allRankList, personalRank)
         }
     }
 }
 
 @Composable
-private fun PagerContents(list: List<DanggnMemberRankResponse>) {
-    val listState = rememberLazyListState()
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = listState,
-        contentPadding = PaddingValues(top = 12.dp)
-    ) {
-        itemsIndexed(
-            items = list.sortedByDescending {
-                it.totalShakeScore
-            },
-            key = { _, item ->
-                item.memberId
-            }) { index, item ->
-            RankingContent(
-                modifier = Modifier.fillMaxWidth(),
-                index = index,
-                name = item.memberName,
-                shakeCount = item.totalShakeScore,
-            )
-            if (index == 2) {
-                DrawDottedLine()
+private fun PagerContents(
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState
+) {
+    if (allRankList.isEmpty()) {
+        Text(
+            modifier = Modifier,
+            textAlign = TextAlign.Center,
+            text = "아직 아무도 당근을 흔들지 않았어요\n바로 당근을 흔들어서 랭킹 안에 들어보세요!",
+            color = Gray400,
+            style = Caption1
+        )
+    } else {
+        val listState = rememberLazyListState()
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            contentPadding = PaddingValues(top = 12.dp)
+        ) {
+            item {
+                MyRanking(allRankList, personalRank)
+            }
+            itemsIndexed(
+                items = allRankList,
+                key = { _, item ->
+                    item.memberId
+                }) { index, item ->
+                // 11개만 보여줍니다
+                if (index < 11) {
+                    RankingContent(
+                        modifier = Modifier.fillMaxWidth(),
+                        index = index,
+                        item = item,
+                    )
+                }
+                if (index == 2) {
+                    DrawDottedLine()
+                }
+            }
+            /**
+             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
+             */
+            if (allRankList.count() <= 11) {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 28.dp)
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
+                        style = Body3,
+                        color = Gray500
+                    )
+                }
+            }
+
+            item {
+                val coroutineScope = rememberCoroutineScope()
+                MashUpButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 20.dp,
+                            end = 20.dp,
+                            top = 28.dp,
+                            bottom = 20.dp
+                        ),
+                    text = "당근 더 흔들기",
+                    onClick = {
+                        coroutineScope.launch {
+                            listState.scrollToItem(index = 0)
+                        }
+                    })
             }
         }
-        // TODO index 11일때 가리는 것 추가해야됨 지금은 넣으면 안보이기 때문에 안넣음
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(top = 28.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                style = Body3,
-                color = Gray500
-            )
-        }
+    }
+}
 
-        item {
-            val coroutineScope = rememberCoroutineScope()
-            MashUpButton(
+@Composable
+private fun MyRanking(
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState
+) {
+    allRankList
+        .firstOrNull {
+            it.memberId == personalRank.memberId
+        }?.let { matchedPersonalRanking ->
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = 20.dp,
-                        end = 20.dp,
-                        top = 28.dp,
-                        bottom = 20.dp
-                    ),
-                text = "당근 더 흔들기",
-                onClick = {
-                    coroutineScope.launch {
-                        listState.animateScrollToItem(index = 0)
-                    }
-                })
+                    .padding(horizontal = 20.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(color = Brand200),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row {
+                    Text(
+                        modifier = Modifier.padding(start = 16.dp),
+                        text = "내 랭킹 ",
+                        style = Body3
+                    )
+                    Text(
+                        modifier = Modifier,
+                        text = "${allRankList.indexOf(matchedPersonalRanking).plus(1)}위",
+                        style = Body3,
+                        color = Brand600
+                    )
+                }
+                Row(
+                    modifier = Modifier.padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .padding(end = 5.dp)
+                            .size(10.dp),
+                        painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(end = 16.dp),
+                        text = thousandFormat(matchedPersonalRanking.totalShakeScore),
+                        color = Gray900,
+                        style = Caption1
+                    )
+                }
+            }
         }
-    }
 }
 
 @Composable
@@ -205,8 +287,7 @@ private fun DrawDottedLine() {
 private fun RankingContent(
     modifier: Modifier,
     index: Int,
-    name: String,
-    shakeCount: Int,
+    item: DanggnRankingViewModel.RankingUiState,
 ) {
     val imageResourceList =
         listOf(R.drawable.img_rank_1, R.drawable.img_rank_2, R.drawable.img_rank_3)
@@ -235,34 +316,41 @@ private fun RankingContent(
                     color = Gray400
                 )
             }
+            val gradientGray300 = listOf(Gray300, Gray300)
+            val gradientGray900 = listOf(Gray900, Gray900)
             Text(
                 modifier = Modifier
                     .padding(start = 12.dp),
-                text = name,
+                text = when (item) {
+                    is DanggnRankingViewModel.RankingUiState.Ranking -> item.memberName
+                    is DanggnRankingViewModel.RankingUiState.EmptyRanking -> "아직 ${index + 1}위가 없어요"
+                },
                 style = SubTitle1.copy(
                     brush = Brush.linearGradient(
                         when (index) { // 반드시 2개 이상의 컬러가 필요해서 Gray900 넣어줬습니다
-                            0 -> rankingOneGradient
-                            1 -> rankingTwoGradient
-                            2 -> rankingThreeGradient
-                            else -> listOf(Gray900, Gray900)
+                            0 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingOneGradient else gradientGray300
+                            1 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingTwoGradient else gradientGray300
+                            2 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingThreeGradient else gradientGray300
+                            else -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) gradientGray900 else gradientGray300
                         }
                     )
                 ),
                 textAlign = TextAlign.Center
             )
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                modifier = Modifier.size(10.dp),
-                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
-                contentDescription = null
-            )
-            Text(
-                modifier = Modifier.padding(start = 4.dp),
-                text = shakeCount.toString(), // 컴마 표시 유틸 추가하기
-                style = Body3
-            )
+        if (item.totalShakeScore > 0) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    modifier = Modifier.size(10.dp),
+                    painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
+                    contentDescription = null
+                )
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = thousandFormat(item.totalShakeScore),
+                    style = Body3
+                )
+            }
         }
     }
 }
@@ -286,61 +374,25 @@ private fun MashUpPagerColorAnimator(
 fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
-            list = listOf(
-                DanggnMemberRankResponse(
-                    39, "정종노드", 150
+            allRankList = listOf(
+                DanggnRankingViewModel.RankingUiState.Ranking(
+                    "39", "정종노드", 150
                 ),
-                DanggnMemberRankResponse(
-                    40, "정종드투", 151
+                DanggnRankingViewModel.RankingUiState.Ranking(
+                    "56", "정종드투", 1510
                 ),
-                DanggnMemberRankResponse(
-                    41, "정종민", 152
-                ),
-                DanggnMemberRankResponse(
-                    42, "정종웹", 153
-                ),
-                DanggnMemberRankResponse(
-                    43, "정종오스", 154
-                ),
-                DanggnMemberRankResponse(
-                    44, "정종자인", 155
-                ),
-                DanggnMemberRankResponse(
-                    45, "정종노드", 150
-                ),
-                DanggnMemberRankResponse(
-                    46, "정종드투", 151
-                ),
-                DanggnMemberRankResponse(
-                    47, "정종민", 152
-                ),
-                DanggnMemberRankResponse(
-                    48, "정종웹", 153
-                ),
-                DanggnMemberRankResponse(
-                    49, "정종오스", 154
-                ),
-                DanggnMemberRankResponse(
-                    50, "정종자인", 155
-                ),
-                DanggnMemberRankResponse(
-                    51, "정종노드", 150
-                ),
-                DanggnMemberRankResponse(
-                    52, "정종드투", 151
-                ),
-                DanggnMemberRankResponse(
-                    53, "정종민", 152
-                ),
-                DanggnMemberRankResponse(
-                    54, "정종웹", 153
-                ),
-                DanggnMemberRankResponse(
-                    55, "정종오스", 154
-                ),
-                DanggnMemberRankResponse(
-                    56, "정종자인", 155
-                ),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking()
+            ).sortedByDescending { it.totalShakeScore },
+            personalRank = DanggnRankingViewModel.RankingUiState.Ranking(
+                "56", "정종드투", 1510
             )
         )
     }

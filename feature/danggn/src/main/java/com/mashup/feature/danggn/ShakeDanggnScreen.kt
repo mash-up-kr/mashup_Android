@@ -29,7 +29,7 @@ fun ShakeDanggnScreen(
     val personalRankState by rankingViewModel.personalRanking.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.subscribeShakeSensor()
+        viewModel.startDanggnGame()
     }
 
     Column(

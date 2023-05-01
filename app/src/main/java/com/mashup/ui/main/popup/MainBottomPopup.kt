@@ -1,7 +1,6 @@
 package com.mashup.ui.main.popup
 
 import android.R
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -55,26 +54,6 @@ class MainBottomPopup : BottomSheetDialogFragment() {
 
     private val viewModel: MainBottomPopupViewModel by viewModels()
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-
-        dialog.setOnShowListener {
-            val bottomSheetDialog = dialog as BottomSheetDialog
-            bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                ?.run {
-                    bottomSheetDialog.behavior.state == BottomSheetBehavior.STATE_EXPANDED
-                    setBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.transparent
-                        )
-                    )
-                }
-        }
-
-        return dialog
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,6 +76,28 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bottomSheetDialog = dialog as BottomSheetDialog
+        bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            ?.run {
+                post {
+                    // post 안하면 작동 안됨
+                    BottomSheetBehavior.from(this).apply {
+                        peekHeight = 0
+                        state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                }
+
+                setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.transparent
+                    )
+                )
+            }
     }
 }
 

@@ -23,7 +23,6 @@ class MainBottomPopupViewModel @Inject constructor(
     val uiState: State<MainBottomPopupUiState> = _uiState
 
     init {
-        patchPopupViewed()
         getStorage()
     }
 
@@ -44,7 +43,7 @@ class MainBottomPopupViewModel @Inject constructor(
         }
     }
 
-    private fun patchPopupViewed() = mashUpScope {
+    fun patchPopupViewed() = mashUpScope {
         if (popupKey.isNullOrBlank()) return@mashUpScope
         popUpRepository.patchPopupViewed(popupKey)
     }

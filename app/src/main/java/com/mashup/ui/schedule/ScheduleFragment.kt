@@ -22,6 +22,7 @@ import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainViewModel
+import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import com.mashup.ui.schedule.detail.ScheduleDetailActivity
@@ -125,6 +126,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
     
     private fun initButtons() {
         viewBinding.btnDanggnEntryPoint.onThrottleFirstClick(lifecycleScope) {
+            mainViewModel.disablePopup(MainPopupType.DANGGN)
             startActivity(
                 ShakeDanggnActivity.newIntent(requireContext())
             )

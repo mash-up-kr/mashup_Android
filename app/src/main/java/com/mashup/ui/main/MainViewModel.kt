@@ -107,6 +107,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun disablePopup(popupKey: MainPopupType) = mashUpScope {
+        popUpRepository.patchPopupDisabled(popupKey.name)
+    }
+
     fun onClickPopup(popupKey: String) = mashUpScope {
         val popupType =
             MainPopupType.getMainPopupType(popupKey)

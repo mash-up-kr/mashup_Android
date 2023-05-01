@@ -16,4 +16,8 @@ class PopUpRepository @Inject constructor(
     suspend fun getPopupKeyList(): Response<List<String>> {
         return popupDao.getMembersPopupKeyList()
     }
+
+    suspend fun patchPopupDisabled(popupType: String): Response<Any> {
+        return popupDao.patchPopupDisabled(popupType)
+    }
 }

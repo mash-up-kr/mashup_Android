@@ -2,6 +2,7 @@ package com.mashup.core.ui.colors
 
 import androidx.compose.ui.graphics.Color
 
+val Gray950 = Color(0xFF25272E)
 val Gray900 = Color(0xFF2C3037)
 val Gray800 = Color(0xFF383E4C)
 val Gray700 = Color(0xFF4D535E)

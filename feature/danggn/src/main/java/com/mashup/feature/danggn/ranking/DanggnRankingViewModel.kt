@@ -19,7 +19,7 @@ class DanggnRankingViewModel @Inject constructor(
 ) : BaseViewModel() {
     companion object {
         private const val GENERATION_NUMBER = 13
-        private const val DEFAULT_ID = -1
+        private const val DEFAULT_SHAKE_NUMBER = -1
     }
 
     private val _mashUpRankingList: MutableStateFlow<List<RankingUiState>> =
@@ -69,7 +69,7 @@ class DanggnRankingViewModel @Inject constructor(
         val allMemberRankingResult = danggnRepository.getAllDanggnRank(GENERATION_NUMBER)
         if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
-            val elevenRankingList = (0..11).map { index ->
+            val elevenRankingList = (0..10).map { index ->
                 rankingList.getOrNull(index)?.let {
                     RankingUiState.Ranking(
                         memberId = it.memberId.toString(),
@@ -131,19 +131,19 @@ class DanggnRankingViewModel @Inject constructor(
         data class Ranking(
             override val memberId: String = "",
             val memberName: String = "",
-            override val totalShakeScore: Int = -1
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingUiState
 
         data class EmptyRanking(
             override val memberId: String = UUID.randomUUID().toString(),
             val name: String = "",
-            override val totalShakeScore: Int = -1,
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingUiState
 
         data class PlatformRanking(
             override val memberId: String = UUID.randomUUID().toString(),
             val platformName: String = "",
-            override val totalShakeScore: Int = -1
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingUiState
     }
 }

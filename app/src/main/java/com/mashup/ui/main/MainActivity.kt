@@ -91,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
 
             launch {
-                viewModel.showPopupKey.collectLatest {
+                viewModel.showPopupType.collectLatest {
                     MainBottomPopup.newInstance(it)
                         .show(supportFragmentManager, MainBottomPopup::class.simpleName)
                 }

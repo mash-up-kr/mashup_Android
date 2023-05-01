@@ -10,6 +10,7 @@ import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.PopUpRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -34,8 +35,8 @@ class MainViewModel @Inject constructor(
     private val _onAttendance = MutableSharedFlow<Unit>()
     val onAttendance: SharedFlow<Unit> = _onAttendance
 
-    private val _showPopupKey = MutableSharedFlow<String>()
-    val showPopupKey: SharedFlow<String> = _showPopupKey.asSharedFlow()
+    private val _showPopupType = MutableSharedFlow<MainPopupType>()
+    val showPopupType: SharedFlow<MainPopupType> = _showPopupType.asSharedFlow()
 
     init {
         savedStateHandle.get<LoginType>(EXTRA_LOGIN_TYPE)?.run {
@@ -95,9 +96,10 @@ class MainViewModel @Inject constructor(
     private fun getMainPopup() = mashUpScope {
         val result = popUpRepository.getPopupKeyList()
         if (result.isSuccess()) {
-            _showPopupKey.emit(
-                result.data?.firstOrNull() ?: return@mashUpScope
-            )
+            val popupType =
+                MainPopupType.getMainPopupType(result.data?.firstOrNull() ?: return@mashUpScope)
+            if (popupType == MainPopupType.UNKNOWN) return@mashUpScope
+            _showPopupType.emit(popupType)
         }
     }
 

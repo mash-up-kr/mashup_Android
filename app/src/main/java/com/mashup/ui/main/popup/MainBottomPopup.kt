@@ -37,6 +37,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.getDrawableResIdByName
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray950
 import com.mashup.core.ui.colors.White
@@ -167,11 +168,7 @@ fun MainBottomPopupContent(
 
         val context = LocalContext.current
         val imageResId = remember(mainPopupEntity.imageResName) {
-            context.resources.getIdentifier(
-                mainPopupEntity.imageResName,
-                "drawable",
-                context.packageName
-            )
+            context.getDrawableResIdByName(mainPopupEntity.imageResName)
         }
         Image(
             modifier = Modifier

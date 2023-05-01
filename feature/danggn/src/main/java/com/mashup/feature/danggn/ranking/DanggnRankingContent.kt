@@ -37,9 +37,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.common.utils.thousandFormat
+import com.mashup.core.model.Platform
+import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Brand200
 import com.mashup.core.ui.colors.Brand600
@@ -67,7 +70,9 @@ import kotlinx.coroutines.launch
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
     allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState
+    personalRank: DanggnRankingViewModel.RankingUiState,
+    platformRank: List<DanggnRankingViewModel.RankingUiState>,
+    userPreference: UserPreference
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -122,15 +127,19 @@ fun DanggnRankingContent(
             /**
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
-            PagerContents(allRankList, personalRank)
+            PagerContents(allRankList, personalRank, platformRank, pagerState, userPreference)
         }
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PagerContents(
     allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState
+    personalRank: DanggnRankingViewModel.RankingUiState,
+    platformRank: List<DanggnRankingViewModel.RankingUiState>,
+    pagerState: PagerState,
+    userPreference: UserPreference
 ) {
     if (allRankList.isEmpty()) {
         Text(
@@ -148,20 +157,32 @@ private fun PagerContents(
             contentPadding = PaddingValues(top = 12.dp)
         ) {
             item {
-                MyRanking(allRankList, personalRank)
+                MyRanking(allRankList, personalRank, platformRank, pagerState, userPreference)
             }
             itemsIndexed(
-                items = allRankList,
+                items = if (pagerState.currentPage == 0) allRankList else platformRank,
                 key = { _, item ->
                     item.memberId
                 }) { index, item ->
-                // 11개만 보여줍니다
-                if (index < 11) {
-                    RankingContent(
-                        modifier = Modifier.fillMaxWidth(),
-                        index = index,
-                        item = item,
-                    )
+                /**
+                 * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
+                 */
+                if (pagerState.currentPage == 0) { // 크루원일 때
+                    if (index < 11) {
+                        RankingContent(
+                            modifier = Modifier.fillMaxWidth(),
+                            index = index,
+                            item = item,
+                        )
+                    }
+                } else {
+                    if (index < 6) {               // 플랫폼 팀일 때
+                        RankingContent(
+                            modifier = Modifier.fillMaxWidth(),
+                            index = index,
+                            item = item
+                        )
+                    }
                 }
                 if (index == 2) {
                     DrawDottedLine()
@@ -204,58 +225,90 @@ private fun PagerContents(
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MyRanking(
     allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState
+    personalRank: DanggnRankingViewModel.RankingUiState,
+    platformRank: List<DanggnRankingViewModel.RankingUiState>,
+    pagerState: PagerState,
+    userPreference: UserPreference
 ) {
-    allRankList
-        .firstOrNull {
-            it.memberId == personalRank.memberId
-        }?.let { matchedPersonalRanking ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(color = Brand200),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row {
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp),
-                        text = "내 랭킹 ",
-                        style = Body3
-                    )
-                    Text(
-                        modifier = Modifier,
-                        text = "${allRankList.indexOf(matchedPersonalRanking).plus(1)}위",
-                        style = Body3,
-                        color = Brand600
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.padding(vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .padding(end = 5.dp)
-                            .size(10.dp),
-                        painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
-                        contentDescription = null
-                    )
-                    Text(
-                        modifier = Modifier.padding(end = 16.dp),
-                        text = thousandFormat(matchedPersonalRanking.totalShakeScore),
-                        color = Gray900,
-                        style = Caption1
-                    )
-                }
+    val isAllCrewRanking = pagerState.currentPage == 0
+    val myRankingText = if (isAllCrewRanking) "내 랭킹 " else "내 팀 랭킹 "
+    if (isAllCrewRanking) {
+        allRankList
+            .firstOrNull {
+                it.memberId == personalRank.memberId
+            }?.let { matchedPersonalRanking ->
+                MyRankingInnerContent(myRankingText, allRankList, matchedPersonalRanking)
             }
+    } else {
+        platformRank
+            .firstOrNull {
+                if (it is DanggnRankingViewModel.RankingUiState.PlatformRanking) {
+                    it.platformName == userPreference.platform.detailName
+                } else {
+                    false
+                }
+            }?.let { matchedPlatformRanking ->
+                MyRankingInnerContent(
+                    myRankingText = myRankingText,
+                    allRankList = platformRank,
+                    matchedPersonalRanking = matchedPlatformRanking
+                )
+            }
+    }
+}
+
+@Composable
+private fun MyRankingInnerContent(
+    myRankingText: String,
+    allRankList: List<DanggnRankingViewModel.RankingUiState>,
+    matchedPersonalRanking: DanggnRankingViewModel.RankingUiState
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(color = Brand200),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row {
+            Text(
+                modifier = Modifier.padding(start = 16.dp),
+                text = myRankingText,
+                style = Body3
+            )
+            Text(
+                modifier = Modifier,
+                text = "${allRankList.indexOf(matchedPersonalRanking).plus(1)}위",
+                style = Body3,
+                color = Brand600
+            )
         }
+
+        Row(
+            modifier = Modifier.padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(end = 5.dp)
+                    .size(10.dp),
+                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
+                contentDescription = null
+            )
+            Text(
+                modifier = Modifier.padding(end = 16.dp),
+                text = thousandFormat(matchedPersonalRanking.totalShakeScore),
+                color = Gray900,
+                style = Caption1
+            )
+        }
+    }
 }
 
 @Composable
@@ -323,14 +376,15 @@ private fun RankingContent(
                 text = when (item) {
                     is DanggnRankingViewModel.RankingUiState.Ranking -> item.memberName
                     is DanggnRankingViewModel.RankingUiState.EmptyRanking -> "아직 ${index + 1}위가 없어요"
+                    is DanggnRankingViewModel.RankingUiState.PlatformRanking -> item.platformName
                 },
                 style = SubTitle1.copy(
                     brush = Brush.linearGradient(
                         when (index) { // 반드시 2개 이상의 컬러가 필요해서 Gray900 넣어줬습니다
-                            0 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingOneGradient else gradientGray300
-                            1 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingTwoGradient else gradientGray300
-                            2 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingThreeGradient else gradientGray300
-                            else -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) gradientGray900 else gradientGray300
+                            0 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingOneGradient else gradientGray300
+                            1 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingTwoGradient else gradientGray300
+                            2 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingThreeGradient else gradientGray300
+                            else -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) gradientGray900 else gradientGray300
                         }
                     )
                 ),
@@ -392,6 +446,21 @@ fun MashUpRankingPreview() {
             ).sortedByDescending { it.totalShakeScore },
             personalRank = DanggnRankingViewModel.RankingUiState.Ranking(
                 "56", "정종드투", 1510
+            ),
+            platformRank = listOf(
+                DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                    platformName = "Android", totalShakeScore = 120,
+                ),
+                DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                    platformName = "iOS", totalShakeScore = 119,
+                ),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+            ),
+            userPreference = UserPreference(
+                "asifgjas", "dkstjrwn", Platform.ANDROID, listOf(), true, true
             )
         )
     }

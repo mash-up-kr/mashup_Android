@@ -15,6 +15,7 @@ import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.safeShow
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
@@ -94,8 +95,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
             launch {
                 viewModel.showPopupType.collectLatest {
-                    MainBottomPopup.newInstance(it)
-                        .show(supportFragmentManager, MainBottomPopup::class.simpleName)
+                    MainBottomPopup.newInstance(it).safeShow(supportFragmentManager)
                 }
             }
 

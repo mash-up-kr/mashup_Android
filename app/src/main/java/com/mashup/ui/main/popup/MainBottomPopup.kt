@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -187,12 +188,14 @@ fun MainBottomPopupContent(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             MashUpButton(
+                modifier = Modifier.wrapContentWidth(),
                 text = mainPopupEntity.leftButtonText,
                 buttonStyle = ButtonStyle.INVERSE,
                 onClick = onClickLeftButton
             )
 
             MashUpButton(
+                modifier = Modifier.weight(1f),
                 text = mainPopupEntity.rightButtonText,
                 buttonStyle = ButtonStyle.PRIMARY,
                 onClick = onClickRightButton

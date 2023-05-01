@@ -91,12 +91,12 @@ class MainBottomPopup : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bottomSheetDialog = dialog as BottomSheetDialog
-        bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheetDialog = dialog as? BottomSheetDialog
+        bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             ?.run {
                 post {
                     // post 안하면 작동 안됨
-                    BottomSheetBehavior.from(this).apply {
+                    bottomSheetDialog.behavior.apply {
                         peekHeight = 0
                         state = BottomSheetBehavior.STATE_EXPANDED
                     }

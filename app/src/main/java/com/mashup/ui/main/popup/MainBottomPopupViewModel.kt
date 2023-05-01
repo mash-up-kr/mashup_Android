@@ -17,7 +17,7 @@ class MainBottomPopupViewModel @Inject constructor(
     private val popUpRepository: PopUpRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-    private val popupKey = savedStateHandle.get<String>(EXTRA_POPUP_KEY)
+    val popupKey = savedStateHandle.get<String>(EXTRA_POPUP_KEY)
 
     private val _uiState = mutableStateOf<MainBottomPopupUiState>(MainBottomPopupUiState.Loading)
     val uiState: State<MainBottomPopupUiState> = _uiState

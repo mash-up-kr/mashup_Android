@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -47,12 +48,15 @@ import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
+import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.main.model.MainPopupEntity
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
+
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     companion object {
         fun newInstance(popupKey: String) = MainBottomPopup().apply {
@@ -83,6 +87,7 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                         },
                         onClickRightButton = {
                             viewModel.patchPopupViewed()
+                            mainViewModel.onClickPopup(viewModel.popupKey ?: "")
                             dismiss()
                         }
                     )

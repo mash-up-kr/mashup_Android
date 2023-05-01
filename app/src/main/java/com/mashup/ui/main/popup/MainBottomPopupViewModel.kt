@@ -28,7 +28,7 @@ class MainBottomPopupViewModel @Inject constructor(
             _uiState.value = MainBottomPopupUiState.Success(
                 MainPopupEntity(
                     title = result.data?.valueMap?.get("title") ?: "",
-                    description = result.data?.valueMap?.get("subTitle") ?: "",
+                    description = result.data?.valueMap?.get("subtitle") ?: "",
                     imageResName = result.data?.valueMap?.get("imageName") ?: "",
                     leftButtonText = result.data?.valueMap?.get("leftButtonTitle") ?: "",
                     rightButtonText = result.data?.valueMap?.get("rightButtonTitle") ?: ""

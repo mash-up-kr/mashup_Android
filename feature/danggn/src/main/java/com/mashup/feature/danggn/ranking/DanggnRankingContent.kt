@@ -37,12 +37,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.common.utils.thousandFormat
-import com.mashup.core.model.Platform
-import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Brand200
 import com.mashup.core.ui.colors.Brand600
@@ -72,7 +69,6 @@ fun DanggnRankingContent(
     allRankList: List<DanggnRankingViewModel.RankingUiState>,
     personalRank: DanggnRankingViewModel.RankingUiState,
     platformRank: List<DanggnRankingViewModel.RankingUiState>,
-    userPreference: UserPreference
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -123,23 +119,21 @@ fun DanggnRankingContent(
             count = pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top,
-        ) { _ ->
+        ) { index ->
             /**
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
-            PagerContents(allRankList, personalRank, platformRank, pagerState, userPreference)
+            PagerContents(allRankList, personalRank, platformRank, index)
         }
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun PagerContents(
     allRankList: List<DanggnRankingViewModel.RankingUiState>,
     personalRank: DanggnRankingViewModel.RankingUiState,
     platformRank: List<DanggnRankingViewModel.RankingUiState>,
-    pagerState: PagerState,
-    userPreference: UserPreference
+    pagerIndex: Int,
 ) {
     if (allRankList.isEmpty()) {
         Text(
@@ -156,18 +150,30 @@ private fun PagerContents(
             state = listState,
             contentPadding = PaddingValues(top = 12.dp)
         ) {
-            item {
-                MyRanking(allRankList, personalRank, platformRank, pagerState, userPreference)
+            if (personalRank is DanggnRankingViewModel.RankingUiState.MyRanking) {
+                /**
+                 * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
+                 * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
+                 * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
+                 */
+                if (personalRank.myRanking.isNotEmpty() && pagerIndex == 0
+                    || personalRank.myPlatformRanking.isNotEmpty() && pagerIndex == 1
+                ) {
+                    item {
+                        MyRanking(personalRank, pagerIndex)
+                    }
+                }
             }
+
             itemsIndexed(
-                items = if (pagerState.currentPage == 0) allRankList else platformRank,
+                items = if (pagerIndex == 0) allRankList else platformRank,
                 key = { _, item ->
                     item.memberId
                 }) { index, item ->
                 /**
                  * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
                  */
-                if (pagerState.currentPage == 0) { // 크루원일 때
+                if (pagerIndex == 0) { // 크루원일 때
                     if (index < 11) {
                         RankingContent(
                             modifier = Modifier.fillMaxWidth(),
@@ -225,47 +231,23 @@ private fun PagerContents(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MyRanking(
-    allRankList: List<DanggnRankingViewModel.RankingUiState>,
     personalRank: DanggnRankingViewModel.RankingUiState,
-    platformRank: List<DanggnRankingViewModel.RankingUiState>,
-    pagerState: PagerState,
-    userPreference: UserPreference
+    pagerIndex: Int,
 ) {
-    val isAllCrewRanking = pagerState.currentPage == 0
+    val isAllCrewRanking = pagerIndex == 0
     val myRankingText = if (isAllCrewRanking) "내 랭킹 " else "내 팀 랭킹 "
-    if (isAllCrewRanking) {
-        allRankList
-            .firstOrNull {
-                it.memberId == personalRank.memberId
-            }?.let { matchedPersonalRanking ->
-                MyRankingInnerContent(myRankingText, allRankList, matchedPersonalRanking)
-            }
-    } else {
-        platformRank
-            .firstOrNull {
-                if (it is DanggnRankingViewModel.RankingUiState.PlatformRanking) {
-                    it.platformName == userPreference.platform.detailName
-                } else {
-                    false
-                }
-            }?.let { matchedPlatformRanking ->
-                MyRankingInnerContent(
-                    myRankingText = myRankingText,
-                    allRankList = platformRank,
-                    matchedPersonalRanking = matchedPlatformRanking
-                )
-            }
+    if (personalRank is DanggnRankingViewModel.RankingUiState.MyRanking) {
+        MyRankingInnerContent(myRankingText, personalRank, isAllCrewRanking)
     }
 }
 
 @Composable
 private fun MyRankingInnerContent(
     myRankingText: String,
-    allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    matchedPersonalRanking: DanggnRankingViewModel.RankingUiState
+    matchedPersonalRanking: DanggnRankingViewModel.RankingUiState.MyRanking,
+    isAllCrewRanking: Boolean
 ) {
     Row(
         modifier = Modifier
@@ -284,7 +266,7 @@ private fun MyRankingInnerContent(
             )
             Text(
                 modifier = Modifier,
-                text = "${allRankList.indexOf(matchedPersonalRanking).plus(1)}위",
+                text = if (isAllCrewRanking) matchedPersonalRanking.myRanking else matchedPersonalRanking.myPlatformRanking,
                 style = Body3,
                 color = Brand600
             )
@@ -377,6 +359,7 @@ private fun RankingContent(
                     is DanggnRankingViewModel.RankingUiState.Ranking -> item.memberName
                     is DanggnRankingViewModel.RankingUiState.EmptyRanking -> "아직 ${index + 1}위가 없어요"
                     is DanggnRankingViewModel.RankingUiState.PlatformRanking -> item.platformName
+                    is DanggnRankingViewModel.RankingUiState.MyRanking -> ""
                 },
                 style = SubTitle1.copy(
                     brush = Brush.linearGradient(
@@ -444,8 +427,9 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingUiState.EmptyRanking(),
                 DanggnRankingViewModel.RankingUiState.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnRankingViewModel.RankingUiState.Ranking(
-                "56", "정종드투", 1510
+            personalRank = DanggnRankingViewModel.RankingUiState.MyRanking(
+                memberId = "560", totalShakeScore = 1510, myRanking =
+                "1위", myPlatformRanking = ""
             ),
             platformRank = listOf(
                 DanggnRankingViewModel.RankingUiState.PlatformRanking(
@@ -459,9 +443,6 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingUiState.EmptyRanking(),
                 DanggnRankingViewModel.RankingUiState.EmptyRanking(),
             ),
-            userPreference = UserPreference(
-                "asifgjas", "dkstjrwn", Platform.ANDROID, listOf(), true, true
-            )
         )
     }
 }

@@ -101,17 +101,31 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
+    // 랭킹 ui가 유기적으로 안바뀔거임 이거 combine으로 관리해보자
     /**
-     * 개인 랭킹을 얻어옵니다
+     * 개인 랭킹(크루원, 플랫폼)을 얻어옵니다
      */
     internal suspend fun updatePersonalRanking() {
         val personalRanking = danggnRepository.getPersonalDanggnRank(GENERATION_NUMBER)
         if (personalRanking.isSuccess()) {
             _personalRanking.value = personalRanking.data?.let {
-                RankingUiState.Ranking(
+                RankingUiState.MyRanking(
                     memberId = it.memberId.toString(),
-                    memberName = it.memberName,
-                    totalShakeScore = it.totalShakeScore
+                    totalShakeScore = it.totalShakeScore,
+                    myRanking = mashUpRankingList.value.indexOfFirst { matched ->
+                        matched.memberId == it.memberId.toString()
+                    }.takeIf { number -> number > 0 }?.let { num ->
+                        "${num}위"
+                    } ?: "",
+                    myPlatformRanking = platformRankingList.value.indexOfFirst { matched ->
+                        if (matched is RankingUiState.PlatformRanking) {
+                            matched.platformName == userPreference.value.platform.detailName
+                        } else {
+                            false
+                        }
+                    }.takeIf { number -> number > 0 }?.let { num ->
+                        "${num}위"
+                    } ?: "",
                 )
             } ?: RankingUiState.EmptyRanking()
         }
@@ -128,6 +142,9 @@ class DanggnRankingViewModel @Inject constructor(
         val memberId: String
         val totalShakeScore: Int
 
+        /**
+         * 크루원 랭킹 Item
+         */
         data class Ranking(
             override val memberId: String = "",
             val memberName: String = "",
@@ -140,10 +157,20 @@ class DanggnRankingViewModel @Inject constructor(
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingUiState
 
+        /**
+         * 플랫폼 랭킹 아이템
+         */
         data class PlatformRanking(
             override val memberId: String = UUID.randomUUID().toString(),
             val platformName: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+        ) : RankingUiState
+
+        data class MyRanking(
+            override val memberId: String = "",
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+            val myRanking: String = "",
+            val myPlatformRanking: String = "",
         ) : RankingUiState
     }
 }

@@ -28,7 +28,6 @@ fun ShakeDanggnScreen(
     val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
     val personalRankState by rankingViewModel.personalRanking.collectAsState()
     val platformRankState by rankingViewModel.platformRankingList.collectAsState()
-    val userPreferenceState by rankingViewModel.userPreference.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()
@@ -61,7 +60,6 @@ fun ShakeDanggnScreen(
             allRankList = uiRankState.sortedByDescending { it.totalShakeScore },
             personalRank = personalRankState,
             platformRank = platformRankState,
-            userPreference = userPreferenceState
         )
     }
 }

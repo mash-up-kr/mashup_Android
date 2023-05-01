@@ -43,10 +43,9 @@ class DanggnRankingViewModel @Inject constructor(
         )
     val personalRanking = _personalRanking.asStateFlow()
 
-    private val _userPreference: MutableStateFlow<UserPreference> = MutableStateFlow(
+    private val userPreference: MutableStateFlow<UserPreference> = MutableStateFlow(
         UserPreference.getDefaultInstance()
     )
-    val userPreference = _userPreference.asStateFlow()
 
     init {
         mashUpScope {
@@ -132,7 +131,7 @@ class DanggnRankingViewModel @Inject constructor(
     }
 
     internal suspend fun updateUserPreference() {
-        _userPreference.value = userPreferenceRepository.getUserPreference().firstOrNull()
+        userPreference.value = userPreferenceRepository.getUserPreference().firstOrNull()
             ?: UserPreference.getDefaultInstance()
     }
 

@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initViews() {
         super.initViews()
         // TODO remove
-        MainBottomPopup().show(supportFragmentManager, "ff")
+        MainBottomPopup.newInstance("DANGGN").show(supportFragmentManager, "ff")
 
         initComposeView()
         initTabButtons()

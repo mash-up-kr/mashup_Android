@@ -1,5 +1,6 @@
 package com.mashup.ui.main.popup
 
+import android.R
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,12 +16,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -29,14 +32,22 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.ui.colors.Gray500
+import com.mashup.core.ui.colors.Gray950
 import com.mashup.core.ui.colors.White
+import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.ui.main.model.MainPopupEntity
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
@@ -44,9 +55,23 @@ class MainBottomPopup : BottomSheetDialogFragment() {
     private val viewModel: MainBottomPopupViewModel by viewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState).apply {
-            window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val dialog = super.onCreateDialog(savedInstanceState)
+
+        dialog.setOnShowListener {
+            val bottomSheetDialog = dialog as BottomSheetDialog
+            bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.run {
+                    bottomSheetDialog.behavior.state == BottomSheetBehavior.STATE_EXPANDED
+                    setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.transparent
+                        )
+                    )
+                }
         }
+
+        return dialog
     }
 
     override fun onCreateView(
@@ -56,16 +81,19 @@ class MainBottomPopup : BottomSheetDialogFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
             setContent {
-                MainBottomPopupScreen(
-                    viewModel = viewModel,
-                    onClickLeftButton = {
-                        dismiss()
-                    },
-                    onClickRightButton = {
-                        dismiss()
-                    }
-                )
+                MashUpTheme {
+                    MainBottomPopupScreen(
+                        viewModel = viewModel,
+                        onClickLeftButton = {
+                            dismiss()
+                        },
+                        onClickRightButton = {
+                            dismiss()
+                        }
+                    )
+                }
             }
         }
     }
@@ -83,6 +111,7 @@ fun MainBottomPopupScreen(
         MainBottomPopupContent(
             modifier = Modifier
                 .fillMaxWidth()
+                .wrapContentHeight()
                 .padding(20.dp),
             mainPopupEntity = it.mainPopupEntity,
             onClickLeftButton = onClickLeftButton,
@@ -109,9 +138,10 @@ fun MainBottomPopupContent(
         Divider(
             modifier = Modifier
                 .width(24.dp)
+                .align(CenterHorizontally)
                 .padding(vertical = 10.dp),
             color = Color(0xFFD9D9D9),
-            thickness = 1.dp
+            thickness = 3.dp
         )
 
         Text(
@@ -121,6 +151,7 @@ fun MainBottomPopupContent(
                 .padding(horizontal = 20.dp),
             text = mainPopupEntity.title,
             style = SubTitle1,
+            color = Gray950,
             textAlign = TextAlign.Center
         )
 
@@ -129,7 +160,8 @@ fun MainBottomPopupContent(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 8.dp),
             text = mainPopupEntity.description,
-            style = SubTitle1,
+            style = Body4,
+            color = Gray500,
             textAlign = TextAlign.Center
         )
 
@@ -154,7 +186,7 @@ fun MainBottomPopupContent(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 24.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             MashUpButton(
                 text = mainPopupEntity.leftButtonText,
@@ -164,7 +196,7 @@ fun MainBottomPopupContent(
 
             MashUpButton(
                 text = mainPopupEntity.rightButtonText,
-                buttonStyle = ButtonStyle.INVERSE,
+                buttonStyle = ButtonStyle.PRIMARY,
                 onClick = onClickRightButton
             )
         }

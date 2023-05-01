@@ -23,6 +23,7 @@ import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -52,9 +53,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initViews() {
         super.initViews()
-        // TODO remove
-        MainBottomPopup.newInstance("DANGGN").show(supportFragmentManager, "ff")
-
         initComposeView()
         initTabButtons()
     }
@@ -84,10 +82,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initObserves() {
         super.initObserves()
         flowLifecycleScope {
-            viewModel.mainTab.collectLatest { tab ->
-                navigationTab(tab)
-                setUIOfTab(tab)
-                updateStatusBarColor(tab)
+            launch {
+                viewModel.mainTab.collectLatest { tab ->
+                    navigationTab(tab)
+                    setUIOfTab(tab)
+                    updateStatusBarColor(tab)
+                }
+            }
+
+            launch {
+                viewModel.showPopupKey.collectLatest {
+                    MainBottomPopup.newInstance(it)
+                        .show(supportFragmentManager, MainBottomPopup::class.simpleName)
+                }
             }
         }
     }

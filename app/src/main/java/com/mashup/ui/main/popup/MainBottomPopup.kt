@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -47,6 +48,7 @@ import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
+import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.main.model.MainPopupEntity
 import com.mashup.ui.main.model.MainPopupType
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,6 +56,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
+
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     companion object {
         fun newInstance(popupType: MainPopupType) = MainBottomPopup().apply {
@@ -79,9 +83,12 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                     MainBottomPopupScreen(
                         viewModel = viewModel,
                         onClickLeftButton = {
+                            viewModel.patchPopupViewed()
                             dismiss()
                         },
                         onClickRightButton = {
+                            viewModel.patchPopupViewed()
+                            mainViewModel.onClickPopup(viewModel.popupKey ?: "")
                             dismiss()
                         }
                     )
@@ -92,12 +99,12 @@ class MainBottomPopup : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bottomSheetDialog = dialog as BottomSheetDialog
-        bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheetDialog = dialog as? BottomSheetDialog
+        bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             ?.run {
                 post {
                     // post 안하면 작동 안됨
-                    BottomSheetBehavior.from(this).apply {
+                    bottomSheetDialog.behavior.apply {
                         peekHeight = 0
                         state = BottomSheetBehavior.STATE_EXPANDED
                     }

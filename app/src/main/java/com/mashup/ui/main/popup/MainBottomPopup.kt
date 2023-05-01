@@ -48,6 +48,7 @@ import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.ui.main.model.MainPopupEntity
+import com.mashup.ui.main.model.MainPopupType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -55,9 +56,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
 
     companion object {
-        fun newInstance(popupKey: String) = MainBottomPopup().apply {
+        fun newInstance(popupType: MainPopupType) = MainBottomPopup().apply {
             arguments = bundleOf(
-                EXTRA_POPUP_KEY to popupKey
+                EXTRA_POPUP_KEY to popupType.name
             )
         }
     }

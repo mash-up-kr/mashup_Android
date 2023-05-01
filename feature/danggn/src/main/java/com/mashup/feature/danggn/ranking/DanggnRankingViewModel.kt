@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +20,7 @@ class DanggnRankingViewModel @Inject constructor(
         private const val DEFAULT_ID = -1
     }
 
-    private val _mashUpRankingList: MutableStateFlow<List<DanggnMemberRankResponse>> =
+    private val _mashUpRankingList: MutableStateFlow<List<RankingUiState>> =
         MutableStateFlow(
             emptyList()
         )
@@ -31,10 +32,9 @@ class DanggnRankingViewModel @Inject constructor(
         )
     val platformRankingList = _platformRankingList.asStateFlow()
 
-    private val _personalRanking: MutableStateFlow<DanggnMemberRankResponse> =
+    private val _personalRanking: MutableStateFlow<RankingUiState> =
         MutableStateFlow(
-            DanggnMemberRankResponse(
-                memberId = -1,
+            RankingUiState.EmptyRanking(
                 memberName = "",
                 totalShakeScore = 0
             )
@@ -61,7 +61,16 @@ class DanggnRankingViewModel @Inject constructor(
         val allMemberRankingResult = danggnRepository.getAllDanggnRank(GENERATION_NUMBER)
         if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
-            _mashUpRankingList.update { rankingList }
+            val elevenRankingList = (0..11).map { index ->
+                rankingList.getOrNull(index)?.let {
+                    RankingUiState.Ranking(
+                        memberId = it.memberId.toString(),
+                        memberName = it.memberName,
+                        totalShakeScore = it.totalShakeScore
+                    )
+                } ?: RankingUiState.EmptyRanking()
+            }
+            _mashUpRankingList.update { elevenRankingList }
         }
     }
 
@@ -81,11 +90,32 @@ class DanggnRankingViewModel @Inject constructor(
     internal suspend fun updatePersonalRanking() {
         val personalRanking = danggnRepository.getPersonalDanggnRank(GENERATION_NUMBER)
         if (personalRanking.isSuccess()) {
-            _personalRanking.value = personalRanking.data ?: DanggnMemberRankResponse(
-                memberId = DEFAULT_ID,
-                memberName = "",
-                totalShakeScore = 0
-            )
+            _personalRanking.value = personalRanking.data?.let {
+                RankingUiState.Ranking(
+                    memberId = it.memberId.toString(),
+                    memberName = it.memberName,
+                    totalShakeScore = it.totalShakeScore
+                )
+            } ?: RankingUiState.EmptyRanking()
         }
+    }
+
+    sealed interface RankingUiState {
+
+        val memberId: String
+        val memberName: String
+        val totalShakeScore: Int
+
+        data class Ranking(
+            override val memberId: String = "",
+            override val memberName: String = "",
+            override val totalShakeScore: Int = -1
+        ) : RankingUiState
+
+        data class EmptyRanking(
+            override val memberId: String = UUID.randomUUID().toString(),
+            override val memberName: String = "",
+            override val totalShakeScore: Int = -1,
+        ) : RankingUiState
     }
 }

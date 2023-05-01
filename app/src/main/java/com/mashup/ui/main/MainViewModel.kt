@@ -38,8 +38,8 @@ class MainViewModel @Inject constructor(
     private val _showPopupType = MutableSharedFlow<MainPopupType>()
     val showPopupType: SharedFlow<MainPopupType> = _showPopupType.asSharedFlow()
 
-    private val _onClickPopupConfirm = MutableSharedFlow<String>()
-    val onClickPopupConfirm: SharedFlow<String> = _onClickPopupConfirm.asSharedFlow()
+    private val _onClickPopupConfirm = MutableSharedFlow<MainPopupType>()
+    val onClickPopupConfirm: SharedFlow<MainPopupType> = _onClickPopupConfirm.asSharedFlow()
 
 
     init {
@@ -108,7 +108,10 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickPopup(popupKey: String) = mashUpScope {
-        _onClickPopupConfirm.emit(popupKey)
+        val popupType =
+            MainPopupType.getMainPopupType(popupKey)
+        if (popupType == MainPopupType.UNKNOWN) return@mashUpScope
+        _onClickPopupConfirm.emit(popupType)
     }
 
     override fun handleErrorCode(code: String) {

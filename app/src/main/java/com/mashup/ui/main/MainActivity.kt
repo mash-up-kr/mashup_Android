@@ -18,6 +18,7 @@ import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.main.popup.MainBottomPopup
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
@@ -99,10 +100,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
 
             launch {
-                viewModel.onClickPopupConfirm.collectLatest { key ->
-                    when (key) {
-                        "DANGGN" -> {
+                viewModel.onClickPopupConfirm.collectLatest { popupType ->
+                    when (popupType) {
+                        MainPopupType.DANGGN -> {
                             startActivity(ShakeDanggnActivity.newIntent(this@MainActivity))
+                        }
+                        else -> {
                         }
                     }
                 }

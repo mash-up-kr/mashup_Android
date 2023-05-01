@@ -53,7 +53,7 @@ class DanggnGameController @Inject constructor(
                 modeController.checkDanggnMode()
                 scoreController.checkDanggnScore()
 
-                val lastComboScore = scoreController.getLastCombonScore()
+                val lastComboScore = scoreController.getLastComboScore()
                 if (lastComboScore > 0) {
                     comboEndCallbackListener?.invoke(lastComboScore)
                 }

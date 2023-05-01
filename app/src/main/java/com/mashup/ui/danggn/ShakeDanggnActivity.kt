@@ -9,10 +9,12 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityShakeDanggnBinding
+import com.mashup.feature.danggn.DanggnUiState
 import com.mashup.feature.danggn.DanggnViewModel
 import com.mashup.feature.danggn.ShakeDanggnScreen
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
@@ -33,6 +35,20 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     onClickBackButton = { onBackPressed() },
                     onClickDanggnInfoButton = { openDanggnInfoActivity() }
                 )
+            }
+        }
+    }
+
+    override fun initObserves() {
+        super.initObserves()
+        flowLifecycleScope {
+            viewModel.uiState.collectLatest { state ->
+                when (state) {
+                    is DanggnUiState.Error -> {
+                        handleCommonError(state.code)
+                    }
+                    else -> {}
+                }
             }
         }
     }

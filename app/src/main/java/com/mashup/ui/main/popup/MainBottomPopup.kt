@@ -78,9 +78,11 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                     MainBottomPopupScreen(
                         viewModel = viewModel,
                         onClickLeftButton = {
+                            viewModel.patchPopupViewed()
                             dismiss()
                         },
                         onClickRightButton = {
+                            viewModel.patchPopupViewed()
                             dismiss()
                         }
                     )

@@ -43,7 +43,7 @@ class DanggnScoreController @Inject constructor() {
     private fun isEndOfComboTimeEnd() =
         (System.currentTimeMillis() - lastAddedScoreTimeMillis) >= COMBO_TERM_DURATION
 
-    fun getLastCombonScore(): Int {
+    fun getLastComboScore(): Int {
         val comboScore = lastComboScore
         lastComboScore = 0
         return comboScore

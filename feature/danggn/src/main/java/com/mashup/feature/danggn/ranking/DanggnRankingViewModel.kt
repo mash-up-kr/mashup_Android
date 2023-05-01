@@ -1,19 +1,21 @@
 package com.mashup.feature.danggn.ranking
 
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
-import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
+import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
-    private val danggnRepository: DanggnRepository
+    private val danggnRepository: DanggnRepository,
+    private val userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
     companion object {
         private const val GENERATION_NUMBER = 13
@@ -26,7 +28,7 @@ class DanggnRankingViewModel @Inject constructor(
         )
     val mashUpRankingList = _mashUpRankingList.asStateFlow()
 
-    private val _platformRankingList: MutableStateFlow<List<DanggnPlatformRankResponse>> =
+    private val _platformRankingList: MutableStateFlow<List<RankingUiState>> =
         MutableStateFlow(
             emptyList()
         )
@@ -35,17 +37,23 @@ class DanggnRankingViewModel @Inject constructor(
     private val _personalRanking: MutableStateFlow<RankingUiState> =
         MutableStateFlow(
             RankingUiState.EmptyRanking(
-                memberName = "",
+                name = "",
                 totalShakeScore = 0
             )
         )
     val personalRanking = _personalRanking.asStateFlow()
+
+    private val _userPreference: MutableStateFlow<UserPreference> = MutableStateFlow(
+        UserPreference.getDefaultInstance()
+    )
+    val userPreference = _userPreference.asStateFlow()
 
     init {
         mashUpScope {
             updateAllRankingList()
             updatePlatformRankingList()
             updatePersonalRanking()
+            updateUserPreference()
         }
     }
 
@@ -80,7 +88,16 @@ class DanggnRankingViewModel @Inject constructor(
     internal suspend fun updatePlatformRankingList() {
         val platformRankingResult = danggnRepository.getPlatformDanggnRank(GENERATION_NUMBER)
         if (platformRankingResult.isSuccess()) {
-            _platformRankingList.value = platformRankingResult.data ?: emptyList()
+            val platformRankingList = platformRankingResult.data ?: emptyList()
+            val sixPlatformRankingList = (0..5).map { index ->
+                platformRankingList.getOrNull(index)?.let {
+                    RankingUiState.PlatformRanking(
+                        platformName = it.platform,
+                        totalShakeScore = it.totalShakeScore
+                    )
+                } ?: RankingUiState.EmptyRanking()
+            }
+            _platformRankingList.update { sixPlatformRankingList }
         }
     }
 
@@ -100,22 +117,33 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
+    internal suspend fun updateUserPreference() {
+        _userPreference.value = userPreferenceRepository.getUserPreference().firstOrNull()
+            ?: UserPreference.getDefaultInstance()
+    }
+
+
     sealed interface RankingUiState {
 
         val memberId: String
-        val memberName: String
         val totalShakeScore: Int
 
         data class Ranking(
             override val memberId: String = "",
-            override val memberName: String = "",
+            val memberName: String = "",
             override val totalShakeScore: Int = -1
         ) : RankingUiState
 
         data class EmptyRanking(
             override val memberId: String = UUID.randomUUID().toString(),
-            override val memberName: String = "",
+            val name: String = "",
             override val totalShakeScore: Int = -1,
+        ) : RankingUiState
+
+        data class PlatformRanking(
+            override val memberId: String = UUID.randomUUID().toString(),
+            val platformName: String = "",
+            override val totalShakeScore: Int = -1
         ) : RankingUiState
     }
 }

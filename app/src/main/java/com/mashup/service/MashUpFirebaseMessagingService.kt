@@ -1,4 +1,4 @@
-package com.mashup.util
+package com.mashup.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,12 +12,16 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.TaskStackBuilder
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mashup.BuildConfig
 import com.mashup.R
-import dagger.hilt.android.AndroidEntryPoint
+import com.mashup.service.PushLinkType.Companion.getPushLinkType
+import com.mashup.ui.danggn.ShakeDanggnActivity
+import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.ui.splash.SplashActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.net.URL
 
 @AndroidEntryPoint
@@ -40,20 +44,44 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
 
         if (title != null && body != null) {
             createNotificationChannel()
-            notifyPushMessage(title, body, imageUrl)
+            notifyPushMessage(
+                title = title,
+                body = body,
+                imageUrl = imageUrl,
+                data = message.data
+            )
         }
     }
 
-    private fun notifyPushMessage(title: String, body: String, imageUrl: Uri?) {
+    private fun notifyPushMessage(
+        title: String,
+        body: String,
+        imageUrl: Uri?,
+        data: Map<String, String>
+    ) {
         val splashIntent = Intent(this, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            applicationContext,
-            0,
-            splashIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        val linkType = data[PUSH_DEEP_LINK_KEY] ?: ""
+        val taskStackBuilder = when (getPushLinkType(linkType)) {
+            PushLinkType.DANGGN -> {
+                TaskStackBuilder.create(this)
+                    .addNextIntentWithParentStack(splashIntent)
+                    .addNextIntent(ShakeDanggnActivity.newIntent(this))
+            }
+            PushLinkType.QR -> {
+                TaskStackBuilder.create(this)
+                    .addNextIntentWithParentStack(splashIntent)
+                    .addNextIntent(QRScanActivity.newIntent(this))
+            }
+            else -> {
+                TaskStackBuilder.create(this)
+                    .addNextIntentWithParentStack(splashIntent)
+            }
+        }
+        val pendingIntent = taskStackBuilder.getPendingIntent(
+            0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val notificationBuild = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -107,5 +135,7 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
         private const val CHANNEL_ID = "MashUpNotificationChannel"
         private const val CHANNEL_NAME = "Mash-Up Notification"
         private var NOTIFICATION_ID = 1001
+
+        private const val PUSH_DEEP_LINK_KEY = "link"
     }
 }

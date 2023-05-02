@@ -4,7 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.datastore.data.repository.UserPreferenceRepository
-import com.mashup.feature.danggn.data.danggn.*
+import com.mashup.feature.danggn.data.danggn.DanggnGameController
+import com.mashup.feature.danggn.data.danggn.DanggnGameState
+import com.mashup.feature.danggn.data.danggn.DanggnMode
+import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
+import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

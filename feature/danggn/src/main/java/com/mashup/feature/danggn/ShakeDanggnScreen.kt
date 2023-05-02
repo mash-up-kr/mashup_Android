@@ -30,8 +30,10 @@ fun ShakeDanggnScreen(
     val danggnMode by viewModel.danggnMode.collectAsState()
     val feverTimeCountDown by viewModel.feverTimeCountDown.collectAsState()
 
-    val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
+    val allMashUpMemberRankState by rankingViewModel.mashUpRankingList.collectAsState()
     val personalRankState by rankingViewModel.personalRanking.collectAsState()
+    val allPlatformRankState by rankingViewModel.platformRankingList.collectAsState()
+    val platformRankState by rankingViewModel.platformRanking.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.startDanggnGame()
@@ -62,8 +64,10 @@ fun ShakeDanggnScreen(
 
             // 당근 흔들기 랭킹 UI
             DanggnRankingContent(
-                allRankList = uiRankState.sortedByDescending { it.totalShakeScore },
-                personalRank = personalRankState
+                allMashUpMemberRankState = allMashUpMemberRankState.sortedByDescending { it.totalShakeScore },
+                personalRank = personalRankState,
+                allPlatformRank = allPlatformRankState,
+                platformRank = platformRankState
             )
         }
 

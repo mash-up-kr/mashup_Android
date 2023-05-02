@@ -27,6 +27,7 @@ fun ShakeDanggnScreen(
     onClickBackButton: () -> Unit,
     onClickDanggnInfoButton: () -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     val danggnMode by viewModel.danggnMode.collectAsState()
     val feverTimeCountDown by viewModel.feverTimeCountDown.collectAsState()
 
@@ -75,7 +76,8 @@ fun ShakeDanggnScreen(
         DanggnShakeEffect(
             modifier = Modifier.fillMaxSize(),
             danggnMode = danggnMode,
-            countDown = feverTimeCountDown
+            countDown = feverTimeCountDown,
+            effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList ?: emptyList(),
         )
     }
 }

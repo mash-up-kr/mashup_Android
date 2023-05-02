@@ -1,5 +1,10 @@
 package com.mashup.feature.danggn.shake
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,16 +14,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.feature.danggn.data.danggn.DanggnMode
+import com.mashup.feature.danggn.data.danggn.DanggnScoreModel
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
+import kotlin.random.Random
+import kotlinx.coroutines.delay
 import com.mashup.core.common.R as CR
 
 @Composable
@@ -26,6 +40,7 @@ fun DanggnShakeEffect(
     modifier: Modifier = Modifier,
     danggnMode: DanggnMode,
     countDown: Int,
+    effectList: List<DanggnScoreModel> = emptyList(),
 ) {
     Box(
         modifier = modifier.background(if (danggnMode is GoldenDanggnMode) Color(0xCC000000) else Color.Transparent)
@@ -62,8 +77,53 @@ fun DanggnShakeEffect(
                     .align(Alignment.Center)
             )
         }
+
+        effectList.forEach {
+            ShakeEffect(danggnMode)
+        }
     }
 }
+
+@Composable
+fun ShakeEffect(danggnMode: DanggnMode) {
+    val configuration = LocalConfiguration.current
+
+    var isVisible by remember { mutableStateOf(true) }
+    val randomX by remember { mutableStateOf(Random.nextInt(configuration.screenWidthDp)) }
+    val randomY by remember { mutableStateOf(Random.nextInt(configuration.screenHeightDp)) }
+
+    val fadeOutYPosition by animateDpAsState(
+        targetValue = if (isVisible) randomY.dp else (randomY - 30).dp,
+        animationSpec = tween(
+            durationMillis = 1000,
+            easing = LinearOutSlowInEasing
+        )
+    )
+
+    androidx.compose.runtime.LaunchedEffect(key1 = null) {
+        delay(1)
+        isVisible = false
+    }
+
+    Box(modifier = Modifier.offset(x = randomX.dp, y = fadeOutYPosition)) {
+        AnimatedVisibility(
+            visible = isVisible,
+            exit = fadeOut(
+                targetAlpha = 0.0f,
+                animationSpec = tween(
+                    durationMillis = 1000
+                )
+            ),
+        ) {
+            Image(
+                painterResource(id = if (danggnMode is NormalDanggnMode) CR.drawable.img_carrot else CR.drawable.img_fever_danggn),
+                contentDescription = null,
+                modifier = Modifier.size(60.dp),
+            )
+        }
+    }
+}
+
 
 @Preview
 @Composable

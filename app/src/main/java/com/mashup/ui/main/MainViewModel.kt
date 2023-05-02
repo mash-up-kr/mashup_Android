@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +31,9 @@ class MainViewModel @Inject constructor(
 
     private val _onAttendance = MutableSharedFlow<Unit>()
     val onAttendance: SharedFlow<Unit> = _onAttendance
+
+    private val _onClickPopupConfirm = MutableSharedFlow<String>()
+    val onClickPopupConfirm: SharedFlow<String> = _onClickPopupConfirm.asSharedFlow()
 
     init {
         savedStateHandle.get<LoginType>(EXTRA_LOGIN_TYPE)?.run {
@@ -82,6 +86,10 @@ class MainViewModel @Inject constructor(
                 pushNotificationAgreed = result.data.pushNotificationAgreed
             )
         }
+    }
+
+    fun onClickPopup(popupKey: String) = mashUpScope {
+        _onClickPopupConfirm.emit(popupKey)
     }
 
     override fun handleErrorCode(code: String) {

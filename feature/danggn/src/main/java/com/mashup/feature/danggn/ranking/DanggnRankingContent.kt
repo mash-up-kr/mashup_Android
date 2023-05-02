@@ -220,12 +220,14 @@ private fun PagerContents(
             item {
                 val coroutineScope = rememberCoroutineScope()
                 MashUpButton(
-                    modifier = Modifier.padding(
-                        start = 20.dp,
-                        end = 20.dp,
-                        top = 28.dp,
-                        bottom = 20.dp
-                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 20.dp,
+                            end = 20.dp,
+                            top = 28.dp,
+                            bottom = 20.dp
+                        ),
                     text = "당근 더 흔들기",
                     onClick = {
                         coroutineScope.launch {

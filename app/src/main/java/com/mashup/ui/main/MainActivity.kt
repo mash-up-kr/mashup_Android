@@ -16,12 +16,15 @@ import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.databinding.ActivityMainBinding
+import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainTab
+import com.mashup.ui.main.popup.MainBottomPopup
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -51,6 +54,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initViews() {
         super.initViews()
+        // TODO remove
+        MainBottomPopup.newInstance("DANGGN").show(supportFragmentManager, "ff")
+
         initComposeView()
         initTabButtons()
     }
@@ -80,10 +86,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initObserves() {
         super.initObserves()
         flowLifecycleScope {
-            viewModel.mainTab.collectLatest { tab ->
-                navigationTab(tab)
-                setUIOfTab(tab)
-                updateStatusBarColor(tab)
+            launch {
+                viewModel.mainTab.collectLatest { tab ->
+                    navigationTab(tab)
+                    setUIOfTab(tab)
+                    updateStatusBarColor(tab)
+                }
+            }
+
+            launch {
+                viewModel.onClickPopupConfirm.collectLatest { key ->
+                    when (key) {
+                        "DANGGN" -> {
+                            startActivity(ShakeDanggnActivity.newIntent(this@MainActivity))
+                        }
+                    }
+                }
             }
         }
     }

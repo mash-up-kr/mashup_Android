@@ -77,7 +77,7 @@ fun ShakeDanggnScreen(
             modifier = Modifier.fillMaxSize(),
             danggnMode = danggnMode,
             countDown = feverTimeCountDown,
-            effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList ?: emptyList()
+            effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList ?: emptyList(),
         )
     }
 }

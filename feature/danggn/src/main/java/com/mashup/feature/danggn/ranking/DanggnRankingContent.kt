@@ -66,8 +66,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState
+    allMashUpMemberRankState: List<DanggnRankingViewModel.RankingUiState>,
+    personalRank: DanggnRankingViewModel.RankingUiState,
+    allPlatformRank: List<DanggnRankingViewModel.RankingUiState>,
+    platformRank: DanggnRankingViewModel.RankingUiState,
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -118,11 +120,17 @@ fun DanggnRankingContent(
             count = pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top,
-        ) { _ ->
+        ) { index ->
             /**
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
-            PagerContents(allRankList, personalRank)
+            PagerContents(
+                allMashUpMemberRankState,
+                personalRank,
+                allPlatformRank,
+                platformRank,
+                index
+            )
         }
     }
 }
@@ -130,7 +138,10 @@ fun DanggnRankingContent(
 @Composable
 private fun PagerContents(
     allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState
+    personalRank: DanggnRankingViewModel.RankingUiState,
+    allPlatformRank: List<DanggnRankingViewModel.RankingUiState>,
+    platformRank: DanggnRankingViewModel.RankingUiState,
+    pagerIndex: Int,
 ) {
     if (allRankList.isEmpty()) {
         Text(
@@ -147,21 +158,43 @@ private fun PagerContents(
             state = listState,
             contentPadding = PaddingValues(top = 12.dp)
         ) {
-            item {
-                MyRanking(allRankList, personalRank)
+            /**
+             * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
+             * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
+             * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
+             */
+            if (personalRank.text.isNotEmpty() && pagerIndex == 0
+                || platformRank.text.isNotEmpty() && pagerIndex == 1
+            ) {
+                item {
+                    MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
+                }
             }
+
             itemsIndexed(
-                items = allRankList,
+                items = if (pagerIndex == 0) allRankList else allPlatformRank,
                 key = { _, item ->
                     item.memberId
                 }) { index, item ->
-                // 11개만 보여줍니다
-                if (index < 11) {
-                    RankingContent(
-                        modifier = Modifier.fillMaxWidth(),
-                        index = index,
-                        item = item,
-                    )
+                /**
+                 * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
+                 */
+                if (pagerIndex == 0) { // 크루원일 때
+                    if (index < 11) {
+                        RankingContent(
+                            modifier = Modifier.fillMaxWidth(),
+                            index = index,
+                            item = item,
+                        )
+                    }
+                } else {
+                    if (index < 6) {               // 플랫폼 팀일 때
+                        RankingContent(
+                            modifier = Modifier.fillMaxWidth(),
+                            index = index,
+                            item = item
+                        )
+                    }
                 }
                 if (index == 2) {
                     DrawDottedLine()
@@ -208,55 +241,61 @@ private fun PagerContents(
 
 @Composable
 private fun MyRanking(
-    allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState
+    personalRank: DanggnRankingViewModel.RankingUiState,
+    pagerIndex: Int,
 ) {
-    allRankList
-        .firstOrNull {
-            it.memberId == personalRank.memberId
-        }?.let { matchedPersonalRanking ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(color = Brand200),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row {
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp),
-                        text = "내 랭킹 ",
-                        style = Body3
-                    )
-                    Text(
-                        modifier = Modifier,
-                        text = "${allRankList.indexOf(matchedPersonalRanking).plus(1)}위",
-                        style = Body3,
-                        color = Brand600
-                    )
-                }
-                Row(
-                    modifier = Modifier.padding(vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .padding(end = 5.dp)
-                            .size(10.dp),
-                        painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
-                        contentDescription = null
-                    )
-                    Text(
-                        modifier = Modifier.padding(end = 16.dp),
-                        text = thousandFormat(matchedPersonalRanking.totalShakeScore),
-                        color = Gray900,
-                        style = Caption1
-                    )
-                }
-            }
+    val isAllCrewRanking = pagerIndex == 0
+    val myRankingText = if (isAllCrewRanking) "내 랭킹 " else "내 팀 랭킹 "
+    MyRankingInnerContent(myRankingText, personalRank)
+}
+
+@Composable
+private fun MyRankingInnerContent(
+    myRankingText: String,
+    matchedPersonalRanking: DanggnRankingViewModel.RankingUiState,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(color = Brand200),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row {
+            Text(
+                modifier = Modifier.padding(start = 16.dp),
+                text = myRankingText,
+                style = Body3
+            )
+            Text(
+                modifier = Modifier,
+                text = matchedPersonalRanking.text,
+                style = Body3,
+                color = Brand600
+            )
         }
+
+        Row(
+            modifier = Modifier.padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(end = 5.dp)
+                    .size(10.dp),
+                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_button),
+                contentDescription = null
+            )
+            Text(
+                modifier = Modifier.padding(end = 16.dp),
+                text = thousandFormat(matchedPersonalRanking.totalShakeScore),
+                color = Gray900,
+                style = Caption1
+            )
+        }
+    }
 }
 
 @Composable
@@ -322,16 +361,19 @@ private fun RankingContent(
                 modifier = Modifier
                     .padding(start = 12.dp),
                 text = when (item) {
-                    is DanggnRankingViewModel.RankingUiState.Ranking -> item.memberName
+                    is DanggnRankingViewModel.RankingUiState.Ranking -> item.text
                     is DanggnRankingViewModel.RankingUiState.EmptyRanking -> "아직 ${index + 1}위가 없어요"
+                    is DanggnRankingViewModel.RankingUiState.PlatformRanking -> item.text
+                    is DanggnRankingViewModel.RankingUiState.MyRanking -> ""
+                    is DanggnRankingViewModel.RankingUiState.MyPlatformRanking -> ""
                 },
                 style = SubTitle1.copy(
                     brush = Brush.linearGradient(
-                        when (index) { // 반드시 2개 이상의 컬러가 필요해서 Gray900 넣어줬습니다
-                            0 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingOneGradient else gradientGray300
-                            1 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingTwoGradient else gradientGray300
-                            2 -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) rankingThreeGradient else gradientGray300
-                            else -> if (item is DanggnRankingViewModel.RankingUiState.Ranking) gradientGray900 else gradientGray300
+                        when (index) {
+                            0 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingOneGradient else gradientGray300
+                            1 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingTwoGradient else gradientGray300
+                            2 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingThreeGradient else gradientGray300
+                            else -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) gradientGray900 else gradientGray300
                         }
                     )
                 ),
@@ -374,7 +416,7 @@ private fun MashUpPagerColorAnimator(
 fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
-            allRankList = listOf(
+            allMashUpMemberRankState = listOf(
                 DanggnRankingViewModel.RankingUiState.Ranking(
                     "39", "정종노드", 150
                 ),
@@ -391,9 +433,27 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingUiState.EmptyRanking(),
                 DanggnRankingViewModel.RankingUiState.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnRankingViewModel.RankingUiState.Ranking(
-                "56", "정종드투", 1510
-            )
+            personalRank = DanggnRankingViewModel.RankingUiState.MyRanking(
+                memberId = "560", totalShakeScore = 1510, text = "1위",
+            ),
+            allPlatformRank = listOf(
+                DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                    memberId = "Android",
+                    text = "Android", totalShakeScore = 120,
+                ),
+                DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                    memberId = "iOS",
+                    text = "iOS", totalShakeScore = 119,
+                ),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+            ),
+            platformRank = DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                memberId = "Android",
+                text = "1위", totalShakeScore = 120,
+            ),
         )
     }
 }

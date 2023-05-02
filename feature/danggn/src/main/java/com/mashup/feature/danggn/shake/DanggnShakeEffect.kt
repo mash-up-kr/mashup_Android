@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
@@ -100,7 +101,7 @@ fun ShakeEffect(danggnMode: DanggnMode) {
         )
     )
 
-    androidx.compose.runtime.LaunchedEffect(key1 = null) {
+    LaunchedEffect(Unit) {
         delay(100)
         isVisible = false
     }

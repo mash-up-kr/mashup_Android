@@ -25,9 +25,10 @@ fun ShakeDanggnScreen(
     onClickDanggnInfoButton: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState(DanggnUiState.Loading)
-    val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
+    val allMashUpMemberRankState by rankingViewModel.mashUpRankingList.collectAsState()
     val personalRankState by rankingViewModel.personalRanking.collectAsState()
-    val platformRankState by rankingViewModel.platformRankingList.collectAsState()
+    val allPlatformRankState by rankingViewModel.platformRankingList.collectAsState()
+    val platformRankState by rankingViewModel.platformRanking.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.subscribeShakeSensor()
@@ -57,9 +58,10 @@ fun ShakeDanggnScreen(
 
         // 당근 흔들기 랭킹 UI
         DanggnRankingContent(
-            allRankList = uiRankState.sortedByDescending { it.totalShakeScore },
+            allMashUpMemberRankState = allMashUpMemberRankState.sortedByDescending { it.totalShakeScore },
             personalRank = personalRankState,
-            platformRank = platformRankState,
+            allPlatformRank = allPlatformRankState,
+            platformRank = platformRankState
         )
     }
 }

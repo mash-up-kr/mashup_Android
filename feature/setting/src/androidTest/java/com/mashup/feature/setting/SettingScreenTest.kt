@@ -1,4 +1,4 @@
-package com.mashup.feature
+package com.mashup.feature.setting
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi

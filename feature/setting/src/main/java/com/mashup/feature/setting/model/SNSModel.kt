@@ -1,4 +1,4 @@
-package com.mashup.feature.model
+package com.mashup.feature.setting.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

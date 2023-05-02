@@ -4,11 +4,15 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.datastore.data.repository.UserPreferenceRepository
-import com.mashup.feature.danggn.data.danggn.DanggnShaker
-import com.mashup.feature.danggn.data.danggn.DanggnShakerState
+import com.mashup.feature.danggn.data.danggn.DanggnGameController
+import com.mashup.feature.danggn.data.danggn.DanggnGameState
+import com.mashup.feature.danggn.data.danggn.DanggnMode
+import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
+import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DanggnViewModel @Inject constructor(
-    private val danggnShaker: DanggnShaker,
+    private val danggnGameController: DanggnGameController,
     private val danggnRepository: DanggnRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
 ) : BaseViewModel() {
@@ -26,18 +30,37 @@ class DanggnViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<DanggnUiState>(DanggnUiState.Loading)
     val uiState: StateFlow<DanggnUiState> = _uiState.asStateFlow()
 
+    private val _danggnMode = MutableStateFlow<DanggnMode>(NormalDanggnMode)
+    val danggnMode: StateFlow<DanggnMode> = _danggnMode.asStateFlow()
+
+    private val _feverTimeCountDown = MutableStateFlow(0)
+    val feverTimeCountDown: StateFlow<Int> = _feverTimeCountDown.asStateFlow()
+
     private val _randomMessage = MutableStateFlow("")
     val randomMessage: StateFlow<String> = _randomMessage.asStateFlow()
 
     init {
-        collectDanggnState()
+        initDanggnGame()
         getDanggnRandomTodayMessage()
     }
 
-    fun subscribeShakeSensor() = mashUpScope {
+    private fun initDanggnGame() {
+        danggnGameController.setListener(
+            frameCallbackListener = {
+                viewModelScope.launch {
+                    _uiState.emit(DanggnUiState.Success(it))
+                    _danggnMode.emit(it.currentMode)
+                }
+            },
+            comboEndCallbackListener = this::sendDanggnScore,
+            danggnModeChangedListener = this::countDownFeverTime
+        )
+    }
+
+    fun startDanggnGame() = mashUpScope {
         val result = danggnRepository.getGoldDanggnPercent()
         if (result.isSuccess()) {
-            danggnShaker.start(
+            danggnGameController.start(
                 threshold = DANGGN_SHAKE_THRESHOLD,
                 interval = DANGGN_SHAKE_INTERVAL_TIME,
                 goldenDanggnPercent = result.data?.goldenDanggnPercent
@@ -58,38 +81,33 @@ class DanggnViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        danggnShaker.stop()
+        danggnGameController.stop()
     }
 
-    private fun collectDanggnState() {
-        viewModelScope.launch {
-            danggnShaker.getDanggnShakeState()
-                .collect {
-                    when (it) {
-                        is DanggnShakerState.End -> {
-                            sendDanggnScore(it)
-                        }
-                        else -> {
-                            _uiState.emit(DanggnUiState.Success)
-                        }
-                    }
-                }
-        }
-    }
-
-    private fun sendDanggnScore(
-        danggnShakerState: DanggnShakerState.End
-    ) = mashUpScope {
+    private fun sendDanggnScore(comboScore: Int) = mashUpScope {
         val generateNumber =
             userPreferenceRepository.getUserPreference()
                 .firstOrNull()?.generationNumbers?.lastOrNull()
         if (generateNumber != null) {
             danggnRepository.postDanggnScore(
                 generationNumber = generateNumber,
-                scoreRequest = DanggnScoreRequest(danggnShakerState.lastScore)
+                scoreRequest = DanggnScoreRequest(comboScore)
             )
         } else {
             handleErrorCode(UNAUTHORIZED)
+        }
+    }
+
+    private fun countDownFeverTime(danggnMode: DanggnMode) {
+        viewModelScope.launch {
+            if (danggnMode is GoldenDanggnMode) {
+                _feverTimeCountDown.value = FEVER_TIME_COUNT_DOWN
+
+                repeat(FEVER_TIME_COUNT_DOWN) {
+                    delay(1000)
+                    _feverTimeCountDown.value = _feverTimeCountDown.value - 1
+                }
+            }
         }
     }
 
@@ -109,12 +127,15 @@ class DanggnViewModel @Inject constructor(
         private const val DANGGN_SHAKE_INTERVAL_TIME = 200L
         private const val DANGGN_SHAKE_THRESHOLD = 200
         private const val DEFAULT_GOLD_DANGGN_PERCENT = 1
+        private const val FEVER_TIME_COUNT_DOWN = 3
     }
 }
 
 sealed interface DanggnUiState {
     object Loading : DanggnUiState
-    object Success : DanggnUiState
+    data class Success(
+        val danggnGameState: DanggnGameState
+    ) : DanggnUiState
 
     data class Error(val code: String) : DanggnUiState
 }

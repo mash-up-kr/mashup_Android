@@ -1,4 +1,4 @@
-package com.mashup.feature.constant
+package com.mashup.feature.setting.constant
 
 const val FACEBOOK = "https://www.facebook.com/mashupgroup/"
 const val INSTAGRAM = "https://www.instagram.com/official_mashup_/"

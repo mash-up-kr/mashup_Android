@@ -2,7 +2,13 @@ package com.mashup.feature.danggn.shake
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,23 +43,15 @@ fun DanggnShakeEffect(
                     modifier = Modifier.width(300.dp)
                 )
 
-                when (countDown) {
-                    1 -> Image(
-                        painter = painterResource(id = CR.drawable.img_fevertime_countdown_1),
-                        contentDescription = null,
-                        modifier = Modifier.size(80.dp)
-                    )
-                    2 -> Image(
-                        painter = painterResource(id = CR.drawable.img_fevertime_countdown_2),
-                        contentDescription = null,
-                        modifier = Modifier.size(80.dp)
-                    )
-                    3 -> Image(
-                        painter = painterResource(id = CR.drawable.img_fevertime_countdown_3),
-                        contentDescription = null,
-                        modifier = Modifier.size(80.dp)
-                    )
-                }
+                Image(
+                    painter = when (countDown) {
+                        1 -> painterResource(id = CR.drawable.img_fevertime_countdown_1)
+                        2 -> painterResource(id = CR.drawable.img_fevertime_countdown_2)
+                        else -> painterResource(id = CR.drawable.img_fevertime_countdown_3)
+                    },
+                    contentDescription = null,
+                    modifier = Modifier.size(80.dp)
+                )
             }
 
             Image(

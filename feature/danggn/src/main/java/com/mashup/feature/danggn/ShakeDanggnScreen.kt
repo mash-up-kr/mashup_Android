@@ -1,21 +1,18 @@
 package com.mashup.feature.danggn
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
-import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.shake.DanggnShakeContent
@@ -30,8 +27,9 @@ fun ShakeDanggnScreen(
     onClickBackButton: () -> Unit,
     onClickDanggnInfoButton: () -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsState(DanggnUiState.Loading)
     val danggnMode by viewModel.danggnMode.collectAsState()
+    val feverTimeCountDown by viewModel.feverTimeCountDown.collectAsState()
+
     val uiRankState by rankingViewModel.mashUpRankingList.collectAsState()
     val personalRankState by rankingViewModel.personalRanking.collectAsState()
 
@@ -70,6 +68,10 @@ fun ShakeDanggnScreen(
         }
 
         // Shake Effect 영역
-        DanggnShakeEffect(modifier = Modifier.fillMaxSize(), danggnMode)
+        DanggnShakeEffect(
+            modifier = Modifier.fillMaxSize(),
+            danggnMode = danggnMode,
+            countDown = feverTimeCountDown
+        )
     }
 }

@@ -70,10 +70,12 @@ class DanggnGameController @Inject constructor(
 
     fun setListener(
         frameCallbackListener: ((DanggnGameState) -> Unit),
-        comboEndCallbackListener: ((comboCount: Int) -> Unit)
+        comboEndCallbackListener: ((comboCount: Int) -> Unit),
+        danggnModeChangedListener: ((DanggnMode) -> Unit),
     ) {
         this.frameCallbackListener = frameCallbackListener
         this.comboEndCallbackListener = comboEndCallbackListener
+        modeController.danggnModeChangedListener = danggnModeChangedListener
     }
 
     fun stop() {

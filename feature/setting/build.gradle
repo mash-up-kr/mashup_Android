@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mashup.feature'
+    namespace 'com.mashup.feature.setting'
     compileSdk compileVersion
 
     defaultConfig {

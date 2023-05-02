@@ -10,15 +10,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.core.common.R as CR
 import com.mashup.feature.danggn.data.danggn.DanggnMode
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
+import com.mashup.core.common.R as CR
 
 @Composable
 fun DanggnShakeEffect(
     modifier: Modifier = Modifier,
-    danggnMode: DanggnMode
+    danggnMode: DanggnMode,
+    countDown: Int,
 ) {
     Box(
         modifier = modifier.background(if (danggnMode is GoldenDanggnMode) Color(0xCC000000) else Color.Transparent)
@@ -35,6 +36,24 @@ fun DanggnShakeEffect(
                     contentDescription = null,
                     modifier = Modifier.width(300.dp)
                 )
+
+                when (countDown) {
+                    1 -> Image(
+                        painter = painterResource(id = CR.drawable.img_fevertime_countdown_1),
+                        contentDescription = null,
+                        modifier = Modifier.size(80.dp)
+                    )
+                    2 -> Image(
+                        painter = painterResource(id = CR.drawable.img_fevertime_countdown_2),
+                        contentDescription = null,
+                        modifier = Modifier.size(80.dp)
+                    )
+                    3 -> Image(
+                        painter = painterResource(id = CR.drawable.img_fevertime_countdown_3),
+                        contentDescription = null,
+                        modifier = Modifier.size(80.dp)
+                    )
+                }
             }
 
             Image(
@@ -53,7 +72,8 @@ fun DanggnShakeEffect(
 fun NormalDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
-        danggnMode = NormalDanggnMode
+        danggnMode = NormalDanggnMode,
+        countDown = 0,
     )
 }
 
@@ -62,6 +82,7 @@ fun NormalDanggnModeEffectPrev() {
 fun GoldenDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
-        danggnMode = GoldenDanggnMode
+        danggnMode = GoldenDanggnMode,
+        countDown = 3,
     )
 }

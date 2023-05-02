@@ -35,7 +35,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.constant.EXTRA_POPUP_KEY
@@ -102,14 +101,6 @@ class MainBottomPopup : BottomSheetDialogFragment() {
         val bottomSheetDialog = dialog as? BottomSheetDialog
         bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             ?.run {
-                post {
-                    // post 안하면 작동 안됨
-                    bottomSheetDialog.behavior.apply {
-                        peekHeight = 0
-                        state = BottomSheetBehavior.STATE_EXPANDED
-                    }
-                }
-
                 setBackgroundColor(
                     ContextCompat.getColor(
                         requireContext(),

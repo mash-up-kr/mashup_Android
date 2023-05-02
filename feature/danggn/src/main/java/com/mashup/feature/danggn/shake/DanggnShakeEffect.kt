@@ -101,7 +101,7 @@ fun ShakeEffect(danggnMode: DanggnMode) {
     )
 
     androidx.compose.runtime.LaunchedEffect(key1 = null) {
-        delay(1)
+        delay(100)
         isVisible = false
     }
 

@@ -6,6 +6,8 @@ import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.danggn.DanggnGameController
 import com.mashup.feature.danggn.data.danggn.DanggnGameState
+import com.mashup.feature.danggn.data.danggn.DanggnMode
+import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,9 @@ class DanggnViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<DanggnUiState>(DanggnUiState.Loading)
     val uiState: StateFlow<DanggnUiState> = _uiState.asStateFlow()
 
+    private val _danggnMode = MutableStateFlow<DanggnMode>(NormalDanggnMode)
+    val danggnMode: StateFlow<DanggnMode> = _danggnMode.asStateFlow()
+
     private val _randomMessage = MutableStateFlow("")
     val randomMessage: StateFlow<String> = _randomMessage.asStateFlow()
 
@@ -39,6 +44,7 @@ class DanggnViewModel @Inject constructor(
             frameCallbackListener = {
                 viewModelScope.launch {
                     _uiState.emit(DanggnUiState.Success(it))
+                    _danggnMode.emit(it.currentMode)
                 }
             },
             comboEndCallbackListener = this::sendDanggnScore

@@ -32,7 +32,7 @@ class DanggnModeController @Inject constructor() {
 
     fun switchToGoldenDanggnMode() {
         if (getDanggnMode() == GoldenDanggnMode) return
-        val changeAvailableDanggnMode = Random.nextInt(1, 100) <= 50
+        val changeAvailableDanggnMode = Random.nextInt(1, 100) <= goldenDanggnPercent
 
         if (changeAvailableDanggnMode) {
             danggnChangedTimeMillis = System.currentTimeMillis()

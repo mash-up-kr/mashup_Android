@@ -36,12 +36,13 @@ class DanggnRankingViewModel @Inject constructor(
 
     private val _personalRanking: MutableStateFlow<RankingUiState> =
         MutableStateFlow(
-            RankingUiState.EmptyRanking(
-                name = "",
-                totalShakeScore = 0
-            )
+            RankingUiState.EmptyRanking()
         )
     val personalRanking = _personalRanking.asStateFlow()
+
+    private val _platformRanking:
+        MutableStateFlow<RankingUiState> = MutableStateFlow(RankingUiState.MyPlatformRanking())
+    val platformRanking = _platformRanking.asStateFlow()
 
     private val userPreference: MutableStateFlow<UserPreference> = MutableStateFlow(
         UserPreference.getDefaultInstance()
@@ -50,7 +51,7 @@ class DanggnRankingViewModel @Inject constructor(
     init {
         mashUpScope {
             updateAllRankingList()
-            updatePlatformRankingList()
+            updatePlatformRanking()
             updatePersonalRanking()
             updateUserPreference()
         }
@@ -72,7 +73,7 @@ class DanggnRankingViewModel @Inject constructor(
                 rankingList.getOrNull(index)?.let {
                     RankingUiState.Ranking(
                         memberId = it.memberId.toString(),
-                        memberName = it.memberName,
+                        text = it.memberName,
                         totalShakeScore = it.totalShakeScore
                     )
                 } ?: RankingUiState.EmptyRanking()
@@ -82,25 +83,45 @@ class DanggnRankingViewModel @Inject constructor(
     }
 
     /**
-     * 플랫폼 랭킹을 얻어옵니다
+     * 플랫폼 랭킹을 얻어와 내 플랫폼 랭킹까지 업데이트 합니다.
      */
-    internal suspend fun updatePlatformRankingList() {
+    internal suspend fun updatePlatformRanking() {
         val platformRankingResult = danggnRepository.getPlatformDanggnRank(GENERATION_NUMBER)
         if (platformRankingResult.isSuccess()) {
             val platformRankingList = platformRankingResult.data ?: emptyList()
             val sixPlatformRankingList = (0..5).map { index ->
                 platformRankingList.getOrNull(index)?.let {
                     RankingUiState.PlatformRanking(
-                        platformName = it.platform,
+                        memberId = it.platform,
+                        text = it.platform,
                         totalShakeScore = it.totalShakeScore
                     )
                 } ?: RankingUiState.EmptyRanking()
             }
+            setMyPlatformRanking(sixPlatformRankingList)
             _platformRankingList.update { sixPlatformRankingList }
         }
     }
 
-    // 랭킹 ui가 유기적으로 안바뀔거임 이거 combine으로 관리해보자
+    private fun setMyPlatformRanking(sixPlatformRankingList: List<RankingUiState>) {
+        val platformName = userPreference.value.platform.detailName
+        val matchedItemIndex = sixPlatformRankingList.indexOfFirst { matched ->
+            if (matched is RankingUiState.MyPlatformRanking) {
+                matched.text == platformName
+            } else {
+                false
+            }
+        }
+        _platformRanking.value = RankingUiState.MyPlatformRanking(
+            memberId = platformName,
+            text = matchedItemIndex.takeIf { number -> number > 0 }?.let { num ->
+                "${num}위"
+            } ?: "",
+            totalShakeScore = kotlin.runCatching { sixPlatformRankingList[matchedItemIndex].totalShakeScore }
+                .getOrNull() ?: DEFAULT_SHAKE_NUMBER
+        )
+    }
+
     /**
      * 개인 랭킹(크루원, 플랫폼)을 얻어옵니다
      */
@@ -111,17 +132,8 @@ class DanggnRankingViewModel @Inject constructor(
                 RankingUiState.MyRanking(
                     memberId = it.memberId.toString(),
                     totalShakeScore = it.totalShakeScore,
-                    myRanking = mashUpRankingList.value.indexOfFirst { matched ->
+                    text = mashUpRankingList.value.indexOfFirst { matched ->
                         matched.memberId == it.memberId.toString()
-                    }.takeIf { number -> number > 0 }?.let { num ->
-                        "${num}위"
-                    } ?: "",
-                    myPlatformRanking = platformRankingList.value.indexOfFirst { matched ->
-                        if (matched is RankingUiState.PlatformRanking) {
-                            matched.platformName == userPreference.value.platform.detailName
-                        } else {
-                            false
-                        }
                     }.takeIf { number -> number > 0 }?.let { num ->
                         "${num}위"
                     } ?: "",
@@ -138,6 +150,7 @@ class DanggnRankingViewModel @Inject constructor(
 
     sealed interface RankingUiState {
 
+        val text: String
         val memberId: String
         val totalShakeScore: Int
 
@@ -146,13 +159,13 @@ class DanggnRankingViewModel @Inject constructor(
          */
         data class Ranking(
             override val memberId: String = "",
-            val memberName: String = "",
+            override val text: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingUiState
 
         data class EmptyRanking(
             override val memberId: String = UUID.randomUUID().toString(),
-            val name: String = "",
+            override val text: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingUiState
 
@@ -161,15 +174,20 @@ class DanggnRankingViewModel @Inject constructor(
          */
         data class PlatformRanking(
             override val memberId: String = UUID.randomUUID().toString(),
-            val platformName: String = "",
+            override val text: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingUiState
 
         data class MyRanking(
             override val memberId: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
-            val myRanking: String = "",
-            val myPlatformRanking: String = "",
+            override val text: String = "",
+        ) : RankingUiState
+
+        data class MyPlatformRanking(
+            override val text: String = "",
+            override val memberId: String = UUID.randomUUID().toString(),
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingUiState
     }
 }

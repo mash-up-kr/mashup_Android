@@ -19,6 +19,7 @@ import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.shake.DanggnShakeContent
+import com.mashup.feature.danggn.shake.DanggnShakeEffect
 import com.mashup.core.common.R as CR
 
 @Composable
@@ -69,33 +70,6 @@ fun ShakeDanggnScreen(
         }
 
         // Shake Effect 영역
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(if (danggnMode is GoldenDanggnMode) Color(0xCC000000) else Color.Transparent)
-        ) {
-            if (danggnMode is GoldenDanggnMode) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 50.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = CR.drawable.img_fevertime_title),
-                        contentDescription = null,
-                        modifier = Modifier.width(300.dp)
-                    )
-                }
-
-                Image(
-                    painter = painterResource(id = CR.drawable.img_fever_danggn),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(174.dp)
-                        .align(Alignment.Center)
-                )
-            }
-        }
+        DanggnShakeEffect(modifier = Modifier.fillMaxSize(), danggnMode)
     }
 }

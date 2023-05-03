@@ -15,9 +15,11 @@ import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.safeShow
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.main.popup.MainBottomPopup
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
@@ -54,9 +56,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initViews() {
         super.initViews()
-        // TODO remove
-        MainBottomPopup.newInstance("DANGGN").show(supportFragmentManager, "ff")
-
         initComposeView()
         initTabButtons()
     }
@@ -95,10 +94,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
 
             launch {
-                viewModel.onClickPopupConfirm.collectLatest { key ->
-                    when (key) {
-                        "DANGGN" -> {
+                viewModel.showPopupType.collectLatest {
+                    MainBottomPopup.newInstance(it).safeShow(supportFragmentManager)
+                }
+            }
+
+            launch {
+                viewModel.onClickPopupConfirm.collectLatest { popupType ->
+                    when (popupType) {
+                        MainPopupType.DANGGN -> {
                             startActivity(ShakeDanggnActivity.newIntent(this@MainActivity))
+                        }
+                        else -> {
                         }
                     }
                 }

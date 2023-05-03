@@ -49,6 +49,7 @@ import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.main.model.MainPopupEntity
+import com.mashup.ui.main.model.MainPopupType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -58,9 +59,9 @@ class MainBottomPopup : BottomSheetDialogFragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
 
     companion object {
-        fun newInstance(popupKey: String) = MainBottomPopup().apply {
+        fun newInstance(popupType: MainPopupType) = MainBottomPopup().apply {
             arguments = bundleOf(
-                EXTRA_POPUP_KEY to popupKey
+                EXTRA_POPUP_KEY to popupType.name
             )
         }
     }

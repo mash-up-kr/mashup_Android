@@ -136,11 +136,6 @@ private fun PagerContents(
              * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
              * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
              */
-            /**
-             * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
-             * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
-             * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
-             */
             if (personalRank.text.isNotEmpty() && pagerIndex == 0
                 || platformRank.text.isNotEmpty() && pagerIndex == 1
             ) {
@@ -149,9 +144,6 @@ private fun PagerContents(
 
             (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
                 key(rankingUiState.memberId) {
-                    /**
-                     * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
-                     */
                     /**
                      * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
                      */
@@ -178,9 +170,6 @@ private fun PagerContents(
                 }
             }
 
-            /**
-             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
-             */
             /**
              * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
              */

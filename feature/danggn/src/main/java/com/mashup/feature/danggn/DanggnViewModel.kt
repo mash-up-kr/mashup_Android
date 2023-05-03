@@ -4,12 +4,22 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.datastore.data.repository.UserPreferenceRepository
-import com.mashup.feature.danggn.data.danggn.*
+import com.mashup.feature.danggn.data.danggn.DanggnGameController
+import com.mashup.feature.danggn.data.danggn.DanggnGameState
+import com.mashup.feature.danggn.data.danggn.DanggnMode
+import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
+import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

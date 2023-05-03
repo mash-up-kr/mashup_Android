@@ -6,14 +6,18 @@ import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
-import java.util.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
-    private val userPreferenceRepository: UserPreferenceRepository
+    userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
     companion object {
         private const val GENERATION_NUMBER = 13

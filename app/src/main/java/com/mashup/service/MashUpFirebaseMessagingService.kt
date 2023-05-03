@@ -1,4 +1,4 @@
-package com.mashup.util
+package com.mashup.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -16,8 +16,9 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mashup.BuildConfig
 import com.mashup.R
-import dagger.hilt.android.AndroidEntryPoint
+import com.mashup.constant.EXTRA_LINK
 import com.mashup.ui.splash.SplashActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.net.URL
 
 @AndroidEntryPoint
@@ -40,13 +41,24 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
 
         if (title != null && body != null) {
             createNotificationChannel()
-            notifyPushMessage(title, body, imageUrl)
+            notifyPushMessage(
+                title = title,
+                body = body,
+                imageUrl = imageUrl,
+                data = message.data
+            )
         }
     }
 
-    private fun notifyPushMessage(title: String, body: String, imageUrl: Uri?) {
+    private fun notifyPushMessage(
+        title: String,
+        body: String,
+        imageUrl: Uri?,
+        data: Map<String, String>
+    ) {
         val splashIntent = Intent(this, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(EXTRA_LINK, data[EXTRA_LINK])
         }
 
         val pendingIntent = PendingIntent.getActivity(

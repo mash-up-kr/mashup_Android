@@ -120,7 +120,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <service
-            android:name=".util.MashUpFirebaseMessagingService"
+            android:name=".service.MashUpFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -104,7 +104,12 @@
             android:name=".ui.setting.SettingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".ui.setting.PushActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
 
         <activity

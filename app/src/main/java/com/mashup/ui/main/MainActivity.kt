@@ -103,6 +103,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.onClickPopupConfirm.collectLatest { popupType ->
                     when (popupType) {
                         MainPopupType.DANGGN -> {
+                            viewModel.disablePopup(popupType)
                             startActivity(ShakeDanggnActivity.newIntent(this@MainActivity))
                         }
                         else -> {

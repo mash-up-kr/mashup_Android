@@ -66,6 +66,11 @@ ext {
     // composeViewPager
     composeViewPagerVersion = "0.20.1"
 
+    // flipper
+    flipperVersion = "0.190.0"
+    flipperNoOpVersion = "0.10.0"
+    soLoaderVersion = "0.10.5"
+
     // Test
     junit4Version = "4.13.2"
     turbine = "app.cash.turbine:turbine:0.12.0"

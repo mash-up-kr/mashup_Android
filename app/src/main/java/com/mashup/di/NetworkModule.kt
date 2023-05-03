@@ -31,6 +31,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
+    companion object {
+        val flipperNetwork = NetworkFlipperPlugin()
+    }
+
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
@@ -40,11 +44,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideFlipperNetwork() = NetworkFlipperPlugin()
-
-    @Provides
-    @Singleton
-    fun provideFlipperOkhttpInterceptor(flipperNetwork: NetworkFlipperPlugin) =
+    fun provideFlipperOkhttpInterceptor() =
         FlipperOkhttpInterceptor(flipperNetwork)
 
     @Provides

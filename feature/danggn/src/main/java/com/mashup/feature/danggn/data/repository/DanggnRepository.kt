@@ -8,7 +8,7 @@ import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
-import com.mashup.network.Response
+import com.mashup.network.Response2
 import javax.inject.Inject
 
 class DanggnRepository @Inject constructor(
@@ -21,37 +21,37 @@ class DanggnRepository @Inject constructor(
     suspend fun getPersonalDanggnRank(
         generationNumber: Int,
         limit: Int = LIMIT,
-    ): Response<DanggnMemberRankResponse> {
+    ): Response2<DanggnMemberRankResponse> {
         return danggnDao.getDanggnMemberRank(generationNumber, limit)
     }
 
     suspend fun getAllDanggnRank(
         generationNumber: Int
-    ): Response<DanggnAllMemberRankResponse> {
+    ): Response2<DanggnAllMemberRankResponse> {
         return danggnDao.getDanggnAllMemberRank(generationNumber)
     }
 
     suspend fun getPlatformDanggnRank(
         generationNumber: Int
-    ): Response<List<DanggnPlatformRankResponse>> {
+    ): Response2<List<DanggnPlatformRankResponse>> {
         return danggnDao.getDanggnPlatformRank(generationNumber)
     }
 
     suspend fun postDanggnScore(
         generationNumber: Int,
         scoreRequest: DanggnScoreRequest
-    ): Response<DanggnScoreResponse> {
+    ): Response2<DanggnScoreResponse> {
         return danggnDao.postDanggnScore(
             generationNumber = generationNumber,
             scoreRequest = scoreRequest
         )
     }
 
-    suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse> {
+    suspend fun getDanggnRandomTodayMessage(): Response2<DanggnRandomTodayMessageResponse> {
         return danggnDao.getDanggnRandomTodayMessage()
     }
 
-    suspend fun getGoldDanggnPercent(): Response<GoldenDanggnPercentResponse> {
+    suspend fun getGoldDanggnPercent(): Response2<GoldenDanggnPercentResponse> {
         return danggnDao.getGoldenDanggnPercent()
     }
 }

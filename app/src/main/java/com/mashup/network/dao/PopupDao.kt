@@ -13,4 +13,9 @@ interface PopupDao {
 
     @GET("/api/v1/member-popups")
     suspend fun getMembersPopupKeyList(): Response<List<String>>
+
+    @PATCH("/api/v1/member-popups/{popupType}/disabled")
+    suspend fun patchPopupDisabled(
+        @Path("popupType") popupType: String
+    ): Response<Any>
 }

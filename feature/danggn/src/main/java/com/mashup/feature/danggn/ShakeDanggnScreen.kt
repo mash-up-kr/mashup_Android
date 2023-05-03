@@ -17,6 +17,8 @@ import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import com.mashup.core.common.R as CR
 
 @Composable
@@ -31,13 +33,16 @@ fun ShakeDanggnScreen(
     val danggnMode by viewModel.danggnMode.collectAsState()
     val feverTimeCountDown by viewModel.feverTimeCountDown.collectAsState()
 
-    val allMashUpMemberRankState by rankingViewModel.mashUpRankingList.collectAsState()
-    val personalRankState by rankingViewModel.personalRanking.collectAsState()
-    val allPlatformRankState by rankingViewModel.platformRankingList.collectAsState()
-    val platformRankState by rankingViewModel.platformRanking.collectAsState()
+    val rankUiState by rankingViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.startDanggnGame()
+
+        launch {
+            viewModel.onSuccessAddScore.collectLatest {
+                rankingViewModel.getRankingData()
+            }
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -65,10 +70,10 @@ fun ShakeDanggnScreen(
 
             // 당근 흔들기 랭킹 UI
             DanggnRankingContent(
-                allMashUpMemberRankState = allMashUpMemberRankState.sortedByDescending { it.totalShakeScore },
-                personalRank = personalRankState,
-                allPlatformRank = allPlatformRankState,
-                platformRank = platformRankState
+                allMashUpMemberRankState = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
+                personalRank = rankUiState.myPersonalRanking,
+                allPlatformRank = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
+                platformRank = rankUiState.myPlatformRanking
             )
         }
 
@@ -77,7 +82,8 @@ fun ShakeDanggnScreen(
             modifier = Modifier.fillMaxSize(),
             danggnMode = danggnMode,
             countDown = feverTimeCountDown,
-            effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList ?: emptyList(),
+            effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList
+                ?: emptyList(),
         )
     }
 }

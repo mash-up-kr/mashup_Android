@@ -1,15 +1,13 @@
 package com.mashup.feature.danggn.ranking
 
+import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.update
-import java.util.UUID
+import kotlinx.coroutines.flow.*
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,38 +20,48 @@ class DanggnRankingViewModel @Inject constructor(
         private const val DEFAULT_SHAKE_NUMBER = -1
     }
 
-    private val _mashUpRankingList: MutableStateFlow<List<RankingUiState>> =
+    private val userPreferenceFlow = userPreferenceRepository.getUserPreference()
+
+    private val personalRankingList: MutableStateFlow<List<RankingItem>> =
         MutableStateFlow(
             emptyList()
         )
-    val mashUpRankingList = _mashUpRankingList.asStateFlow()
 
-    private val _platformRankingList: MutableStateFlow<List<RankingUiState>> =
+    private val platformRankingList: MutableStateFlow<List<RankingItem>> =
         MutableStateFlow(
             emptyList()
         )
-    val platformRankingList = _platformRankingList.asStateFlow()
 
-    private val _personalRanking: MutableStateFlow<RankingUiState> =
-        MutableStateFlow(
-            RankingUiState.EmptyRanking()
+    val uiState: StateFlow<RankingUiState> = combine(
+        userPreferenceFlow, personalRankingList, platformRankingList
+    ) { userPreference, personalRankingList, platformRankingList ->
+        RankingUiState(
+            personalRankingList = personalRankingList,
+            platformRankingList = platformRankingList,
+            myPersonalRanking = getPersonalRankingItem(
+                userPreference = userPreference,
+                personalRankingList = personalRankingList
+            ),
+            myPlatformRanking = getPlatformRankingItem(
+                userPreference = userPreference,
+                platformRankingList = platformRankingList
+            )
         )
-    val personalRanking = _personalRanking.asStateFlow()
-
-    private val _platformRanking:
-        MutableStateFlow<RankingUiState> = MutableStateFlow(RankingUiState.MyPlatformRanking())
-    val platformRanking = _platformRanking.asStateFlow()
-
-    private val userPreference: MutableStateFlow<UserPreference> = MutableStateFlow(
-        UserPreference.getDefaultInstance()
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000),
+        RankingUiState()
     )
 
+
     init {
+        getRankingData()
+    }
+
+    fun getRankingData() {
         mashUpScope {
             updateAllRankingList()
             updatePlatformRanking()
-            updatePersonalRanking()
-            updateUserPreference()
         }
     }
 
@@ -71,14 +79,14 @@ class DanggnRankingViewModel @Inject constructor(
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
             val elevenRankingList = (0..10).map { index ->
                 rankingList.getOrNull(index)?.let {
-                    RankingUiState.Ranking(
+                    RankingItem.Ranking(
                         memberId = it.memberId.toString(),
                         text = it.memberName,
                         totalShakeScore = it.totalShakeScore
                     )
-                } ?: RankingUiState.EmptyRanking()
+                } ?: RankingItem.EmptyRanking()
             }
-            _mashUpRankingList.update { elevenRankingList }
+            personalRankingList.emit(elevenRankingList)
         }
     }
 
@@ -86,38 +94,33 @@ class DanggnRankingViewModel @Inject constructor(
      * 플랫폼 랭킹을 얻어와 내 플랫폼 랭킹까지 업데이트 합니다.
      */
     internal suspend fun updatePlatformRanking() {
-        val platformRankingResult = danggnRepository.getPlatformDanggnRank(GENERATION_NUMBER)
-        if (platformRankingResult.isSuccess()) {
-            val platformRankingList = platformRankingResult.data ?: emptyList()
+        val result = danggnRepository.getPlatformDanggnRank(GENERATION_NUMBER)
+        if (result.isSuccess()) {
             val sixPlatformRankingList = (0..5).map { index ->
-                platformRankingList.getOrNull(index)?.let {
-                    RankingUiState.PlatformRanking(
-                        memberId = it.platform,
-                        text = it.platform,
+                result.data?.getOrNull(index)?.let {
+                    RankingItem.PlatformRanking(
+                        memberId = it.platform.detailName,
+                        text = it.platform.detailName,
                         totalShakeScore = it.totalShakeScore
                     )
-                } ?: RankingUiState.EmptyRanking()
+                } ?: RankingItem.EmptyRanking()
             }
-            setMyPlatformRanking(sixPlatformRankingList)
-            _platformRankingList.update { sixPlatformRankingList }
+            platformRankingList.emit(sixPlatformRankingList)
         }
     }
 
-    private fun setMyPlatformRanking(sixPlatformRankingList: List<RankingUiState>) {
-        val platformName = userPreference.value.platform.detailName
-        val matchedItemIndex = sixPlatformRankingList.indexOfFirst { matched ->
-            if (matched is RankingUiState.MyPlatformRanking) {
-                matched.text == platformName
-            } else {
-                false
-            }
+    internal fun getPlatformRankingItem(
+        userPreference: UserPreference,
+        platformRankingList: List<RankingItem>
+    ): RankingItem {
+        val matchedItemIndex = platformRankingList.indexOfFirst { matched ->
+            matched.text == userPreference.platform.detailName
         }
-        _platformRanking.value = RankingUiState.MyPlatformRanking(
-            memberId = platformName,
-            text = matchedItemIndex.takeIf { number -> number > 0 }?.let { num ->
-                "${num}위"
-            } ?: "",
-            totalShakeScore = kotlin.runCatching { sixPlatformRankingList[matchedItemIndex].totalShakeScore }
+        if (matchedItemIndex == -1) return RankingItem.EmptyRanking()
+        return RankingItem.MyPlatformRanking(
+            memberId = userPreference.platform.detailName,
+            text = "${matchedItemIndex + 1}위",
+            totalShakeScore = kotlin.runCatching { platformRankingList[matchedItemIndex].totalShakeScore }
                 .getOrNull() ?: DEFAULT_SHAKE_NUMBER
         )
     }
@@ -125,30 +128,22 @@ class DanggnRankingViewModel @Inject constructor(
     /**
      * 개인 랭킹(크루원, 플랫폼)을 얻어옵니다
      */
-    internal suspend fun updatePersonalRanking() {
-        val personalRanking = danggnRepository.getPersonalDanggnRank(GENERATION_NUMBER)
-        if (personalRanking.isSuccess()) {
-            _personalRanking.value = personalRanking.data?.let {
-                RankingUiState.MyRanking(
-                    memberId = it.memberId.toString(),
-                    totalShakeScore = it.totalShakeScore,
-                    text = mashUpRankingList.value.indexOfFirst { matched ->
-                        matched.memberId == it.memberId.toString()
-                    }.takeIf { number -> number > 0 }?.let { num ->
-                        "${num}위"
-                    } ?: "",
-                )
-            } ?: RankingUiState.EmptyRanking()
-        }
+    internal fun getPersonalRankingItem(
+        userPreference: UserPreference,
+        personalRankingList: List<RankingItem>
+    ): RankingItem {
+        val myPersonalRank = personalRankingList.find { it.text == userPreference.name }
+            ?: return RankingItem.EmptyRanking()
+        val index = personalRankingList.indexOf(myPersonalRank)
+
+        return RankingItem.MyRanking(
+            memberId = myPersonalRank.memberId,
+            totalShakeScore = myPersonalRank.totalShakeScore,
+            text = "${index + 1}위"
+        )
     }
 
-    internal suspend fun updateUserPreference() {
-        userPreference.value = userPreferenceRepository.getUserPreference().firstOrNull()
-            ?: UserPreference.getDefaultInstance()
-    }
-
-
-    sealed interface RankingUiState {
+    sealed interface RankingItem {
 
         val text: String
         val memberId: String
@@ -160,14 +155,14 @@ class DanggnRankingViewModel @Inject constructor(
         data class Ranking(
             override val memberId: String = "",
             override val text: String = "",
-            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
-        ) : RankingUiState
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+        ) : RankingItem
 
         data class EmptyRanking(
             override val memberId: String = UUID.randomUUID().toString(),
             override val text: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
-        ) : RankingUiState
+        ) : RankingItem
 
         /**
          * 플랫폼 랭킹 아이템
@@ -176,18 +171,25 @@ class DanggnRankingViewModel @Inject constructor(
             override val memberId: String = UUID.randomUUID().toString(),
             override val text: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
-        ) : RankingUiState
+        ) : RankingItem
 
         data class MyRanking(
             override val memberId: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
             override val text: String = "",
-        ) : RankingUiState
+        ) : RankingItem
 
         data class MyPlatformRanking(
             override val text: String = "",
             override val memberId: String = UUID.randomUUID().toString(),
-            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
-        ) : RankingUiState
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+        ) : RankingItem
     }
 }
+
+data class RankingUiState(
+    val personalRankingList: List<DanggnRankingViewModel.RankingItem> = emptyList(),
+    val platformRankingList: List<DanggnRankingViewModel.RankingItem> = emptyList(),
+    val myPersonalRanking: DanggnRankingViewModel.RankingItem = DanggnRankingViewModel.RankingItem.EmptyRanking(),
+    val myPlatformRanking: DanggnRankingViewModel.RankingItem = DanggnRankingViewModel.RankingItem.EmptyRanking()
+)

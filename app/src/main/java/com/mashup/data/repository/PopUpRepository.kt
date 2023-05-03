@@ -12,4 +12,8 @@ class PopUpRepository @Inject constructor(
     suspend fun patchPopupViewed(popupType: String): Response<Any> {
         return popupDao.patchPopupViewed(popupType)
     }
+
+    suspend fun getPopupKeyList(): Response<List<String>> {
+        return popupDao.getMembersPopupKeyList()
+    }
 }

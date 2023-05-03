@@ -12,3 +12,6 @@ const val EXTRA_WITH_DRAWL = "EXTRA_WITH_DRAWL"
 const val EXTRA_ANIMATION = "EXTRA_ANIMATION"
 
 const val EXTRA_LINK = "link"
+
+const val EXTRA_POPUP_KEY = "EXTRA_POPUP_KEY"
+

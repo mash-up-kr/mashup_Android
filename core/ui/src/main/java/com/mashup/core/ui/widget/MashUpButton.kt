@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -37,16 +36,19 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mashup.core.ui.colors.Brand100
 import com.mashup.core.ui.colors.Brand300
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray600
+import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body1
 
 enum class ButtonStyle(val backgroundColor: Color, val textColor: Color) {
-    PRIMARY(backgroundColor = Brand500, textColor = Color.White),
-    DISABLE(backgroundColor = Brand300, textColor = Color.White),
+    PRIMARY(backgroundColor = Brand500, textColor = White),
+    INVERSE(backgroundColor = Brand100, textColor = Brand500),
+    DISABLE(backgroundColor = Brand300, textColor = White),
     DEFAULT(backgroundColor = Gray100, textColor = Gray600)
 }
 
@@ -62,9 +64,9 @@ fun MashUpButton(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
-            .fillMaxWidth()
             .height(52.dp)
             .background(if (isEnabled) buttonStyle.backgroundColor else ButtonStyle.DISABLE.backgroundColor)
+            .padding(horizontal = 20.dp)
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },

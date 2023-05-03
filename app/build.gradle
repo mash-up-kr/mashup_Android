@@ -141,4 +141,10 @@ dependencies {
 
     // coroutine test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
+
+    debugImplementation "com.facebook.flipper:flipper:$flipperVersion"
+    debugImplementation "com.facebook.soloader:soloader:$soLoaderVersion"
+    debugImplementation "com.facebook.flipper:flipper-network-plugin:$flipperVersion"
+    releaseImplementation "com.facebook.flipper:flipper-noop:$flipperVersion"
+    releaseImplementation "com.github.theGlenn:flipper-android-no-op:$flipperNoOpVersion"
 }

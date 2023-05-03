@@ -1,5 +1,7 @@
 package com.mashup.di
 
+import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
+import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
@@ -38,20 +40,33 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideFlipperNetwork() = NetworkFlipperPlugin()
+
+    @Provides
+    @Singleton
+    fun provideFlipperOkhttpInterceptor(flipperNetwork: NetworkFlipperPlugin) =
+        FlipperOkhttpInterceptor(flipperNetwork)
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-        baseInterceptor: BaseInterceptor
+        baseInterceptor: BaseInterceptor,
+        flipperInterceptor: FlipperOkhttpInterceptor,
     ): OkHttpClient {
+
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(baseInterceptor)
 
         if (DEBUG_MODE) {
-            okHttpClient.addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                }
-            )
+            okHttpClient
+                .addNetworkInterceptor(flipperInterceptor)
+                .addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                    }
+                )
         }
         return okHttpClient
             .readTimeout(10L, TimeUnit.SECONDS)

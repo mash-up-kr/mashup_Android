@@ -4,11 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
@@ -17,6 +16,7 @@ import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
+import kotlinx.coroutines.launch
 import com.mashup.core.common.R as CR
 
 @Composable
@@ -40,9 +40,12 @@ fun ShakeDanggnScreen(
         viewModel.startDanggnGame()
     }
 
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = modifier
+            modifier = modifier.verticalScroll(scrollState)
         ) {
             MashUpToolbar(
                 title = "당근 흔들기",
@@ -68,7 +71,12 @@ fun ShakeDanggnScreen(
                 allMashUpMemberRankState = allMashUpMemberRankState.sortedByDescending { it.totalShakeScore },
                 personalRank = personalRankState,
                 allPlatformRank = allPlatformRankState,
-                platformRank = platformRankState
+                platformRank = platformRankState,
+                onClickScrollTopButton = {
+                    coroutineScope.launch {
+                        scrollState.scrollTo(0)
+                    }
+                }
             )
         }
 

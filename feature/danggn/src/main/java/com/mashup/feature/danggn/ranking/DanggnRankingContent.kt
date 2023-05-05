@@ -1,21 +1,8 @@
 package com.mashup.feature.danggn.ranking
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
@@ -23,6 +10,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,24 +28,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.common.utils.thousandFormat
-import com.mashup.core.ui.colors.Black
-import com.mashup.core.ui.colors.Brand200
-import com.mashup.core.ui.colors.Brand600
-import com.mashup.core.ui.colors.Gray200
-import com.mashup.core.ui.colors.Gray300
-import com.mashup.core.ui.colors.Gray400
-import com.mashup.core.ui.colors.Gray500
-import com.mashup.core.ui.colors.Gray900
-import com.mashup.core.ui.colors.White
-import com.mashup.core.ui.colors.rankingOneGradient
-import com.mashup.core.ui.colors.rankingThreeGradient
-import com.mashup.core.ui.colors.rankingTwoGradient
+import com.mashup.core.ui.colors.*
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.Body3
-import com.mashup.core.ui.typography.GilroyExtraBold
-import com.mashup.core.ui.typography.Caption1
-import com.mashup.core.ui.typography.SubTitle1
-import com.mashup.core.ui.typography.Title1
+import com.mashup.core.ui.typography.*
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
@@ -70,6 +43,7 @@ fun DanggnRankingContent(
     personalRank: DanggnRankingViewModel.RankingUiState,
     allPlatformRank: List<DanggnRankingViewModel.RankingUiState>,
     platformRank: DanggnRankingViewModel.RankingUiState,
+    onClickScrollTopButton: () -> Unit = {}
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
@@ -129,7 +103,8 @@ fun DanggnRankingContent(
                 personalRank,
                 allPlatformRank,
                 platformRank,
-                index
+                index,
+                onClickScrollTopButton = onClickScrollTopButton
             )
         }
     }
@@ -142,6 +117,7 @@ private fun PagerContents(
     allPlatformRank: List<DanggnRankingViewModel.RankingUiState>,
     platformRank: DanggnRankingViewModel.RankingUiState,
     pagerIndex: Int,
+    onClickScrollTopButton: () -> Unit = {}
 ) {
     if (allRankList.isEmpty()) {
         Text(
@@ -152,11 +128,8 @@ private fun PagerContents(
             style = Caption1
         )
     } else {
-        val listState = rememberLazyListState()
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = listState,
-            contentPadding = PaddingValues(top = 12.dp)
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
             /**
              * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
@@ -166,75 +139,63 @@ private fun PagerContents(
             if (personalRank.text.isNotEmpty() && pagerIndex == 0
                 || platformRank.text.isNotEmpty() && pagerIndex == 1
             ) {
-                item {
-                    MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
+                MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
+            }
+
+            (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
+                key(rankingUiState.memberId) {
+                    /**
+                     * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
+                     */
+                    if (pagerIndex == 0) { // 크루원일 때
+                        if (index < 11) {
+                            RankingContent(
+                                modifier = Modifier.fillMaxWidth(),
+                                index = index,
+                                item = rankingUiState,
+                            )
+                        }
+                    } else {
+                        if (index < 6) {               // 플랫폼 팀일 때
+                            RankingContent(
+                                modifier = Modifier.fillMaxWidth(),
+                                index = index,
+                                item = rankingUiState
+                            )
+                        }
+                    }
+                    if (index == 2) {
+                        DrawDottedLine()
+                    }
                 }
             }
 
-            itemsIndexed(
-                items = if (pagerIndex == 0) allRankList else allPlatformRank,
-                key = { _, item ->
-                    item.memberId
-                }) { index, item ->
-                /**
-                 * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
-                 */
-                if (pagerIndex == 0) { // 크루원일 때
-                    if (index < 11) {
-                        RankingContent(
-                            modifier = Modifier.fillMaxWidth(),
-                            index = index,
-                            item = item,
-                        )
-                    }
-                } else {
-                    if (index < 6) {               // 플랫폼 팀일 때
-                        RankingContent(
-                            modifier = Modifier.fillMaxWidth(),
-                            index = index,
-                            item = item
-                        )
-                    }
-                }
-                if (index == 2) {
-                    DrawDottedLine()
-                }
-            }
             /**
              * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
              */
             if (allRankList.count() <= 11) {
-                item {
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 28.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                        style = Body3,
-                        color = Gray500
-                    )
-                }
-            }
-
-            item {
-                val coroutineScope = rememberCoroutineScope()
-                MashUpButton(
+                Text(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 20.dp,
-                            end = 20.dp,
-                            top = 28.dp,
-                            bottom = 20.dp
-                        ),
-                    text = "당근 더 흔들기",
-                    onClick = {
-                        coroutineScope.launch {
-                            listState.scrollToItem(index = 0)
-                        }
-                    })
+                        .padding(top = 28.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
+                    style = Body3,
+                    color = Gray500
+                )
             }
+            MashUpButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 20.dp,
+                        end = 20.dp,
+                        top = 28.dp,
+                        bottom = 20.dp
+                    ),
+                text = "당근 더 흔들기",
+                onClick = onClickScrollTopButton
+            )
         }
     }
 }

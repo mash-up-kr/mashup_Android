@@ -141,4 +141,9 @@ dependencies {
 
     // coroutine test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
+
+    // flipper
+    implementation "com.facebook.flipper:flipper:$flipperVersion"
+    implementation "com.facebook.soloader:soloader:$soLoaderVersion"
+    implementation "com.facebook.flipper:flipper-network-plugin:$flipperVersion"
 }

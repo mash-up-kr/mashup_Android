@@ -1,5 +1,7 @@
 package com.mashup.di
 
+import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
+import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
@@ -29,6 +31,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
+    companion object {
+        val flipperNetwork = NetworkFlipperPlugin()
+    }
+
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
@@ -38,20 +44,29 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideFlipperOkhttpInterceptor() =
+        FlipperOkhttpInterceptor(flipperNetwork)
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-        baseInterceptor: BaseInterceptor
+        baseInterceptor: BaseInterceptor,
+        flipperInterceptor: FlipperOkhttpInterceptor,
     ): OkHttpClient {
+
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(baseInterceptor)
 
         if (DEBUG_MODE) {
-            okHttpClient.addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                }
-            )
+            okHttpClient
+                .addNetworkInterceptor(flipperInterceptor)
+                .addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                    }
+                )
         }
         return okHttpClient
             .readTimeout(10L, TimeUnit.SECONDS)

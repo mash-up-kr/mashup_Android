@@ -21,19 +21,12 @@ fun Context.haptic(time: Long = 500L, amplitude: Int) {
         val vibratorManager: VibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         vibratorManager.defaultVibrator
     } else {
-        // backward compatibility for Android API < 31,
-        // VibratorManager was only added on API level 31 release.
-        // noinspection deprecation
         getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
         vibrator.vibrate(VibrationEffect.createOneShot(time, amplitude))
-
     } else {
-        // backward compatibility for Android API < 26
-        // noinspection deprecation
         vibrator.vibrate(time)
     }
 }

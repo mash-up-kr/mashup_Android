@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.ranking
 
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.data.local.DanggnPreference
@@ -14,12 +15,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
-    private val userPreferenceRepository: UserPreferenceRepository,
+    val userPreferenceRepository: UserPreferenceRepository,
     private val danggnPreferenceRepository: DanggnPreferenceRepository
 ) : BaseViewModel() {
     companion object {
@@ -161,7 +163,7 @@ class DanggnRankingViewModel @Inject constructor(
         )
     }
 
-    private suspend fun getFirstPlaceState(
+    private fun getFirstPlaceState(
         tabIndex: Int,
         userPreference: UserPreference,
         danggnPreference: DanggnPreference,
@@ -175,18 +177,19 @@ class DanggnRankingViewModel @Inject constructor(
         val currentPlatformRanking = platformRankingList.indexOfFirst { it.text == myPlatform }
 
         if (
-            tabIndex == 0 && danggnPreference.personalFirstRanking == currentPersonalRanking ||
-            tabIndex == 1 && danggnPreference.platformFirstRanking == currentPlatformRanking
+            tabIndex == 0 && currentPersonalRanking == -1 ||
+            tabIndex == 1 && currentPlatformRanking == -1
         ) {
             return FirstRankingState.Empty
         }
 
-        if (tabIndex == 0) {
-            danggnPreferenceRepository.updatePersonalFirstRanking(currentPersonalRanking)
-        } else {
-            danggnPreferenceRepository.updatePlatformFirstRanking(currentPlatformRanking)
+        if (
+            tabIndex == 0 && danggnPreference.personalFirstRanking == currentPersonalRanking ||
+            tabIndex == 1 && danggnPreference.platformFirstRanking == currentPlatformRanking
+        ) {
+            updateFirstRanking()
+            return FirstRankingState.Empty
         }
-
 
         return when {
             tabIndex == 0 && currentPersonalRanking == 0 -> {
@@ -196,8 +199,24 @@ class DanggnRankingViewModel @Inject constructor(
                 FirstRankingState.FirstRanking("$myPlatform 팀")
             }
             else -> {
+                updateFirstRanking()
                 FirstRankingState.Empty
             }
+        }
+    }
+
+    fun updateFirstRanking() = mashUpScope {
+        val userPreference = userPreferenceRepository.getUserPreference().first()
+        val myName = userPreference.name
+        val myPlatform = userPreference.platform.detailName
+        if (currentTabIndex.value == 0) {
+            danggnPreferenceRepository.updatePersonalFirstRanking(
+                ranking = personalRankingList.value.indexOfFirst { it.text == myName }
+            )
+        } else {
+            danggnPreferenceRepository.updatePlatformFirstRanking(
+                ranking = platformRankingList.value.indexOfFirst { it.text == myPlatform }
+            )
         }
     }
 
@@ -244,6 +263,7 @@ class DanggnRankingViewModel @Inject constructor(
         ) : RankingItem
     }
 
+    @Stable
     sealed interface FirstRankingState {
         object Empty : FirstRankingState
         data class FirstRanking(val text: String) : FirstRankingState

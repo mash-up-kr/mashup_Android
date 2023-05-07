@@ -2,9 +2,7 @@ package com.mashup.feature.danggn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,31 +31,23 @@ import com.mashup.core.ui.widget.MashUpButton
  */
 @Composable
 fun DanggnFirstPlaceScreen(
+    name: String,
     modifier: Modifier = Modifier,
-    name: String = "매숑이님",
-    onClickCloseButton: (() -> Unit)? = null,
+    onClickCloseButton: () -> Unit = {},
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        DanggnFirstPlaceContent(modifier, name)
-        Image(
-            modifier = Modifier
-                .padding(top = 70.dp, end = 26.dp)
-                .align(Alignment.TopEnd)
-                .clickable {
-                    onClickCloseButton?.invoke()
-                },
-            alignment = Alignment.CenterEnd,
-            painter = painterResource(id = com.mashup.core.common.R.drawable.ic_close),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(Color.White)
-        )
-    }
+    DanggnFirstPlaceContent(
+        modifier = modifier,
+        name = name,
+        onClickCloseButton = onClickCloseButton
+    )
 }
 
 @Composable
-private fun DanggnFirstPlaceContent(modifier: Modifier, name: String) {
+private fun DanggnFirstPlaceContent(
+    name: String,
+    modifier: Modifier = Modifier,
+    onClickCloseButton: () -> Unit = {}
+) {
     Column(
         modifier = modifier
             .background(color = Color(0xB3000000))
@@ -89,7 +78,8 @@ private fun DanggnFirstPlaceContent(modifier: Modifier, name: String) {
             modifier = Modifier
                 .width(120.dp)
                 .height(52.dp),
-            text = "확인", onClick = { /*TODO*/ })
+            text = "확인", onClick = onClickCloseButton
+        )
     }
 }
 
@@ -98,7 +88,9 @@ private fun DanggnFirstPlaceContent(modifier: Modifier, name: String) {
 fun PreviewDanggnFirstPlace() {
     MashUpTheme {
         Surface(color = Color.White) {
-            DanggnFirstPlaceScreen()
+            DanggnFirstPlaceScreen(
+                name = "매숑이님"
+            )
         }
     }
 }

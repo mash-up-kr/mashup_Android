@@ -12,6 +12,7 @@ import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class DanggnViewModel @Inject constructor(
@@ -45,6 +45,9 @@ class DanggnViewModel @Inject constructor(
     private val _onSuccessAddScore = MutableSharedFlow<Unit>()
     val onSuccessAddScore: SharedFlow<Unit> = _onSuccessAddScore.asSharedFlow()
 
+    private val _onShakeDevice = MutableSharedFlow<Unit>()
+    val onShakeDevice: SharedFlow<Unit> = _onShakeDevice.asSharedFlow()
+
 
     init {
         initDanggnGame()
@@ -60,7 +63,12 @@ class DanggnViewModel @Inject constructor(
                 }
             },
             comboEndCallbackListener = this::sendDanggnScore,
-            danggnModeChangedListener = this::countDownFeverTime
+            danggnModeChangedListener = this::countDownFeverTime,
+            onShakeListener = {
+                viewModelScope.launch {
+                    _onShakeDevice.emit(Unit)
+                }
+            }
         )
     }
 

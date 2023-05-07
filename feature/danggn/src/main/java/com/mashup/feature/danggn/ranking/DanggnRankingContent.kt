@@ -39,10 +39,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    allMashUpMemberRankState: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState,
-    allPlatformRank: List<DanggnRankingViewModel.RankingUiState>,
-    platformRank: DanggnRankingViewModel.RankingUiState,
+    allMashUpMemberRankState: List<DanggnRankingViewModel.RankingItem>,
+    personalRank: DanggnRankingViewModel.RankingItem,
+    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    platformRank: DanggnRankingViewModel.RankingItem,
     onClickScrollTopButton: () -> Unit = {}
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
@@ -112,10 +112,10 @@ fun DanggnRankingContent(
 
 @Composable
 private fun PagerContents(
-    allRankList: List<DanggnRankingViewModel.RankingUiState>,
-    personalRank: DanggnRankingViewModel.RankingUiState,
-    allPlatformRank: List<DanggnRankingViewModel.RankingUiState>,
-    platformRank: DanggnRankingViewModel.RankingUiState,
+    allRankList: List<DanggnRankingViewModel.RankingItem>,
+    personalRank: DanggnRankingViewModel.RankingItem,
+    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    platformRank: DanggnRankingViewModel.RankingItem,
     pagerIndex: Int,
     onClickScrollTopButton: () -> Unit = {}
 ) {
@@ -202,7 +202,7 @@ private fun PagerContents(
 
 @Composable
 private fun MyRanking(
-    personalRank: DanggnRankingViewModel.RankingUiState,
+    personalRank: DanggnRankingViewModel.RankingItem,
     pagerIndex: Int,
 ) {
     val isAllCrewRanking = pagerIndex == 0
@@ -213,7 +213,7 @@ private fun MyRanking(
 @Composable
 private fun MyRankingInnerContent(
     myRankingText: String,
-    matchedPersonalRanking: DanggnRankingViewModel.RankingUiState,
+    matchedPersonalRanking: DanggnRankingViewModel.RankingItem,
 ) {
     Row(
         modifier = Modifier
@@ -287,7 +287,7 @@ private fun DrawDottedLine() {
 private fun RankingContent(
     modifier: Modifier,
     index: Int,
-    item: DanggnRankingViewModel.RankingUiState,
+    item: DanggnRankingViewModel.RankingItem,
 ) {
     val imageResourceList =
         listOf(R.drawable.img_rank_1, R.drawable.img_rank_2, R.drawable.img_rank_3)
@@ -322,19 +322,19 @@ private fun RankingContent(
                 modifier = Modifier
                     .padding(start = 12.dp),
                 text = when (item) {
-                    is DanggnRankingViewModel.RankingUiState.Ranking -> item.text
-                    is DanggnRankingViewModel.RankingUiState.EmptyRanking -> "아직 ${index + 1}위가 없어요"
-                    is DanggnRankingViewModel.RankingUiState.PlatformRanking -> item.text
-                    is DanggnRankingViewModel.RankingUiState.MyRanking -> ""
-                    is DanggnRankingViewModel.RankingUiState.MyPlatformRanking -> ""
+                    is DanggnRankingViewModel.RankingItem.Ranking -> item.text
+                    is DanggnRankingViewModel.RankingItem.EmptyRanking -> "아직 ${index + 1}위가 없어요"
+                    is DanggnRankingViewModel.RankingItem.PlatformRanking -> item.text
+                    is DanggnRankingViewModel.RankingItem.MyRanking -> ""
+                    is DanggnRankingViewModel.RankingItem.MyPlatformRanking -> ""
                 },
                 style = SubTitle1.copy(
                     brush = Brush.linearGradient(
                         when (index) {
-                            0 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingOneGradient else gradientGray300
-                            1 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingTwoGradient else gradientGray300
-                            2 -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) rankingThreeGradient else gradientGray300
-                            else -> if (item !is DanggnRankingViewModel.RankingUiState.EmptyRanking) gradientGray900 else gradientGray300
+                            0 -> if (item !is DanggnRankingViewModel.RankingItem.EmptyRanking) rankingOneGradient else gradientGray300
+                            1 -> if (item !is DanggnRankingViewModel.RankingItem.EmptyRanking) rankingTwoGradient else gradientGray300
+                            2 -> if (item !is DanggnRankingViewModel.RankingItem.EmptyRanking) rankingThreeGradient else gradientGray300
+                            else -> if (item !is DanggnRankingViewModel.RankingItem.EmptyRanking) gradientGray900 else gradientGray300
                         }
                     )
                 ),
@@ -378,40 +378,40 @@ fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
             allMashUpMemberRankState = listOf(
-                DanggnRankingViewModel.RankingUiState.Ranking(
+                DanggnRankingViewModel.RankingItem.Ranking(
                     "39", "정종노드", 150
                 ),
-                DanggnRankingViewModel.RankingUiState.Ranking(
+                DanggnRankingViewModel.RankingItem.Ranking(
                     "56", "정종드투", 1510
                 ),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking()
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnRankingViewModel.RankingUiState.MyRanking(
+            personalRank = DanggnRankingViewModel.RankingItem.MyRanking(
                 memberId = "560", totalShakeScore = 1510, text = "1위",
             ),
             allPlatformRank = listOf(
-                DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                DanggnRankingViewModel.RankingItem.PlatformRanking(
                     memberId = "Android",
                     text = "Android", totalShakeScore = 120,
                 ),
-                DanggnRankingViewModel.RankingUiState.PlatformRanking(
+                DanggnRankingViewModel.RankingItem.PlatformRanking(
                     memberId = "iOS",
                     text = "iOS", totalShakeScore = 119,
                 ),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
-                DanggnRankingViewModel.RankingUiState.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking(),
             ),
-            platformRank = DanggnRankingViewModel.RankingUiState.PlatformRanking(
+            platformRank = DanggnRankingViewModel.RankingItem.PlatformRanking(
                 memberId = "Android",
                 text = "1위", totalShakeScore = 120,
             ),

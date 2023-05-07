@@ -7,14 +7,17 @@ import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.danggn.DanggnGameController
 import com.mashup.feature.danggn.data.danggn.DanggnGameState
 import com.mashup.feature.danggn.data.danggn.DanggnMode
-import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
+import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -38,6 +41,10 @@ class DanggnViewModel @Inject constructor(
 
     private val _randomMessage = MutableStateFlow("")
     val randomMessage: StateFlow<String> = _randomMessage.asStateFlow()
+
+    private val _onSuccessAddScore = MutableSharedFlow<Unit>()
+    val onSuccessAddScore: SharedFlow<Unit> = _onSuccessAddScore.asSharedFlow()
+
 
     init {
         initDanggnGame()
@@ -93,6 +100,7 @@ class DanggnViewModel @Inject constructor(
                 generationNumber = generateNumber,
                 scoreRequest = DanggnScoreRequest(comboScore)
             )
+            _onSuccessAddScore.emit(Unit)
         } else {
             handleErrorCode(UNAUTHORIZED)
         }

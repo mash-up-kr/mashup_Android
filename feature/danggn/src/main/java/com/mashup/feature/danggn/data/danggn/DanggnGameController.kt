@@ -1,13 +1,13 @@
 package com.mashup.feature.danggn.data.danggn
 
 import com.mashup.feature.danggn.data.ShakeDetector
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ShakeDetector의 shake 이벤트를 탐지하여 콤보 카운트를 계산합니다.
@@ -31,6 +31,7 @@ class DanggnGameController @Inject constructor(
      * @param comboCount 누적된 콤보 카운트
      */
     private var comboEndCallbackListener: ((comboCount: Int) -> Unit)? = null
+    private var onShakeListener: (() -> Unit)? = null
 
     fun start(
         threshold: Int,
@@ -72,6 +73,7 @@ class DanggnGameController @Inject constructor(
         frameCallbackListener: ((DanggnGameState) -> Unit),
         comboEndCallbackListener: ((comboCount: Int) -> Unit),
         danggnModeChangedListener: ((DanggnMode) -> Unit),
+        onShakeListener: (() -> Unit) = {}
     ) {
         this.frameCallbackListener = frameCallbackListener
         this.comboEndCallbackListener = comboEndCallbackListener
@@ -86,6 +88,7 @@ class DanggnGameController @Inject constructor(
     }
 
     private fun onShakeDevice() {
+        onShakeListener?.invoke()
         modeController.switchToGoldenDanggnMode()
 
         val mode = modeController.getDanggnMode()

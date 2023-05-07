@@ -59,7 +59,7 @@ fun ShakeDanggnScreen(
         launch {
             viewModel.onShakeDevice.collectLatest {
                 context.haptic(amplitude = shakeVibrateAmplitude)
-                scrollState.scrollTo(0)
+                scrollState.scrollTo(0) // 당근 흔들면 화면 스크롤 상단으로 올리기
             }
         }
     }

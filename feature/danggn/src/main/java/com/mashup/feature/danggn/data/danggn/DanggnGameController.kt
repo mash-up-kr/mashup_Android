@@ -78,6 +78,7 @@ class DanggnGameController @Inject constructor(
         this.frameCallbackListener = frameCallbackListener
         this.comboEndCallbackListener = comboEndCallbackListener
         modeController.danggnModeChangedListener = danggnModeChangedListener
+        this.onShakeListener = onShakeListener
     }
 
     fun stop() {

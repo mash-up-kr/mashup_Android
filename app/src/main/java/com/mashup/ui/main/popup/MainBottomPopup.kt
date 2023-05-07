@@ -69,6 +69,11 @@ class MainBottomPopup : BottomSheetDialogFragment() {
 
     private val viewModel: MainBottomPopupViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.patchPopupViewed()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,11 +87,9 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                     MainBottomPopupScreen(
                         viewModel = viewModel,
                         onClickLeftButton = {
-                            viewModel.patchPopupViewed()
                             dismiss()
                         },
                         onClickRightButton = {
-                            viewModel.patchPopupViewed()
                             mainViewModel.onClickPopup(viewModel.popupKey ?: "")
                             dismiss()
                         }

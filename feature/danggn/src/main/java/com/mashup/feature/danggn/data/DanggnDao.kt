@@ -1,6 +1,12 @@
 package com.mashup.feature.danggn.data
 
-import com.mashup.feature.danggn.data.dto.*
+import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
+import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
+import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
+import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
+import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
+import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
+import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
 import com.mashup.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

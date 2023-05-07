@@ -1,6 +1,8 @@
 package com.mashup.ui.schedule
 
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.data.dto.AttendanceInfoResponse
+import com.mashup.data.dto.ScheduleListResponse
 import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.dto.SchedulesProgress
 import com.mashup.data.repository.AttendanceRepository
@@ -9,11 +11,7 @@ import com.mashup.datastore.data.repository.AppPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.schedule.model.ScheduleCard
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,8 +34,9 @@ class ScheduleViewModel @Inject constructor(
                 userPreferenceRepository.getUserPreference().first().generationNumbers.last()
 
             val response = scheduleRepository.getScheduleList(generateNumber)
+            val data: ScheduleListResponse? = response.data
 
-            if (!response.isSuccess() || response.data == null) {
+            if (!response.isSuccess() || data == null) {
                 handleErrorCode(response.code)
                 _scheduleState.emit(
                     ScheduleState.Success(
@@ -51,29 +50,29 @@ class ScheduleViewModel @Inject constructor(
             _scheduleState.emit(
                 ScheduleState.Success(
                     scheduleTitleState = when {
-                        response.data.progress == SchedulesProgress.DONE -> {
+                        data.progress == SchedulesProgress.DONE -> {
                             ScheduleTitleState.End(generateNumber)
                         }
-                        response.data.progress == SchedulesProgress.NOT_REGISTERED -> {
+                        data.progress == SchedulesProgress.NOT_REGISTERED -> {
                             ScheduleTitleState.Empty
                         }
-                        response.data.progress == SchedulesProgress.ON_GOING &&
-                            response.data.dateCount != null -> {
-                            ScheduleTitleState.DateCount(response.data.dateCount)
+                        data.progress == SchedulesProgress.ON_GOING &&
+                                data.dateCount != null -> {
+                            ScheduleTitleState.DateCount(data.dateCount)
                         }
                         else -> {
                             ScheduleTitleState.SchedulePreparing
                         }
                     },
-                    scheduleList = if (response.data.scheduleList.isEmpty()) {
+                    scheduleList = if (data.scheduleList.isEmpty()) {
                         listOf(ScheduleCard.EmptySchedule())
                     } else {
-                        response.data.scheduleList.map { mapperToScheduleCard(it) }
+                        data.scheduleList.map { mapperToScheduleCard(it) }
                     },
-                    schedulePosition = getSchedulePosition(response.data.scheduleList)
+                    schedulePosition = getSchedulePosition(data.scheduleList)
                 )
             )
-            showCoachMark(response.data.scheduleList)
+            showCoachMark(data.scheduleList)
         }
     }
 
@@ -91,10 +90,11 @@ class ScheduleViewModel @Inject constructor(
         val attendResponse = attendanceRepository.getScheduleAttendanceInfo(
             scheduleResponse.scheduleId
         )
+        val data: AttendanceInfoResponse? = attendResponse.data
 
         return when {
-            !attendResponse.isSuccess() || attendResponse.data == null ||
-                attendResponse.data.attendanceInfos.isEmpty() -> {
+            !attendResponse.isSuccess() || data == null ||
+                    data.attendanceInfos.isEmpty() -> {
                 ScheduleCard.InProgressSchedule(
                     scheduleResponse = scheduleResponse,
                     attendanceInfo = attendResponse.data
@@ -103,7 +103,7 @@ class ScheduleViewModel @Inject constructor(
             else -> {
                 ScheduleCard.EndSchedule(
                     scheduleResponse = scheduleResponse,
-                    attendanceInfo = attendResponse.data
+                    attendanceInfo = data
                 )
             }
         }

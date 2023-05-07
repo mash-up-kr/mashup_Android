@@ -1,9 +1,10 @@
 package com.mashup.ui.schedule.detail
 
 import androidx.lifecycle.SavedStateHandle
-import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_SCHEDULE_ID
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.dto.EventResponse
+import com.mashup.data.dto.ScheduleResponse
 import com.mashup.data.repository.ScheduleRepository
 import com.mashup.ui.schedule.model.Body
 import com.mashup.ui.schedule.model.EventDetail
@@ -35,14 +36,15 @@ class ScheduleDetailViewModel @Inject constructor(
         mashUpScope {
             _scheduleState.emit(ScheduleState.Loading)
             val response = scheduleRepository.getSchedule(scheduleId)
+            val data: ScheduleResponse? = response.data
 
-            if (!response.isSuccess() || response.data == null) {
+            if (!response.isSuccess() || data == null) {
                 handleErrorCode(response.code)
                 return@mashUpScope
             }
             _scheduleState.emit(
                 ScheduleState.Success(
-                    getEventDetailList(response.data.eventList)
+                    getEventDetailList(data.eventList)
                 )
             )
         }

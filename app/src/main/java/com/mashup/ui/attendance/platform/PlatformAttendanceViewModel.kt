@@ -3,8 +3,8 @@ package com.mashup.ui.attendance.platform
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
-import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_SCHEDULE_ID
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.data.repository.AttendanceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,13 +29,14 @@ class PlatformAttendanceViewModel @Inject constructor(
         _platformAttendanceState.value = PlatformAttendanceState.Loading
         val scheduleId = scheduleId ?: return@mashUpScope
         val response = attendanceRepository.getPlatformAttendanceList(scheduleId)
+        val data: TotalAttendanceResponse? = response.data
 
         if (!response.isSuccess()) {
             handleErrorCode(response.code)
             return@mashUpScope
         }
 
-        response.data?.run {
+        data?.run {
             val notice = when {
                 eventNum == 0 -> {
                     "아직 일정 시작 전이예요."
@@ -57,7 +58,7 @@ class PlatformAttendanceViewModel @Inject constructor(
             _platformAttendanceState.value =
                 PlatformAttendanceState.Success(
                     notice = notice,
-                    totalAttendance = response.data
+                    totalAttendance = data
                 )
         }
     }

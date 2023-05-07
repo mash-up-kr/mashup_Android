@@ -6,6 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
+import com.mashup.data.dto.MemberInfoResponse
+import com.mashup.data.dto.TokenResponse
 import com.mashup.data.repository.MemberRepository
 import com.mashup.data.repository.PopUpRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -14,11 +16,7 @@ import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,8 +67,9 @@ class MainViewModel @Inject constructor(
 
     private fun refreshToken() = mashUpScope {
         val result = memberRepository.refreshToken()
-        if (result.isSuccess() && result.data != null) {
-            userPreferenceRepository.updateUserToken(result.data.token)
+        val data: TokenResponse? = result.data
+        if (result.isSuccess() && data != null) {
+            userPreferenceRepository.updateUserToken(data.token)
         }
     }
 
@@ -87,12 +86,13 @@ class MainViewModel @Inject constructor(
 
     private fun refreshUserData() = mashUpScope {
         val result = memberRepository.getMember()
-        if (result.isSuccess() && result.data != null) {
+        val data: MemberInfoResponse? = result.data
+        if (result.isSuccess() && data != null) {
             userPreferenceRepository.updateUserPreference(
-                name = result.data.name,
-                platform = Platform.getPlatform(result.data.platform),
-                generationNumbers = result.data.generationNumbers,
-                pushNotificationAgreed = result.data.pushNotificationAgreed
+                name = data.name,
+                platform = Platform.getPlatform(data.platform),
+                generationNumbers = data.generationNumbers,
+                pushNotificationAgreed = data.pushNotificationAgreed
             )
         }
     }

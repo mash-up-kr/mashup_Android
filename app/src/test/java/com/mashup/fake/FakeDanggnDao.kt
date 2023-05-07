@@ -6,6 +6,7 @@ import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
+import com.mashup.network.Response
 
 class FakeDanggnDao : DanggnDao {
     override suspend fun getDanggnMemberRank(

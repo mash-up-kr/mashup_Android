@@ -2,23 +2,16 @@ package com.mashup.ui.signup.fragment.auth
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.common.model.Validation
-import com.mashup.data.repository.MemberRepository
 import com.mashup.core.common.constant.INVALID_MEMBER_ID
 import com.mashup.core.common.constant.MEMBER_DUPLICATED_IDENTIFICATION
+import com.mashup.core.common.model.Validation
+import com.mashup.data.dto.ValidResponse
+import com.mashup.data.repository.MemberRepository
 import com.mashup.ui.signup.validationId
 import com.mashup.ui.signup.validationPwd
 import com.mashup.ui.signup.validationPwdCheck
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -154,13 +147,13 @@ class SignUpAuthViewModel @Inject constructor(
         buttonState.emit(SignUpButtonState.Loading)
         try {
             val response = memberRepository.validateId(id.value)
-
-            if (!response.isSuccess() || response.data?.valid != true) {
+            val data: ValidResponse? = response.data
+            if (!response.isSuccess() || data?.valid != true) {
                 buttonState.emit(SignUpButtonState.Disable)
                 idState.emit(SignUpIdState.Error(code = MEMBER_DUPLICATED_IDENTIFICATION))
             } else {
                 buttonState.emit(SignUpButtonState.Enable)
-                idState.emit(SignUpIdState.Success(validId = response.data.valid))
+                idState.emit(SignUpIdState.Success(validId = data.valid))
             }
         } catch (ignore: Exception) {
             buttonState.emit(SignUpButtonState.Disable)

@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,11 +44,16 @@ fun DanggnRankingContent(
     personalRank: DanggnRankingViewModel.RankingItem,
     allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
-    onClickScrollTopButton: () -> Unit = {}
+    onClickScrollTopButton: () -> Unit = {},
+    onChangedTabIndex: (index: Int) -> Unit = {}
 ) {
     val pages = listOf("크루원", "플랫폼 팀")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(pagerState.currentPage) {
+        onChangedTabIndex(pagerState.currentPage)
+    }
 
     Column(modifier = modifier.background(White)) {
         Text(

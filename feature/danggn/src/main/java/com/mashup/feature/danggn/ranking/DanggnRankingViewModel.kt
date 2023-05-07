@@ -1,6 +1,5 @@
 package com.mashup.feature.danggn.ranking
 
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.data.local.DanggnPreference
@@ -263,7 +262,6 @@ class DanggnRankingViewModel @Inject constructor(
         ) : RankingItem
     }
 
-    @Stable
     sealed interface FirstRankingState {
         object Empty : FirstRankingState
         data class FirstRanking(val text: String) : FirstRankingState

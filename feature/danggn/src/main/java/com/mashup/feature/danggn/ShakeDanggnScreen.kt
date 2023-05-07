@@ -106,7 +106,8 @@ fun ShakeDanggnScreen(
                     coroutineScope.launch {
                         scrollState.scrollTo(0)
                     }
-                }
+                },
+                onChangedTabIndex = rankingViewModel::updateCurrentTabIndex
             )
         }
 

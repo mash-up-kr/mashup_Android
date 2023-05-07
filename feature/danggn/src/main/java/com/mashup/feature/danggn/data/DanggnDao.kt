@@ -1,13 +1,7 @@
 package com.mashup.feature.danggn.data
 
-import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
-import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
-import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
-import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
-import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
-import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
-import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
-import com.mashup.network.Response2
+import com.mashup.feature.danggn.data.dto.*
+import com.mashup.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -22,31 +16,31 @@ interface DanggnDao {
     @GET("api/v1/danggn/rank/member")
     suspend fun getDanggnMemberRank(
         @Query("generationNumber") generationNumber: Int, @Query("limit") limit: Int
-    ): Response2<DanggnMemberRankResponse>
+    ): Response<DanggnMemberRankResponse>
 
     // 당근 흔들기 개인별 랭킹 전체
     @GET("api/v1/danggn/rank/member/all")
     suspend fun getDanggnAllMemberRank(
         @Query("generationNumber") generationNumber: Int
-    ): Response2<DanggnAllMemberRankResponse>
+    ): Response<DanggnAllMemberRankResponse>
 
     // 당근 흔들기 플랫폼별 랭킹
     @GET("api/v1/danggn/rank/platform")
     suspend fun getDanggnPlatformRank(
         @Query("generationNumber") generationNumber: Int
-    ): Response2<List<DanggnPlatformRankResponse>>
+    ): Response<List<DanggnPlatformRankResponse>>
 
     // 당근 흔들기 플랫폼별 랭킹
     @POST("api/v1/danggn/score")
     suspend fun postDanggnScore(
         @Query("generationNumber") generationNumber: Int,
         @Body scoreRequest: DanggnScoreRequest
-    ): Response2<DanggnScoreResponse>
+    ): Response<DanggnScoreResponse>
 
     @GET("/api/v1/danggn/random-today-message")
-    suspend fun getDanggnRandomTodayMessage(): Response2<DanggnRandomTodayMessageResponse>
+    suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse>
 
     // 황금 당근 확률
     @GET("api/v1/danggn/golden-danggn-percent")
-    suspend fun getGoldenDanggnPercent(): Response2<GoldenDanggnPercentResponse>
+    suspend fun getGoldenDanggnPercent(): Response<GoldenDanggnPercentResponse>
 }

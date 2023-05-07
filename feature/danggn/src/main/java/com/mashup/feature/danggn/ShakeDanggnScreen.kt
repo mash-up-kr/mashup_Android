@@ -4,11 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Gray100
@@ -45,9 +44,12 @@ fun ShakeDanggnScreen(
         }
     }
 
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = modifier
+            modifier = modifier.verticalScroll(scrollState)
         ) {
             MashUpToolbar(
                 title = "당근 흔들기",
@@ -73,7 +75,12 @@ fun ShakeDanggnScreen(
                 allMashUpMemberRankState = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
                 personalRank = rankUiState.myPersonalRanking,
                 allPlatformRank = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
-                platformRank = rankUiState.myPlatformRanking
+                platformRank = rankUiState.myPlatformRanking,
+                onClickScrollTopButton = {
+                    coroutineScope.launch {
+                        scrollState.scrollTo(0)
+                    }
+                }
             )
         }
 

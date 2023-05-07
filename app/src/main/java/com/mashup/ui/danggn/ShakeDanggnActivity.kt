@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityShakeDanggnBinding
 import com.mashup.feature.danggn.DanggnUiState
@@ -60,7 +62,7 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, ShakeDanggnActivity::class.java).apply {
-
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
     }
 }

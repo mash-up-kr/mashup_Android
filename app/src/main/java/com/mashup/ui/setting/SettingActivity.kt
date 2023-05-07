@@ -120,7 +120,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, SettingActivity::class.java).apply {
-            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
     }
 

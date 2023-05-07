@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_ANIMATION
+import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.feature.danggn.DanggnInfoScreen
@@ -28,7 +30,7 @@ class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, DanggnInfoActivity::class.java).apply {
-
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
     }
 }

@@ -4,8 +4,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,13 +23,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.common.utils.thousandFormat
 import com.mashup.core.ui.colors.*
+import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.*
 import com.mashup.core.ui.widget.MashUpButton
+import com.mashup.core.ui.widget.MashUpTabRow
+import com.mashup.core.ui.widget.mashupTabIndicatorOffset
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
 
@@ -57,34 +57,31 @@ fun DanggnRankingContent(
             text = "랭킹",
             style = Title1,
         )
-        TabRow(
-            modifier = Modifier,
-            selectedTabIndex = pagerState.currentPage,
+        MashUpTabRow(
+            modifier = Modifier.wrapContentSize(),
+            horizontalSpace = 24.dp,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier
-                        .pagerTabIndicatorOffset(
-                            pagerState = pagerState,
-                            tabPositions = tabPositions
+                        .mashupTabIndicatorOffset(
+                            currentTabPosition = tabPositions[pagerState.currentPage]
                         )
-                        .padding(horizontal = 60.dp),
-                    color = Black
+                        .clip(RoundedCornerShape(20.dp)),
+                    color = Black,
+                    height = 2.dp
                 )
             }
         ) {
             pages.forEachIndexed { index, title ->
-                Tab(
-                    modifier = Modifier
-                        .background(White),
-                    text = {
-                        MashUpPagerColorAnimator(title, pagerState.currentPage == index)
-                    },
-                    selected = pagerState.currentPage == index,
-                    onClick = {
+                MashUpPagerColorAnimatedTab(
+                    modifier = Modifier.noRippleClickable {
                         coroutineScope.launch {
                             pagerState.scrollToPage(index)
                         }
-                    })
+                    },
+                    title = title,
+                    selected = pagerState.currentPage == index
+                )
             }
         }
 
@@ -218,7 +215,7 @@ private fun MyRankingInnerContent(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp, vertical = 4.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(color = Brand200),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -359,16 +356,20 @@ private fun RankingContent(
 }
 
 @Composable
-private fun MashUpPagerColorAnimator(
-    title: String, selected: Boolean
+private fun MashUpPagerColorAnimatedTab(
+    title: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier
 ) {
     val textColorAnimation by animateColorAsState(
         targetValue = if (selected) Black else Gray400
     )
     Text(
+        modifier = modifier,
         text = title,
         textAlign = TextAlign.Start,
-        color = textColorAnimation
+        color = textColorAnimation,
+        style = SubTitle1
     )
 }
 

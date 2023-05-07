@@ -32,6 +32,7 @@ dependencies {
     api(espresso)
     api(composeJunitTest)
     api(hiltTest)
+    api(mockk)
 
     debugApi(composeManifestTest)
 }

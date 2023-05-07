@@ -64,4 +64,16 @@ class FakeDanggnDao : DanggnDao {
             "null", null, null, null
         )
     }
+
+    override suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse> {
+        return Response(
+            "null", null, null, null
+        )
+    }
+
+    override suspend fun getGoldenDanggnPercent(): Response<GoldenDanggnPercentResponse> {
+        return Response(
+            "null", null, null, null
+        )
+    }
 }

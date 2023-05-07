@@ -78,4 +78,5 @@ ext {
     composeJunitTest = "androidx.compose.ui:ui-test-junit4:$composeVersion"
     composeManifestTest = "androidx.compose.ui:ui-test-manifest:$composeVersion"
     hiltTest = "com.google.dagger:hilt-android-testing:$hiltVersion"
+    mockk = "io.mockk:mockk:1.10.5"
 }

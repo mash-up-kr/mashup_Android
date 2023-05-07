@@ -215,7 +215,7 @@ private fun MyRankingInnerContent(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp, vertical = 4.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(color = Brand200),
         horizontalArrangement = Arrangement.SpaceBetween,

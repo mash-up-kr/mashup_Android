@@ -2,29 +2,30 @@ package com.mashup.feature.danggn.ranking
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.UUID
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import java.util.UUID
-import javax.inject.Inject
 
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
-    userPreferenceRepository: UserPreferenceRepository
+    private val userPreferenceRepository: UserPreferenceRepository,
+    private val danggnPreferenceRepository: DanggnPreferenceRepository
 ) : BaseViewModel() {
     companion object {
         private const val GENERATION_NUMBER = 13
         private const val DEFAULT_SHAKE_NUMBER = -1
     }
-
-    private val userPreferenceFlow = userPreferenceRepository.getUserPreference()
 
     private val personalRankingList: MutableStateFlow<List<RankingItem>> =
         MutableStateFlow(
@@ -36,10 +37,19 @@ class DanggnRankingViewModel @Inject constructor(
             emptyList()
         )
 
+    private val currentTabIndex = MutableStateFlow(0)
+
     val uiState: StateFlow<RankingUiState> = combine(
-        userPreferenceFlow, personalRankingList, platformRankingList
-    ) { userPreference, personalRankingList, platformRankingList ->
+        currentTabIndex,
+        userPreferenceRepository.getUserPreference(),
+        danggnPreferenceRepository.getDanggnPreference(),
+        personalRankingList,
+        platformRankingList
+    ) { tabIndex, userPreference, danggnPreference, personalRankingList, platformRankingList ->
         RankingUiState(
+            firstPlaceState = getFirstPlaceState(
+                tabIndex, userPreference, danggnPreference, personalRankingList, platformRankingList
+            ),
             personalRankingList = personalRankingList,
             platformRankingList = platformRankingList,
             myPersonalRanking = getPersonalRankingItem(
@@ -67,6 +77,10 @@ class DanggnRankingViewModel @Inject constructor(
             updateAllRankingList()
             updatePlatformRanking()
         }
+    }
+
+    fun updateCurrentTabIndex(index: Int) = mashUpScope {
+        currentTabIndex.emit(index)
     }
 
     /**
@@ -147,6 +161,46 @@ class DanggnRankingViewModel @Inject constructor(
         )
     }
 
+    private suspend fun getFirstPlaceState(
+        tabIndex: Int,
+        userPreference: UserPreference,
+        danggnPreference: DanggnPreference,
+        personalRankingList: List<RankingItem>,
+        platformRankingList: List<RankingItem>
+    ): FirstRankingState {
+        val myName = userPreference.name
+        val myPlatform = userPreference.platform.detailName
+
+        val currentPersonalRanking = personalRankingList.indexOfFirst { it.text == myName }
+        val currentPlatformRanking = platformRankingList.indexOfFirst { it.text == myPlatform }
+
+        if (
+            tabIndex == 0 && danggnPreference.personalFirstRanking == currentPersonalRanking ||
+            tabIndex == 1 && danggnPreference.platformFirstRanking == currentPlatformRanking
+        ) {
+            return FirstRankingState.Empty
+        }
+
+        if (tabIndex == 0) {
+            danggnPreferenceRepository.updatePersonalFirstRanking(currentPersonalRanking)
+        } else {
+            danggnPreferenceRepository.updatePlatformFirstRanking(currentPlatformRanking)
+        }
+
+
+        return when {
+            tabIndex == 0 && currentPersonalRanking == 0 -> {
+                FirstRankingState.FirstRanking("${myName}님")
+            }
+            tabIndex == 1 && currentPlatformRanking == 0 -> {
+                FirstRankingState.FirstRanking("$myPlatform 팀")
+            }
+            else -> {
+                FirstRankingState.Empty
+            }
+        }
+    }
+
     sealed interface RankingItem {
 
         val text: String
@@ -189,9 +243,15 @@ class DanggnRankingViewModel @Inject constructor(
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingItem
     }
+
+    sealed interface FirstRankingState {
+        object Empty : FirstRankingState
+        data class FirstRanking(val text: String) : FirstRankingState
+    }
 }
 
 data class RankingUiState(
+    val firstPlaceState: DanggnRankingViewModel.FirstRankingState = DanggnRankingViewModel.FirstRankingState.Empty,
     val personalRankingList: List<DanggnRankingViewModel.RankingItem> = emptyList(),
     val platformRankingList: List<DanggnRankingViewModel.RankingItem> = emptyList(),
     val myPersonalRanking: DanggnRankingViewModel.RankingItem = DanggnRankingViewModel.RankingItem.EmptyRanking(),

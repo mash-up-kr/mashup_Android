@@ -44,6 +44,9 @@ fun ShakeDanggnScreen(
 
     val context = LocalContext.current
 
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+
     LaunchedEffect(Unit) {
         viewModel.startDanggnGame()
 
@@ -56,6 +59,7 @@ fun ShakeDanggnScreen(
         launch {
             viewModel.onShakeDevice.collectLatest {
                 context.haptic(amplitude = shakeVibrateAmplitude)
+                scrollState.scrollTo(0)
             }
         }
     }
@@ -65,9 +69,6 @@ fun ShakeDanggnScreen(
             context.haptic(amplitude = goldDanggnModeVibrateAmplitude)
         }
     }
-
-    val scrollState = rememberScrollState()
-    val coroutineScope = rememberCoroutineScope()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(

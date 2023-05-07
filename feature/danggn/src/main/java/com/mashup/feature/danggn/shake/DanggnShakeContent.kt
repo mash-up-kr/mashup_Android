@@ -7,29 +7,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.mashup.feature.danggn.DanggnViewModel
+import com.mashup.feature.danggn.data.danggn.DanggnMode
 import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.core.common.R as CR
 
 @Composable
 fun DanggnShakeContent(
+    randomTodayMessage: String,
+    danggnMode: DanggnMode,
     modifier: Modifier = Modifier,
-    viewModel: DanggnViewModel,
 ) {
-    val randomTodayMessage = viewModel.randomMessage.collectAsState().value
-    val danggnMode = viewModel.danggnMode.collectAsState()
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(400.dp)
     ) {
-        if (danggnMode.value is NormalDanggnMode) {
+        if (danggnMode is NormalDanggnMode) {
             Image(
                 painter = painterResource(id = CR.drawable.img_carrot),
                 contentDescription = null,

@@ -34,7 +34,7 @@ class DanggnGameController @Inject constructor(
     private var onShakeListener: (() -> Unit)? = null
 
     fun start(
-        threshold: Int,
+        threshold: Float,
         interval: Long,
         goldenDanggnPercent: Int
     ) {

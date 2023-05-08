@@ -73,14 +73,14 @@ class DanggnRankingViewModel @Inject constructor(
         getRankingData()
     }
 
-    fun getRankingData() {
+    internal fun getRankingData() {
         mashUpScope {
             updateAllRankingList()
             updatePlatformRanking()
         }
     }
 
-    fun updateCurrentTabIndex(index: Int) = mashUpScope {
+    internal fun updateCurrentTabIndex(index: Int) = mashUpScope {
         currentTabIndex.emit(index)
     }
 
@@ -204,7 +204,7 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
-    fun updateFirstRanking() = mashUpScope {
+    internal fun updateFirstRanking() = mashUpScope {
         val userPreference = userPreferenceRepository.getUserPreference().first()
         val myName = userPreference.name
         val myPlatform = userPreference.platform.detailName

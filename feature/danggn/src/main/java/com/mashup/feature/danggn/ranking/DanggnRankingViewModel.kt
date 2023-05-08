@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.stateIn
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
-    val userPreferenceRepository: UserPreferenceRepository,
+    private val userPreferenceRepository: UserPreferenceRepository,
     private val danggnPreferenceRepository: DanggnPreferenceRepository
 ) : BaseViewModel() {
     companion object {

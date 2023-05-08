@@ -11,20 +11,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -80,7 +81,9 @@ fun DanggnShakeEffect(
         }
 
         effectList.forEach {
-            ShakeEffect(danggnMode)
+            key(it.initTimeMillis) {
+                ShakeEffect(danggnMode)
+            }
         }
     }
 }
@@ -89,9 +92,10 @@ fun DanggnShakeEffect(
 fun ShakeEffect(danggnMode: DanggnMode) {
     val configuration = LocalConfiguration.current
 
+    val danggnSize = 60.dp
     var isVisible by remember { mutableStateOf(true) }
-    val randomX by remember { mutableStateOf(Random.nextInt(configuration.screenWidthDp)) }
-    val randomY by remember { mutableStateOf(Random.nextInt(configuration.screenHeightDp)) }
+    val randomX by remember { mutableStateOf(Random.nextInt(configuration.screenWidthDp - danggnSize.value.toInt())) }
+    val randomY by remember { mutableStateOf(Random.nextInt(configuration.screenHeightDp - danggnSize.value.toInt())) }
 
     val fadeOutYPosition by animateDpAsState(
         targetValue = if (isVisible) randomY.dp else (randomY - 30).dp,
@@ -119,7 +123,7 @@ fun ShakeEffect(danggnMode: DanggnMode) {
             Image(
                 painterResource(id = if (danggnMode is NormalDanggnMode) CR.drawable.img_carrot else CR.drawable.img_fever_danggn),
                 contentDescription = null,
-                modifier = Modifier.size(60.dp),
+                modifier = Modifier.size(danggnSize),
             )
         }
     }

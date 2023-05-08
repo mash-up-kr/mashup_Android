@@ -55,7 +55,7 @@ fun DanggnRankingContent(
         onChangedTabIndex(pagerState.currentPage)
     }
 
-    Column(modifier = modifier.background(White)) {
+    Column(modifier = modifier.background(Gray50)) {
         Text(
             modifier = Modifier
                 .padding(start = 20.dp, top = 24.dp)

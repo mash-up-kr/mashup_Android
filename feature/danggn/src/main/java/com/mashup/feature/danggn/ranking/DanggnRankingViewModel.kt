@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import java.util.UUID
@@ -57,6 +58,8 @@ class DanggnRankingViewModel @Inject constructor(
         RankingUiState()
     )
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
     init {
         getRankingData()
@@ -64,8 +67,10 @@ class DanggnRankingViewModel @Inject constructor(
 
     fun getRankingData() {
         mashUpScope {
+            _isRefreshing.value = true
             updateAllRankingList()
             updatePlatformRanking()
+            _isRefreshing.value = false
         }
     }
 

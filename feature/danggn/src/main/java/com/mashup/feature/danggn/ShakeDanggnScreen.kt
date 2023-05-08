@@ -1,9 +1,12 @@
 package com.mashup.feature.danggn
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
@@ -12,9 +15,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mashup.core.common.extensions.haptic
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
@@ -47,6 +55,9 @@ fun ShakeDanggnScreen(
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
 
+    val isRefreshing = rankingViewModel.isRefreshing.collectAsState().value
+    val pullRefreshState = rememberSwipeRefreshState(isRefreshing)
+
     LaunchedEffect(Unit) {
         viewModel.startDanggnGame()
 
@@ -70,7 +81,13 @@ fun ShakeDanggnScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    SwipeRefresh(
+        state = pullRefreshState,
+        onRefresh = { rankingViewModel.getRankingData() },
+        modifier = Modifier.fillMaxSize(),
+        indicatorAlignment = Alignment.TopCenter,
+        indicator = { _, _ -> }
+    ) {
         Column(
             modifier = modifier.verticalScroll(scrollState)
         ) {
@@ -81,6 +98,16 @@ fun ShakeDanggnScreen(
                 showActionButton = true,
                 onClickActionButton = onClickDanggnInfoButton,
                 actionButtonDrawableRes = CR.drawable.ic_info
+            )
+
+            Image(
+                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_pulltorefresh),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(vertical = 12.dp)
+                    .width(235.dp)
+                    .height(if ((pullRefreshState.indicatorOffset / 2) > 80) 80.dp else (pullRefreshState.indicatorOffset / 2).dp) // FIXME: 나름의 계산식인데 고쳐줘요..
+                    .align(CenterHorizontally)
             )
 
             // 당근 흔들기 UI

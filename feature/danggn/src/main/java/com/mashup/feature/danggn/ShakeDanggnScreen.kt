@@ -2,6 +2,7 @@ package com.mashup.feature.danggn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,12 +17,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mashup.core.common.extensions.haptic
 import com.mashup.core.ui.colors.Gray100
@@ -57,6 +61,7 @@ fun ShakeDanggnScreen(
 
     val isRefreshing = rankingViewModel.isRefreshing.collectAsState().value
     val pullRefreshState = rememberSwipeRefreshState(isRefreshing)
+    val refreshTriggerDistance = 80.dp
 
     LaunchedEffect(Unit) {
         viewModel.startDanggnGame()
@@ -100,15 +105,7 @@ fun ShakeDanggnScreen(
                 actionButtonDrawableRes = CR.drawable.ic_info
             )
 
-            Image(
-                painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_pulltorefresh),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(vertical = 12.dp)
-                    .width(235.dp)
-                    .height(if ((pullRefreshState.indicatorOffset / 2) > 80) 80.dp else (pullRefreshState.indicatorOffset / 2).dp) // FIXME: 나름의 계산식인데 고쳐줘요..
-                    .align(CenterHorizontally)
-            )
+            DanggnPullToRefreshIndicator(pullRefreshState = pullRefreshState, refreshTriggerDistance = refreshTriggerDistance)
 
             // 당근 흔들기 UI
             DanggnShakeContent(
@@ -144,6 +141,28 @@ fun ShakeDanggnScreen(
             countDown = feverTimeCountDown,
             effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList
                 ?: emptyList(),
+        )
+    }
+}
+
+@Composable
+fun DanggnPullToRefreshIndicator(
+    modifier: Modifier = Modifier,
+    pullRefreshState: SwipeRefreshState,
+    refreshTriggerDistance: Dp
+) {
+    val trigger = with(LocalDensity.current) { refreshTriggerDistance.toPx() }
+    val progress = (pullRefreshState.indicatorOffset / trigger).coerceIn(0f, 1f)
+
+    Box(modifier.fillMaxWidth().height(200.dp * progress)) {
+        Image(
+            painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_pulltorefresh),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(vertical = 12.dp)
+                .width(235.dp)
+                .height(32.dp)
+                .align(Center)
         )
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.constant.EXTRA_LOGIN_TYPE
+import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.MemberRepository
@@ -13,13 +14,13 @@ import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -45,6 +46,10 @@ class MainViewModel @Inject constructor(
     init {
         savedStateHandle.get<LoginType>(EXTRA_LOGIN_TYPE)?.run {
             handleLoginType(this)
+        }
+
+        savedStateHandle.get<MainTab>(EXTRA_MAIN_TAB)?.run {
+            setMainTab(this)
         }
 
         getMainPopup()

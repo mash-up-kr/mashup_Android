@@ -3,6 +3,8 @@ package com.mashup.feature.danggn
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,6 +45,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import com.mashup.core.common.R as CR
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShakeDanggnScreen(
     modifier: Modifier = Modifier,
@@ -89,65 +93,69 @@ fun ShakeDanggnScreen(
         }
     }
 
-    SwipeRefresh(
-        state = pullRefreshState,
-        onRefresh = { rankingViewModel.refreshRankingData() },
-        modifier = Modifier.fillMaxSize(),
-        indicatorAlignment = Alignment.TopCenter,
-        indicator = { _, _ -> }
+    CompositionLocalProvider(
+        LocalOverscrollConfiguration provides null
     ) {
-        Column(
-            modifier = modifier.verticalScroll(scrollState)
+        SwipeRefresh(
+            state = pullRefreshState,
+            onRefresh = { rankingViewModel.refreshRankingData() },
+            modifier = Modifier.fillMaxSize(),
+            indicatorAlignment = Alignment.TopCenter,
+            indicator = { _, _ -> }
         ) {
-            MashUpToolbar(
-                title = "당근 흔들기",
-                showBackButton = true,
-                onClickBackButton = onClickBackButton,
-                showActionButton = true,
-                onClickActionButton = onClickDanggnInfoButton,
-                actionButtonDrawableRes = CR.drawable.ic_info
-            )
+            Column(
+                modifier = modifier.verticalScroll(scrollState)
+            ) {
+                MashUpToolbar(
+                    title = "당근 흔들기",
+                    showBackButton = true,
+                    onClickBackButton = onClickBackButton,
+                    showActionButton = true,
+                    onClickActionButton = onClickDanggnInfoButton,
+                    actionButtonDrawableRes = CR.drawable.ic_info
+                )
 
-            DanggnPullToRefreshIndicator(
-                pullRefreshState = pullRefreshState,
-                refreshTriggerDistance = refreshTriggerDistance
-            )
+                DanggnPullToRefreshIndicator(
+                    pullRefreshState = pullRefreshState,
+                    refreshTriggerDistance = refreshTriggerDistance
+                )
 
-            // 당근 흔들기 UI
-            DanggnShakeContent(
-                randomTodayMessage = randomTodayMessage,
-                danggnMode = danggnMode
-            )
+                // 당근 흔들기 UI
+                DanggnShakeContent(
+                    randomTodayMessage = randomTodayMessage,
+                    danggnMode = danggnMode
+                )
 
-            // 중간 Divider
-            Divider(
-                color = Gray100,
-                modifier = Modifier.fillMaxWidth(),
-                thickness = 4.dp
-            )
+                // 중간 Divider
+                Divider(
+                    color = Gray100,
+                    modifier = Modifier.fillMaxWidth(),
+                    thickness = 4.dp
+                )
 
-            // 당근 흔들기 랭킹 UI
-            DanggnRankingContent(
-                allMashUpMemberRankState = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
-                personalRank = rankUiState.myPersonalRanking,
-                allPlatformRank = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
-                platformRank = rankUiState.myPlatformRanking,
-                onClickScrollTopButton = {
-                    coroutineScope.launch {
-                        scrollState.scrollTo(0)
+                // 당근 흔들기 랭킹 UI
+                DanggnRankingContent(
+                    allMashUpMemberRankState = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
+                    personalRank = rankUiState.myPersonalRanking,
+                    allPlatformRank = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
+                    platformRank = rankUiState.myPlatformRanking,
+                    onClickScrollTopButton = {
+                        coroutineScope.launch {
+                            scrollState.scrollTo(0)
+                        }
                     }
-                }
+                )
+            }
+
+            // Shake Effect 영역
+            DanggnShakeEffect(
+                modifier = Modifier.fillMaxSize(),
+                danggnMode = danggnMode,
+                countDown = feverTimeCountDown,
+                effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList
+                    ?: emptyList(),
             )
         }
-
-        // Shake Effect 영역
-        DanggnShakeEffect(
-            modifier = Modifier.fillMaxSize(),
-            danggnMode = danggnMode,
-            countDown = feverTimeCountDown,
-            effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList
-                ?: emptyList(),
-        )
     }
 }
 

@@ -1,5 +1,8 @@
 package com.mashup.feature.danggn
 
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
@@ -88,7 +91,7 @@ fun ShakeDanggnScreen(
 
     SwipeRefresh(
         state = pullRefreshState,
-        onRefresh = { rankingViewModel.getRankingData() },
+        onRefresh = { rankingViewModel.refreshRankingData() },
         modifier = Modifier.fillMaxSize(),
         indicatorAlignment = Alignment.TopCenter,
         indicator = { _, _ -> }
@@ -105,7 +108,10 @@ fun ShakeDanggnScreen(
                 actionButtonDrawableRes = CR.drawable.ic_info
             )
 
-            DanggnPullToRefreshIndicator(pullRefreshState = pullRefreshState, refreshTriggerDistance = refreshTriggerDistance)
+            DanggnPullToRefreshIndicator(
+                pullRefreshState = pullRefreshState,
+                refreshTriggerDistance = refreshTriggerDistance
+            )
 
             // 당근 흔들기 UI
             DanggnShakeContent(
@@ -154,19 +160,25 @@ fun DanggnPullToRefreshIndicator(
     val trigger = with(LocalDensity.current) { refreshTriggerDistance.toPx() }
     val progress = (pullRefreshState.indicatorOffset / trigger).coerceIn(0f, 1f)
 
-    Box(modifier.fillMaxWidth().height(200.dp * progress)) {
+    val animationIndicatorHeight by animateDpAsState(
+        targetValue = if (pullRefreshState.isRefreshing && pullRefreshState.isSwipeInProgress.not()) 32.dp else 32.dp * progress,
+        animationSpec = tween(
+            durationMillis = if (pullRefreshState.isRefreshing) 1 else 200,
+            easing = LinearOutSlowInEasing
+        )
+    )
+
+    Box(modifier.fillMaxWidth().padding(vertical = 150.dp * progress)) {
         Image(
             painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_pulltorefresh),
             contentDescription = null,
             modifier = Modifier
-                .padding(vertical = 12.dp)
                 .width(235.dp)
-                .height(32.dp)
+                .height(animationIndicatorHeight)
                 .align(Center)
         )
     }
 }
-
 
 private const val shakeVibrateAmplitude = 50
 private const val goldDanggnModeVibrateAmplitude = 200

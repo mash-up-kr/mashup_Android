@@ -26,9 +26,9 @@ class ShakeDetector @Inject constructor(
             val timeDifference = currentTime - lastUpdateTime
             if (event != null && timeDifference > shakeIntervalTime) {
                 lastUpdateTime = currentTime
-                val x = event.values[0]
-                val y = event.values[1]
-                val z = event.values[2]
+                val x = event.values[0] / SensorManager.GRAVITY_EARTH
+                val y = event.values[1] / SensorManager.GRAVITY_EARTH
+                val z = event.values[2] / SensorManager.GRAVITY_EARTH
 
                 val speed = sqrt(x.pow(2)) + sqrt(y.pow(2)) + sqrt(z.pow(2))
 

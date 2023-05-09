@@ -94,6 +94,7 @@ class MainViewModel @Inject constructor(
         val result = memberRepository.getMember()
         if (result.isSuccess() && result.data != null) {
             userPreferenceRepository.updateUserPreference(
+                id = result.data.id,
                 name = result.data.name,
                 platform = Platform.getPlatform(result.data.platform),
                 generationNumbers = result.data.generationNumbers,

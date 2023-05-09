@@ -143,7 +143,8 @@ fun ShakeDanggnScreen(
                         coroutineScope.launch {
                             scrollState.scrollTo(0)
                         }
-                    }
+                    },
+                    onChangedTabIndex = rankingViewModel::updateCurrentTabIndex
                 )
             }
 
@@ -155,6 +156,15 @@ fun ShakeDanggnScreen(
                 effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList
                     ?: emptyList(),
             )
+
+            (rankUiState.firstPlaceState as? DanggnRankingViewModel.FirstRankingState.FirstRanking)?.run {
+                DanggnFirstPlaceScreen(
+                    name = text,
+                    onClickCloseButton = {
+                        rankingViewModel.updateFirstRanking()
+                    }
+                )
+            }
         }
     }
 }

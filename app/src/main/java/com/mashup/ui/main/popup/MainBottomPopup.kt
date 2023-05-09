@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.constant.EXTRA_POPUP_KEY
@@ -68,6 +70,15 @@ class MainBottomPopup : BottomSheetDialogFragment() {
 
 
     private val viewModel: MainBottomPopupViewModel by viewModels()
+
+    private val behavior: BottomSheetBehavior<View>?
+        get() {
+            val bottomSheet =
+                dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            return bottomSheet?.let {
+                BottomSheetBehavior.from(bottomSheet)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +122,20 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                     )
                 )
             }
+
+        addGlobalLayoutListener(view)
+    }
+
+    private fun addGlobalLayoutListener(view: View) {
+        view.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                if (this@MainBottomPopup.view?.height == 0) return
+                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior?.peekHeight = this@MainBottomPopup.view?.height ?: 0
+            }
+        })
     }
 }
 

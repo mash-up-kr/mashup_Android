@@ -6,6 +6,7 @@ import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -65,12 +66,19 @@ class DanggnRankingViewModel @Inject constructor(
         getRankingData()
     }
 
-    fun getRankingData() {
+    fun refreshRankingData() {
         mashUpScope {
             _isRefreshing.value = true
+            getRankingData()
+            delay(1000L)
+            _isRefreshing.value = false
+        }
+    }
+
+    fun getRankingData() {
+        mashUpScope {
             updateAllRankingList()
             updatePlatformRanking()
-            _isRefreshing.value = false
         }
     }
 

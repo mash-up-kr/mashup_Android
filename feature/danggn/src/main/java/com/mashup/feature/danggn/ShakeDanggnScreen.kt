@@ -180,5 +180,5 @@ fun DanggnPullToRefreshIndicator(
     }
 }
 
-private const val shakeVibrateAmplitude = 50
-private const val goldDanggnModeVibrateAmplitude = 200
+private const val shakeVibrateAmplitude = 40
+private const val goldDanggnModeVibrateAmplitude = 255

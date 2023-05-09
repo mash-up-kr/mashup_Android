@@ -164,7 +164,7 @@ class DanggnRankingViewModel @Inject constructor(
         userPreference: UserPreference,
         personalRankingList: List<RankingItem>
     ): RankingItem {
-        val myPersonalRank = personalRankingList.find { it.text == userPreference.name }
+        val myPersonalRank = personalRankingList.find { it.memberId == userPreference.id.toString() }
             ?: return RankingItem.EmptyRanking()
         val index = personalRankingList.indexOf(myPersonalRank)
 

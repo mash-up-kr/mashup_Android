@@ -13,6 +13,7 @@ class UserPreferenceRepository @Inject constructor(
     fun getUserPreference() = userPreferenceDataSource.data
 
     suspend fun updateUserPreference(
+        id: Int,
         token: String = "",
         name: String,
         platform: Platform,
@@ -21,6 +22,7 @@ class UserPreferenceRepository @Inject constructor(
     ) {
         userPreferenceDataSource.updateData { savedUserPreferences ->
             savedUserPreferences.copy(
+                id = id,
                 token = token.ifBlank { savedUserPreferences.token },
                 name = name,
                 platform = platform,

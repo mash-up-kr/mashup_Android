@@ -19,14 +19,16 @@ import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.service.PushLinkType
 import com.mashup.ui.danggn.ShakeDanggnActivity
-import com.mashup.ui.login.LoginActivity
+import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.MainActivity
+import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Splash API 사용 시 Icon이 잘리는 현상이 있어 차선책으로 사용
@@ -83,7 +85,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private fun moveNextScreen() {
         val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
-        val baseIntent = LoginActivity.newIntent(this@SplashActivity)
+        val baseIntent = MainActivity.newIntent(
+            context = this@SplashActivity,
+            loginType = LoginType.AUTO,
+            mainTab = if (deepLink == PushLinkType.MYPAGE.name) MainTab.MY_PAGE else MainTab.EVENT
+        )
         val taskStackBuilder = when (PushLinkType.getPushLinkType(deepLink)) {
             PushLinkType.DANGGN -> {
                 TaskStackBuilder.create(this)

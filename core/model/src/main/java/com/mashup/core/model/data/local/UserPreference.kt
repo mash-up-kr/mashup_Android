@@ -10,7 +10,8 @@ data class UserPreference(
     val platform: Platform,
     val generationNumbers: List<Int>,
     val pushNotificationAgreed: Boolean,
-    val danggnPushNotificationAgreed: Boolean = true
+    val danggnPushNotificationAgreed: Boolean = true,
+    val id: Int = 0
 ) {
     companion object {
         fun getDefaultInstance() = UserPreference(

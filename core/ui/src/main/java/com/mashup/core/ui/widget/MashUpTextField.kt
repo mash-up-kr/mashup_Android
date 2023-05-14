@@ -72,20 +72,15 @@ fun MashUpTextField(
             .height(84.dp)
             .animateContentSize()
             .clip(cornerShape)
-            .run {
-                if (validation == Validation.EMPTY) {
-                    this
-                } else {
-                    border(
-                        shape = cornerShape,
-                        width = 1.dp,
-                        color = when (validation) {
-                            Validation.SUCCESS -> Brand500
-                            else -> Red500
-                        }
-                    )
+            .border(
+                shape = cornerShape,
+                width = 1.dp,
+                color = when (validation) {
+                    Validation.SUCCESS -> Brand500
+                    Validation.EMPTY -> Color.Transparent
+                    else -> Red500
                 }
-            }
+            )
             .background(Color.White)
             .onFocusChanged {
                 focus = it.hasFocus
@@ -186,14 +181,36 @@ fun MashUpTextFieldPrev(
     requestFocus: Boolean = false
 ) {
     var text by remember { mutableStateOf(previousText) }
+    var textValidation by remember {
+        mutableStateOf(Validation.EMPTY)
+    }
     MashUpTheme {
         MashUpTextField(
             modifier = Modifier,
             text = text,
-            onTextChanged = { newText -> text = newText },
+            onTextChanged = { newText ->
+                text = newText
+                checkValidation(text, labelText) {
+                    textValidation = it
+                }
+            },
             labelText = "탈퇴할게요",
             requestFocus = requestFocus,
-            validation = validation
+            validation = textValidation
         )
+    }
+}
+
+private fun checkValidation(
+    text: String,
+    labelText: String,
+    onTextValidation: (Validation) -> Unit
+) {
+    if (text.isEmpty()) {
+        onTextValidation(Validation.EMPTY)
+    } else if (text == labelText) {
+        onTextValidation(Validation.SUCCESS)
+    } else {
+        onTextValidation(Validation.FAILED)
     }
 }

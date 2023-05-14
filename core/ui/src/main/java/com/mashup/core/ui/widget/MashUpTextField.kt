@@ -33,8 +33,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +60,6 @@ fun MashUpTextField(
 ) {
     var focus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
-    val textFieldValue = remember { TextFieldValue(text = text) }
     val cornerShape = RoundedCornerShape(12.dp)
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -94,10 +91,10 @@ fun MashUpTextField(
                 focus = it.hasFocus
             }
             .focusRequester(focusRequester),
-            value = textFieldValue.copy(text = text, selection = TextRange(text.length)),
+            value = text,
             textStyle = Title2,
             singleLine = true,
-            onValueChange = { onTextChanged(it.text) },
+            onValueChange = { onTextChanged(it) },
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier

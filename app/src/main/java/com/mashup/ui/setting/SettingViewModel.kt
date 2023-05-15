@@ -50,7 +50,7 @@ class SettingViewModel @Inject constructor(
     fun patchDanggnPushNotification(
         danggnPushNotificationAgreed: Boolean
     ) = mashUpScope {
-        val pushNotificationAgreed = userPreference.value.danggnPushNotificationAgreed
+        val pushNotificationAgreed = userPreference.value.pushNotificationAgreed
         val result = memberRepository.patchPushNotification(
             pushNotificationAgreed = pushNotificationAgreed,
             danggnPushNotificationAgreed = danggnPushNotificationAgreed

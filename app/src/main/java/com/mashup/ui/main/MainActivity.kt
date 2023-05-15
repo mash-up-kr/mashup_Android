@@ -15,6 +15,7 @@ import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
+import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.safeShow
 import com.mashup.databinding.ActivityMainBinding
@@ -105,7 +106,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     when (popupType) {
                         MainPopupType.DANGGN -> {
                             viewModel.disablePopup(popupType)
-                            startActivity(ShakeDanggnActivity.newIntent(this@MainActivity))
+                            startActivity(
+                                ShakeDanggnActivity.newIntent(
+                                    context = this@MainActivity,
+                                    type = ActivityEnterType.POPUP
+                                )
+                            )
                         }
                         else -> {
                         }

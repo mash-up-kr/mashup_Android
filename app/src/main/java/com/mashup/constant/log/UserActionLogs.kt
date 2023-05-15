@@ -31,3 +31,9 @@ const val LOG_QR_TIME_FAIL = "qr_time_fail"
 const val LOG_QR_WRONG = "qr_wrong"
 
 const val LOG_DELETE_SUCCESS_USER = "delete_user_success"
+
+const val LOG_COMMON_POPUP_CONFIRM = "popup_new_confirm"
+const val LOG_COMMON_POPUP_CANCEL = "popup_new_cancel"
+
+const val LOG_DANGGN = "danggn"
+const val LOG_DANGGN_HELP = "danggn_help"

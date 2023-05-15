@@ -70,17 +70,17 @@ class DanggnRankingViewModel @Inject constructor(
         RankingUiState()
     )
 
-    private fun createPersonalRankingList(personalRankingList: List<RankingItem>): List<RankingItem> {
-        return (0..10).map { index ->
-            personalRankingList.getOrNull(index) ?: RankingItem.EmptyRanking()
-        }
-    }
-
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
     init {
         getRankingData()
+    }
+
+    private fun createPersonalRankingList(personalRankingList: List<RankingItem>): List<RankingItem> {
+        return (0..10).map { index ->
+            personalRankingList.getOrNull(index) ?: RankingItem.EmptyRanking()
+        }
     }
 
     fun refreshRankingData() {

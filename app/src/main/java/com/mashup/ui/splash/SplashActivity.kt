@@ -14,6 +14,7 @@ import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_LINK
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
+import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -25,10 +26,10 @@ import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Splash API 사용 시 Icon이 잘리는 현상이 있어 차선책으로 사용
@@ -94,7 +95,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             PushLinkType.DANGGN -> {
                 TaskStackBuilder.create(this)
                     .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(ShakeDanggnActivity.newIntent(this))
+                    .addNextIntent(
+                        ShakeDanggnActivity.newIntent(
+                            context = this,
+                            type = ActivityEnterType.ALARM
+                        )
+                    )
             }
             PushLinkType.QR -> {
                 TaskStackBuilder.create(this)

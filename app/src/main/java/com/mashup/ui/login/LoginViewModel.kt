@@ -1,17 +1,17 @@
 package com.mashup.ui.login
 
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.core.firebase.FirebaseRepository
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.MemberRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -69,6 +69,7 @@ class LoginViewModel @Inject constructor(
 
         response.data?.apply {
             userPreferenceRepository.updateUserPreference(
+                id = memberId,
                 token = token,
                 name = name,
                 platform = Platform.getPlatform(platform),

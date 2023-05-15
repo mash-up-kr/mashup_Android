@@ -1,11 +1,11 @@
 package com.mashup.ui.attendance.crew
 
 import androidx.lifecycle.SavedStateHandle
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.dto.PlatformAttendanceResponse
 import com.mashup.data.model.PlatformInfo
 import com.mashup.data.repository.AttendanceRepository
-import com.mashup.network.errorcode.BAD_REQUEST
+import com.mashup.core.common.constant.BAD_REQUEST
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,6 +1,6 @@
 package com.mashup.ui.withdrawl
 
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.data.repository.MemberRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository

@@ -2,7 +2,7 @@ package com.mashup.ui.splash
 
 import android.content.Context
 import androidx.core.content.pm.PackageInfoCompat
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.firebase.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException

@@ -1,0 +1,27 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.MashUp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="android:windowBackground">@color/gray50</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/gray50</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.MashUp">
+        <item name="android:windowBackground">@color/brand500</item>
+        <item name="android:statusBarColor">@color/brand500</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:background">@drawable/bg_white_half_round_12</item>
+    </style>
+</resources>

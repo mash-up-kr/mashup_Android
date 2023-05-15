@@ -1,15 +1,20 @@
 package com.mashup.di
 
+import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
+import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
+import com.mashup.network.dao.PopupDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
+import com.mashup.network.dao.StorageDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,28 +31,42 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
+    companion object {
+        val flipperNetwork = NetworkFlipperPlugin()
+    }
+
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, CustomDateAdapter().nullSafe())
+        .addLast(KotlinJsonAdapterFactory())
         .build()
+
+    @Provides
+    @Singleton
+    fun provideFlipperOkhttpInterceptor() =
+        FlipperOkhttpInterceptor(flipperNetwork)
 
     @Provides
     @Singleton
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-        baseInterceptor: BaseInterceptor
+        baseInterceptor: BaseInterceptor,
+        flipperInterceptor: FlipperOkhttpInterceptor,
     ): OkHttpClient {
+
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(baseInterceptor)
 
         if (DEBUG_MODE) {
-            okHttpClient.addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                }
-            )
+            okHttpClient
+                .addNetworkInterceptor(flipperInterceptor)
+                .addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                    }
+                )
         }
         return okHttpClient
             .readTimeout(10L, TimeUnit.SECONDS)
@@ -97,6 +116,22 @@ class NetworkModule {
     fun provideScoreDao(
         retrofit: Retrofit
     ): ScoreDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStorageDao(
+        retrofit: Retrofit
+    ): StorageDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun providePopupDao(
+        retrofit: Retrofit
+    ): PopupDao {
         return retrofit.create()
     }
 }

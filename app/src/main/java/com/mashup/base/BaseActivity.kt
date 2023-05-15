@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,6 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.mashup.constant.EXTRA_ACTIVITY_ENTER_TYPE
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.constant.BAD_REQUEST
 import com.mashup.core.common.constant.DISCONNECT_NETWORK
@@ -26,6 +28,7 @@ import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.ui.error.NetworkDisconnectActivity
 import com.mashup.ui.login.LoginActivity
+import com.mashup.util.AnalyticsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -178,5 +181,10 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
                 exitOut
             )
         }
+    }
+
+    protected fun sendActivityEnterType(screenName: String) {
+        val type = intent.getStringExtra(EXTRA_ACTIVITY_ENTER_TYPE) ?: return
+        AnalyticsManager.addEvent(screenName, bundleOf("type" to type))
     }
 }

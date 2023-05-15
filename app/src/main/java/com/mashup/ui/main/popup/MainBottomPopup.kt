@@ -40,6 +40,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.constant.EXTRA_POPUP_KEY
+import com.mashup.constant.log.LOG_COMMON_POPUP_CANCEL
+import com.mashup.constant.log.LOG_COMMON_POPUP_CONFIRM
 import com.mashup.core.common.utils.getDrawableResIdByName
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray950
@@ -52,6 +54,7 @@ import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.main.model.MainPopupEntity
 import com.mashup.ui.main.model.MainPopupType
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -98,10 +101,12 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                     MainBottomPopupScreen(
                         viewModel = viewModel,
                         onClickLeftButton = {
+                            AnalyticsManager.addEvent(LOG_COMMON_POPUP_CANCEL, bundleOf("key" to viewModel.popupKey))
                             dismiss()
                         },
                         onClickRightButton = {
                             mainViewModel.onClickPopup(viewModel.popupKey ?: "")
+                            AnalyticsManager.addEvent(LOG_COMMON_POPUP_CONFIRM, bundleOf("key" to viewModel.popupKey))
                             dismiss()
                         }
                     )

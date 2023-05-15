@@ -53,7 +53,7 @@ class DanggnRankingViewModel @Inject constructor(
             firstPlaceState = getFirstPlaceState(
                 tabIndex, userPreference, danggnPreference, personalRankingList, platformRankingList
             ),
-            personalRankingList = personalRankingList,
+            personalRankingList = personalRankingList.take(11),
             platformRankingList = platformRankingList,
             myPersonalRanking = getPersonalRankingItem(
                 userPreference = userPreference,
@@ -109,16 +109,14 @@ class DanggnRankingViewModel @Inject constructor(
         val allMemberRankingResult = danggnRepository.getAllDanggnRank(GENERATION_NUMBER)
         if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
-            val elevenRankingList = (0..10).map { index ->
-                rankingList.getOrNull(index)?.let {
+            val allRankingList = rankingList.map {
                     RankingItem.Ranking(
                         memberId = it.memberId.toString(),
                         text = it.memberName,
                         totalShakeScore = it.totalShakeScore
                     )
-                } ?: RankingItem.EmptyRanking()
-            }
-            personalRankingList.emit(elevenRankingList)
+                }
+            personalRankingList.emit(allRankingList)
         }
     }
 

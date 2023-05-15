@@ -53,7 +53,7 @@ class DanggnRankingViewModel @Inject constructor(
             firstPlaceState = getFirstPlaceState(
                 tabIndex, userPreference, danggnPreference, personalRankingList, platformRankingList
             ),
-            personalRankingList = personalRankingList.take(11),
+            personalRankingList = createPersonalRankingList(personalRankingList),
             platformRankingList = platformRankingList,
             myPersonalRanking = getPersonalRankingItem(
                 userPreference = userPreference,
@@ -69,6 +69,12 @@ class DanggnRankingViewModel @Inject constructor(
         SharingStarted.WhileSubscribed(5_000),
         RankingUiState()
     )
+
+    private fun createPersonalRankingList(personalRankingList: List<RankingItem>): List<RankingItem> {
+        return (0..10).map { index ->
+            personalRankingList.getOrNull(index) ?: RankingItem.EmptyRanking()
+        }
+    }
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()

@@ -81,9 +81,13 @@ class MemberRepository @Inject constructor(
         return memberDao.deleteMember()
     }
 
-    suspend fun patchPushNotification(pushNotificationAgreed: Boolean): Response<Boolean> {
+    suspend fun patchPushNotification(
+        pushNotificationAgreed: Boolean,
+        danggnPushNotificationAgreed: Boolean
+    ): Response<Boolean> {
         val requestBody = PushNotificationRequest(
-            pushNotificationAgreed = pushNotificationAgreed
+            pushNotificationAgreed = pushNotificationAgreed,
+            danggnPushNotificationAgreed = danggnPushNotificationAgreed
         )
 
         return memberDao.patchPushNotification(requestBody)

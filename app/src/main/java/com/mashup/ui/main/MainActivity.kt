@@ -11,17 +11,24 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_LOGIN_TYPE
+import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
+import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.safeShow
 import com.mashup.databinding.ActivityMainBinding
+import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
+import com.mashup.ui.main.popup.MainBottomPopup
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -80,10 +87,36 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initObserves() {
         super.initObserves()
         flowLifecycleScope {
-            viewModel.mainTab.collectLatest { tab ->
-                navigationTab(tab)
-                setUIOfTab(tab)
-                updateStatusBarColor(tab)
+            launch {
+                viewModel.mainTab.collectLatest { tab ->
+                    navigationTab(tab)
+                    setUIOfTab(tab)
+                    updateStatusBarColor(tab)
+                }
+            }
+
+            launch {
+                viewModel.showPopupType.collectLatest {
+                    MainBottomPopup.newInstance(it).safeShow(supportFragmentManager)
+                }
+            }
+
+            launch {
+                viewModel.onClickPopupConfirm.collectLatest { popupType ->
+                    when (popupType) {
+                        MainPopupType.DANGGN -> {
+                            viewModel.disablePopup(popupType)
+                            startActivity(
+                                ShakeDanggnActivity.newIntent(
+                                    context = this@MainActivity,
+                                    type = ActivityEnterType.POPUP
+                                )
+                            )
+                        }
+                        else -> {
+                        }
+                    }
+                }
             }
         }
     }
@@ -150,10 +183,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     companion object {
         fun newIntent(
             context: Context,
-            loginType: LoginType
+            loginType: LoginType,
+            mainTab: MainTab = MainTab.EVENT
         ) = Intent(context, MainActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
             putExtra(EXTRA_LOGIN_TYPE, loginType)
+            putExtra(EXTRA_MAIN_TAB, mainTab)
         }
     }
 }

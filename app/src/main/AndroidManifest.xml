@@ -29,6 +29,18 @@
         <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="false" />
 
         <activity
+            android:name=".ui.danggn.DanggnInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".ui.danggn.ShakeDanggnActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -92,7 +104,12 @@
             android:name=".ui.setting.SettingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".ui.setting.PushActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
@@ -103,7 +120,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <service
-            android:name=".util.MashUpFirebaseMessagingService"
+            android:name=".service.MashUpFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

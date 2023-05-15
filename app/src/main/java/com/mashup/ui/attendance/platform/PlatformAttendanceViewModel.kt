@@ -3,7 +3,7 @@ package com.mashup.ui.attendance.platform
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
-import com.mashup.base.BaseViewModel
+import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.data.repository.AttendanceRepository

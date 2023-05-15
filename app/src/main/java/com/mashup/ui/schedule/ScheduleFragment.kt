@@ -13,7 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.constant.log.LOG_SCHEDULE_EVENT_DETAIL
-import com.mashup.constant.log.LOG_SCHEDULE_LIST_REFRESH
 import com.mashup.constant.log.LOG_SCHEDULE_STATUS_CONFIRM
 import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.common.extensions.gone
@@ -21,7 +20,9 @@ import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.extensions.visible
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
+import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainViewModel
+import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.schedule.adapter.OnItemClickListener
 import com.mashup.ui.schedule.adapter.ScheduleViewPagerAdapter
 import com.mashup.ui.schedule.detail.ScheduleDetailActivity
@@ -78,6 +79,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
         super.initViews()
         initSwipeRefreshLayout()
         initViewPager()
+        initButtons()
     }
 
     private fun initSwipeRefreshLayout() {
@@ -119,6 +121,15 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
             })
             adapter = scheduleAdapter
             offscreenPageLimit = 4
+        }
+    }
+    
+    private fun initButtons() {
+        viewBinding.btnDanggnEntryPoint.onThrottleFirstClick(lifecycleScope) {
+            mainViewModel.disablePopup(MainPopupType.DANGGN)
+            startActivity(
+                ShakeDanggnActivity.newIntent(requireContext())
+            )
         }
     }
 

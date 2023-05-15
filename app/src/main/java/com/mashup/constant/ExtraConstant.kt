@@ -1,5 +1,6 @@
 package com.mashup.constant
 
+const val EXTRA_MAIN_TAB = "EXTRA_MAIN_TAB"
 const val EXTRA_LOGIN_TYPE = "EXTRA_MAIN_TYPE"
 
 const val EXTRA_TITLE_KEY = "EXTRA_TITLE_KEY"
@@ -10,3 +11,9 @@ const val EXTRA_LOGOUT = "EXTRA_LOGOUT"
 const val EXTRA_WITH_DRAWL = "EXTRA_WITH_DRAWL"
 
 const val EXTRA_ANIMATION = "EXTRA_ANIMATION"
+
+const val EXTRA_LINK = "link"
+
+const val EXTRA_POPUP_KEY = "EXTRA_POPUP_KEY"
+
+const val EXTRA_ACTIVITY_ENTER_TYPE = "EXTRA_ACTIVITY_ENTER_TYPE"

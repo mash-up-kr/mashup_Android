@@ -5,17 +5,25 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_LINK
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
+import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository
-import com.mashup.ui.login.LoginActivity
+import com.mashup.service.PushLinkType
+import com.mashup.ui.danggn.ShakeDanggnActivity
+import com.mashup.ui.login.LoginType
+import com.mashup.ui.main.MainActivity
+import com.mashup.ui.main.model.MainTab
+import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -77,7 +85,34 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun moveNextScreen() {
-        startActivity(LoginActivity.newIntent(this@SplashActivity))
+        val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
+        val baseIntent = MainActivity.newIntent(
+            context = this@SplashActivity,
+            loginType = LoginType.AUTO,
+            mainTab = if (deepLink == PushLinkType.MYPAGE.name) MainTab.MY_PAGE else MainTab.EVENT
+        )
+        val taskStackBuilder = when (PushLinkType.getPushLinkType(deepLink)) {
+            PushLinkType.DANGGN -> {
+                TaskStackBuilder.create(this)
+                    .addNextIntentWithParentStack(baseIntent)
+                    .addNextIntent(
+                        ShakeDanggnActivity.newIntent(
+                            context = this,
+                            type = ActivityEnterType.ALARM
+                        )
+                    )
+            }
+            PushLinkType.QR -> {
+                TaskStackBuilder.create(this)
+                    .addNextIntentWithParentStack(baseIntent)
+                    .addNextIntent(QRScanActivity.newIntent(this))
+            }
+            else -> {
+                TaskStackBuilder.create(this)
+                    .addNextIntentWithParentStack(baseIntent)
+            }
+        }
+        taskStackBuilder.startActivities()
         finish()
     }
 

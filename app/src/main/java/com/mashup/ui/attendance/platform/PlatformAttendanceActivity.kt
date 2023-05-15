@@ -13,8 +13,8 @@ import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityPlatformAttendanceBinding
-import com.mashup.network.errorcode.EVENT_NOT_FOUND
-import com.mashup.network.errorcode.SCHEDULE_NOT_FOUND
+import com.mashup.core.common.constant.EVENT_NOT_FOUND
+import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
 import com.mashup.ui.attendance.crew.CrewAttendanceActivity
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -169,18 +169,13 @@ private fun setDescriptionText(codeState: Validation): String {
     }
 }
 
-/**
- * 테스트를 위해서 focusBool을 넣어서 두개다 테스트
- */
 @Preview("reverse - 기본 텍스트 필드")
 @Composable
 fun MashUpTextFieldPrev(
     labelText: String = "탈퇴할게요",
-    validation: Validation = Validation.EMPTY,
-    previousText: String = "",
-    requestFocus: Boolean = false
+    requestFocus: Boolean = false,
 ) {
-    var text by remember { mutableStateOf(previousText) }
+    var text by remember { mutableStateOf("") }
     var textValidation by remember {
         mutableStateOf(Validation.EMPTY)
     }
@@ -196,7 +191,7 @@ fun MashUpTextFieldPrev(
             },
             labelText = "탈퇴할게요",
             requestFocus = requestFocus,
-            validation = textValidation
+            validation = textValidation,
         )
     }
 }

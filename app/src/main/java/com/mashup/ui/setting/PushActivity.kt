@@ -54,7 +54,7 @@ class PushActivity : BaseActivity<ActivitySettingBinding>() {
 
     companion object {
         fun newIntent(context: Context) = Intent(context, PushActivity::class.java).apply {
-            putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+            putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
         }
     }
 

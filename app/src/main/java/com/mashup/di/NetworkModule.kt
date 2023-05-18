@@ -2,6 +2,7 @@ package com.mashup.di
 
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
+import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.core.model.Platform
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
@@ -61,13 +62,15 @@ class NetworkModule {
             .addInterceptor(authInterceptor)
             .addInterceptor(baseInterceptor)
 
-        okHttpClient
-            .addNetworkInterceptor(flipperInterceptor)
-            .addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                }
-            )
+        if (DEBUG_MODE) {
+            okHttpClient
+                .addNetworkInterceptor(flipperInterceptor)
+                .addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                    }
+                )
+        }
         return okHttpClient
             .readTimeout(10L, TimeUnit.SECONDS)
             .writeTimeout(10L, TimeUnit.SECONDS)

@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DanggnAllMemberRankResponse(
-    @Json(name = "danggnMemberRankDataList")
+    @field:Json(name = "danggnMemberRankDataList")
     val allMemberRankList: List<DanggnMemberRankResponse>,
-    @Json(name = "limit")
+    @field:Json(name = "limit")
     val limit: Int,
 )

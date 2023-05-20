@@ -7,15 +7,17 @@ import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_LOGOUT
+import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.constant.EXTRA_WITH_DRAWL
 import com.mashup.constant.log.LOG_LOGIN
 import com.mashup.constant.log.LOG_SIGN_UP
+import com.mashup.core.common.constant.MEMBER_NOT_FOUND
+import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.Validation
 import com.mashup.databinding.ActivityLoginBinding
-import com.mashup.core.common.constant.MEMBER_NOT_FOUND
-import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.ui.main.MainActivity
+import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.signup.SignUpActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,7 +82,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         startActivity(
             MainActivity.newIntent(
                 context = this,
-                loginType = loginType
+                loginType = loginType,
+                mainTab = (intent.getSerializableExtra(EXTRA_MAIN_TAB) as? MainTab) ?: MainTab.EVENT
             )
         )
         finish()
@@ -139,11 +142,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         fun newIntent(
             context: Context,
             isLogout: Boolean = false,
-            isWithDrawl: Boolean = false
+            isWithDrawl: Boolean = false,
+            mainTab: MainTab = MainTab.EVENT
         ): Intent {
             return Intent(context, LoginActivity::class.java).apply {
                 putExtra(EXTRA_LOGOUT, isLogout)
                 putExtra(EXTRA_WITH_DRAWL, isWithDrawl)
+                putExtra(EXTRA_MAIN_TAB, mainTab)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }

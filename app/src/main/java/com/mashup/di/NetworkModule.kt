@@ -3,8 +3,10 @@ package com.mashup.di
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
+import com.mashup.core.model.Platform
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
+import com.mashup.network.adapter.PlatformJsonAdapter
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
 import com.mashup.network.dao.PopupDao
@@ -39,6 +41,7 @@ class NetworkModule {
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(Date::class.java, CustomDateAdapter().nullSafe())
+        .add(Platform::class.java, PlatformJsonAdapter())
         .addLast(KotlinJsonAdapterFactory())
         .build()
 

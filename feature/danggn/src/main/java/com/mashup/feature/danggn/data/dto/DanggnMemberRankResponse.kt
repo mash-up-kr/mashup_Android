@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DanggnMemberRankResponse(
-    @Json(name = "memberId")
+    @field:Json(name = "memberId")
     val memberId: Int,
-    @Json(name = "memberName")
+    @field:Json(name = "memberName")
     val memberName: String,
-    @Json(name = "totalShakeScore")
+    @field:Json(name = "totalShakeScore")
     val totalShakeScore: Int
 )

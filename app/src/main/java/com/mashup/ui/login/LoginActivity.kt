@@ -47,6 +47,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             isRequestWithDrawl -> {
                 showToast("회원탈퇴 완료되었어요")
             }
+
             isRequestLogOut -> {
                 showToast("로그아웃 되었어요")
             }
@@ -61,15 +62,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                         is LoginState.Loading -> {
                             viewBinding.btnLogin.showLoading()
                         }
+
                         is LoginState.Success -> {
                             viewBinding.btnLogin.hideLoading()
                             moveNextScreen(state.loginType)
                         }
+
                         is LoginState.Error -> {
                             viewBinding.btnLogin.hideLoading()
                             handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }
+
                         else -> {
                         }
                     }
@@ -120,9 +124,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             MEMBER_NOT_FOUND -> {
                 "회원을 찾을 수 없습니다."
             }
+
             MEMBER_NOT_MATCH_PASSWORD -> {
                 "비밀번호가 일치하지 않습니다."
             }
+
             else -> {
                 null
             }
@@ -132,35 +138,42 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun moveNextScreen(loginType: LoginType) {
         val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
-        val baseIntent =  MainActivity.newIntent(
+        val baseIntent = MainActivity.newIntent(
             context = this,
             loginType = loginType,
             mainTab = (intent.getSerializableExtra(EXTRA_MAIN_TAB) as? MainTab) ?: MainTab.EVENT
         )
         val taskStackBuilder = when (PushLinkType.getPushLinkType(deepLink)) {
             PushLinkType.DANGGN -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(
-                        ShakeDanggnActivity.newIntent(
-                            context = this,
-                            type = ActivityEnterType.ALARM
-                        )
+                buildTaskStack(
+                    baseIntent,
+                    ShakeDanggnActivity.newIntent(
+                        context = this,
+                        type = ActivityEnterType.ALARM
                     )
+                )
             }
+
             PushLinkType.QR -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(QRScanActivity.newIntent(this))
+                buildTaskStack(baseIntent, QRScanActivity.newIntent(this))
             }
+
             else -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
+                buildTaskStack(baseIntent)
             }
         }
         taskStackBuilder.startActivities()
         finish()
     }
+
+    private fun buildTaskStack(baseIntent: Intent, vararg newIntent: Intent) =
+        TaskStackBuilder.create(this)
+            .apply {
+                addNextIntentWithParentStack(baseIntent)
+                newIntent.forEach { intent ->
+                    addNextIntent(intent)
+                }
+            }
 
     override val layoutId: Int = R.layout.activity_login
 

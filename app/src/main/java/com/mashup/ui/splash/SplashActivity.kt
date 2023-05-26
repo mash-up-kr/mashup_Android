@@ -84,33 +84,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun moveNextScreen() {
-        val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
-        val baseIntent = LoginActivity.newIntent(
-            context = this@SplashActivity,
-            mainTab = if (deepLink == PushLinkType.MYPAGE.name) MainTab.MY_PAGE else MainTab.EVENT
+        startActivity(
+            LoginActivity.newIntent(
+                context = this@SplashActivity,
+                deepLink = intent.getStringExtra(EXTRA_LINK) ?: PushLinkType.UNKNOWN.name
+            )
         )
-        val taskStackBuilder = when (PushLinkType.getPushLinkType(deepLink)) {
-            PushLinkType.DANGGN -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(
-                        ShakeDanggnActivity.newIntent(
-                            context = this,
-                            type = ActivityEnterType.ALARM
-                        )
-                    )
-            }
-            PushLinkType.QR -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(QRScanActivity.newIntent(this))
-            }
-            else -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-            }
-        }
-        taskStackBuilder.startActivities()
         finish()
     }
 

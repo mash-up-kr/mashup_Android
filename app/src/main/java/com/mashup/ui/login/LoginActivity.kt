@@ -3,9 +3,11 @@ package com.mashup.ui.login
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.lifecycleScope
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.constant.EXTRA_LINK
 import com.mashup.constant.EXTRA_LOGOUT
 import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.constant.EXTRA_WITH_DRAWL
@@ -14,10 +16,14 @@ import com.mashup.constant.log.LOG_SIGN_UP
 import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.core.common.extensions.onThrottleFirstClick
+import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.Validation
 import com.mashup.databinding.ActivityLoginBinding
+import com.mashup.service.PushLinkType
+import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.main.model.MainTab
+import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.ui.signup.SignUpActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +47,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             isRequestWithDrawl -> {
                 showToast("회원탈퇴 완료되었어요")
             }
+
             isRequestLogOut -> {
                 showToast("로그아웃 되었어요")
             }
@@ -55,15 +62,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                         is LoginState.Loading -> {
                             viewBinding.btnLogin.showLoading()
                         }
+
                         is LoginState.Success -> {
                             viewBinding.btnLogin.hideLoading()
-                            moveToMainScreen(state.loginType)
+                            moveNextScreen(state.loginType)
                         }
+
                         is LoginState.Error -> {
                             viewBinding.btnLogin.hideLoading()
                             handleCommonError(state.code)
                             handleSignUpErrorCode(state)
                         }
+
                         else -> {
                         }
                     }
@@ -76,17 +86,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
             }
         }
-    }
-
-    private fun moveToMainScreen(loginType: LoginType) {
-        startActivity(
-            MainActivity.newIntent(
-                context = this,
-                loginType = loginType,
-                mainTab = (intent.getSerializableExtra(EXTRA_MAIN_TAB) as? MainTab) ?: MainTab.EVENT
-            )
-        )
-        finish()
     }
 
     private fun initTextField() {
@@ -125,15 +124,56 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             MEMBER_NOT_FOUND -> {
                 "회원을 찾을 수 없습니다."
             }
+
             MEMBER_NOT_MATCH_PASSWORD -> {
                 "비밀번호가 일치하지 않습니다."
             }
+
             else -> {
                 null
             }
         }
         codeMessage?.run { showToast(codeMessage) }
     }
+
+    private fun moveNextScreen(loginType: LoginType) {
+        val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
+        val baseIntent = MainActivity.newIntent(
+            context = this,
+            loginType = loginType,
+            mainTab = (intent.getSerializableExtra(EXTRA_MAIN_TAB) as? MainTab) ?: MainTab.EVENT
+        )
+        val taskStackBuilder = when (PushLinkType.getPushLinkType(deepLink)) {
+            PushLinkType.DANGGN -> {
+                buildTaskStack(
+                    baseIntent,
+                    ShakeDanggnActivity.newIntent(
+                        context = this,
+                        type = ActivityEnterType.ALARM
+                    )
+                )
+            }
+
+            PushLinkType.QR -> {
+                buildTaskStack(baseIntent, QRScanActivity.newIntent(this))
+            }
+
+            else -> {
+                buildTaskStack(baseIntent)
+            }
+        }
+        taskStackBuilder.startActivities()
+        finish()
+    }
+
+    private fun buildTaskStack(baseIntent: Intent, vararg newIntent: Intent) =
+        TaskStackBuilder.create(this)
+            .apply {
+                addNextIntentWithParentStack(baseIntent)
+                newIntent.forEach { intent ->
+                    addNextIntent(intent)
+                }
+            }
 
     override val layoutId: Int = R.layout.activity_login
 
@@ -143,12 +183,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             context: Context,
             isLogout: Boolean = false,
             isWithDrawl: Boolean = false,
-            mainTab: MainTab = MainTab.EVENT
+            mainTab: MainTab = MainTab.EVENT,
+            deepLink: String = PushLinkType.UNKNOWN.name
         ): Intent {
             return Intent(context, LoginActivity::class.java).apply {
                 putExtra(EXTRA_LOGOUT, isLogout)
                 putExtra(EXTRA_WITH_DRAWL, isWithDrawl)
                 putExtra(EXTRA_MAIN_TAB, mainTab)
+                putExtra(EXTRA_LINK, deepLink)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }

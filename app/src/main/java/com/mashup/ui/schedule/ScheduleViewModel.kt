@@ -35,45 +35,44 @@ class ScheduleViewModel @Inject constructor(
             val generateNumber =
                 userPreferenceRepository.getUserPreference().first().generationNumbers.last()
 
-            val response = scheduleRepository.getScheduleList(generateNumber)
-
-            if (!response.isSuccess() || response.data == null) {
-                handleErrorCode(response.code)
-                _scheduleState.emit(
-                    ScheduleState.Success(
-                        scheduleTitleState = ScheduleTitleState.Empty,
-                        scheduleList = listOf(ScheduleCard.EmptySchedule()),
-                        schedulePosition = 0
+            scheduleRepository.getScheduleList(generateNumber)
+                .onSuccess { response ->
+                    _scheduleState.emit(
+                        ScheduleState.Success(
+                            scheduleTitleState = when {
+                                response.progress == SchedulesProgress.DONE -> {
+                                    ScheduleTitleState.End(generateNumber)
+                                }
+                                response.progress == SchedulesProgress.NOT_REGISTERED -> {
+                                    ScheduleTitleState.Empty
+                                }
+                                response.progress == SchedulesProgress.ON_GOING &&
+                                        response.dateCount != null -> {
+                                    ScheduleTitleState.DateCount(response.dateCount)
+                                }
+                                else -> {
+                                    ScheduleTitleState.SchedulePreparing
+                                }
+                            },
+                            scheduleList = if (response.scheduleList.isEmpty()) {
+                                listOf(ScheduleCard.EmptySchedule())
+                            } else {
+                                response.scheduleList.map { mapperToScheduleCard(it) }
+                            },
+                            schedulePosition = getSchedulePosition(response.scheduleList)
+                        )
                     )
-                )
-                return@mashUpScope
-            }
-            _scheduleState.emit(
-                ScheduleState.Success(
-                    scheduleTitleState = when {
-                        response.data.progress == SchedulesProgress.DONE -> {
-                            ScheduleTitleState.End(generateNumber)
-                        }
-                        response.data.progress == SchedulesProgress.NOT_REGISTERED -> {
-                            ScheduleTitleState.Empty
-                        }
-                        response.data.progress == SchedulesProgress.ON_GOING &&
-                            response.data.dateCount != null -> {
-                            ScheduleTitleState.DateCount(response.data.dateCount)
-                        }
-                        else -> {
-                            ScheduleTitleState.SchedulePreparing
-                        }
-                    },
-                    scheduleList = if (response.data.scheduleList.isEmpty()) {
-                        listOf(ScheduleCard.EmptySchedule())
-                    } else {
-                        response.data.scheduleList.map { mapperToScheduleCard(it) }
-                    },
-                    schedulePosition = getSchedulePosition(response.data.scheduleList)
-                )
-            )
-            showCoachMark(response.data.scheduleList)
+                    showCoachMark(response.scheduleList)
+                }.onFailure { code ->
+                    handleErrorCode(code)
+                    _scheduleState.emit(
+                        ScheduleState.Success(
+                            scheduleTitleState = ScheduleTitleState.Empty,
+                            scheduleList = listOf(ScheduleCard.EmptySchedule()),
+                            schedulePosition = 0
+                        )
+                    )
+                }
         }
     }
 
@@ -88,25 +87,25 @@ class ScheduleViewModel @Inject constructor(
             return ScheduleCard.EmptySchedule(scheduleResponse)
         }
 
-        val attendResponse = attendanceRepository.getScheduleAttendanceInfo(
-            scheduleResponse.scheduleId
-        )
+        attendanceRepository.getScheduleAttendanceInfo(scheduleResponse.scheduleId)
+            .onSuccess { response ->
+                return if (response.attendanceInfos.isEmpty()) {
+                    ScheduleCard.InProgressSchedule(
+                        scheduleResponse = scheduleResponse,
+                        attendanceInfo = response
+                    )
+                } else {
+                    ScheduleCard.EndSchedule(
+                        scheduleResponse = scheduleResponse,
+                        attendanceInfo = response
+                    )
+                }
+            }
+            .onFailure {
+                return ScheduleCard.EmptySchedule(scheduleResponse)
+            }
 
-        return when {
-            !attendResponse.isSuccess() || attendResponse.data == null ||
-                attendResponse.data.attendanceInfos.isEmpty() -> {
-                ScheduleCard.InProgressSchedule(
-                    scheduleResponse = scheduleResponse,
-                    attendanceInfo = attendResponse.data
-                )
-            }
-            else -> {
-                ScheduleCard.EndSchedule(
-                    scheduleResponse = scheduleResponse,
-                    attendanceInfo = attendResponse.data
-                )
-            }
-        }
+        return ScheduleCard.EmptySchedule(scheduleResponse)
     }
 
     private fun getSchedulePosition(schedules: List<ScheduleResponse>): Int {

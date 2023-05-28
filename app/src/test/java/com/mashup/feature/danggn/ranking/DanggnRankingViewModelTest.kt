@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.ranking
 
+import app.cash.turbine.test
 import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
@@ -10,6 +11,7 @@ import com.mashup.util.CoroutineRule
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.doReturn
@@ -36,7 +38,7 @@ class DanggnRankingViewModelTest {
     }
 
     @Test
-    fun `DanggnMemberRankResponse 올바르게 PlatformRanking으로 변환되는지 테스트`() {
+    fun `DanggnMemberRankResponse 올바르게 PlatformRanking으로 변환되는지 테스트`() = runTest {
         // given
         rankingViewModel = DanggnRankingViewModel(
             danggnRepository = DanggnRepository(fakeRankingDao),
@@ -44,30 +46,40 @@ class DanggnRankingViewModelTest {
             danggnPreferenceRepository = defaultDanggnPreferenceRepository
         )
 
-        // when
-        coroutineRule.testDispatcher.scheduler.advanceTimeBy(3000L)
-
+        coroutineRule.testDispatcher.scheduler.advanceUntilIdle()
         val list = listOf(
-            DanggnRankingViewModel.RankingItem.PlatformRanking(
+            DanggnRankingViewModel.RankingItem.Ranking(
                 "39", "정종노드", 150
             ),
-            DanggnRankingViewModel.RankingItem.PlatformRanking(
+            DanggnRankingViewModel.RankingItem.Ranking(
                 "40", "정종드투", 151
             ),
-            DanggnRankingViewModel.RankingItem.PlatformRanking(
+            DanggnRankingViewModel.RankingItem.Ranking(
                 "41", "정종민", 152
             ),
-            DanggnRankingViewModel.RankingItem.PlatformRanking(
+            DanggnRankingViewModel.RankingItem.Ranking(
                 "42", "정종웹", 153
             ),
-            DanggnRankingViewModel.RankingItem.PlatformRanking(
+            DanggnRankingViewModel.RankingItem.Ranking(
                 "43", "정종오스", 154
             ),
-            DanggnRankingViewModel.RankingItem.PlatformRanking(
+            DanggnRankingViewModel.RankingItem.Ranking(
                 "44", "정종자인", 155
-            ),
+            )
         )
+
+
         // then
-        assertEquals(rankingViewModel.uiState.value.personalRankingList, list)
+        rankingViewModel.uiState.test {
+            assertEquals(
+                awaitItem().personalRankingList,
+                emptyList<DanggnRankingViewModel.RankingItem>()
+            )
+            assertEquals(
+                awaitItem().personalRankingList.filter { it !is DanggnRankingViewModel.RankingItem.EmptyRanking },
+                list
+            )
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }

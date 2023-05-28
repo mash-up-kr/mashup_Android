@@ -6,8 +6,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DanggnPlatformRankResponse(
-    @Json(name = "platform")
+    @field:Json(name = "platform")
     val platform: Platform,
-    @Json(name = "totalShakeScore")
+    @field:Json(name = "totalShakeScore")
     val totalShakeScore: Int
 )

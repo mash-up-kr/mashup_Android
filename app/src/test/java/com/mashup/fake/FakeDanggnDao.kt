@@ -4,22 +4,13 @@ import com.mashup.feature.danggn.data.DanggnDao
 import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
+import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
+import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
 import com.mashup.network.Response
 
 class FakeDanggnDao : DanggnDao {
-    override suspend fun getDanggnMemberRank(
-        generationNumber: Int,
-        limit: Int
-    ): Response<DanggnMemberRankResponse> {
-        return Response(
-            code = "",
-            message = null,
-            data = null,
-            page = null
-        )
-    }
 
     override suspend fun getDanggnAllMemberRank(generationNumber: Int): Response<DanggnAllMemberRankResponse> {
         return Response(
@@ -60,6 +51,18 @@ class FakeDanggnDao : DanggnDao {
         generationNumber: Int,
         scoreRequest: DanggnScoreRequest
     ): Response<DanggnScoreResponse> {
+        return Response(
+            "null", null, null, null
+        )
+    }
+
+    override suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse> {
+        return Response(
+            "null", null, null, null
+        )
+    }
+
+    override suspend fun getGoldenDanggnPercent(): Response<GoldenDanggnPercentResponse> {
         return Response(
             "null", null, null, null
         )

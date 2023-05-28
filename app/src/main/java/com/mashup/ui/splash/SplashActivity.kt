@@ -20,8 +20,7 @@ import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.service.PushLinkType
 import com.mashup.ui.danggn.ShakeDanggnActivity
-import com.mashup.ui.login.LoginType
-import com.mashup.ui.main.MainActivity
+import com.mashup.ui.login.LoginActivity
 import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.util.AnalyticsManager
@@ -85,34 +84,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun moveNextScreen() {
-        val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
-        val baseIntent = MainActivity.newIntent(
-            context = this@SplashActivity,
-            loginType = LoginType.AUTO,
-            mainTab = if (deepLink == PushLinkType.MYPAGE.name) MainTab.MY_PAGE else MainTab.EVENT
+        startActivity(
+            LoginActivity.newIntent(
+                context = this@SplashActivity,
+                deepLink = intent.getStringExtra(EXTRA_LINK) ?: PushLinkType.UNKNOWN.name
+            )
         )
-        val taskStackBuilder = when (PushLinkType.getPushLinkType(deepLink)) {
-            PushLinkType.DANGGN -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(
-                        ShakeDanggnActivity.newIntent(
-                            context = this,
-                            type = ActivityEnterType.ALARM
-                        )
-                    )
-            }
-            PushLinkType.QR -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-                    .addNextIntent(QRScanActivity.newIntent(this))
-            }
-            else -> {
-                TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(baseIntent)
-            }
-        }
-        taskStackBuilder.startActivities()
         finish()
     }
 

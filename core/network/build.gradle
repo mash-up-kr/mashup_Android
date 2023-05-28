@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core:model")
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
@@ -32,4 +33,8 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"
     api "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     api "com.squareup.okhttp3:logging-interceptor:$okhttpInterceptorVerison"
+
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 }

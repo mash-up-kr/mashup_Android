@@ -5,5 +5,5 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class GoldenDanggnPercentResponse(
-    @Json(name = "goldenDanggnPercent") val goldenDanggnPercent: Int?
+    @field:Json(name = "goldenDanggnPercent") val goldenDanggnPercent: Int?
 )

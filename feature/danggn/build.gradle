@@ -44,4 +44,8 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
     implementation 'nl.dionsegijn:konfetti-compose:2.0.2'
+
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 }

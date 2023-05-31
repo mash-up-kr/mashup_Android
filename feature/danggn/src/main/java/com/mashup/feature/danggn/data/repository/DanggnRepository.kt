@@ -7,7 +7,7 @@ import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
-import com.mashup.network.Response2
+import com.mashup.network.Response
 import javax.inject.Inject
 
 class DanggnRepository @Inject constructor(
@@ -15,31 +15,31 @@ class DanggnRepository @Inject constructor(
 ) {
     suspend fun getAllDanggnRank(
         generationNumber: Int
-    ): Response2<DanggnAllMemberRankResponse> {
+    ): Response<DanggnAllMemberRankResponse> {
         return danggnDao.getDanggnAllMemberRank(generationNumber)
     }
 
     suspend fun getPlatformDanggnRank(
         generationNumber: Int
-    ): Response2<List<DanggnPlatformRankResponse>> {
+    ): Response<List<DanggnPlatformRankResponse>> {
         return danggnDao.getDanggnPlatformRank(generationNumber)
     }
 
     suspend fun postDanggnScore(
         generationNumber: Int,
         scoreRequest: DanggnScoreRequest
-    ): Response2<DanggnScoreResponse> {
+    ): Response<DanggnScoreResponse> {
         return danggnDao.postDanggnScore(
             generationNumber = generationNumber,
             scoreRequest = scoreRequest
         )
     }
 
-    suspend fun getDanggnRandomTodayMessage(): Response2<DanggnRandomTodayMessageResponse> {
+    suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse> {
         return danggnDao.getDanggnRandomTodayMessage()
     }
 
-    suspend fun getGoldDanggnPercent(): Response2<GoldenDanggnPercentResponse> {
+    suspend fun getGoldDanggnPercent(): Response<GoldenDanggnPercentResponse> {
         return danggnDao.getGoldenDanggnPercent()
     }
 }

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.mashup.network
 
 import com.squareup.moshi.Json
@@ -15,6 +17,16 @@ data class Response<T>(
     val page: PageResponse?
 ) {
     fun isSuccess() = code == "SUCCESS"
+
+    inline fun onSuccess(action: (T) -> Unit): Response<T> {
+        if (isSuccess()) action(data as T)
+        return this
+    }
+
+    inline fun onFailure(action: (code: String) -> Unit): Response<T> {
+        if (!isSuccess()) action(code)
+        return this
+    }
 }
 
 @JsonClass(generateAdapter = true)

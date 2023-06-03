@@ -60,15 +60,22 @@ fun DanggnShakeEffect(
                     modifier = Modifier.width(300.dp)
                 )
 
-                Image(
-                    painter = when (countDown) {
-                        1 -> painterResource(id = CR.drawable.img_fevertime_countdown_1)
-                        2 -> painterResource(id = CR.drawable.img_fevertime_countdown_2)
-                        else -> painterResource(id = CR.drawable.img_fevertime_countdown_3)
-                    },
-                    contentDescription = null,
-                    modifier = Modifier.size(80.dp)
-                )
+                val countDownDrawableRes = remember(countDown) {
+                    when(countDown) {
+                        1 -> CR.drawable.img_fevertime_countdown_1
+                        2 -> CR.drawable.img_fevertime_countdown_2
+                        3 -> CR.drawable.img_fevertime_countdown_3
+                        else -> null
+                    }
+                }
+
+                if (countDownDrawableRes != null) {
+                    Image(
+                        painter = painterResource(id = countDownDrawableRes),
+                        contentDescription = null,
+                        modifier = Modifier.size(80.dp)
+                    )
+                }
             }
 
             Image(

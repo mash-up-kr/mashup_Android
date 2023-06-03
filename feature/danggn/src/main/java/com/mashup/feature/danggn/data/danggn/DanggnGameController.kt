@@ -1,6 +1,10 @@
 package com.mashup.feature.danggn.data.danggn
 
 import com.mashup.feature.danggn.data.ShakeDetector
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +24,7 @@ class DanggnGameController @Inject constructor(
 
     companion object {
         private const val DEFAULT_FRAME_RATE = 100L
+        private const val FEVER_TIME_COUNT_DOWN = 3
     }
 
     private var danggnShakerScope: CoroutineScope? = null
@@ -32,6 +37,9 @@ class DanggnGameController @Inject constructor(
      */
     private var comboEndCallbackListener: ((comboCount: Int) -> Unit)? = null
     private var onShakeListener: (() -> Unit)? = null
+
+    private val _feverTimeCountDown = MutableStateFlow(0)
+    val feverTimeCountDown: StateFlow<Int> = _feverTimeCountDown.asStateFlow()
 
     fun start(
         threshold: Float,
@@ -72,13 +80,12 @@ class DanggnGameController @Inject constructor(
     fun setListener(
         frameCallbackListener: ((DanggnGameState) -> Unit),
         comboEndCallbackListener: ((comboCount: Int) -> Unit),
-        danggnModeChangedListener: ((DanggnMode) -> Unit),
         onShakeListener: (() -> Unit) = {}
     ) {
         this.frameCallbackListener = frameCallbackListener
         this.comboEndCallbackListener = comboEndCallbackListener
-        modeController.danggnModeChangedListener = danggnModeChangedListener
         this.onShakeListener = onShakeListener
+        modeController.danggnModeChangedListener = ::danggnModeChangedListener
     }
 
     fun stop() {
@@ -94,5 +101,22 @@ class DanggnGameController @Inject constructor(
 
         val mode = modeController.getDanggnMode()
         scoreController.addScore(mode)
+    }
+
+    private fun danggnModeChangedListener(danggnMode: DanggnMode) {
+        if (danggnMode is GoldenDanggnMode) {
+            countDownFeverTime()
+        }
+    }
+
+    private fun countDownFeverTime() {
+        CoroutineScope(Dispatchers.Default).launch {
+            _feverTimeCountDown.value = FEVER_TIME_COUNT_DOWN
+
+            repeat(FEVER_TIME_COUNT_DOWN) {
+                delay(1000)
+                _feverTimeCountDown.value = _feverTimeCountDown.value - 1
+            }
+        }
     }
 }

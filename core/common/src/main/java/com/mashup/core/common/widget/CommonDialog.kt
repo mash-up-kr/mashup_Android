@@ -53,7 +53,7 @@ class CommonDialog(context: Context) : Dialog(context) {
 
     fun setPositiveButton(
         text: String = "확인",
-        clickListener: (Dialog) -> Unit = { it.dismiss() }
+        clickListener: (Dialog) -> Unit = {}
     ) {
         with(viewBinding.btnPositive) {
             visible()

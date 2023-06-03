@@ -22,6 +22,7 @@ import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.utils.safeShow
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
@@ -206,7 +207,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun showRationalNotificationPermissionDialog() {
-        // TODO show notification rationale ui
+        CommonDialog(this).apply {
+            setTitle(text = "알림 권한 재설정")
+            setMessage(text = "매쉬업 소식을 빠르게 알기 위해서는\n알림 권한이 필수로 필요해요.")
+            setNegativeButton(text = "닫기")
+            setPositiveButton("재설정") {
+                permissionHelper.requestPermission(
+                    permission = requestPermission
+                )
+            }
+            show()
+        }
     }
 
     companion object {

@@ -20,7 +20,7 @@ android {
             keyAlias 'key'
         }
     }
-    compileSdkVersion compileVersion
+    compileSdk compileVersion
 
     defaultConfig {
         applicationId "com.mashup"

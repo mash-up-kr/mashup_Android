@@ -7,13 +7,11 @@ import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.danggn.DanggnGameController
 import com.mashup.feature.danggn.data.danggn.DanggnGameState
 import com.mashup.feature.danggn.data.danggn.DanggnMode
-import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -36,8 +34,7 @@ class DanggnViewModel @Inject constructor(
     private val _danggnMode = MutableStateFlow<DanggnMode>(NormalDanggnMode)
     val danggnMode: StateFlow<DanggnMode> = _danggnMode.asStateFlow()
 
-    private val _feverTimeCountDown = MutableStateFlow(0)
-    val feverTimeCountDown: StateFlow<Int> = _feverTimeCountDown.asStateFlow()
+    val feverTimeCountDown: StateFlow<Int> = danggnGameController.feverTimeCountDown
 
     private val _randomMessage = MutableStateFlow("")
     val randomMessage: StateFlow<String> = _randomMessage.asStateFlow()
@@ -63,7 +60,6 @@ class DanggnViewModel @Inject constructor(
                 }
             },
             comboEndCallbackListener = this::sendDanggnScore,
-            danggnModeChangedListener = this::countDownFeverTime,
             onShakeListener = {
                 viewModelScope.launch {
                     _onShakeDevice.emit(Unit)
@@ -114,19 +110,6 @@ class DanggnViewModel @Inject constructor(
         }
     }
 
-    private fun countDownFeverTime(danggnMode: DanggnMode) {
-        viewModelScope.launch {
-            if (danggnMode is GoldenDanggnMode) {
-                _feverTimeCountDown.value = FEVER_TIME_COUNT_DOWN
-
-                repeat(FEVER_TIME_COUNT_DOWN) {
-                    delay(1000)
-                    _feverTimeCountDown.value = _feverTimeCountDown.value - 1
-                }
-            }
-        }
-    }
-
     private fun getDanggnRandomTodayMessage() = mashUpScope {
         val response = danggnRepository.getDanggnRandomTodayMessage()
         val defaultMessage = "힘들면 당근 흔들어잇!"
@@ -143,7 +126,6 @@ class DanggnViewModel @Inject constructor(
         private const val DANGGN_SHAKE_INTERVAL_TIME = 200L
         private const val DANGGN_SHAKE_THRESHOLD = 3.0f
         private const val DEFAULT_GOLD_DANGGN_PERCENT = 1
-        private const val FEVER_TIME_COUNT_DOWN = 3
     }
 }
 

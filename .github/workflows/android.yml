@@ -21,10 +21,7 @@ jobs:
         cache: gradle
     - name: add local.properties
       run: |
-        echo api.key="${{ secrets.API_KEY }}" >> local.properties
-    - name: read local.properties
-      run: |
-        f = open('local.properties','r'), print(f.readlines())
+        echo api.key=\"${{ secrets.API_KEY }}\" > local.properties
     - name: Cache Gradle Packages
       uses: actions/cache@v3
       with:

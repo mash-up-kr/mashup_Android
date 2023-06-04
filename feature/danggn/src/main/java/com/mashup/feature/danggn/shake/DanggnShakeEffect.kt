@@ -41,7 +41,6 @@ import com.mashup.core.common.R as CR
 fun DanggnShakeEffect(
     modifier: Modifier = Modifier,
     danggnMode: DanggnMode,
-    countDown: Int,
     effectList: List<DanggnScoreModel> = emptyList(),
 ) {
     Box(
@@ -60,6 +59,7 @@ fun DanggnShakeEffect(
                     modifier = Modifier.width(300.dp)
                 )
 
+                val countDown = danggnMode.remainTimeInSeconds.toInt()
                 val countDownDrawableRes = remember(countDown) {
                     when(countDown) {
                         1 -> CR.drawable.img_fevertime_countdown_1
@@ -143,7 +143,6 @@ fun NormalDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
         danggnMode = NormalDanggnMode,
-        countDown = 0,
     )
 }
 
@@ -152,7 +151,6 @@ fun NormalDanggnModeEffectPrev() {
 fun GoldenDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
-        danggnMode = GoldenDanggnMode,
-        countDown = 3,
+        danggnMode = GoldenDanggnMode(),
     )
 }

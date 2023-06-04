@@ -46,7 +46,7 @@ fun MashUpTabRow(
             val tabPositions = List(tabCount) { index ->
                 TabPosition(
                     (tabPlaceables.take(index)
-                        .fastSumBy { it.width } * index + horizontalSpace.toPx() * index).toDp(),
+                        .fastSumBy { it.width } + horizontalSpace.toPx() * index).toDp(),
                     tabPlaceables[index].width.toDp()
                 )
             }

@@ -34,7 +34,8 @@ class DanggnViewModel @Inject constructor(
     private val _danggnMode = MutableStateFlow<DanggnMode>(NormalDanggnMode)
     val danggnMode: StateFlow<DanggnMode> = _danggnMode.asStateFlow()
 
-    val feverTimeCountDown: StateFlow<Int> = danggnGameController.feverTimeCountDown
+    private val _feverTimeCountDown = MutableStateFlow(0)
+    val feverTimeCountDown: StateFlow<Int> = _feverTimeCountDown.asStateFlow()
 
     private val _randomMessage = MutableStateFlow("")
     val randomMessage: StateFlow<String> = _randomMessage.asStateFlow()

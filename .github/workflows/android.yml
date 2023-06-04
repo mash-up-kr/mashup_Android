@@ -22,6 +22,9 @@ jobs:
     - name: add local.properties
       run: |
         echo api.key="${{secrets.API_KEY}}" >> local.properties
+    - name: print local.properties
+      run: |
+        echo local.properties
     - name: Cache Gradle Packages
       uses: actions/cache@v3
       with:

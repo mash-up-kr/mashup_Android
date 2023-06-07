@@ -34,7 +34,7 @@ class BaseInterceptor @Inject constructor() : Interceptor {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Base64.getEncoder().encodeToString(encoded)
         } else {
-            encode(encoded, DEFAULT).toString()
+            encode(encoded, NO_WRAP).toString(Charsets.UTF_8)
         }
     }
 }

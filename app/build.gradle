@@ -6,6 +6,8 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     lintOptions {
@@ -33,6 +35,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        buildConfigField "String", "API_KEY", properties["api.key"]
     }
 
     sourceSets {

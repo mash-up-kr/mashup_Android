@@ -2,8 +2,6 @@ package com.mashup.network.interceptor
 
 import android.os.Build
 import android.util.Base64.*
-import android.util.Log
-import androidx.annotation.RequiresApi
 import com.mashup.BuildConfig
 import okhttp3.Interceptor
 import java.util.Base64

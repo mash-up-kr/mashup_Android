@@ -12,7 +12,7 @@ import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 
 class BaseInterceptor @Inject constructor() : Interceptor {
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun intercept(chain: Interceptor.Chain) = chain.proceed(
         chain.request()
             .newBuilder()

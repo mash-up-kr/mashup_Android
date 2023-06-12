@@ -31,12 +31,12 @@ class DanggnModeController @Inject constructor() {
     }
 
     fun switchToGoldenDanggnMode() {
-        if (getDanggnMode() == GoldenDanggnMode) return
+        if (getDanggnMode() is GoldenDanggnMode) return
         val changeAvailableDanggnMode = Random.nextInt(1, 100) <= goldenDanggnPercent
 
         if (changeAvailableDanggnMode) {
             danggnChangedTimeMillis = System.currentTimeMillis()
-            currentMode = GoldenDanggnMode
+            currentMode = GoldenDanggnMode()
         }
     }
 
@@ -47,11 +47,13 @@ class DanggnModeController @Inject constructor() {
         if (timeDiff >= GOLDEN_MODE_TIME) {
             danggnChangedTimeMillis = 0
             currentMode = NormalDanggnMode
+        } else {
+            currentMode = GoldenDanggnMode((GOLDEN_MODE_TIME - timeDiff) / 1000 + 1)
         }
     }
 
     fun checkDanggnMode() {
-        if (getDanggnMode() == GoldenDanggnMode) {
+        if (getDanggnMode() is GoldenDanggnMode) {
             switchToNormalDanggnMode()
         }
     }

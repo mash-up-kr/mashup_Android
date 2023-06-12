@@ -57,7 +57,6 @@ fun ShakeDanggnScreen(
     val uiState by viewModel.uiState.collectAsState()
     val randomTodayMessage by viewModel.randomMessage.collectAsState()
     val danggnMode by viewModel.danggnMode.collectAsState()
-    val feverTimeCountDown by viewModel.feverTimeCountDown.collectAsState()
 
     val rankUiState by rankingViewModel.uiState.collectAsState()
 

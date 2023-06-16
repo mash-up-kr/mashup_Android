@@ -1,7 +1,10 @@
 package com.mashup.ui.main
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -17,7 +20,9 @@ import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.utils.safeShow
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivityMainBinding
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
@@ -35,6 +40,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutId = R.layout.activity_main
 
     private val viewModel: MainViewModel by viewModels()
+
+    private val permissionHelper by lazy {
+        PermissionHelper(this)
+    }
 
     private val navController by lazy {
         val navHostFragment =
@@ -60,6 +69,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.initViews()
         initComposeView()
         initTabButtons()
+        requestNotificationPermission()
     }
 
     private fun initComposeView() {
@@ -180,7 +190,40 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionHelper.checkGrantedPermission(
+                permission = requestPermission,
+                onRequestPermission = {
+                    permissionHelper.requestPermission(
+                        permission = requestPermission
+                    )
+                },
+                onShowRationaleUi = {
+                    showRationalNotificationPermissionDialog()
+                }
+            )
+        }
+    }
+
+    private fun showRationalNotificationPermissionDialog() {
+        CommonDialog(this).apply {
+            setTitle(text = "알림 권한 재설정")
+            setMessage(text = "매쉬업 소식을 빠르게 알기 위해서는\n알림 권한이 필수로 필요해요.")
+            setNegativeButton(text = "닫기")
+            setPositiveButton("재설정") {
+                permissionHelper.requestPermission(
+                    permission = requestPermission
+                )
+            }
+            show()
+        }
+    }
+
     companion object {
+        @SuppressLint("InlinedApi")
+        private const val requestPermission = POST_NOTIFICATIONS
+
         fun newIntent(
             context: Context,
             loginType: LoginType,

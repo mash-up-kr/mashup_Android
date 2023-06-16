@@ -210,7 +210,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
             .translationY(0f)
             .alpha(0.0f)
             .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     gone()
                 }

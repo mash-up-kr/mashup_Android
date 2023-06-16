@@ -200,11 +200,11 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     private fun showRequestCameraPermissionDialog() {
         CommonDialog(this).apply {
             setTitle(text = "카메라 권한 재설정")
-            setMessage(text = "QR 출석체크를 하기 위해서는 카메라의 권한이 필수로 필요합니다")
-            setNegativeButton(text = "거절") {
+            setMessage(text = "QR 출석체크를 하기 위해서는\n카메라의 접근 권한이 필요해요.")
+            setNegativeButton(text = "닫기") {
                 finish()
             }
-            setPositiveButton("확인") {
+            setPositiveButton("재설정") {
                 permissionHelper.requestPermission(
                     requestCode = REQUEST_CODE_CAMERA,
                     permission = PERMISSION_CAMERA

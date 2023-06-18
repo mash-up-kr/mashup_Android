@@ -8,8 +8,8 @@ import androidx.core.content.ContextCompat
 class PermissionHelper(private val activity: Activity) {
 
     fun requestPermission(
-        requestCode: Int,
-        permission: String
+        permission: String,
+        requestCode: Int = 0
     ) {
         ActivityCompat.requestPermissions(
             activity,

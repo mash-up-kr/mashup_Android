@@ -14,13 +14,13 @@ import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.main.model.MainTab
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -73,9 +73,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun refreshToken() = mashUpScope {
-        val result = memberRepository.refreshToken()
-        if (result.isSuccess() && result.data != null) {
-            userPreferenceRepository.updateUserToken(result.data.token)
+        memberRepository.refreshToken().onSuccess { response ->
+            userPreferenceRepository.updateUserToken(response.token)
         }
     }
 
@@ -91,16 +90,16 @@ class MainViewModel @Inject constructor(
     }
 
     private fun refreshUserData() = mashUpScope {
-        val result = memberRepository.getMember()
-        if (result.isSuccess() && result.data != null) {
-            userPreferenceRepository.updateUserPreference(
-                id = result.data.id,
-                name = result.data.name,
-                platform = Platform.getPlatform(result.data.platform),
-                generationNumbers = result.data.generationNumbers,
-                pushNotificationAgreed = result.data.pushNotificationAgreed
-            )
-        }
+        memberRepository.getMember()
+            .onSuccess { response ->
+                userPreferenceRepository.updateUserPreference(
+                    id = response.id,
+                    name = response.name,
+                    platform = Platform.getPlatform(response.platform),
+                    generationNumbers = response.generationNumbers,
+                    pushNotificationAgreed = response.pushNotificationAgreed
+                )
+            }
     }
 
     private fun getMainPopup() = mashUpScope {

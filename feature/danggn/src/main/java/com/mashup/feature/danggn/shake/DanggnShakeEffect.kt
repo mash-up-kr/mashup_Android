@@ -41,7 +41,6 @@ import com.mashup.core.common.R as CR
 fun DanggnShakeEffect(
     modifier: Modifier = Modifier,
     danggnMode: DanggnMode,
-    countDown: Int,
     effectList: List<DanggnScoreModel> = emptyList(),
 ) {
     Box(
@@ -60,15 +59,23 @@ fun DanggnShakeEffect(
                     modifier = Modifier.width(300.dp)
                 )
 
-                Image(
-                    painter = when (countDown) {
-                        1 -> painterResource(id = CR.drawable.img_fevertime_countdown_1)
-                        2 -> painterResource(id = CR.drawable.img_fevertime_countdown_2)
-                        else -> painterResource(id = CR.drawable.img_fevertime_countdown_3)
-                    },
-                    contentDescription = null,
-                    modifier = Modifier.size(80.dp)
-                )
+                val countDown = danggnMode.remainTimeInSeconds.toInt()
+                val countDownDrawableRes = remember(countDown) {
+                    when(countDown) {
+                        1 -> CR.drawable.img_fevertime_countdown_1
+                        2 -> CR.drawable.img_fevertime_countdown_2
+                        3 -> CR.drawable.img_fevertime_countdown_3
+                        else -> null
+                    }
+                }
+
+                if (countDownDrawableRes != null) {
+                    Image(
+                        painter = painterResource(id = countDownDrawableRes),
+                        contentDescription = null,
+                        modifier = Modifier.size(80.dp)
+                    )
+                }
             }
 
             Image(
@@ -136,7 +143,6 @@ fun NormalDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
         danggnMode = NormalDanggnMode,
-        countDown = 0,
     )
 }
 
@@ -145,7 +151,6 @@ fun NormalDanggnModeEffectPrev() {
 fun GoldenDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
-        danggnMode = GoldenDanggnMode,
-        countDown = 3,
+        danggnMode = GoldenDanggnMode(),
     )
 }

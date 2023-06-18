@@ -8,6 +8,8 @@ object NormalDanggnMode : DanggnMode {
     override fun getNextScore(currentScore: Int) = currentScore + 1
 }
 
-object GoldenDanggnMode : DanggnMode {
+data class GoldenDanggnMode(
+    val remainTimeInSeconds: Long = 0L
+) : DanggnMode {
     override fun getNextScore(currentScore: Int) = currentScore + 100
 }

@@ -2,10 +2,10 @@ package com.mashup.ui.attendance.crew
 
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.core.common.constant.BAD_REQUEST
 import com.mashup.data.dto.PlatformAttendanceResponse
 import com.mashup.data.model.PlatformInfo
 import com.mashup.data.repository.AttendanceRepository
-import com.mashup.core.common.constant.BAD_REQUEST
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,23 +39,20 @@ class CrewAttendanceViewModel @Inject constructor(
             handleErrorCode(BAD_REQUEST)
             return@mashUpScope
         }
-        val response = attendanceRepository.getCrewAttendanceList(
+        attendanceRepository.getCrewAttendanceList(
             platformName = platformName,
             scheduleId = scheduleId
-        )
-
-        if (!response.isSuccess()) {
-            handleErrorCode(response.code)
-            return@mashUpScope
-        }
-
-        if (platformAttendance != null && response.data != null) {
-            _crewAttendanceState.emit(
-                CrewAttendanceState.Success(
-                    title = "${platformAttendance.platform.detailName}(${platformAttendance.totalCount}명)",
-                    crewAttendance = response.data
+        ).onSuccess { response ->
+            if (platformAttendance != null) {
+                _crewAttendanceState.emit(
+                    CrewAttendanceState.Success(
+                        title = "${platformAttendance.platform.detailName}(${platformAttendance.totalCount}명)",
+                        crewAttendance = response
+                    )
                 )
-            )
+            }
+        }.onFailure { code ->
+            handleErrorCode(code)
         }
     }
 

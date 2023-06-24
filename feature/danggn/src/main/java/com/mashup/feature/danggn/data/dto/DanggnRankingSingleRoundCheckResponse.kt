@@ -3,7 +3,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class DanggnRankingSingleTimeCheckResponse(
+data class DanggnRankingSingleRoundCheckResponse(
     @Json(name = "danggnRankingReward")
     val danggnRankingReward: DanggnRankingReward,
     @Json(name = "dateCount")

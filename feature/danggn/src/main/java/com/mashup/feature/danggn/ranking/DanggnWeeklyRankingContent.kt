@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray100
+import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.RankingGrayColor
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Caption3
@@ -39,12 +40,11 @@ import com.mashup.core.ui.typography.Title3
 @Composable
 fun DanggnWeeklyRankingContent(
     modifier: Modifier = Modifier,
-
     ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(Gray50),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(15.dp))

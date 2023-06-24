@@ -108,7 +108,7 @@ fun DanggnUpdateContent(
                     ) {
                         append("모두에게 한 마디를 공지")
                     }
-                    append("있는\n리워드를 받을 수 있어요")
+                    append("할 수 있는\n리워드를 받을 수 있어요")
                 },
                 color = Gray900,
                 style = Header2

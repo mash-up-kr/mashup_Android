@@ -4,6 +4,7 @@ import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
@@ -53,5 +54,5 @@ interface DanggnDao {
     @GET("api/v1/danggn/ranking-round/{danggnRankingRoundId}")
     suspend fun getDanggnSingleRound(
         @Path("danggnRankingRoundId") danggnRankingRoundId: Int
-    )
+    ): Response<DanggnRankingSingleRoundCheckResponse>
 }

@@ -3,6 +3,7 @@ package com.mashup.feature.danggn.data
 import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
@@ -10,6 +11,7 @@ import com.mashup.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -42,4 +44,14 @@ interface DanggnDao {
     // 황금 당근 확률
     @GET("api/v1/danggn/golden-danggn-percent")
     suspend fun getGoldenDanggnPercent(): Response<GoldenDanggnPercentResponse>
+
+    // 당근 랭킹 회차 단건 조회
+    @GET("api/v1/danggn/ranking-round")
+    suspend fun getDanggnMultipleRound(): Response<DanggnRankingMultipleRoundCheckResponse>
+
+    // 당근 랭킹 회차 다건 조회
+    @GET("api/v1/danggn/ranking-round/{danggnRankingRoundId}")
+    suspend fun getDanggnSingleRound(
+        @Path("danggnRankingRoundId") danggnRankingRoundId: Int
+    )
 }

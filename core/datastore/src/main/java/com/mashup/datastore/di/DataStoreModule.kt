@@ -3,9 +3,9 @@ package com.mashup.datastore.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import com.mashup.core.model.data.local.AppPreference
-import com.mashup.core.model.data.local.DanggnPreference
-import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.model.AppPreference
+import com.mashup.datastore.model.DanggnPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.datastore.data.source.AppPreferenceSerializer
 import com.mashup.datastore.data.source.DanggnPreferenceSerializer
 import com.mashup.datastore.data.source.UserPreferenceSerializer

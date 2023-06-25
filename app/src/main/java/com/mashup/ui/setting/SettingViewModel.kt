@@ -2,7 +2,7 @@ package com.mashup.ui.setting
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.data.repository.MemberRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

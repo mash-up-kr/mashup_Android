@@ -1,8 +1,8 @@
 package com.mashup.feature.danggn.ranking
 
 import app.cash.turbine.test
-import com.mashup.core.model.data.local.DanggnPreference
-import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.model.DanggnPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.fake.FakeDanggnDao

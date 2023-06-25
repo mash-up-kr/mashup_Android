@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.MashUpBottomPopupScreen
 import com.mashup.core.ui.widget.MashUpBottomPopupUiState
@@ -54,7 +55,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                     MashUpBottomPopupScreen(
                         uiState = MashUpBottomPopupUiState.Success(entity),
                         onClickLeftButton = {
-                            // TODO
+                            showRewardInformationDialog()
                             dismiss()
                         },
                         onClickRightButton = {
@@ -93,5 +94,14 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                 behavior?.peekHeight = this@DanggnFirstPlaceBottomPopup.view?.height ?: 0
             }
         })
+    }
+
+    private fun showRewardInformationDialog() {
+        CommonDialog(requireContext()).apply {
+            setTitle(text = "다음 회차 랭킹이 시작되기 전까지 언제든 공지를 작성할 수 있어요!")
+            setMessage(text = "다음 회차 랭킹이 시작되면 공지 등록권이 소멸되니 기간 안에 꼭 등록해주세요!")
+            setPositiveButton("확인")
+            show()
+        }
     }
 }

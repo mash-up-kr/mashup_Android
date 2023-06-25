@@ -2,8 +2,8 @@ package com.mashup.feature.danggn.ranking
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.model.data.local.DanggnPreference
-import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.model.DanggnPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository

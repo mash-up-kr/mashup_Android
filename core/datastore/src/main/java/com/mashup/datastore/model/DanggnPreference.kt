@@ -1,4 +1,4 @@
-package com.mashup.core.model.data.local
+package com.mashup.datastore.model
 
 import kotlinx.serialization.Serializable
 

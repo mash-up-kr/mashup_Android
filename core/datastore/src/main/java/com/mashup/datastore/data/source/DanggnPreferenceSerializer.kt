@@ -2,7 +2,7 @@ package com.mashup.datastore.data.source
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.mashup.core.model.data.local.DanggnPreference
+import com.mashup.datastore.model.DanggnPreference
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.Dispatchers

@@ -4,6 +4,8 @@ import com.mashup.feature.danggn.data.DanggnDao
 import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
@@ -41,5 +43,13 @@ class DanggnRepository @Inject constructor(
 
     suspend fun getGoldDanggnPercent(): Response<GoldenDanggnPercentResponse> {
         return danggnDao.getGoldenDanggnPercent()
+    }
+
+    suspend fun getDanggnMultipleRound(): Response<DanggnRankingMultipleRoundCheckResponse> {
+        return danggnDao.getDanggnMultipleRound()
+    }
+
+    suspend fun getDanggnSingleRound(danggnRankingRoundId: Int) :Response<DanggnRankingSingleRoundCheckResponse> {
+        return danggnDao.getDanggnSingleRound(danggnRankingRoundId)
     }
 }

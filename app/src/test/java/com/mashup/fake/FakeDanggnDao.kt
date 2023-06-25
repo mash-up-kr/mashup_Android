@@ -5,6 +5,8 @@ import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
@@ -63,6 +65,33 @@ class FakeDanggnDao : DanggnDao {
     }
 
     override suspend fun getGoldenDanggnPercent(): Response<GoldenDanggnPercentResponse> {
+        return Response(
+            "null", null, null, null
+        )
+    }
+
+    override suspend fun getDanggnMultipleRound(): Response<DanggnRankingMultipleRoundCheckResponse> {
+        return Response(
+            "SUCCESS", null, DanggnRankingMultipleRoundCheckResponse(
+                listOf(
+                    DanggnRankingMultipleRoundCheckResponse.DanggnRankingRound(
+                        id = 2,
+                        number = 2,
+                        startDate = "2023-06-17",
+                        endDate = "2023-06-20"
+                    ),
+                    DanggnRankingMultipleRoundCheckResponse.DanggnRankingRound(
+                        id = 1,
+                        number = 1,
+                        startDate = "2023-06-18",
+                        endDate = "2023-06-18"
+                    ),
+                )
+            ), null
+        )
+    }
+
+    override suspend fun getDanggnSingleRound(danggnRankingRoundId: Int): Response<DanggnRankingSingleRoundCheckResponse> {
         return Response(
             "null", null, null, null
         )

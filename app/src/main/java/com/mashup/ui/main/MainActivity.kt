@@ -127,6 +127,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 )
                             )
                         }
+
+                        MainPopupType.DANGGN_UPDATE -> {
+                            viewModel.disablePopup(popupType)
+                            startActivity(
+                                DanggnUpdateActivity.newIntent(
+                                    context = this@MainActivity
+                                )
+                            )
+                        }
                         else -> {
                         }
                     }

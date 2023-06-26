@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
 }
 
 android {
@@ -21,10 +21,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += [
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
     composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
+        kotlinCompilerExtensionVersion composeCompiler
     }
     packagingOptions {
         resources {

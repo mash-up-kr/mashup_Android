@@ -23,13 +23,15 @@ interface DanggnDao {
     // 당근 흔들기 개인별 랭킹 전체
     @GET("api/v1/danggn/rank/member/all")
     suspend fun getDanggnAllMemberRank(
-        @Query("generationNumber") generationNumber: Int
+        @Query("danggnRankingRoundId") danggnRankingRoundId: Int,
+        @Query("generationNumber") generationNumber: Int,
     ): Response<DanggnAllMemberRankResponse>
 
     // 당근 흔들기 플랫폼별 랭킹
     @GET("api/v1/danggn/rank/platform")
     suspend fun getDanggnPlatformRank(
-        @Query("generationNumber") generationNumber: Int
+        @Query("danggnRankingRoundId") danggnRankingRoundId: Int,
+        @Query("generationNumber") generationNumber: Int,
     ): Response<List<DanggnPlatformRankResponse>>
 
     // 당근 흔들기 플랫폼별 랭킹

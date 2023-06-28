@@ -36,8 +36,10 @@ class ScheduleDetailViewModel @Inject constructor(
             _scheduleState.emit(ScheduleState.Loading)
             scheduleRepository.getSchedule(scheduleId)
                 .onSuccess { response ->
-                    ScheduleState.Success(
-                        getEventDetailList(response.eventList)
+                    _scheduleState.emit(
+                        ScheduleState.Success(
+                            getEventDetailList(response.eventList)
+                        )
                     )
                 }
                 .onFailure { code ->

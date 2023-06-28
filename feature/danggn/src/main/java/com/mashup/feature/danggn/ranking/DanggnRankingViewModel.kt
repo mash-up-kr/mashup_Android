@@ -26,7 +26,6 @@ class DanggnRankingViewModel @Inject constructor(
     private val danggnPreferenceRepository: DanggnPreferenceRepository
 ) : BaseViewModel() {
     companion object {
-        private const val GENERATION_NUMBER = 13
         private const val DEFAULT_SHAKE_NUMBER = -1
     }
 
@@ -102,8 +101,14 @@ class DanggnRankingViewModel @Inject constructor(
         mashUpScope {
             updateAllRanking()
             allDanggnRoundList.value.getOrNull(0)?.let {
-                updateAllRankingList(it.id) // 내림차순 한 값이라서 맨 위의 값 사용
-                updatePlatformRanking(it.id)
+                updateAllRankingList(
+                    it.id,
+                    userPreferenceRepository.getUserPreference().first().generationNumbers.first()
+                ) // 내림차순 한 값이라서 맨 위의 값 사용
+                updatePlatformRanking(
+                    it.id,
+                    userPreferenceRepository.getUserPreference().first().generationNumbers.first()
+                )
             }
         }
     }
@@ -135,10 +140,10 @@ class DanggnRankingViewModel @Inject constructor(
     /**
      * 모든 멤버의 랭킹 리스트를 얻어옵니다 (11개)
      */
-    internal suspend fun updateAllRankingList(rankingRoundId: Int) {
+    internal suspend fun updateAllRankingList(rankingRoundId: Int, generationNumber: Int) {
         val allMemberRankingResult = danggnRepository.getAllDanggnRank(
             danggnRankingRoundId = rankingRoundId,
-            generationNumber = GENERATION_NUMBER
+            generationNumber = generationNumber
         )
         if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
@@ -156,10 +161,10 @@ class DanggnRankingViewModel @Inject constructor(
     /**
      * 플랫폼 랭킹을 얻어와 내 플랫폼 랭킹까지 업데이트 합니다.
      */
-    internal suspend fun updatePlatformRanking(rankingRoundId: Int) {
+    internal suspend fun updatePlatformRanking(rankingRoundId: Int, generationNumber: Int) {
         val result = danggnRepository.getPlatformDanggnRank(
             danggnRankingRoundId = rankingRoundId,
-            generationNumber = GENERATION_NUMBER
+            generationNumber = generationNumber
         )
         if (result.isSuccess()) {
             val sixPlatformRankingList = (0..5).map { index ->

@@ -3,6 +3,9 @@ package com.mashup.feature.danggn.ranking
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
@@ -131,74 +134,73 @@ private fun PagerContents(
             style = Caption1
         )
     } else {
-        Column(
-            modifier = Modifier.fillMaxSize()
+        // 요상~한 버그가 있어서 LazyColumn 으로 바꿨습니다 참나~
+        // 그냥 Column 이용시 scrollState 안 달면 index 한번 쓰고 밑에 안그려지는 이슈가 있었음
+        // index == 2 에서 dotted line 밑에 아무것도 안그려지는 이슈;;
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             /**
              * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
              * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
              * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
              */
-            if (personalRank.text.isNotEmpty() && pagerIndex == 0
-                || platformRank.text.isNotEmpty() && pagerIndex == 1
-            ) {
-                MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
-            }
-
-            (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
-                key(rankingUiState.memberId) {
-                    /**
-                     * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
-                     */
-                    if (pagerIndex == 0) { // 크루원일 때
-                        if (index < 11) {
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState,
-                            )
-                        }
-                    } else {
-                        if (index < 6) {               // 플랫폼 팀일 때
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState
-                            )
-                        }
-                    }
-                    if (index == 2) {
-                        DrawDottedLine()
-                    }
+            /**
+             * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
+             * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
+             * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
+             */
+            item {
+                if (personalRank.text.isNotEmpty() && pagerIndex == 0
+                    || platformRank.text.isNotEmpty() && pagerIndex == 1
+                ) {
+                    MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
                 }
             }
 
+            itemsIndexed(items = if (pagerIndex == 0) allRankList else allPlatformRank) { index, rankingUiState ->
+                /**
+                 * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
+                 */
+                RankingContent(
+                    modifier = Modifier.fillMaxWidth(),
+                    index = index,
+                    item = rankingUiState
+                )
+                if (index == 2) {
+                    DrawDottedLine()
+                }
+            }
+            // TODO 얘들아 나 이거 원래 기획이 기억이 안나 살려줘 그냥 없애도 되나?
             /**
              * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
              */
-            if (allRankList.count() <= 11) {
-                Text(
+//            if (allRankList.count() <= 11) {
+//                Text(
+//                    modifier = Modifier
+//                        .padding(top = 28.dp)
+//                        .fillMaxWidth(),
+//                    textAlign = TextAlign.Center,
+//                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
+//                    style = Body3,
+//                    color = Gray500
+//                )
+//            }
+            item {
+                MashUpButton(
                     modifier = Modifier
-                        .padding(top = 28.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                    style = Body3,
-                    color = Gray500
+                        .fillMaxWidth()
+                        .padding(
+                            start = 20.dp,
+                            end = 20.dp,
+                            top = 28.dp,
+                            bottom = 20.dp
+                        ),
+                    text = "당근 더 흔들기",
+                    onClick = onClickScrollTopButton
                 )
             }
-            MashUpButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 20.dp,
-                        end = 20.dp,
-                        top = 28.dp,
-                        bottom = 20.dp
-                    ),
-                text = "당근 더 흔들기",
-                onClick = onClickScrollTopButton
-            )
         }
     }
 }
@@ -391,9 +393,18 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.Ranking(
                     "56", "정종드투", 1510
                 ),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "57", "정종드썬더일레븐", 1511
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "58", "정종드썬더트웰브", 1512
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "59", "정종드썬더썰틴", 1513
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "60", "정종드썬더피프티피프티", 1514
+                ),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
@@ -402,7 +413,7 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
             personalRank = DanggnRankingViewModel.RankingItem.MyRanking(
-                memberId = "560", totalShakeScore = 1510, text = "1위",
+                memberId = "60", totalShakeScore = 1514, text = "1위",
             ),
             allPlatformRank = listOf(
                 DanggnRankingViewModel.RankingItem.PlatformRanking(

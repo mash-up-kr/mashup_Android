@@ -16,15 +16,23 @@ class DanggnRepository @Inject constructor(
     private val danggnDao: DanggnDao
 ) {
     suspend fun getAllDanggnRank(
-        generationNumber: Int
+        danggnRankingRoundId: Int,
+        generationNumber: Int,
     ): Response<DanggnAllMemberRankResponse> {
-        return danggnDao.getDanggnAllMemberRank(generationNumber)
+        return danggnDao.getDanggnAllMemberRank(
+            danggnRankingRoundId = danggnRankingRoundId,
+            generationNumber = generationNumber
+        )
     }
 
     suspend fun getPlatformDanggnRank(
-        generationNumber: Int
+        danggnRankingRoundId: Int,
+        generationNumber: Int,
     ): Response<List<DanggnPlatformRankResponse>> {
-        return danggnDao.getDanggnPlatformRank(generationNumber)
+        return danggnDao.getDanggnPlatformRank(
+            danggnRankingRoundId = danggnRankingRoundId,
+            generationNumber = generationNumber
+        )
     }
 
     suspend fun postDanggnScore(
@@ -49,7 +57,7 @@ class DanggnRepository @Inject constructor(
         return danggnDao.getDanggnMultipleRound()
     }
 
-    suspend fun getDanggnSingleRound(danggnRankingRoundId: Int) :Response<DanggnRankingSingleRoundCheckResponse> {
+    suspend fun getDanggnSingleRound(danggnRankingRoundId: Int): Response<DanggnRankingSingleRoundCheckResponse> {
         return danggnDao.getDanggnSingleRound(danggnRankingRoundId)
     }
 }

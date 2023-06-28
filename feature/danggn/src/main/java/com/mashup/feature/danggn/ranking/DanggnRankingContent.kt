@@ -310,7 +310,7 @@ private fun RankingContent(
                     painter = painterResource(id = imageResourceList[index]),
                     contentDescription = null
                 )
-            } else { //3 ~ 10
+            } else { // 4등부터 나머지 다보여줌
                 Text(
                     modifier = Modifier
                         .size(20.dp)

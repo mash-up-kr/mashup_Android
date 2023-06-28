@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,16 +30,19 @@ import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray50
-import com.mashup.core.ui.colors.RankingGrayColor
+import com.mashup.core.ui.colors.Gray500
+import com.mashup.core.ui.colors.Gray600
+import com.mashup.core.ui.colors.Gray950
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.Caption3
-import com.mashup.core.ui.typography.Title1
-import com.mashup.core.ui.typography.Title3
+import com.mashup.core.ui.typography.Body2
+import com.mashup.core.ui.typography.Caption2
+import com.mashup.core.ui.typography.Header2
+import com.mashup.core.ui.typography.SubTitle2
 
 @Composable
 fun DanggnWeeklyRankingContent(
     modifier: Modifier = Modifier,
-    ) {
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +62,9 @@ fun DanggnWeeklyRankingContent(
                 Text(
                     modifier = Modifier,
                     text = "2주의 당근 랭킹",
-                    style = Title3,
+                    style = SubTitle2,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Gray950,
                 )
 
                 Image(
@@ -74,7 +80,13 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(27.dp))
 
-        Text(modifier = Modifier, text = "3회차", style = Title1, color = Brand500)
+        Text(
+            modifier = Modifier,
+            text = "3회차",
+            style = Header2,
+            color = Brand500,
+            fontWeight = FontWeight.Bold
+        )
 
         Spacer(modifier = Modifier.height(6.dp))
 
@@ -92,10 +104,19 @@ fun DanggnWeeklyRankingContent(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                // TODO 컬러, 스타일 모두 변경 될 여지가 있습니다 ^^ 배선영 일해라~
-                Text(text = "23.06.05", style = Caption3, color = RankingGrayColor)
-                Text(text = "-", style = Caption3, color = RankingGrayColor)
-                Text(text = "23.06.18", style = Caption3, color = RankingGrayColor)
+                Text(
+                    text = "23.06.05",
+                    style = Caption2,
+                    color = Gray500,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(text = "-", style = Caption2, color = Gray500, fontWeight = FontWeight.Medium)
+                Text(
+                    text = "23.06.18",
+                    style = Caption2,
+                    color = Gray500,
+                    fontWeight = FontWeight.Medium
+                )
                 Image(
                     modifier = Modifier
                         .padding(start = 4.dp),
@@ -108,18 +129,21 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        Text(text = buildAnnotatedString {
-            append("랭킹 종료까지" )
-            withStyle(
-                SpanStyle(
-                    color = Brand500
-                )
-            ) {
-                // TODO 서버 값 넣기
-                append("3일 ")
-            }
-            append("남았어요")
-        })
+        Text(
+            color = Gray600,
+            style = Body2,
+            text = buildAnnotatedString {
+                append("랭킹 종료까지 ")
+                withStyle(
+                    SpanStyle(
+                        fontWeight = FontWeight.Bold,
+                    )
+                ) {
+                    // TODO 서버 값 넣기
+                    append("3일 ")
+                }
+                append("남았어요")
+            })
 
         Spacer(modifier = Modifier.height(12.dp))
     }

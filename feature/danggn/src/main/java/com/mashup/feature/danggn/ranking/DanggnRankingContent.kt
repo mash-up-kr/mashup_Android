@@ -132,7 +132,8 @@ private fun PagerContents(
         )
     } else {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             /**
              * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
@@ -148,45 +149,19 @@ private fun PagerContents(
             (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
                 key(rankingUiState.memberId) {
                     /**
-                     * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
+                     * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
                      */
-                    if (pagerIndex == 0) { // 크루원일 때
-                        if (index < 11) {
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState,
-                            )
-                        }
-                    } else {
-                        if (index < 6) {               // 플랫폼 팀일 때
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState
-                            )
-                        }
-                    }
+                    RankingContent(
+                        modifier = Modifier.fillMaxWidth(),
+                        index = index,
+                        item = rankingUiState
+                    )
                     if (index == 2) {
                         DrawDottedLine()
                     }
                 }
             }
 
-            /**
-             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
-             */
-            if (allRankList.count() <= 11) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 28.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                    style = Body3,
-                    color = Gray500
-                )
-            }
             MashUpButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -308,7 +283,7 @@ private fun RankingContent(
                     painter = painterResource(id = imageResourceList[index]),
                     contentDescription = null
                 )
-            } else { //3 ~ 10
+            } else { // 4등부터 나머지 다보여 줌
                 Text(
                     modifier = Modifier
                         .size(20.dp)
@@ -391,9 +366,18 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.Ranking(
                     "56", "정종드투", 1510
                 ),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "57", "정종드썬더일레븐", 1511
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "58", "정종드썬더트웰브", 1512
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "59", "정종드썬더썰틴", 1513
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "60", "정종드썬더피프티피프티", 1514
+                ),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
@@ -402,7 +386,7 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
             personalRank = DanggnRankingViewModel.RankingItem.MyRanking(
-                memberId = "560", totalShakeScore = 1510, text = "1위",
+                memberId = "60", totalShakeScore = 1514, text = "1위",
             ),
             allPlatformRank = listOf(
                 DanggnRankingViewModel.RankingItem.PlatformRanking(

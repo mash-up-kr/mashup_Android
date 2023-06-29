@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -34,11 +35,16 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mashup.core.common.extensions.haptic
+import com.mashup.core.common.utils.safeShow
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.Empty
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRanking
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRankingLastTurn
+import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
 import kotlinx.coroutines.flow.collectLatest
@@ -155,13 +161,29 @@ fun ShakeDanggnScreen(
                     ?: emptyList(),
             )
 
-            (rankUiState.firstPlaceState as? DanggnRankingViewModel.FirstRankingState.FirstRanking)?.run {
-                DanggnFirstPlaceScreen(
-                    name = text,
-                    onClickCloseButton = {
-                        rankingViewModel.updateFirstRanking()
-                    }
-                )
+            when (val state = rankUiState.firstPlaceState) {
+                is FirstRanking -> {
+                    DanggnFirstPlaceScreen(
+                        name = state.text,
+                        onClickCloseButton = {
+                            rankingViewModel.updateFirstRanking()
+                        }
+                    )
+                }
+
+                is FirstRankingLastTurn -> {
+                    DanggnLastTurnFirstPlaceScreen(
+                        turn = state.turn,
+                        name = state.name,
+                        onClickCloseButton = {
+                            rankingViewModel.getReward()
+                            DanggnFirstPlaceBottomPopup(state.turn).safeShow((context as AppCompatActivity).supportFragmentManager)
+                        })
+                }
+
+                Empty -> {
+
+                }
             }
         }
     }

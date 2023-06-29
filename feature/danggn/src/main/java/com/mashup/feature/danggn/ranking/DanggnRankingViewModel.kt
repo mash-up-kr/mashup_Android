@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.ranking
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.extensions.combineWithSixValue
@@ -9,8 +10,7 @@ import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.UUID
-import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,30 +18,33 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.UUID
+import javax.inject.Inject
 
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
-    private val danggnPreferenceRepository: DanggnPreferenceRepository
+    private val danggnPreferenceRepository: DanggnPreferenceRepository,
 ) : BaseViewModel() {
     companion object {
         private const val DEFAULT_SHAKE_NUMBER = -1
     }
 
     private val personalRankingList: MutableStateFlow<List<RankingItem>> =
-        MutableStateFlow(
-            emptyList()
-        )
+        MutableStateFlow(emptyList())
 
     private val platformRankingList: MutableStateFlow<List<RankingItem>> =
-        MutableStateFlow(
-            emptyList()
-        )
-    private val allDanggnRoundList: MutableStateFlow<List<AllRound>> =
-        MutableStateFlow(
-            emptyList()
-        )
+        MutableStateFlow(emptyList())
+
+    private val _allDanggnRoundList: MutableStateFlow<List<AllRound>> =
+        MutableStateFlow(emptyList())
+    val allDanggnRoundList: StateFlow<List<AllRound>> = _allDanggnRoundList.asStateFlow()
+
+    private val _currentRoundId: MutableStateFlow<Int> = MutableStateFlow(0)
+    val currentRoundId: StateFlow<Int> = _currentRoundId.asStateFlow()
 
     private val currentTabIndex = MutableStateFlow(0)
 
@@ -51,11 +54,15 @@ class DanggnRankingViewModel @Inject constructor(
         danggnPreferenceRepository.getDanggnPreference(),
         personalRankingList,
         platformRankingList,
-        allDanggnRoundList,
-    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList->
+        _allDanggnRoundList,
+    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList ->
         RankingUiState(
             firstPlaceState = getFirstPlaceState(
-                tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList
+                tabIndex,
+                userPreference,
+                danggnPreferenceRepository,
+                personalRankingList,
+                platformRankingList
             ),
             personalRankingList = createPersonalRankingList(personalRankingList),
             platformRankingList = platformRankingList,
@@ -100,7 +107,7 @@ class DanggnRankingViewModel @Inject constructor(
     internal fun getRankingData() {
         mashUpScope {
             updateAllRanking()
-            allDanggnRoundList.value.getOrNull(0)?.let {
+            _allDanggnRoundList.value.getOrNull(0)?.let {
                 updateAllRankingList(
                     it.id,
                     userPreferenceRepository.getUserPreference().first().generationNumbers.first()
@@ -121,19 +128,32 @@ class DanggnRankingViewModel @Inject constructor(
      * 밖에서도 호출할 수 있도록 private가 아닌 internal로 만들었습니다.
      * TODO else 처리에 대해서 논의해봐야할 것 같습니다.
      */
+    @SuppressLint("SimpleDateFormat")
     internal suspend fun updateAllRanking() {
         val allRoundListResponse = danggnRepository.getDanggnMultipleRound()
         if (allRoundListResponse.isSuccess()) {
-            val roundListData = allRoundListResponse.data?.danggnRankingRounds ?: listOf()
-            val allRoundList = roundListData.map {
-                AllRound(
-                    id = it.id,
-                    number = it.number,
-                    startDate =  it.startDate,
-                    endDate = it.endDate,
-                )
+            withContext(Dispatchers.Default) {
+                val roundListData = allRoundListResponse.data?.danggnRankingRounds ?: listOf()
+                val allRoundList = roundListData.map {
+                    val (startDateString, endDateString) = try {
+                        val startDate = SimpleDateFormat("yyyy-mm-dd").parse(it.startDate)!!
+                        val endDate = SimpleDateFormat("yyyy-mm-dd").parse(it.endDate)!!
+
+                        val roundFormat = SimpleDateFormat("yy.mm.dd")
+                        roundFormat.format(startDate) to roundFormat.format(endDate)
+                    } catch (ignore: Exception) {
+                        "????.??.??" to "????.??.??"
+                    }
+
+                    AllRound(
+                        id = it.id,
+                        number = it.number,
+                        startDate = startDateString,
+                        endDate = endDateString,
+                    )
+                }
+                _allDanggnRoundList.emit(allRoundList.sortedByDescending { it.number })
             }
-            allDanggnRoundList.emit(allRoundList.sortedByDescending { it.number })
         }
     }
 
@@ -148,12 +168,12 @@ class DanggnRankingViewModel @Inject constructor(
         if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
             val allRankingList = rankingList.map {
-                    RankingItem.Ranking(
-                        memberId = it.memberId.toString(),
-                        text = it.memberName,
-                        totalShakeScore = it.totalShakeScore
-                    )
-                }
+                RankingItem.Ranking(
+                    memberId = it.memberId.toString(),
+                    text = it.memberName,
+                    totalShakeScore = it.totalShakeScore
+                )
+            }
             personalRankingList.emit(allRankingList)
         }
     }
@@ -203,8 +223,9 @@ class DanggnRankingViewModel @Inject constructor(
         userPreference: UserPreference,
         personalRankingList: List<RankingItem>
     ): RankingItem {
-        val myPersonalRank = personalRankingList.find { it.memberId == userPreference.id.toString() }
-            ?: return RankingItem.EmptyRanking()
+        val myPersonalRank =
+            personalRankingList.find { it.memberId == userPreference.id.toString() }
+                ?: return RankingItem.EmptyRanking()
         val index = personalRankingList.indexOf(myPersonalRank)
 
         return RankingItem.MyRanking(
@@ -246,9 +267,11 @@ class DanggnRankingViewModel @Inject constructor(
             tabIndex == 0 && currentPersonalRanking == 0 -> {
                 FirstRankingState.FirstRanking("${myName}님")
             }
+
             tabIndex == 1 && currentPlatformRanking == 0 -> {
                 FirstRankingState.FirstRanking("$myPlatform 팀")
             }
+
             else -> {
                 updateFirstRanking()
                 FirstRankingState.Empty
@@ -269,6 +292,10 @@ class DanggnRankingViewModel @Inject constructor(
                 ranking = platformRankingList.value.indexOfFirst { it.text == myPlatform }
             )
         }
+    }
+
+    fun updateCurrentRound(roundId: Int) = mashUpScope {
+        _currentRoundId.emit(roundId)
     }
 
     sealed interface RankingItem {

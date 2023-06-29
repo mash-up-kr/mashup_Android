@@ -164,24 +164,7 @@ private fun PagerContents(
                     }
                 }
             }
-            // TODO 얘들아 나 이거 원래 기획이 기억이 안나 살려줘 그냥 없애도 되나?
-            /**
-             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
-             */
-            /**
-             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
-             */
-//            if (allRankList.count() <= 11) {
-//                Text(
-//                    modifier = Modifier
-//                        .padding(top = 28.dp)
-//                        .fillMaxWidth(),
-//                    textAlign = TextAlign.Center,
-//                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-//                    style = Body3,
-//                    color = Gray500
-//                )
-//            }
+            
             MashUpButton(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -3,9 +3,6 @@ package com.mashup.feature.danggn.ranking
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
@@ -134,10 +131,7 @@ private fun PagerContents(
             style = Caption1
         )
     } else {
-        // 요상~한 버그가 있어서 LazyColumn 으로 바꿨습니다 참나~
-        // 그냥 Column 이용시 scrollState 안 달면 index 한번 쓰고 밑에 안그려지는 이슈가 있었음
-        // index == 2 에서 dotted line 밑에 아무것도 안그려지는 이슈;;
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
@@ -146,33 +140,34 @@ private fun PagerContents(
              * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
              * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
              */
-            /**
-             * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
-             * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
-             * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
-             */
-            item {
-                if (personalRank.text.isNotEmpty() && pagerIndex == 0
-                    || platformRank.text.isNotEmpty() && pagerIndex == 1
-                ) {
-                    MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
-                }
+            if (personalRank.text.isNotEmpty() && pagerIndex == 0
+                || platformRank.text.isNotEmpty() && pagerIndex == 1
+            ) {
+                MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
             }
 
-            itemsIndexed(items = if (pagerIndex == 0) allRankList else allPlatformRank) { index, rankingUiState ->
-                /**
-                 * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
-                 */
-                RankingContent(
-                    modifier = Modifier.fillMaxWidth(),
-                    index = index,
-                    item = rankingUiState
-                )
-                if (index == 2) {
-                    DrawDottedLine()
+            (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
+                key(rankingUiState.memberId) {
+                    /**
+                     * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
+                     */
+                    /**
+                     * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
+                     */
+                    RankingContent(
+                        modifier = Modifier.fillMaxWidth(),
+                        index = index,
+                        item = rankingUiState
+                    )
+                    if (index == 2) {
+                        DrawDottedLine()
+                    }
                 }
             }
             // TODO 얘들아 나 이거 원래 기획이 기억이 안나 살려줘 그냥 없애도 되나?
+            /**
+             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
+             */
             /**
              * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
              */
@@ -187,20 +182,18 @@ private fun PagerContents(
 //                    color = Gray500
 //                )
 //            }
-            item {
-                MashUpButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 20.dp,
-                            end = 20.dp,
-                            top = 28.dp,
-                            bottom = 20.dp
-                        ),
-                    text = "당근 더 흔들기",
-                    onClick = onClickScrollTopButton
-                )
-            }
+            MashUpButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 20.dp,
+                        end = 20.dp,
+                        top = 28.dp,
+                        bottom = 20.dp
+                    ),
+                text = "당근 더 흔들기",
+                onClick = onClickScrollTopButton
+            )
         }
     }
 }

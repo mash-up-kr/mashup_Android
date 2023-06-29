@@ -151,9 +151,6 @@ private fun PagerContents(
                     /**
                      * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
                      */
-                    /**
-                     * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
-                     */
                     RankingContent(
                         modifier = Modifier.fillMaxWidth(),
                         index = index,
@@ -164,7 +161,7 @@ private fun PagerContents(
                     }
                 }
             }
-            
+
             MashUpButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -286,7 +283,7 @@ private fun RankingContent(
                     painter = painterResource(id = imageResourceList[index]),
                     contentDescription = null
                 )
-            } else { // 4등부터 나머지 다보여줌
+            } else { // 4등부터 나머지 다보여 줌
                 Text(
                     modifier = Modifier
                         .size(20.dp)

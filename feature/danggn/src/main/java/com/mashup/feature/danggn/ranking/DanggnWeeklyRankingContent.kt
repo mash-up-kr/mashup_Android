@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +37,7 @@ import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.Gray950
+import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body2
 import com.mashup.core.ui.typography.Caption2
@@ -42,9 +47,14 @@ import com.mashup.core.ui.typography.SubTitle2
 @Composable
 fun DanggnWeeklyRankingContent(
     modifier: Modifier = Modifier,
+    allRoundList: List<DanggnRankingViewModel.AllRound> = listOf(),
+    onClickAnotherRounds: () -> Unit = {},  // 이걸 누를 때 랭킹 회차 팝업 보여줌
+    onClickHelpButton: () -> Unit = {},
 ) {
+    var index by remember { mutableStateOf(0) }
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Gray50),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,7 +80,10 @@ fun DanggnWeeklyRankingContent(
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 16.dp),
+                        .padding(end = 16.dp)
+                        .noRippleClickable {
+                            onClickHelpButton()
+                        },
                     painter = painterResource(id = R.drawable.ic_info_inverse),
                     contentDescription = null,
                     alignment = Alignment.CenterEnd
@@ -82,7 +95,7 @@ fun DanggnWeeklyRankingContent(
 
         Text(
             modifier = Modifier,
-            text = "3회차",
+            text = "${allRoundList.getOrNull(index)?.number ?: "비밀"}회차",
             style = Header2,
             color = Brand500,
             fontWeight = FontWeight.Bold
@@ -90,41 +103,41 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        Box(
+        Row(
             modifier = Modifier
-                .size(width = 139.dp, height = 25.dp)
                 .clip(shape = RoundedCornerShape(8.dp))
                 .background(Gray100)
-                .padding(5.dp)
+                .noRippleClickable {
+                    onClickAnotherRounds()
+                }
+                .padding(horizontal = 8.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
+            // substring(2) 를 통해 2023-06-15 -> 23-06-15로 변환합니다
+            Text(
+                text = allRoundList.getOrNull(index)?.startDate?.substring(2)?.replace("-", ".")
+                    ?: "",
+                style = Caption2,
+                color = Gray500,
+                fontWeight = FontWeight.Medium
+            )
+            Text(text = " - ", style = Caption2, color = Gray500, fontWeight = FontWeight.Medium)
+            Text(
+                text = allRoundList.getOrNull(index)?.endDate?.substring(2)?.replace("-", ".")
+                    ?: "",
+                style = Caption2,
+                color = Gray500,
+                fontWeight = FontWeight.Medium
+            )
+            Image(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "23.06.05",
-                    style = Caption2,
-                    color = Gray500,
-                    fontWeight = FontWeight.Medium
-                )
-                Text(text = "-", style = Caption2, color = Gray500, fontWeight = FontWeight.Medium)
-                Text(
-                    text = "23.06.18",
-                    style = Caption2,
-                    color = Gray500,
-                    fontWeight = FontWeight.Medium
-                )
-                Image(
-                    modifier = Modifier
-                        .padding(start = 4.dp),
-                    painter = painterResource(id = R.drawable.ic_chevron_down),
-                    contentDescription = null,
-                    alignment = Alignment.BottomCenter
-                )
-            }
+                    .padding(start = 4.dp)
+                    .size(12.dp),
+                painter = painterResource(id = R.drawable.ic_chevron_down),
+                contentDescription = null,
+                alignment = Alignment.BottomCenter
+            )
         }
 
         Spacer(modifier = Modifier.height(13.dp))

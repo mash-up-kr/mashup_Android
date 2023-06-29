@@ -33,6 +33,8 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
         super.initViews()
         sendActivityEnterType(LOG_DANGGN)
 
+        DanggnRoundSelectorDialog().show(supportFragmentManager, "")
+
         viewBinding.shakeDanggnScreen.setContent {
             MashUpTheme {
                 ShakeDanggnScreen(

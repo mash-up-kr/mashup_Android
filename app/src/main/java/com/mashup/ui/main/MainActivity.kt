@@ -68,9 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initViews() {
         super.initViews()
-        startActivity(
-            DanggnUpdateActivity.newIntent(this)
-        )
+
         initComposeView()
         initTabButtons()
         requestNotificationPermission()

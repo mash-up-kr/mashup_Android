@@ -25,7 +25,7 @@ fun BottomSheetHandler(
         contentAlignment = Alignment.Center
     ) {
         Divider(
-            modifier = Modifier.width(24.dp),
+            modifier = Modifier.width(28.dp),
             color = Color(0xFFD9D9D9),
             thickness = 3.dp
         )
@@ -40,8 +40,7 @@ fun BottomSheetTitle(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 20.dp, horizontal = 12.dp),
-        contentAlignment = Alignment.Center
+            .padding(vertical = 12.dp, horizontal = 20.dp),
     ) {
         Text(
             text = title,

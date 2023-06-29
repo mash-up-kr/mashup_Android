@@ -17,7 +17,7 @@ import com.mashup.core.ui.widget.MashUpBottomPopupScreen
 import com.mashup.core.ui.widget.MashUpBottomPopupUiState
 import com.mashup.core.ui.widget.MashUpPopupEntity
 
-class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
+class DanggnFirstPlaceBottomPopup(private val turn: Int) : BottomSheetDialogFragment() {
 
     private val behavior: BottomSheetBehavior<View>?
         get() {
@@ -35,7 +35,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
     ): View {
         // TODO: storage api로 받아오기
         val entity = MashUpPopupEntity(
-            title = "당근 흔들기 3회차 랭킹 1위를 축하합니다!\n" +
+            title = "당근 흔들기 ${turn}회차 랭킹 1위를 축하합니다!\n" +
                     "리워드로 전체 공지 작성 기회가 생겼어요!",
             description = "다음 랭킹 시작 전까지 공지를 작성해서\n모두에게 한 마디 할 수 있는 기회를 놓치지 마세요!",
             imageResName = "img_carrot_reward_bottom_popup",

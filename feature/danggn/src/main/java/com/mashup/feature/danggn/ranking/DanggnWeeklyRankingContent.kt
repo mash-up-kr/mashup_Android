@@ -115,17 +115,16 @@ fun DanggnWeeklyRankingContent(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             // substring(2) 를 통해 2023-06-15 -> 23-06-15로 변환합니다
+            val (startDate, endDate) = remember(
+                allRoundList.getOrNull(index)?.startDate ?: "",
+                allRoundList.getOrNull(index)?.endDate ?: ""
+            ) {
+                allRoundList.getOrNull(index)?.startDate?.substring(2)?.replace("-", ".") to
+                        allRoundList.getOrNull(index)?.endDate?.substring(2)?.replace("-", ".")
+            }
+
             Text(
-                text = allRoundList.getOrNull(index)?.startDate?.substring(2)?.replace("-", ".")
-                    ?: "",
-                style = Caption2,
-                color = Gray500,
-                fontWeight = FontWeight.Medium
-            )
-            Text(text = " - ", style = Caption2, color = Gray500, fontWeight = FontWeight.Medium)
-            Text(
-                text = allRoundList.getOrNull(index)?.endDate?.substring(2)?.replace("-", ".")
-                    ?: "",
+                text = "$startDate - $endDate",
                 style = Caption2,
                 color = Gray500,
                 fontWeight = FontWeight.Medium

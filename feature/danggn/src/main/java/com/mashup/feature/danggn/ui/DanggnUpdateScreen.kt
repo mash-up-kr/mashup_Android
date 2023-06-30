@@ -22,7 +22,7 @@ import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray700
 import com.mashup.core.ui.colors.Gray900
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.Body4
+import com.mashup.core.ui.typography.Body5
 import com.mashup.core.ui.typography.Header2
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
@@ -92,7 +92,7 @@ fun DanggnUpdateContent(
                     .padding(horizontal = 20.dp),
                 text = stringResource(R.string.content_period_danggn),
                 color = Gray700,
-                style = Body4
+                style = Body5
             )
 
             Text(
@@ -121,7 +121,7 @@ fun DanggnUpdateContent(
                     .padding(horizontal = 20.dp),
                 text = stringResource(R.string.content_reward_danggn),
                 color = Gray700,
-                style = Body4
+                style = Body5
             )
             Spacer(
                 modifier = Modifier

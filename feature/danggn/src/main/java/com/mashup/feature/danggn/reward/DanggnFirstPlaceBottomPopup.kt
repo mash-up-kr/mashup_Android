@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.reward
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.safeShow
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.MashUpBottomPopupScreen
@@ -57,7 +59,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                             dismiss()
                         },
                         onClickRightButton = {
-                            // TODO
+                            DanggnRewardPopup.getNewInstance(onClickSubmitButton = {}).safeShow(parentFragmentManager)
                             dismiss()
                         }
                     )

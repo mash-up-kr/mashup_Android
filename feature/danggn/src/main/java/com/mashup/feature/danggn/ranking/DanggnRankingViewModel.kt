@@ -3,7 +3,7 @@ package com.mashup.feature.danggn.ranking
 import android.annotation.SuppressLint
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.common.extensions.combineWithSixValue
+import com.mashup.core.common.extensions.combineWithSevenValue
 import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
@@ -48,14 +48,17 @@ class DanggnRankingViewModel @Inject constructor(
 
     private val currentTabIndex = MutableStateFlow(0)
 
-    val uiState: StateFlow<RankingUiState> = combineWithSixValue(
+    private val shouldCheckDanggnPopup = MutableStateFlow(true)
+
+    val uiState: StateFlow<RankingUiState> = combineWithSevenValue(
         currentTabIndex,
         userPreferenceRepository.getUserPreference(),
         danggnPreferenceRepository.getDanggnPreference(),
         personalRankingList,
         platformRankingList,
         allDanggnRoundList,
-    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList ->
+        shouldCheckDanggnPopup,
+    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList, _ ->
         RankingUiState(
             firstPlaceState = getFirstPlaceState(
                 tabIndex,
@@ -223,9 +226,8 @@ class DanggnRankingViewModel @Inject constructor(
         userPreference: UserPreference,
         personalRankingList: List<RankingItem>
     ): RankingItem {
-        val myPersonalRank =
-            personalRankingList.find { it.memberId == userPreference.id.toString() }
-                ?: return RankingItem.EmptyRanking()
+        val myPersonalRank = personalRankingList.find { it.memberId == userPreference.id.toString() }
+            ?: return RankingItem.EmptyRanking()
         val index = personalRankingList.indexOf(myPersonalRank)
 
         return RankingItem.MyRanking(
@@ -247,6 +249,13 @@ class DanggnRankingViewModel @Inject constructor(
 
         val currentPersonalRanking = personalRankingList.indexOfFirst { it.text == myName }
         val currentPlatformRanking = platformRankingList.indexOfFirst { it.text == myPlatform }
+
+        if (shouldCheckDanggnPopup.value && checkFirstPlaceLastRound()) {
+            return FirstRankingState.FirstRankingLastRound(
+                name = myName,
+                round = allDanggnRoundList.value.size - 1
+            )
+        }
 
         if (
             tabIndex == 0 && currentPersonalRanking == -1 ||
@@ -277,6 +286,15 @@ class DanggnRankingViewModel @Inject constructor(
                 FirstRankingState.Empty
             }
         }
+    }
+
+    private fun checkFirstPlaceLastRound(): Boolean {
+        // TODO: member-popups
+        return true
+    }
+
+    fun getReward() {
+        shouldCheckDanggnPopup.value = false
     }
 
     internal fun updateFirstRanking() = mashUpScope {
@@ -344,6 +362,7 @@ class DanggnRankingViewModel @Inject constructor(
     sealed interface FirstRankingState {
         object Empty : FirstRankingState
         data class FirstRanking(val text: String) : FirstRankingState
+        data class FirstRankingLastRound(val name: String, val round: Int) : FirstRankingState
     }
 
     data class AllRound(

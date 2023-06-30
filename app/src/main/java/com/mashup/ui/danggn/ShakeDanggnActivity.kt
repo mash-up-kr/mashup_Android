@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -40,9 +39,10 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     modifier = Modifier.fillMaxSize(),
                     viewModel = viewModel,
                     rankingViewModel = rankingViewModel,
-                    onClickBackButton = { onBackPressed() },
-                    onClickDanggnInfoButton = { openDanggnInfoActivity() },
-                    onClickHelpButton = { openDanggnUpdateActivity() }
+                    onClickBackButton = this::onBackPressed,
+                    onClickDanggnInfoButton = this::openDanggnInfoActivity,
+                    onClickHelpButton = this::openDanggnUpdateActivity,
+                    onClickAnotherRounds = this::showDanggnRoundSelectDialog
                 )
             }
         }
@@ -71,6 +71,10 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
         sendActivityEnterType(LOG_DANGGN_HELP)
         val intent = DanggnInfoActivity.newIntent(this)
         startActivity(intent)
+    }
+
+    private fun showDanggnRoundSelectDialog() {
+        DanggnRoundSelectorDialog().show(supportFragmentManager, DanggnRoundSelectorDialog::class.simpleName)
     }
 
     companion object {

@@ -3,6 +3,7 @@ package com.mashup.datastore.data.repository
 import androidx.datastore.core.DataStore
 import com.mashup.core.model.Platform
 import com.mashup.core.model.data.local.UserPreference
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -58,5 +59,9 @@ class UserPreferenceRepository @Inject constructor(
         userPreferenceDataSource.updateData {
             UserPreference.getDefaultInstance()
         }
+    }
+
+    suspend fun getCurrentGenerationNumber(): Int {
+        return getUserPreference().first().generationNumbers.first()
     }
 }

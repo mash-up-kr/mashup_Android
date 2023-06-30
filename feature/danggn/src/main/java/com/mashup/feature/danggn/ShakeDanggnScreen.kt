@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -16,12 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
@@ -34,12 +30,15 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mashup.core.common.extensions.haptic
+import com.mashup.core.common.utils.safeShow
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.*
 import com.mashup.feature.danggn.ranking.DanggnWeeklyRankingContent
+import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
 import kotlinx.coroutines.flow.collectLatest
@@ -165,13 +164,31 @@ fun ShakeDanggnScreen(
                     ?: emptyList(),
             )
 
-            (rankUiState.firstPlaceState as? DanggnRankingViewModel.FirstRankingState.FirstRanking)?.run {
-                DanggnFirstPlaceScreen(
-                    name = text,
-                    onClickCloseButton = {
-                        rankingViewModel.updateFirstRanking()
-                    }
-                )
+            when (val state = rankUiState.firstPlaceState) {
+                is FirstRanking -> {
+                    DanggnFirstPlaceScreen(
+                        name = state.text,
+                        onClickCloseButton = {
+                            rankingViewModel.updateFirstRanking()
+                        }
+                    )
+                }
+
+                is FirstRankingLastRound -> {
+                    DanggnLastRoundFirstPlaceScreen(
+                        round = state.round,
+                        name = state.name,
+                        onClickCloseButton = {
+                            rankingViewModel.getReward()
+                            DanggnFirstPlaceBottomPopup
+                                .getNewInstance(state.round)
+                                .safeShow((context as AppCompatActivity).supportFragmentManager)
+                        })
+                }
+
+                Empty -> {
+
+                }
             }
         }
     }

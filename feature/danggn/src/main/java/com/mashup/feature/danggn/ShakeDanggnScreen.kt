@@ -27,6 +27,7 @@ import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.*
+import com.mashup.feature.danggn.ranking.DanggnWeeklyRankingContent
 import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
@@ -42,6 +43,7 @@ fun ShakeDanggnScreen(
     rankingViewModel: DanggnRankingViewModel,
     onClickBackButton: () -> Unit,
     onClickDanggnInfoButton: () -> Unit,
+    onClickHelpButton: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val randomTodayMessage by viewModel.randomMessage.collectAsState()
@@ -119,6 +121,15 @@ fun ShakeDanggnScreen(
                     color = Gray100,
                     modifier = Modifier.fillMaxWidth(),
                     thickness = 4.dp
+                )
+
+                // 당근 회차 알리미
+                DanggnWeeklyRankingContent(
+                    allRoundList = rankUiState.danggnAllRoundList,
+                    onClickAnotherRounds = {
+                        // TODO 누르면 다른 회차 팝업 보여주기 작업
+                    },
+                    onClickHelpButton = onClickHelpButton
                 )
 
                 // 당근 흔들기 랭킹 UI

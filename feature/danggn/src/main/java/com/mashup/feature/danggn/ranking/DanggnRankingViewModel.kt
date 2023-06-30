@@ -54,7 +54,7 @@ class DanggnRankingViewModel @Inject constructor(
         danggnPreferenceRepository.getDanggnPreference(),
         personalRankingList,
         platformRankingList,
-        _allDanggnRoundList,
+        allDanggnRoundList,
     ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList ->
         RankingUiState(
             firstPlaceState = getFirstPlaceState(

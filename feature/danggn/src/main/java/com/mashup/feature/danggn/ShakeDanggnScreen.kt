@@ -133,7 +133,7 @@ fun ShakeDanggnScreen(
                     thickness = 4.dp
                 )
 
-                (rankUiState.danggnAllRoundList.getOrNull(currentRoundId))?.let { round ->
+                (rankUiState.danggnAllRoundList.find { it.id == currentRoundId })?.let { round ->
                     // 당근 회차 알리미
                     DanggnWeeklyRankingContent(
                         round = round,

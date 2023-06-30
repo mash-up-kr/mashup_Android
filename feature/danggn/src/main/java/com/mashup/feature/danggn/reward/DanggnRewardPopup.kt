@@ -88,7 +88,6 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 if (this@DanggnRewardPopup.view?.height == 0) return
-                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 behavior?.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior?.peekHeight = this@DanggnRewardPopup.view?.height ?: 0
             }

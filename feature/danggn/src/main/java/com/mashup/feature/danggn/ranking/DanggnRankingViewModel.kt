@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -33,18 +34,20 @@ class DanggnRankingViewModel @Inject constructor(
         private const val DEFAULT_SHAKE_NUMBER = -1
     }
 
-    private val personalRankingList: MutableStateFlow<List<RankingItem>> =
-        MutableStateFlow(emptyList())
-
-    private val platformRankingList: MutableStateFlow<List<RankingItem>> =
-        MutableStateFlow(emptyList())
-
     private val _allDanggnRoundList: MutableStateFlow<List<AllRound>> =
         MutableStateFlow(emptyList())
     val allDanggnRoundList: StateFlow<List<AllRound>> = _allDanggnRoundList.asStateFlow()
 
     private val _currentRoundId: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentRoundId: StateFlow<Int> = _currentRoundId.asStateFlow()
+
+    private val personalRankingList: StateFlow<List<RankingItem>> =
+        currentRoundId.map(this::mapPersonalRankingList)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    private val platformRankingList: StateFlow<List<RankingItem>> =
+        currentRoundId.map(this::mapPlatformRanking)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val currentTabIndex = MutableStateFlow(0)
 
@@ -104,20 +107,8 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
-    internal fun getRankingData() {
-        mashUpScope {
-            updateAllRanking()
-            _allDanggnRoundList.value.getOrNull(0)?.let {
-                updateAllRankingList(
-                    it.id,
-                    userPreferenceRepository.getUserPreference().first().generationNumbers.first()
-                ) // 내림차순 한 값이라서 맨 위의 값 사용
-                updatePlatformRanking(
-                    it.id,
-                    userPreferenceRepository.getUserPreference().first().generationNumbers.first()
-                )
-            }
-        }
+    internal fun getRankingData() = mashUpScope {
+        updateAllRanking()
     }
 
     internal fun updateCurrentTabIndex(index: Int) = mashUpScope {
@@ -159,36 +150,37 @@ class DanggnRankingViewModel @Inject constructor(
     }
 
     /**
-     * 모든 멤버의 랭킹 리스트를 얻어옵니다 (11개)
+     * 모든 멤버의 랭킹 리스트를 얻어옵니다
      */
-    internal suspend fun updateAllRankingList(rankingRoundId: Int, generationNumber: Int) {
+    private suspend fun mapPersonalRankingList(rankingRoundId: Int): List<RankingItem> {
         val allMemberRankingResult = danggnRepository.getAllDanggnRank(
             danggnRankingRoundId = rankingRoundId,
-            generationNumber = generationNumber
+            generationNumber = userPreferenceRepository.getCurrentGenerationNumber()
         )
-        if (allMemberRankingResult.isSuccess()) {
+        return if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
-            val allRankingList = rankingList.map {
+            rankingList.map {
                 RankingItem.Ranking(
                     memberId = it.memberId.toString(),
                     text = it.memberName,
                     totalShakeScore = it.totalShakeScore
                 )
             }
-            personalRankingList.emit(allRankingList)
+        } else {
+            emptyList()
         }
     }
 
     /**
      * 플랫폼 랭킹을 얻어와 내 플랫폼 랭킹까지 업데이트 합니다.
      */
-    internal suspend fun updatePlatformRanking(rankingRoundId: Int, generationNumber: Int) {
+    private suspend fun mapPlatformRanking(rankingRoundId: Int): List<RankingItem> {
         val result = danggnRepository.getPlatformDanggnRank(
             danggnRankingRoundId = rankingRoundId,
-            generationNumber = generationNumber
+            generationNumber = userPreferenceRepository.getCurrentGenerationNumber()
         )
-        if (result.isSuccess()) {
-            val sixPlatformRankingList = (0..5).map { index ->
+        return if (result.isSuccess()) {
+            (0..5).map { index ->
                 result.data?.getOrNull(index)?.let {
                     RankingItem.PlatformRanking(
                         memberId = it.platform.detailName,
@@ -197,11 +189,12 @@ class DanggnRankingViewModel @Inject constructor(
                     )
                 } ?: RankingItem.EmptyRanking()
             }
-            platformRankingList.emit(sixPlatformRankingList)
+        } else {
+            emptyList()
         }
     }
 
-    internal fun getPlatformRankingItem(
+    private fun getPlatformRankingItem(
         userPreference: UserPreference,
         platformRankingList: List<RankingItem>
     ): RankingItem {
@@ -220,7 +213,7 @@ class DanggnRankingViewModel @Inject constructor(
     /**
      * 개인 랭킹(크루원, 플랫폼)을 얻어옵니다
      */
-    internal fun getPersonalRankingItem(
+    private fun getPersonalRankingItem(
         userPreference: UserPreference,
         personalRankingList: List<RankingItem>
     ): RankingItem {

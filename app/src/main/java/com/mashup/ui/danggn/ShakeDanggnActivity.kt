@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -40,7 +41,8 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     viewModel = viewModel,
                     rankingViewModel = rankingViewModel,
                     onClickBackButton = { onBackPressed() },
-                    onClickDanggnInfoButton = { openDanggnInfoActivity() }
+                    onClickDanggnInfoButton = { openDanggnInfoActivity() },
+                    onClickHelpButton = { openDanggnUpdateActivity() }
                 )
             }
         }
@@ -58,6 +60,11 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                 }
             }
         }
+    }
+
+    private fun openDanggnUpdateActivity() {
+        val intent = DanggnUpdateActivity.newIntent(this)
+        startActivity(intent)
     }
 
     private fun openDanggnInfoActivity() {

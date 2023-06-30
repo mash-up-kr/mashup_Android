@@ -56,13 +56,6 @@ fun DanggnRankingContent(
     }
 
     Column(modifier = modifier.background(Gray50)) {
-        Text(
-            modifier = Modifier
-                .padding(start = 20.dp, top = 24.dp)
-                .fillMaxWidth(),
-            text = "랭킹",
-            style = Title1,
-        )
         MashUpTabRow(
             modifier = Modifier.wrapContentSize(),
             horizontalSpace = 24.dp,

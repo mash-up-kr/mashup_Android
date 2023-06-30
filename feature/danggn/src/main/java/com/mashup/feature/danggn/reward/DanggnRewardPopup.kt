@@ -1,6 +1,5 @@
 package com.mashup.feature.danggn.reward
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +58,7 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             setContent {
                 MashUpTheme {
                     DanggnRewardPopupScreen(
-                        onClickDismissButton = { this@DanggnRewardPopup.dismiss() },
+                        onClickDismissButton = { showCancelRewardDialog() },
                         onClickSubmitButton = onClickSubmitButton
                     )
                 }
@@ -78,6 +77,7 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
                         android.R.color.transparent
                     )
                 )
+                isCancelable = false
             }
 
         addGlobalLayoutListener(view)
@@ -95,6 +95,17 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
         })
     }
 
+    private fun showCancelRewardDialog() {
+        CommonDialog(requireContext()).apply {
+            setTitle(text = "다음에 공지하시겠어요?")
+            setMessage(text = "다음 회차 랭킹이 시작되면 공지 등록권이 소멸되니 기간 안에 꼭 등록해주세요!")
+            setPositiveButton("네") {
+                this@DanggnRewardPopup.dismiss()
+            }
+            setNegativeButton("아니오")
+            show()
+        }
+    }
 
     companion object {
         const val MAX_LENGTH = 20
@@ -141,7 +152,7 @@ fun DanggnRewardPopupScreen(
 
         Text(
             text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
-            style = Body4,
+            style = Body4, // FIXME: Body5
             color = Gray600,
             modifier = Modifier.padding(top = 8.dp, bottom = 26.dp),
         )

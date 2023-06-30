@@ -84,6 +84,11 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
         addGlobalLayoutListener(view)
     }
 
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        showRewardInformationDialog()
+    }
+
     private fun addGlobalLayoutListener(view: View) {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {

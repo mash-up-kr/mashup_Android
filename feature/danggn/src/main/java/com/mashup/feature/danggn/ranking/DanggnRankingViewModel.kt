@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.UUID
 import javax.inject.Inject
 
@@ -32,6 +33,7 @@ class DanggnRankingViewModel @Inject constructor(
 ) : BaseViewModel() {
     companion object {
         private const val DEFAULT_SHAKE_NUMBER = -1
+        private const val DATE_FORMAT = 60 * 60 * 24 * 1000
     }
 
     private val _allDanggnRoundList: MutableStateFlow<List<AllRound>> =
@@ -52,6 +54,8 @@ class DanggnRankingViewModel @Inject constructor(
     private val currentTabIndex = MutableStateFlow(0)
 
     private val shouldCheckDanggnPopup = MutableStateFlow(true)
+
+    private val currentDateDiff: MutableStateFlow<Int> = MutableStateFlow(-1)
 
     val uiState: StateFlow<RankingUiState> = combineWithSevenValue(
         currentTabIndex,
@@ -120,7 +124,6 @@ class DanggnRankingViewModel @Inject constructor(
 
     /**
      * 밖에서도 호출할 수 있도록 private가 아닌 internal로 만들었습니다.
-     * TODO else 처리에 대해서 논의해봐야할 것 같습니다.
      */
     @SuppressLint("SimpleDateFormat")
     internal suspend fun updateAllRanking() {
@@ -128,10 +131,16 @@ class DanggnRankingViewModel @Inject constructor(
         if (allRoundListResponse.isSuccess()) {
             withContext(Dispatchers.Default) {
                 val roundListData = allRoundListResponse.data?.danggnRankingRounds ?: listOf()
-                val allRoundList = roundListData.map {
+                val allRoundList = roundListData.mapIndexed { index, item ->
                     val (startDateString, endDateString) = try {
-                        val startDate = SimpleDateFormat("yyyy-mm-dd").parse(it.startDate)!!
-                        val endDate = SimpleDateFormat("yyyy-mm-dd").parse(it.endDate)!!
+                        val startDate = SimpleDateFormat("yyyy-mm-dd").parse(item.startDate)!!
+                        val endDate = SimpleDateFormat("yyyy-mm-dd").parse(item.endDate)!!
+
+                        val endDateForDiff = SimpleDateFormat("yyyy-MM-dd").parse(item.endDate)!!
+                        if (index == 0) { // 현재 진행중인 랭킹일 때만 날짜 차이를 계산
+                            currentDateDiff.value =
+                                ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_FORMAT).toInt() + 1
+                        }
 
                         val roundFormat = SimpleDateFormat("yy.mm.dd")
                         roundFormat.format(startDate) to roundFormat.format(endDate)
@@ -140,10 +149,12 @@ class DanggnRankingViewModel @Inject constructor(
                     }
 
                     AllRound(
-                        id = it.id,
-                        number = it.number,
+                        id = item.id,
+                        number = item.number,
                         startDate = startDateString,
                         endDate = endDateString,
+                        dateDiff = currentDateDiff.value,
+                        index = index,
                     )
                 }.sortedByDescending { it.number }
                 _currentRoundId.emit(allRoundList.first().id)
@@ -364,6 +375,8 @@ class DanggnRankingViewModel @Inject constructor(
         val number: Int = 0,
         val startDate: String = "",
         val endDate: String = "",
+        val dateDiff: Int = 0,
+        val index: Int = 0,
     )
 }
 

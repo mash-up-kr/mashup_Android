@@ -127,21 +127,33 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        Text(
-            color = Gray600,
-            style = Body2,
-            text = buildAnnotatedString {
-                append("랭킹 종료까지 ")
-                withStyle(
-                    SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                    )
-                ) {
-                    // TODO 서버 값 넣기
-                    append("3일 ")
-                }
-                append("남았어요")
-            })
+        if(round.index == 0) { // 현재 진행 중인 랭킹을 보고 있을 때
+            Text(
+                color = Gray600,
+                style = Body2,
+                text = buildAnnotatedString {
+                    append("랭킹 종료까지 ")
+                    withStyle(
+                        SpanStyle(
+                            fontWeight = FontWeight.Bold,
+                        )
+                    ) {
+                        if (round.dateDiff > 1) {
+                            append("${round.dateDiff}일")
+                        } else {
+                            append("00:00:00")
+                        }
+                    }
+                    append(" 남았어요")
+                })
+        } else {
+            // 이전 회차의 랭킹을 보고 있을 때
+            Text(
+                color = Gray600,
+                style = Body2,
+                text = "종료된 랭킹이에요"
+            )
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
     }

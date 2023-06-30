@@ -4,7 +4,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,8 +33,6 @@ import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.*
 import com.mashup.core.ui.widget.MashUpButton
-import com.mashup.core.ui.widget.MashUpTabRow
-import com.mashup.core.ui.widget.mashupTabIndicatorOffset
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
 
@@ -56,28 +56,32 @@ fun DanggnRankingContent(
     }
 
     Column(modifier = modifier.background(Gray50)) {
-        MashUpTabRow(
-            modifier = Modifier.wrapContentSize(),
-            horizontalSpace = 24.dp,
+        TabRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            containerColor = Gray50,
+            selectedTabIndex = pagerState.currentPage,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier
-                        .mashupTabIndicatorOffset(
-                            currentTabPosition = tabPositions[pagerState.currentPage]
-                        )
+                        .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                         .clip(RoundedCornerShape(20.dp)),
                     color = Black,
                     height = 2.dp
                 )
-            }
+            },
+            divider = {}
         ) {
             pages.forEachIndexed { index, title ->
                 MashUpPagerColorAnimatedTab(
-                    modifier = Modifier.noRippleClickable {
-                        coroutineScope.launch {
-                            pagerState.scrollToPage(index)
-                        }
-                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .noRippleClickable {
+                            coroutineScope.launch {
+                                pagerState.scrollToPage(index)
+                            }
+                        },
                     title = title,
                     selected = pagerState.currentPage == index
                 )
@@ -339,9 +343,9 @@ private fun MashUpPagerColorAnimatedTab(
         targetValue = if (selected) Black else Gray400
     )
     Text(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 8.dp),
         text = title,
-        textAlign = TextAlign.Start,
+        textAlign = TextAlign.Center,
         color = textColorAnimation,
         style = SubTitle1
     )

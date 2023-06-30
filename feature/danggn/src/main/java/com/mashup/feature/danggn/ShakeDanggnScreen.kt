@@ -4,25 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
@@ -41,9 +26,7 @@ import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
-import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.Empty
-import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRanking
-import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRankingLastRound
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.*
 import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
@@ -177,7 +160,9 @@ fun ShakeDanggnScreen(
                         name = state.name,
                         onClickCloseButton = {
                             rankingViewModel.getReward()
-                            DanggnFirstPlaceBottomPopup(state.round).safeShow((context as AppCompatActivity).supportFragmentManager)
+                            DanggnFirstPlaceBottomPopup
+                                .getNewInstance(state.round)
+                                .safeShow((context as AppCompatActivity).supportFragmentManager)
                         })
                 }
 

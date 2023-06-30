@@ -55,7 +55,7 @@ class DanggnRankingViewModel @Inject constructor(
         platformRankingList,
         allDanggnRoundList,
         shouldCheckDanggnPopup,
-    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList, firstPlaceLastTurn ->
+    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList, _ ->
         RankingUiState(
             firstPlaceState = getFirstPlaceState(
                 tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList
@@ -230,10 +230,10 @@ class DanggnRankingViewModel @Inject constructor(
         val currentPersonalRanking = personalRankingList.indexOfFirst { it.text == myName }
         val currentPlatformRanking = platformRankingList.indexOfFirst { it.text == myPlatform }
 
-        if (shouldCheckDanggnPopup.value && checkFirstPlaceLastTurn()) {
-            return FirstRankingState.FirstRankingLastTurn(
+        if (shouldCheckDanggnPopup.value && checkFirstPlaceLastRound()) {
+            return FirstRankingState.FirstRankingLastRound(
                 name = myName,
-                turn = allDanggnRoundList.value.size - 1
+                round = allDanggnRoundList.value.size - 1
             )
         }
 
@@ -266,7 +266,7 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
-    private fun checkFirstPlaceLastTurn(): Boolean {
+    private fun checkFirstPlaceLastRound(): Boolean {
         // TODO: member-popups
         return true
     }
@@ -336,7 +336,7 @@ class DanggnRankingViewModel @Inject constructor(
     sealed interface FirstRankingState {
         object Empty : FirstRankingState
         data class FirstRanking(val text: String) : FirstRankingState
-        data class FirstRankingLastTurn(val name: String, val turn: Int) : FirstRankingState
+        data class FirstRankingLastRound(val name: String, val round: Int) : FirstRankingState
     }
 
     data class AllRound(

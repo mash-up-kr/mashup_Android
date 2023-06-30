@@ -43,7 +43,7 @@ import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.Empty
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRanking
-import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRankingLastTurn
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.FirstRankingLastRound
 import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
@@ -171,13 +171,13 @@ fun ShakeDanggnScreen(
                     )
                 }
 
-                is FirstRankingLastTurn -> {
-                    DanggnLastTurnFirstPlaceScreen(
-                        turn = state.turn,
+                is FirstRankingLastRound -> {
+                    DanggnLastRoundFirstPlaceScreen(
+                        round = state.round,
                         name = state.name,
                         onClickCloseButton = {
                             rankingViewModel.getReward()
-                            DanggnFirstPlaceBottomPopup(state.turn).safeShow((context as AppCompatActivity).supportFragmentManager)
+                            DanggnFirstPlaceBottomPopup(state.round).safeShow((context as AppCompatActivity).supportFragmentManager)
                         })
                 }
 

@@ -43,7 +43,7 @@ class DanggnRankingViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val allDanggnRoundList: StateFlow<List<AllRound>> = _allDanggnRoundList.asStateFlow()
 
-    private val _currentRoundId: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val _currentRoundId: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentRoundId: StateFlow<Int> = _currentRoundId.asStateFlow()
 
     private val currentTabIndex = MutableStateFlow(0)
@@ -151,8 +151,9 @@ class DanggnRankingViewModel @Inject constructor(
                         startDate = startDateString,
                         endDate = endDateString,
                     )
-                }
-                _allDanggnRoundList.emit(allRoundList.sortedByDescending { it.number })
+                }.sortedByDescending { it.number }
+                _currentRoundId.emit(allRoundList.first().id)
+                _allDanggnRoundList.emit(allRoundList)
             }
         }
     }

@@ -59,7 +59,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                             dismiss()
                         },
                         onClickRightButton = {
-                            DanggnRewardPopup.getNewInstance(onClickSubmitButton = {}).safeShow(parentFragmentManager)
+                            DanggnRewardPopup.getNewInstance(submitRewardNotice = ::submitRewardNotice).safeShow(parentFragmentManager)
                             dismiss()
                         }
                     )
@@ -108,6 +108,10 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
             setPositiveButton("확인")
             show()
         }
+    }
+
+    private fun submitRewardNotice(text: String) {
+
     }
 
     companion object {

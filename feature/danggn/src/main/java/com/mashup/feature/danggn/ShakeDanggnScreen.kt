@@ -4,8 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,25 +48,24 @@ import com.mashup.core.common.R as CR
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShakeDanggnScreen(
-    modifier: Modifier = Modifier,
     viewModel: DanggnViewModel,
     rankingViewModel: DanggnRankingViewModel,
-    onClickBackButton: () -> Unit,
-    onClickDanggnInfoButton: () -> Unit,
-    onClickHelpButton: () -> Unit,
+    modifier: Modifier = Modifier,
+    onClickBackButton: () -> Unit = {},
+    onClickDanggnInfoButton: () -> Unit = {},
+    onClickHelpButton: () -> Unit = {},
+    onClickAnotherRounds: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val randomTodayMessage by viewModel.randomMessage.collectAsState()
     val danggnMode by viewModel.danggnMode.collectAsState()
-
     val rankUiState by rankingViewModel.uiState.collectAsState()
-
     val context = LocalContext.current
-
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
-
     val isRefreshing = rankingViewModel.isRefreshing.collectAsState().value
+    val currentRoundId by rankingViewModel.currentRoundId.collectAsState(0)
+
     val pullRefreshState = rememberSwipeRefreshState(isRefreshing)
     val refreshTriggerDistance = 80.dp
 
@@ -123,14 +132,14 @@ fun ShakeDanggnScreen(
                     thickness = 4.dp
                 )
 
-                // 당근 회차 알리미
-                DanggnWeeklyRankingContent(
-                    allRoundList = rankUiState.danggnAllRoundList,
-                    onClickAnotherRounds = {
-                        // TODO 누르면 다른 회차 팝업 보여주기 작업
-                    },
-                    onClickHelpButton = onClickHelpButton
-                )
+                (rankUiState.danggnAllRoundList.find { it.id == currentRoundId })?.let { round ->
+                    // 당근 회차 알리미
+                    DanggnWeeklyRankingContent(
+                        round = round,
+                        onClickAnotherRounds = onClickAnotherRounds,
+                        onClickHelpButton = onClickHelpButton
+                    )
+                }
 
                 // 당근 흔들기 랭킹 UI
                 DanggnRankingContent(
@@ -202,7 +211,11 @@ fun DanggnPullToRefreshIndicator(
         )
     )
 
-    Box(modifier.fillMaxWidth().padding(vertical = 150.dp * progress)) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .padding(vertical = 150.dp * progress)
+    ) {
         Image(
             painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_pulltorefresh),
             contentDescription = null,

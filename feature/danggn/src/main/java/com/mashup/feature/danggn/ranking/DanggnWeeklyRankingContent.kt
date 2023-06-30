@@ -16,10 +16,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,12 +42,11 @@ import com.mashup.core.ui.typography.SubTitle2
 
 @Composable
 fun DanggnWeeklyRankingContent(
+    round: DanggnRankingViewModel.AllRound,
     modifier: Modifier = Modifier,
-    allRoundList: List<DanggnRankingViewModel.AllRound> = listOf(),
     onClickAnotherRounds: () -> Unit = {},  // 이걸 누를 때 랭킹 회차 팝업 보여줌
     onClickHelpButton: () -> Unit = {},
 ) {
-    var index by remember { mutableStateOf(0) }
 
     Column(
         modifier = modifier
@@ -95,7 +90,7 @@ fun DanggnWeeklyRankingContent(
 
         Text(
             modifier = Modifier,
-            text = "${allRoundList.getOrNull(index)?.number ?: "비밀"}회차",
+            text = "${round.number}회차",
             style = Header2,
             color = Brand500,
             fontWeight = FontWeight.Bold
@@ -114,17 +109,8 @@ fun DanggnWeeklyRankingContent(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // substring(2) 를 통해 2023-06-15 -> 23-06-15로 변환합니다
-            val (startDate, endDate) = remember(
-                allRoundList.getOrNull(index)?.startDate ?: "",
-                allRoundList.getOrNull(index)?.endDate ?: ""
-            ) {
-                allRoundList.getOrNull(index)?.startDate?.substring(2)?.replace("-", ".") to
-                        allRoundList.getOrNull(index)?.endDate?.substring(2)?.replace("-", ".")
-            }
-
             Text(
-                text = "$startDate - $endDate",
+                text = "${round.startDate} - ${round.endDate}",
                 style = Caption2,
                 color = Gray500,
                 fontWeight = FontWeight.Medium
@@ -165,6 +151,13 @@ fun DanggnWeeklyRankingContent(
 @Preview
 fun WeeklyRankingPreview() {
     MashUpTheme {
-        DanggnWeeklyRankingContent()
+        DanggnWeeklyRankingContent(
+            round = DanggnRankingViewModel.AllRound(
+                id = 0,
+                number = 3,
+                startDate = "23.02.10",
+                endDate = "23.02.11"
+            )
+        )
     }
 }

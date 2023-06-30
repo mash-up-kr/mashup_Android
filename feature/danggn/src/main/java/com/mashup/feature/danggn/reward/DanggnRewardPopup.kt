@@ -58,8 +58,8 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             setContent {
                 MashUpTheme {
                     DanggnRewardPopupScreen(
-                        onClickDismissButton = { showCancelRewardDialog() },
-                        onClickSubmitButton = onClickSubmitButton
+                        onClickDismissButton = ::showCancelRewardDialog,
+                        onClickSubmitButton = ::showSubmitRewardDialog,
                     )
                 }
             }
@@ -107,15 +107,28 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
         }
     }
 
+    private fun showSubmitRewardDialog(text: String) {
+        CommonDialog(requireContext()).apply {
+            setTitle(text = "공지로 등록하시겠어요?")
+            setMessage(text = "등록하면 이제 수정할 수 없고 다음 랭킹까지 당근 흔들기 상단에 모두에게 노출돼요!")
+            setPositiveButton("등록하기") {
+                submitRewardNotice(text)
+                this@DanggnRewardPopup.dismiss()
+            }
+            setNegativeButton("아니오")
+            show()
+        }
+    }
+
     companion object {
         const val MAX_LENGTH = 20
 
-        var onClickSubmitButton: (String) -> Unit = { }
+        var submitRewardNotice: (String) -> Unit = { }
 
         fun getNewInstance(
-            onClickSubmitButton: (String) -> Unit,
+            submitRewardNotice: (String) -> Unit,
         ): DanggnRewardPopup {
-            this.onClickSubmitButton = onClickSubmitButton
+            this.submitRewardNotice = submitRewardNotice
             return DanggnRewardPopup()
         }
     }
@@ -189,12 +202,11 @@ fun DanggnRewardPopupScreen(
 
         MashUpButton(
             text = "공지 등록하기",
-            onClick = { /*TODO*/ },
+            onClick = { onClickSubmitButton(text) },
             isEnabled = text.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp)
-                .clickable { onClickSubmitButton(text) },
+                .padding(top = 20.dp),
         )
     }
 }
@@ -203,6 +215,6 @@ fun DanggnRewardPopupScreen(
 @Preview
 fun PreviewDanggnRewardPopupContent() {
     MashUpTheme {
-        DanggnRewardPopupScreen(onClickDismissButton = {}, onClickSubmitButton = {})
+        DanggnRewardPopupScreen(onClickDismissButton = {}, onClickSubmitButton = { })
     }
 }

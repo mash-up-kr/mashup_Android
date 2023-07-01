@@ -21,6 +21,8 @@ import com.mashup.core.ui.widget.MashUpPopupEntity
 
 class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
 
+    private var lastRound: Int = -1
+
     private val behavior: BottomSheetBehavior<View>?
         get() {
             val bottomSheet =
@@ -35,7 +37,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val lastRound = arguments?.getInt(KEY_LAST_ROUND)
+        lastRound = arguments?.getInt(KEY_LAST_ROUND) ?: -1
 
         // TODO: storage api로 받아오기
         val entity = MashUpPopupEntity(
@@ -59,7 +61,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                             dismiss()
                         },
                         onClickRightButton = {
-                            DanggnRewardPopup.getNewInstance(submitRewardNotice = ::submitRewardNotice).safeShow(parentFragmentManager)
+                            DanggnRewardPopup.getNewInstance(lastRound).safeShow(parentFragmentManager)
                             dismiss()
                         }
                     )
@@ -108,10 +110,6 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
             setPositiveButton("확인")
             show()
         }
-    }
-
-    private fun submitRewardNotice(text: String) {
-
     }
 
     companion object {

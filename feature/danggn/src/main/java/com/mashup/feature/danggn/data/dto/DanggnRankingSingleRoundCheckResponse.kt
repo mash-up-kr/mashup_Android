@@ -1,6 +1,7 @@
 package com.mashup.feature.danggn.data.dto
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.Date
 
 @JsonClass(generateAdapter = true)
 data class DanggnRankingSingleRoundCheckResponse(
@@ -9,11 +10,11 @@ data class DanggnRankingSingleRoundCheckResponse(
     @Json(name = "dateCount")
     val dateCount: Int,
     @Json(name = "endDate")
-    val endDate: String,
+    val endDate: Date,
     @Json(name = "number")
     val number: Int,
     @Json(name = "startDate")
-    val startDate: String
+    val startDate: Date
 ) {
     @JsonClass(generateAdapter = true)
     data class DanggnRankingReward(

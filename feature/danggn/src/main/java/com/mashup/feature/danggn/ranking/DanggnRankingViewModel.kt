@@ -3,7 +3,8 @@ package com.mashup.feature.danggn.ranking
 import android.annotation.SuppressLint
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.common.extensions.combineWithSevenValue
+import com.mashup.core.common.extensions.combineWithEightValue
+import com.mashup.core.common.utils.TimerUtils
 import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.UUID
@@ -51,13 +53,16 @@ class DanggnRankingViewModel @Inject constructor(
         currentRoundId.map(this::mapPlatformRanking)
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
+    private val timer: MutableStateFlow<TimerUtils> = MutableStateFlow(TimerUtils())
+    private val timerCount: MutableStateFlow<RankingItem.Timer> = MutableStateFlow(RankingItem.Timer(""))
+
     private val currentTabIndex = MutableStateFlow(0)
 
     private val shouldCheckDanggnPopup = MutableStateFlow(true)
 
     private val currentDateDiff: MutableStateFlow<Int> = MutableStateFlow(-1)
 
-    val uiState: StateFlow<RankingUiState> = combineWithSevenValue(
+    val uiState: StateFlow<RankingUiState> = combineWithEightValue(
         currentTabIndex,
         userPreferenceRepository.getUserPreference(),
         danggnPreferenceRepository.getDanggnPreference(),
@@ -65,7 +70,8 @@ class DanggnRankingViewModel @Inject constructor(
         platformRankingList,
         allDanggnRoundList,
         shouldCheckDanggnPopup,
-    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList, _ ->
+        timerCount
+    ) { tabIndex, userPreference, danggnPreferenceRepository, personalRankingList, platformRankingList, allDanggnRoundList, _, timer ->
         RankingUiState(
             firstPlaceState = getFirstPlaceState(
                 tabIndex,
@@ -84,7 +90,8 @@ class DanggnRankingViewModel @Inject constructor(
                 userPreference = userPreference,
                 platformRankingList = platformRankingList
             ),
-            danggnAllRoundList = allDanggnRoundList
+            danggnAllRoundList = allDanggnRoundList,
+            timer = timer
         )
     }.stateIn(
         viewModelScope,
@@ -109,8 +116,36 @@ class DanggnRankingViewModel @Inject constructor(
         mashUpScope {
             _isRefreshing.value = true
             getRankingData()
+            getTimerData(currentRoundId.value)
             delay(1000L)
             _isRefreshing.value = false
+        }
+    }
+
+    /**
+     * 단건 API를 호출해서, 랭킹 종료 초단위까지 받아와서 timer 돌림
+     * 멈추고 나서 서버에서 어떻게 할 지 얘기해보기 00:00:00으로 놔둠
+     */
+    private fun getTimerData(value: Int) = mashUpScope {
+        timer.value.stopTimer()
+        danggnRepository.getDanggnSingleRound(value).also {
+            if (it.isSuccess()) {
+                kotlin.runCatching {
+                    if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
+                        timer.value.startTimer(
+                            endTime = it.data?.endDate ?: throw ParseException("", 0)
+                        ) { timer ->
+                            timerCount.value = RankingItem.Timer(timerString = timer)
+                        }
+                    } else {
+                        timerCount.value = RankingItem.Timer(timerString = "00:00:00")
+                    }
+                }.getOrNull() ?: also {
+                    timerCount.value = RankingItem.Timer(timerString = "00:00:00")
+                }.also {
+                    timer.value.stopTimer()
+                }
+            }
         }
     }
 
@@ -362,6 +397,10 @@ class DanggnRankingViewModel @Inject constructor(
             override val memberId: String = UUID.randomUUID().toString(),
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
         ) : RankingItem
+
+        data class Timer(
+            val timerString: String = "",
+        )
     }
 
     sealed interface FirstRankingState {
@@ -387,4 +426,5 @@ data class RankingUiState(
     val myPersonalRanking: DanggnRankingViewModel.RankingItem = DanggnRankingViewModel.RankingItem.EmptyRanking(),
     val myPlatformRanking: DanggnRankingViewModel.RankingItem = DanggnRankingViewModel.RankingItem.EmptyRanking(),
     val danggnAllRoundList: List<DanggnRankingViewModel.AllRound> = emptyList(),
+    val timer: DanggnRankingViewModel.RankingItem.Timer = DanggnRankingViewModel.RankingItem.Timer()
 )

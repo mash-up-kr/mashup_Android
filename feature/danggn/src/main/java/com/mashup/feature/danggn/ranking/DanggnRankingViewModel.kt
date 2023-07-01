@@ -33,7 +33,7 @@ class DanggnRankingViewModel @Inject constructor(
 ) : BaseViewModel() {
     companion object {
         private const val DEFAULT_SHAKE_NUMBER = -1
-        private const val DATE_FORMAT = 60 * 60 * 24 * 1000
+        private const val DATE_UNIT = 60 * 60 * 24 * 1000
     }
 
     private val _allDanggnRoundList: MutableStateFlow<List<AllRound>> =
@@ -139,7 +139,7 @@ class DanggnRankingViewModel @Inject constructor(
                         val endDateForDiff = SimpleDateFormat("yyyy-MM-dd").parse(item.endDate)!!
                         if (index == 0) { // 현재 진행중인 랭킹일 때만 날짜 차이를 계산
                             currentDateDiff.value =
-                                ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_FORMAT).toInt() + 1
+                                ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_UNIT).toInt() + 1
                         }
 
                         val roundFormat = SimpleDateFormat("yy.mm.dd")
@@ -154,7 +154,7 @@ class DanggnRankingViewModel @Inject constructor(
                         startDate = startDateString,
                         endDate = endDateString,
                         dateDiff = currentDateDiff.value,
-                        index = index,
+                        isRunning = index == 0,
                     )
                 }.sortedByDescending { it.number }
                 _currentRoundId.emit(allRoundList.first().id)
@@ -376,7 +376,7 @@ class DanggnRankingViewModel @Inject constructor(
         val startDate: String = "",
         val endDate: String = "",
         val dateDiff: Int = 0,
-        val index: Int = 0,
+        val isRunning: Boolean = false,
     )
 }
 

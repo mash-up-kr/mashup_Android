@@ -136,6 +136,7 @@ fun ShakeDanggnScreen(
                     // 당근 회차 알리미
                     DanggnWeeklyRankingContent(
                         round = round,
+                        timerCount = rankUiState.timer.timerString,
                         onClickAnotherRounds = onClickAnotherRounds,
                         onClickHelpButton = onClickHelpButton
                     )

@@ -127,7 +127,7 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        if(round.index == 0) { // 현재 진행 중인 랭킹을 보고 있을 때
+        if(round.isRunning) { // 현재 진행 중인 랭킹을 보고 있을 때
             Text(
                 color = Gray600,
                 style = Body2,

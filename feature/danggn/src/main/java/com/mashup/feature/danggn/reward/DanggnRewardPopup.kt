@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -32,11 +33,16 @@ import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body4
+import com.mashup.core.ui.typography.Body5
 import com.mashup.core.ui.typography.SubTitle2
 import com.mashup.core.ui.widget.MashUpButton
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import com.mashup.core.common.R as CR
 
+@AndroidEntryPoint
 class DanggnRewardPopup : BottomSheetDialogFragment() {
+    private val rankingViewModel: DanggnRankingViewModel by viewModels()
 
     private val behavior: BottomSheetBehavior<View>?
         get() {
@@ -119,16 +125,18 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
         }
     }
 
+    private fun submitRewardNotice(text: String) {
+        rankingViewModel.registerRewardNotice(arguments?.getInt(KEY_LAST_ROUND) ?: -1, text)
+    }
+
     companion object {
+        private const val KEY_LAST_ROUND = "KEY_LAST_ROUND"
         const val MAX_LENGTH = 20
 
-        var submitRewardNotice: (String) -> Unit = { }
-
-        fun getNewInstance(
-            submitRewardNotice: (String) -> Unit,
-        ): DanggnRewardPopup {
-            this.submitRewardNotice = submitRewardNotice
-            return DanggnRewardPopup()
+        fun getNewInstance(lastRound: Int): DanggnRewardPopup = DanggnRewardPopup().apply {
+            arguments = Bundle().apply {
+                putInt(KEY_LAST_ROUND, lastRound)
+            }
         }
     }
 }
@@ -164,7 +172,7 @@ fun DanggnRewardPopupScreen(
 
         Text(
             text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
-            style = Body4, // FIXME: Body5
+            style = Body5,
             color = Gray600,
             modifier = Modifier.padding(top = 8.dp, bottom = 26.dp),
         )

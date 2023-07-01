@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.UUID
@@ -287,8 +288,20 @@ class DanggnRankingViewModel @Inject constructor(
         return true
     }
 
-    fun getReward() {
-        shouldCheckDanggnPopup.value = false
+    fun setShouldCheckFirstPlaceLastRound(flag: Boolean) {
+        shouldCheckDanggnPopup.value = flag
+    }
+
+    fun registerRewardNotice(round: Int, comment: String) {
+        viewModelScope.launch {
+            try {
+                danggnRepository.postDanggnRankingRewardComment(round, comment).also {
+                    // TODO: 랭킹 단건조회 & 리프레쉬
+                }
+            } catch (e: Exception) {
+
+            }
+        }
     }
 
     internal fun updateFirstRanking() = mashUpScope {

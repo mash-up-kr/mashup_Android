@@ -13,7 +13,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 class TimerUtils {
     companion object {
         private const val ONE_SEC = 1000
-        private const val ONE_HOUR = 9 * 60 * 60 * 1000
+        private const val KOREAN_ONE_HOUR = 9 * 60 * 60 * 1000 // GMT 9시간 추가입니다
     }
 
     private var job: Job = Job()
@@ -28,7 +28,7 @@ class TimerUtils {
             while (diffTime >= 0) {
                 val result = kotlin.runCatching {
                     val cong = SimpleDateFormat("HH:mm:ss")
-                    cong.format(Date(diffTime - ONE_HOUR))
+                    cong.format(Date(diffTime - KOREAN_ONE_HOUR))
                 }.getOrDefault("??:??:??")
 
                 timerValue(result)

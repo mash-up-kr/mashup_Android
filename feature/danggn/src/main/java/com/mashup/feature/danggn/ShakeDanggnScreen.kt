@@ -143,9 +143,9 @@ fun ShakeDanggnScreen(
 
                 // 당근 흔들기 랭킹 UI
                 DanggnRankingContent(
-                    allMashUpMemberRankState = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
-                    personalRank = rankUiState.myPersonalRanking,
-                    allPlatformRank = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
+                    personalRankList = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
+                    myPersonalRank = rankUiState.myPersonalRanking,
+                    platformRankList = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
                     platformRank = rankUiState.myPlatformRanking,
                     onClickScrollTopButton = {
                         coroutineScope.launch {

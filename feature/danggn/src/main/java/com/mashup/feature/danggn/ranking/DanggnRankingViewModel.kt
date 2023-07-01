@@ -70,7 +70,7 @@ class DanggnRankingViewModel @Inject constructor(
                 personalRankingList,
                 platformRankingList
             ),
-            personalRankingList = createPersonalRankingList(personalRankingList),
+            personalRankingList = personalRankingList,
             platformRankingList = platformRankingList,
             myPersonalRanking = getPersonalRankingItem(
                 userPreference = userPreference,
@@ -93,12 +93,6 @@ class DanggnRankingViewModel @Inject constructor(
 
     init {
         getRankingData()
-    }
-
-    private fun createPersonalRankingList(personalRankingList: List<RankingItem>): List<RankingItem> {
-        return (0..10).map { index ->
-            personalRankingList.getOrNull(index) ?: RankingItem.EmptyRanking()
-        }
     }
 
     fun refreshRankingData() {
@@ -161,7 +155,7 @@ class DanggnRankingViewModel @Inject constructor(
             generationNumber = userPreferenceRepository.getCurrentGenerationNumber()
         )
         return if (allMemberRankingResult.isSuccess()) {
-            val rankingList = allMemberRankingResult.data?.allMemberRankList ?: listOf()
+            val rankingList = allMemberRankingResult.data ?: listOf()
             rankingList.map {
                 RankingItem.Ranking(
                     memberId = it.memberId.toString(),

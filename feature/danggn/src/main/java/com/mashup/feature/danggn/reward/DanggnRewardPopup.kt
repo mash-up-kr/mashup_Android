@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -42,7 +42,7 @@ import com.mashup.core.common.R as CR
 
 @AndroidEntryPoint
 class DanggnRewardPopup : BottomSheetDialogFragment() {
-    private val rankingViewModel: DanggnRankingViewModel by viewModels()
+    private val rankingViewModel: DanggnRankingViewModel by activityViewModels()
 
     private val behavior: BottomSheetBehavior<View>?
         get() {

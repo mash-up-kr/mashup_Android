@@ -40,9 +40,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    allMashUpMemberRankState: List<DanggnRankingViewModel.RankingItem>,
-    personalRank: DanggnRankingViewModel.RankingItem,
-    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    personalRankList: List<DanggnRankingViewModel.RankingItem>,
+    myPersonalRank: DanggnRankingViewModel.RankingItem,
+    platformRankList: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
     onClickScrollTopButton: () -> Unit = {},
     onChangedTabIndex: (index: Int) -> Unit = {}
@@ -99,9 +99,9 @@ fun DanggnRankingContent(
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
             PagerContents(
-                allMashUpMemberRankState,
-                personalRank,
-                allPlatformRank,
+                personalRankList,
+                myPersonalRank,
+                platformRankList,
                 platformRank,
                 index,
                 onClickScrollTopButton = onClickScrollTopButton
@@ -112,14 +112,14 @@ fun DanggnRankingContent(
 
 @Composable
 private fun PagerContents(
-    allRankList: List<DanggnRankingViewModel.RankingItem>,
-    personalRank: DanggnRankingViewModel.RankingItem,
-    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    personalRankList: List<DanggnRankingViewModel.RankingItem>,
+    myPersonalRank: DanggnRankingViewModel.RankingItem,
+    platformRankList: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
     pagerIndex: Int,
     onClickScrollTopButton: () -> Unit = {}
 ) {
-    if (allRankList.isEmpty()) {
+    if (personalRankList.isEmpty()) {
         Text(
             modifier = Modifier,
             textAlign = TextAlign.Center,
@@ -137,13 +137,13 @@ private fun PagerContents(
              * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
              * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
              */
-            if (personalRank.text.isNotEmpty() && pagerIndex == 0
+            if (myPersonalRank.text.isNotEmpty() && pagerIndex == 0
                 || platformRank.text.isNotEmpty() && pagerIndex == 1
             ) {
-                MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
+                MyRanking(if (pagerIndex == 0) myPersonalRank else platformRank, pagerIndex)
             }
 
-            (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
+            (if (pagerIndex == 0) personalRankList else platformRankList).forEachIndexed { index, rankingUiState ->
                 key(rankingUiState.memberId) {
                     /**
                      * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
@@ -356,7 +356,7 @@ private fun MashUpPagerColorAnimatedTab(
 fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
-            allMashUpMemberRankState = listOf(
+            personalRankList = listOf(
                 DanggnRankingViewModel.RankingItem.Ranking(
                     "39", "정종노드", 150
                 ),
@@ -382,10 +382,10 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnRankingViewModel.RankingItem.MyRanking(
+            myPersonalRank = DanggnRankingViewModel.RankingItem.MyRanking(
                 memberId = "60", totalShakeScore = 1514, text = "1위",
             ),
-            allPlatformRank = listOf(
+            platformRankList = listOf(
                 DanggnRankingViewModel.RankingItem.PlatformRanking(
                     memberId = "Android",
                     text = "Android", totalShakeScore = 120,

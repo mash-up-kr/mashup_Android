@@ -39,6 +39,7 @@ import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.*
 import com.mashup.feature.danggn.ranking.DanggnWeeklyRankingContent
 import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
+import com.mashup.feature.danggn.reward.DanggnRewardContent
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
 import kotlinx.coroutines.flow.collectLatest
@@ -54,13 +55,15 @@ fun ShakeDanggnScreen(
     onClickBackButton: () -> Unit = {},
     onClickDanggnInfoButton: () -> Unit = {},
     onClickHelpButton: () -> Unit = {},
-    onClickAnotherRounds: () -> Unit = {}
+    onClickAnotherRounds: () -> Unit = {},
+    onClickReward: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val randomTodayMessage by viewModel.randomMessage.collectAsState()
     val danggnMode by viewModel.danggnMode.collectAsState()
     val rankUiState by rankingViewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val danggnRound by rankingViewModel.currentRound.collectAsState()
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val isRefreshing = rankingViewModel.isRefreshing.collectAsState().value
@@ -119,11 +122,24 @@ fun ShakeDanggnScreen(
                     refreshTriggerDistance = refreshTriggerDistance
                 )
 
-                // 당근 흔들기 UI
-                DanggnShakeContent(
-                    randomTodayMessage = randomTodayMessage,
-                    danggnMode = danggnMode
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    danggnRound?.danggnRankingReward?.let { reward ->
+                        if (reward.isFirstPlaceMember) {
+                            DanggnRewardContent(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 20.dp),
+                                reward = reward,
+                                onClickReward = onClickReward
+                            )
+                        }
+                    }
+                    // 당근 흔들기 UI
+                    DanggnShakeContent(
+                        randomTodayMessage = randomTodayMessage,
+                        danggnMode = danggnMode
+                    )
+                }
 
                 // 중간 Divider
                 Divider(

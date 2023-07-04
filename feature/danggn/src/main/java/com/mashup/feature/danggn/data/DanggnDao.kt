@@ -62,6 +62,6 @@ interface DanggnDao {
     @POST("api/v1/danggn/ranking-reward-comment/{danggnRankingRewardId}")
     suspend fun postDanggnRankingRewardComment(
         @Path("danggnRankingRewardId") danggnRankingRewardId: Int,
-        @Body scoreRequest: DanggnRankingRewardCommentRequest,
+        @Body commentRequest: DanggnRankingRewardCommentRequest,
     ): Response<Boolean>
 }

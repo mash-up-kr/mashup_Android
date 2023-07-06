@@ -151,6 +151,7 @@ class DanggnRankingViewModel @Inject constructor(
 
     internal fun getRankingData() = mashUpScope {
         updateAllRanking()
+        if (currentDateDiff.value <= 0) { getTimerData(currentRoundId.value) }
     }
 
     internal fun updateCurrentTabIndex(index: Int) = mashUpScope {

@@ -8,6 +8,7 @@ import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
 import com.mashup.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -57,4 +58,10 @@ interface DanggnDao {
     suspend fun getDanggnSingleRound(
         @Path("danggnRankingRoundId") danggnRankingRoundId: Int
     ): Response<DanggnRankingSingleRoundCheckResponse>
+
+    @POST("api/v1/danggn/ranking-reward-comment/{danggnRankingRewardId}")
+    suspend fun postDanggnRankingRewardComment(
+        @Path("danggnRankingRewardId") danggnRankingRewardId: Int,
+        @Body commentRequest: DanggnRankingRewardCommentRequest,
+    ): Response<Boolean>
 }

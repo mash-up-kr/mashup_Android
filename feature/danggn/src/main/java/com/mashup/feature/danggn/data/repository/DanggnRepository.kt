@@ -9,6 +9,7 @@ import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
 import com.mashup.network.Response
 import javax.inject.Inject
 
@@ -59,5 +60,9 @@ class DanggnRepository @Inject constructor(
 
     suspend fun getDanggnSingleRound(danggnRankingRoundId: Int): Response<DanggnRankingSingleRoundCheckResponse> {
         return danggnDao.getDanggnSingleRound(danggnRankingRoundId)
+    }
+
+    suspend fun postDanggnRankingRewardComment(danggnRankingRoundId: Int, comment: String): Response<Boolean> {
+        return danggnDao.postDanggnRankingRewardComment(danggnRankingRoundId, DanggnRankingRewardCommentRequest(comment))
     }
 }

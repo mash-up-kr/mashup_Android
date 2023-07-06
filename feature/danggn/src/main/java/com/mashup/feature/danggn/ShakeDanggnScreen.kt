@@ -179,7 +179,7 @@ fun ShakeDanggnScreen(
                         round = state.round,
                         name = state.name,
                         onClickCloseButton = {
-                            rankingViewModel.getReward()
+                            rankingViewModel.setShouldCheckFirstPlaceLastRound(false)
                             DanggnFirstPlaceBottomPopup
                                 .getNewInstance(state.round)
                                 .safeShow((context as AppCompatActivity).supportFragmentManager)

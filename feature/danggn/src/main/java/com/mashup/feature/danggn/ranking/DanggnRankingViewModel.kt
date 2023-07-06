@@ -127,23 +127,25 @@ class DanggnRankingViewModel @Inject constructor(
      * 멈추고 나서 서버에서 어떻게 할 지 얘기해보기 00:00:00으로 놔둠
      */
     private fun getTimerData(value: Int) = mashUpScope {
-        timer.stopTimer()
-        danggnRepository.getDanggnSingleRound(value).also {
-            if (it.isSuccess()) {
-                kotlin.runCatching {
-                    if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
-                        timer.startTimer(
-                            endTime = it.data?.endDate ?: throw ParseException("", 0)
-                        ) { timer ->
-                            timerCount.value = RankingItem.Timer(timerString = timer)
+        withContext(Dispatchers.IO) {
+            timer.stopTimer()
+            danggnRepository.getDanggnSingleRound(value).also {
+                if (it.isSuccess()) {
+                    kotlin.runCatching {
+                        if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
+                            timer.startTimer(
+                                endTime = it.data?.endDate ?: throw ParseException("", 0)
+                            ) { timer ->
+                                timerCount.value = RankingItem.Timer(timerString = timer)
+                            }
+                        } else {
+                            timerCount.value = RankingItem.Timer(timerString = "00:00:00")
                         }
-                    } else {
+                    }.getOrNull() ?: also {
                         timerCount.value = RankingItem.Timer(timerString = "00:00:00")
+                    }.also {
+                        timer.stopTimer()
                     }
-                }.getOrNull() ?: also {
-                    timerCount.value = RankingItem.Timer(timerString = "00:00:00")
-                }.also {
-                    timer.stopTimer()
                 }
             }
         }

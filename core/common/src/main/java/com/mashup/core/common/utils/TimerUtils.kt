@@ -18,28 +18,26 @@ class TimerUtils {
 
     private var job: Job = Job()
 
-    fun startTimer(
+    suspend fun startTimer(
         startTime: Date = Calendar.getInstance().time,
         endTime: Date,
         timerValue: (String) -> Unit
     ) {
-        job = CoroutineScope(EmptyCoroutineContext).launch(Dispatchers.IO) {
-            var diffTime = (endTime.time - startTime.time)
-            while (diffTime >= 0) {
-                val result = kotlin.runCatching {
-                    val cong = SimpleDateFormat("HH:mm:ss")
-                    cong.format(Date(diffTime - KOREAN_ONE_HOUR))
-                }.getOrDefault("??:??:??")
+        var diffTime = (endTime.time - startTime.time)
+        while (diffTime >= 0) {
+            val result = kotlin.runCatching {
+                val cong = SimpleDateFormat("HH:mm:ss")
+                cong.format(Date(diffTime - KOREAN_ONE_HOUR))
+            }.getOrDefault("??:??:??")
 
-                timerValue(result)
-                diffTime -= ONE_SEC
-                delay(1000L)
-            }
-            stopTimer()
+            timerValue(result)
+            diffTime -= ONE_SEC
+            delay(1000L)
         }
+        stopTimer()
     }
 
-    fun stopTimer() {
+    suspend fun stopTimer() {
         job.cancel()
     }
 }

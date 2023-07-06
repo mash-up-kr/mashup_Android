@@ -53,7 +53,7 @@ class DanggnRankingViewModel @Inject constructor(
         currentRoundId.map(this::mapPlatformRanking)
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    private val timer: MutableStateFlow<TimerUtils> = MutableStateFlow(TimerUtils())
+    private val timer = TimerUtils()
     private val timerCount: MutableStateFlow<RankingItem.Timer> = MutableStateFlow(RankingItem.Timer(""))
 
     private val currentTabIndex = MutableStateFlow(0)
@@ -127,12 +127,12 @@ class DanggnRankingViewModel @Inject constructor(
      * 멈추고 나서 서버에서 어떻게 할 지 얘기해보기 00:00:00으로 놔둠
      */
     private fun getTimerData(value: Int) = mashUpScope {
-        timer.value.stopTimer()
+        timer.stopTimer()
         danggnRepository.getDanggnSingleRound(value).also {
             if (it.isSuccess()) {
                 kotlin.runCatching {
                     if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
-                        timer.value.startTimer(
+                        timer.startTimer(
                             endTime = it.data?.endDate ?: throw ParseException("", 0)
                         ) { timer ->
                             timerCount.value = RankingItem.Timer(timerString = timer)
@@ -143,7 +143,7 @@ class DanggnRankingViewModel @Inject constructor(
                 }.getOrNull() ?: also {
                     timerCount.value = RankingItem.Timer(timerString = "00:00:00")
                 }.also {
-                    timer.value.stopTimer()
+                    timer.stopTimer()
                 }
             }
         }

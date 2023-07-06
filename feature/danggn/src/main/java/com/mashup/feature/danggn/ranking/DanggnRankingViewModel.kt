@@ -298,8 +298,18 @@ class DanggnRankingViewModel @Inject constructor(
         return true
     }
 
-    fun getReward() {
-        shouldCheckDanggnPopup.value = false
+    fun setShouldCheckFirstPlaceLastRound(flag: Boolean) {
+        shouldCheckDanggnPopup.value = flag
+    }
+
+    fun registerRewardNotice(round: Int, comment: String) {
+        mashUpScope {
+            kotlin.runCatching {
+                danggnRepository.postDanggnRankingRewardComment(round, comment)
+            }.onSuccess {
+                // TODO: 랭킹 단건조회 & 리프레쉬
+            }
+        }
     }
 
     internal fun updateFirstRanking() = mashUpScope {

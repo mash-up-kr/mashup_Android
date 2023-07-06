@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -127,25 +128,23 @@ class DanggnRankingViewModel @Inject constructor(
      * 멈추고 나서 서버에서 어떻게 할 지 얘기해보기 00:00:00으로 놔둠
      */
     private fun getTimerData(value: Int) = mashUpScope {
-        withContext(Dispatchers.IO) {
-            timer.stopTimer()
-            danggnRepository.getDanggnSingleRound(value).also {
-                if (it.isSuccess()) {
-                    kotlin.runCatching {
-                        if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
-                            timer.startTimer(
-                                endTime = it.data?.endDate ?: throw ParseException("", 0)
-                            ) { timer ->
-                                timerCount.value = RankingItem.Timer(timerString = timer)
-                            }
-                        } else {
-                            timerCount.value = RankingItem.Timer(timerString = "00:00:00")
+        timer.stopTimer()
+        danggnRepository.getDanggnSingleRound(value).also {
+            if (it.isSuccess()) {
+                kotlin.runCatching {
+                    if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
+                        timer.startTimer(
+                            endTime = it.data?.endDate ?: throw ParseException("", 0)
+                        ) { timer ->
+                            timerCount.value = RankingItem.Timer(timerString = timer)
                         }
-                    }.getOrNull() ?: also {
+                    } else {
                         timerCount.value = RankingItem.Timer(timerString = "00:00:00")
-                    }.also {
-                        timer.stopTimer()
                     }
+                }.getOrNull() ?: also {
+                    timerCount.value = RankingItem.Timer(timerString = "00:00:00")
+                }.also {
+                    timer.stopTimer()
                 }
             }
         }

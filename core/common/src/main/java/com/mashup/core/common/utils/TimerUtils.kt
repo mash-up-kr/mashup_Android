@@ -3,8 +3,10 @@ package com.mashup.core.common.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -23,21 +25,23 @@ class TimerUtils {
         endTime: Date,
         timerValue: (String) -> Unit
     ) {
-        var diffTime = (endTime.time - startTime.time)
-        while (diffTime >= 0) {
-            val result = kotlin.runCatching {
-                val cong = SimpleDateFormat("HH:mm:ss")
-                cong.format(Date(diffTime - KOREAN_ONE_HOUR))
-            }.getOrDefault("??:??:??")
+        withContext(job + Dispatchers.IO) {
+            var diffTime = (endTime.time - startTime.time)
+            while (diffTime >= 0) {
+                val result = kotlin.runCatching {
+                    val cong = SimpleDateFormat("HH:mm:ss")
+                    cong.format(Date(diffTime - KOREAN_ONE_HOUR))
+                }.getOrDefault("??:??:??")
 
-            timerValue(result)
-            diffTime -= ONE_SEC
-            delay(1000L)
+                timerValue(result)
+                diffTime -= ONE_SEC
+                delay(1000L)
+            }
+            stopTimer()
         }
-        stopTimer()
     }
 
     suspend fun stopTimer() {
-        job.cancel()
+        job.cancelAndJoin()
     }
 }

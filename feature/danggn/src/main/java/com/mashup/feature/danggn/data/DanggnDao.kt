@@ -1,6 +1,6 @@
 package com.mashup.feature.danggn.data
 
-import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
+import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
@@ -22,11 +22,12 @@ import retrofit2.http.Query
 interface DanggnDao {
 
     // 당근 흔들기 개인별 랭킹 전체
-    @GET("api/v1/danggn/rank/member/all")
+    @GET("api/v1/danggn/rank/member")
     suspend fun getDanggnAllMemberRank(
         @Query("danggnRankingRoundId") danggnRankingRoundId: Int,
         @Query("generationNumber") generationNumber: Int,
-    ): Response<DanggnAllMemberRankResponse>
+        @Query("limit") limit: Int = Int.MAX_VALUE
+    ): Response<List<DanggnMemberRankResponse>>
 
     // 당근 흔들기 플랫폼별 랭킹
     @GET("api/v1/danggn/rank/platform")

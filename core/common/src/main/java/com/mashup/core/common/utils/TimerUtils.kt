@@ -41,7 +41,7 @@ class TimerUtils {
         }
     }
 
-    suspend fun stopTimer() {
-        job.cancelAndJoin()
+    private fun stopTimer() {
+        job.cancel()
     }
 }

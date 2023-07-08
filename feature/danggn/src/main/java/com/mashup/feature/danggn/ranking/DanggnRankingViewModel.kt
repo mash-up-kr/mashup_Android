@@ -1,6 +1,7 @@
 package com.mashup.feature.danggn.ranking
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.extensions.combineWithEightValue
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -117,7 +117,6 @@ class DanggnRankingViewModel @Inject constructor(
         mashUpScope {
             _isRefreshing.value = true
             getRankingData()
-            getTimerData(currentRoundId.value)
             delay(1000L)
             _isRefreshing.value = false
         }
@@ -125,10 +124,9 @@ class DanggnRankingViewModel @Inject constructor(
 
     /**
      * 단건 API를 호출해서, 랭킹 종료 초단위까지 받아와서 timer 돌림
-     * 멈추고 나서 서버에서 어떻게 할 지 얘기해보기 00:00:00으로 놔둠
+     * 멈추고 나서 서버에서 어떻게 할 지 얘기해보기 다음 정보 없으면 ??:??:??으로 놔둠
      */
     private fun getTimerData(value: Int) = mashUpScope {
-        timer.stopTimer()
         danggnRepository.getDanggnSingleRound(value).also {
             if (it.isSuccess()) {
                 kotlin.runCatching {
@@ -141,10 +139,10 @@ class DanggnRankingViewModel @Inject constructor(
                     } else {
                         timerCount.value = RankingItem.Timer(timerString = "00:00:00")
                     }
+                }.onFailure {
+                    Log.d("tjrwn", "getTimerData: ${it.message}")
                 }.getOrNull() ?: also {
-                    timerCount.value = RankingItem.Timer(timerString = "00:00:00")
-                }.also {
-                    timer.stopTimer()
+                    timerCount.value = RankingItem.Timer(timerString = "??:??:??")
                 }
             }
         }
@@ -152,7 +150,8 @@ class DanggnRankingViewModel @Inject constructor(
 
     internal fun getRankingData() = mashUpScope {
         updateAllRanking()
-        if (currentDateDiff.value <= 0) { getTimerData(currentRoundId.value) }
+        if (currentDateDiff.value <= 0) {
+            getTimerData(currentRoundId.value) }
     }
 
     internal fun updateCurrentTabIndex(index: Int) = mashUpScope {
@@ -170,16 +169,22 @@ class DanggnRankingViewModel @Inject constructor(
                 val roundListData = allRoundListResponse.data?.danggnRankingRounds ?: listOf()
                 val allRoundList = roundListData.mapIndexed { index, item ->
                     val (startDateString, endDateString) = try {
+                        val roundFormat = SimpleDateFormat("yy.mm.dd")
+                        val detailDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+
                         val startDate = SimpleDateFormat("yyyy-mm-dd").parse(item.startDate)!!
                         val endDate = SimpleDateFormat("yyyy-mm-dd").parse(item.endDate)!!
 
-                        val endDateForDiff = SimpleDateFormat("yyyy-MM-dd").parse(item.endDate)!!
                         if (index == 0) { // 현재 진행중인 랭킹일 때만 날짜 차이를 계산
-                            currentDateDiff.value =
-                                ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_UNIT).toInt() + 1
+                            danggnRepository.getDanggnSingleRound(item.id).data.also {
+                                val detailEndDate = it?.endDate?.let { date ->
+                                    detailDateFormat.format(date)
+                                } ?: ""
+                                val endDateForDiff = detailDateFormat.parse(detailEndDate)
+                                currentDateDiff.value =
+                                    ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_UNIT).toInt()
+                            }
                         }
-
-                        val roundFormat = SimpleDateFormat("yy.mm.dd")
                         roundFormat.format(startDate) to roundFormat.format(endDate)
                     } catch (ignore: Exception) {
                         "????.??.??" to "????.??.??"

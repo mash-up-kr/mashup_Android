@@ -139,7 +139,7 @@ fun DanggnWeeklyRankingContent(
                             fontWeight = FontWeight.Bold,
                         )
                     ) {
-                        if (round.dateDiff > 1) {
+                        if (round.dateDiff > 0) {
                             append("${round.dateDiff}일")
                         } else {
                             append(timerCount.ifBlank { "00:00:00" })

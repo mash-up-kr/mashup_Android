@@ -139,8 +139,6 @@ class DanggnRankingViewModel @Inject constructor(
                     } else {
                         timerCount.value = RankingItem.Timer(timerString = "00:00:00")
                     }
-                }.onFailure {
-                    Log.d("tjrwn", "getTimerData: ${it.message}")
                 }.getOrNull() ?: also {
                     timerCount.value = RankingItem.Timer(timerString = "??:??:??")
                 }

@@ -1,7 +1,7 @@
 package com.mashup.feature.danggn.data.repository
 
 import com.mashup.feature.danggn.data.DanggnDao
-import com.mashup.feature.danggn.data.dto.DanggnAllMemberRankResponse
+import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
@@ -19,7 +19,7 @@ class DanggnRepository @Inject constructor(
     suspend fun getAllDanggnRank(
         danggnRankingRoundId: Int,
         generationNumber: Int,
-    ): Response<DanggnAllMemberRankResponse> {
+    ): Response<List<DanggnMemberRankResponse>> {
         return danggnDao.getDanggnAllMemberRank(
             danggnRankingRoundId = danggnRankingRoundId,
             generationNumber = generationNumber

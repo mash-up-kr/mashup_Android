@@ -88,7 +88,8 @@ private fun RewardNotRegisteredPrev() {
                 status = "FIRST_PLACE_MEMBER_NOT_REGISTERED",
                 id = null,
                 name = null,
-                comment = null
+                comment = null,
+                isFirstPlaceMember = true
             )
         )
     }
@@ -104,7 +105,8 @@ private fun RewardRegisteredPrev() {
                 status = "FIRST_PLACE_MEMBER_REGISTERED",
                 id = 0,
                 name = "김매숑",
-                comment = "내가 1위 해버렸쥬? 프디팀 짱이죠"
+                comment = "내가 1위 해버렸쥬? 프디팀 짱이죠",
+                isFirstPlaceMember = true
             )
         )
     }

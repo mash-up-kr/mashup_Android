@@ -8,6 +8,7 @@ import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
+import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,10 @@ class DanggnRankingViewModel @Inject constructor(
 
     private val _currentRoundId: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentRoundId: StateFlow<Int> = _currentRoundId.asStateFlow()
+
+    val currentRound: StateFlow<DanggnRankingSingleRoundCheckResponse?> =
+        currentRoundId.map(this::mapSingleRound)
+            .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private val personalRankingList: StateFlow<List<RankingItem>> =
         currentRoundId.map(this::mapPersonalRankingList)
@@ -225,8 +230,9 @@ class DanggnRankingViewModel @Inject constructor(
         userPreference: UserPreference,
         personalRankingList: List<RankingItem>
     ): RankingItem {
-        val myPersonalRank = personalRankingList.find { it.memberId == userPreference.id.toString() }
-            ?: return RankingItem.EmptyRanking()
+        val myPersonalRank =
+            personalRankingList.find { it.memberId == userPreference.id.toString() }
+                ?: return RankingItem.EmptyRanking()
         val index = personalRankingList.indexOf(myPersonalRank)
 
         return RankingItem.MyRanking(
@@ -323,6 +329,20 @@ class DanggnRankingViewModel @Inject constructor(
 
     fun updateCurrentRound(roundId: Int) = mashUpScope {
         _currentRoundId.emit(roundId)
+    }
+
+    /**
+     * 모든 멤버의 랭킹 리스트를 얻어옵니다
+     */
+    private suspend fun mapSingleRound(rankingRoundId: Int): DanggnRankingSingleRoundCheckResponse? {
+        val singleRoundResult = danggnRepository.getDanggnSingleRound(
+            danggnRankingRoundId = rankingRoundId
+        )
+        return if (singleRoundResult.isSuccess()) {
+            singleRoundResult.data
+        } else {
+            null
+        }
     }
 
     sealed interface RankingItem {

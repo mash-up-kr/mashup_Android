@@ -24,7 +24,9 @@ data class DanggnRankingSingleRoundCheckResponse(
         @Json(name = "name")
         val name: String?,
         @Json(name = "status")
-        val status: String
+        val status: String,
+        @Json(name = "isFirstPlaceMember")
+        val isFirstPlaceMember: Boolean
     ) {
         enum class DanggnRankingRewardStatus {
             FIRST_PLACE_MEMBER_NOT_EXISTED, // 1등한 사람이 없는 경우(1회차)

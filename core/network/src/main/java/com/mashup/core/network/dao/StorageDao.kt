@@ -1,7 +1,7 @@
-package com.mashup.network.dao
+package com.mashup.core.network.dao
 
-import com.mashup.data.dto.StorageResponse
 import com.mashup.core.network.Response
+import com.mashup.core.network.dto.StorageResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

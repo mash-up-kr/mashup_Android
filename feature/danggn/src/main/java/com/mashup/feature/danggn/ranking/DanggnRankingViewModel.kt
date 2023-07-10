@@ -336,16 +336,12 @@ class DanggnRankingViewModel @Inject constructor(
     }
 
     private suspend fun checkFirstPlaceLastRound(): Boolean {
-        var result = false
-
-        kotlin.runCatching {
-            popupRepository.getPopupKeyList()
-        }.onSuccess {
-            val type = it.data?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_FIRST_PLACE }
-            result = type != null
-        }
-
-        return result
+        return kotlin.runCatching {
+            popupRepository.getPopupKeyList().data
+        }.getOrNull()
+            ?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_FIRST_PLACE }
+            .isNullOrBlank()
+            .not()
     }
 
     fun setShouldCheckFirstPlaceLastRound(flag: Boolean) {

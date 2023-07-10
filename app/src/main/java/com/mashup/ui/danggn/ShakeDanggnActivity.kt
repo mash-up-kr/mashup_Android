@@ -58,6 +58,7 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     is DanggnUiState.Error -> {
                         handleCommonError(state.code)
                     }
+
                     else -> {}
                 }
             }
@@ -65,7 +66,7 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
     }
 
     private fun openDanggnUpdateActivity() {
-        val intent = DanggnUpdateActivity.newIntent(this)
+        val intent = DanggnUpdateActivity.newIntent(context = this, hasMoveToDanggnButton = false)
         startActivity(intent)
     }
 
@@ -76,7 +77,10 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
     }
 
     private fun showDanggnRoundSelectDialog() {
-        DanggnRoundSelectorDialog().show(supportFragmentManager, DanggnRoundSelectorDialog::class.simpleName)
+        DanggnRoundSelectorDialog().show(
+            supportFragmentManager,
+            DanggnRoundSelectorDialog::class.simpleName
+        )
     }
 
     private fun showDanggnRewardPopup() {

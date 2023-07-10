@@ -32,6 +32,7 @@ import com.mashup.feature.danggn.R
 @Composable
 fun DanggnUpdateScreen(
     modifier: Modifier = Modifier,
+    hasMoveToDanggnButton: Boolean = true,
     onClickCloseButton: () -> Unit = {},
     onClickMoveDanggn: () -> Unit = {}
 ) {
@@ -40,6 +41,7 @@ fun DanggnUpdateScreen(
     ) {
         DanggnUpdateContent(
             modifier = Modifier.fillMaxSize(),
+            hasMoveToDanggnButton = hasMoveToDanggnButton,
             onClickCloseButton = onClickCloseButton,
             onClickMoveDanggn = onClickMoveDanggn
         )
@@ -49,6 +51,7 @@ fun DanggnUpdateScreen(
 @Composable
 fun DanggnUpdateContent(
     modifier: Modifier = Modifier,
+    hasMoveToDanggnButton: Boolean = true,
     onClickCloseButton: () -> Unit = {},
     onClickMoveDanggn: () -> Unit = {}
 ) {
@@ -136,14 +139,16 @@ fun DanggnUpdateContent(
                 text = "확인 완료",
                 onClick = onClickCloseButton
             )
-            MashUpButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 9.dp),
-                text = "업데이트된 당근 흔들기 구경하기",
-                onClick = onClickMoveDanggn
-            )
+            if (hasMoveToDanggnButton) {
+                MashUpButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 9.dp),
+                    text = "업데이트된 당근 흔들기 구경하기",
+                    onClick = onClickMoveDanggn
+                )
+            }
             Spacer(modifier = Modifier.height(20.dp))
         }
     }

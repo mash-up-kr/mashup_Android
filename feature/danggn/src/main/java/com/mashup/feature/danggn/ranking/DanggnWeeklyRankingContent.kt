@@ -43,6 +43,7 @@ import com.mashup.core.ui.typography.SubTitle2
 @Composable
 fun DanggnWeeklyRankingContent(
     round: DanggnRankingViewModel.AllRound,
+    timerCount: String,
     modifier: Modifier = Modifier,
     onClickAnotherRounds: () -> Unit = {},  // 이걸 누를 때 랭킹 회차 팝업 보여줌
     onClickHelpButton: () -> Unit = {},
@@ -138,10 +139,10 @@ fun DanggnWeeklyRankingContent(
                             fontWeight = FontWeight.Bold,
                         )
                     ) {
-                        if (round.dateDiff > 1) {
+                        if (round.dateDiff > 0) {
                             append("${round.dateDiff}일")
                         } else {
-                            append("00:00:00")
+                            append(timerCount.ifBlank { "00:00:00" })
                         }
                     }
                     append(" 남았어요")
@@ -169,7 +170,8 @@ fun WeeklyRankingPreview() {
                 number = 3,
                 startDate = "23.02.10",
                 endDate = "23.02.11"
-            )
+            ),
+            timerCount = ""
         )
     }
 }

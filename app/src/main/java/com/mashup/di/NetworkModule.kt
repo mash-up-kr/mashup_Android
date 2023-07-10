@@ -9,7 +9,7 @@ import com.mashup.network.CustomDateAdapter
 import com.mashup.core.network.adapter.PlatformJsonAdapter
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
-import com.mashup.network.dao.PopupDao
+import com.mashup.core.network.dao.PopupDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
 import com.mashup.network.dao.StorageDao

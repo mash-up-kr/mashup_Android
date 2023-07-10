@@ -1,7 +1,7 @@
-package com.mashup.data.repository
+package com.mashup.core.data.repository
 
 import com.mashup.core.network.Response
-import com.mashup.network.dao.PopupDao
+import com.mashup.core.network.dao.PopupDao
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Brand500
+import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.Gray700
 import com.mashup.core.ui.colors.Gray900
 import com.mashup.core.ui.theme.MashUpTheme
@@ -36,16 +38,12 @@ fun DanggnUpdateScreen(
     onClickCloseButton: () -> Unit = {},
     onClickMoveDanggn: () -> Unit = {}
 ) {
-    Column(
-        modifier = modifier
-    ) {
-        DanggnUpdateContent(
-            modifier = Modifier.fillMaxSize(),
-            hasMoveToDanggnButton = hasMoveToDanggnButton,
-            onClickCloseButton = onClickCloseButton,
-            onClickMoveDanggn = onClickMoveDanggn
-        )
-    }
+    DanggnUpdateContent(
+        modifier = modifier,
+        hasMoveToDanggnButton = hasMoveToDanggnButton,
+        onClickCloseButton = onClickCloseButton,
+        onClickMoveDanggn = onClickMoveDanggn
+    )
 }
 
 @Composable
@@ -56,7 +54,7 @@ fun DanggnUpdateContent(
     onClickMoveDanggn: () -> Unit = {}
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.background(Gray50)
     ) {
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),

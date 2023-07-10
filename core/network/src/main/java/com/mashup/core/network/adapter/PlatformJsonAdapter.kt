@@ -1,4 +1,4 @@
-package com.mashup.network.adapter
+package com.mashup.core.network.adapter
 
 import com.mashup.core.model.Platform
 import com.squareup.moshi.JsonAdapter

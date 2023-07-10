@@ -1,17 +1,18 @@
 package com.mashup.feature.danggn.ranking
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.extensions.combineWithEightValue
 import com.mashup.core.common.utils.TimerUtils
+import com.mashup.core.data.repository.PopUpRepository
 import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.repository.DanggnRepository
+import com.mashup.feature.danggn.reward.model.DanggnPopupType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -32,6 +33,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
+    private val popupRepository: PopUpRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
     private val danggnPreferenceRepository: DanggnPreferenceRepository,
 ) : BaseViewModel() {
@@ -282,7 +284,7 @@ class DanggnRankingViewModel @Inject constructor(
         )
     }
 
-    private fun getFirstPlaceState(
+    private suspend fun getFirstPlaceState(
         tabIndex: Int,
         userPreference: UserPreference,
         danggnPreference: DanggnPreference,
@@ -333,9 +335,17 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
-    private fun checkFirstPlaceLastRound(): Boolean {
-        // TODO: member-popups
-        return true
+    private suspend fun checkFirstPlaceLastRound(): Boolean {
+        var result = false
+
+        kotlin.runCatching {
+            popupRepository.getPopupKeyList()
+        }.onSuccess {
+            val type = it.data?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_FIRST_PLACE }
+            result = type != null
+        }
+
+        return result
     }
 
     fun setShouldCheckFirstPlaceLastRound(flag: Boolean) {

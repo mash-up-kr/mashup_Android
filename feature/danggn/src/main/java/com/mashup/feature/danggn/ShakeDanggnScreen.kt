@@ -40,11 +40,13 @@ import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingStat
 import com.mashup.feature.danggn.ranking.DanggnWeeklyRankingContent
 import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.reward.DanggnRewardContent
+import com.mashup.feature.danggn.reward.DanggnRewardNoticeScreen
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import com.mashup.core.common.R as CR
+import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse.DanggnRankingReward.DanggnRankingRewardStatus.FIRST_PLACE_MEMBER_REGISTERED as DANGGN_REWARD_REGISTERED
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -68,7 +70,7 @@ fun ShakeDanggnScreen(
     val coroutineScope = rememberCoroutineScope()
     val isRefreshing = rankingViewModel.isRefreshing.collectAsState().value
     val currentRoundId by rankingViewModel.currentRoundId.collectAsState(0)
-
+    val showDanggnRewardDialog by rankingViewModel.showRewardNoticeDialog.collectAsState(false)
     val pullRefreshState = rememberSwipeRefreshState(isRefreshing)
     val refreshTriggerDistance = 80.dp
 
@@ -206,6 +208,15 @@ fun ShakeDanggnScreen(
                 Empty -> {
 
                 }
+            }
+
+            if (showDanggnRewardDialog && danggnRound?.danggnRankingReward?.status == DANGGN_REWARD_REGISTERED.name) {
+                DanggnRewardNoticeScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    name = danggnRound?.danggnRankingReward?.name ?: "",
+                    message = danggnRound?.danggnRankingReward?.comment ?: "",
+                    onClickCloseButton = rankingViewModel::confirmDanggnRewardNotice
+                )
             }
         }
     }

@@ -339,7 +339,7 @@ class DanggnRankingViewModel @Inject constructor(
         return kotlin.runCatching {
             popupRepository.getPopupKeyList().data
         }.getOrNull()
-            ?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_FIRST_PLACE }
+            ?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_REWARD }
             .isNullOrBlank()
             .not()
     }

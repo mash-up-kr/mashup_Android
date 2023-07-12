@@ -53,7 +53,6 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                         uiState = MashUpBottomPopupUiState.Success(entity),
                         onClickLeftButton = {
                             showRewardInformationDialog()
-                            dismiss()
                         },
                         onClickRightButton = {
                             DanggnRewardPopup.getNewInstance().safeShow(parentFragmentManager)
@@ -100,9 +99,12 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
 
     private fun showRewardInformationDialog() {
         CommonDialog(requireContext()).apply {
-            setTitle(text = "다음 회차 랭킹이 시작되기 전까지 언제든 공지를 작성할 수 있어요!")
+            setTitle(text = "다음에 공지하시겠어요?")
             setMessage(text = "다음 회차 랭킹이 시작되면 공지 등록권이 소멸되니 기간 안에 꼭 등록해주세요!")
-            setPositiveButton("확인")
+            setPositiveButton("네") {
+                this@DanggnFirstPlaceBottomPopup.dismiss()
+            }
+            setNegativeButton("아니오")
             show()
         }
     }

@@ -117,7 +117,7 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             setTitle(text = "공지로 등록하시겠어요?")
             setMessage(text = "등록하면 이제 수정할 수 없고 다음 랭킹까지 당근 흔들기 상단에 모두에게 노출돼요!")
             setPositiveButton("등록하기") {
-                submitRewardNotice(text)
+                rankingViewModel.registerRewardNotice(text)
                 this@DanggnRewardPopup.dismiss()
             }
             setNegativeButton("아니오")
@@ -125,19 +125,10 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
         }
     }
 
-    private fun submitRewardNotice(text: String) {
-        rankingViewModel.registerRewardNotice(arguments?.getInt(KEY_LAST_ROUND) ?: -1, text)
-    }
-
     companion object {
-        private const val KEY_LAST_ROUND = "KEY_LAST_ROUND"
         const val MAX_LENGTH = 20
 
-        fun getNewInstance(lastRound: Int): DanggnRewardPopup = DanggnRewardPopup().apply {
-            arguments = Bundle().apply {
-                putInt(KEY_LAST_ROUND, lastRound)
-            }
-        }
+        fun getNewInstance(): DanggnRewardPopup = DanggnRewardPopup()
     }
 }
 

@@ -18,10 +18,9 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.MashUpBottomPopupScreen
 import com.mashup.core.ui.widget.MashUpBottomPopupUiState
 import com.mashup.core.ui.widget.MashUpPopupEntity
+import com.mashup.feature.danggn.reward.model.DanggnPopupType
 
 class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
-
-    private var lastRound: Int = -1
 
     private val behavior: BottomSheetBehavior<View>?
         get() {
@@ -37,16 +36,12 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        lastRound = arguments?.getInt(KEY_LAST_ROUND) ?: -1
-
-        // TODO: storage api로 받아오기
         val entity = MashUpPopupEntity(
-            title = "당근 흔들기 ${lastRound}회차 랭킹 1위를 축하합니다!\n" +
-                    "리워드로 전체 공지 작성 기회가 생겼어요!",
-            description = "다음 랭킹 시작 전까지 공지를 작성해서\n모두에게 한 마디 할 수 있는 기회를 놓치지 마세요!",
-            imageResName = "img_carrot_reward_bottom_popup",
-            leftButtonText = "다음에",
-            rightButtonText = "한 마디 공지하기"
+            title = arguments?.getString(EXTRA_POPUP_TITLE) ?: "",
+            description = arguments?.getString(EXTRA_POPUP_DESCRIPTION) ?: "",
+            imageResName = arguments?.getString(EXTRA_POPUP_IMG_RES_NAME) ?: "img_danggn_reward_info",
+            leftButtonText = arguments?.getString(EXTRA_POPUP_LEFT_BUTTON_TEXT) ?: "",
+            rightButtonText = arguments?.getString(EXTRA_POPUP_RIGHT_BUTTON_TEXT) ?: ""
         )
 
         return ComposeView(requireContext()).apply {
@@ -61,7 +56,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                             dismiss()
                         },
                         onClickRightButton = {
-                            DanggnRewardPopup.getNewInstance(lastRound).safeShow(parentFragmentManager)
+                            DanggnRewardPopup.getNewInstance().safeShow(parentFragmentManager)
                             dismiss()
                         }
                     )
@@ -113,14 +108,24 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
     }
 
     companion object {
-        private const val KEY_LAST_ROUND = "KEY_LAST_ROUND"
+        private const val EXTRA_POPUP_KEY = "EXTRA_POPUP_KEY"
+        private const val EXTRA_POPUP_TITLE = "EXTRA_POPUP_TITLE"
+        private const val EXTRA_POPUP_DESCRIPTION = "EXTRA_POPUP_DESCRIPTION"
+        private const val EXTRA_POPUP_IMG_RES_NAME = "EXTRA_POPUP_IMG_RES_NAME"
+        private const val EXTRA_POPUP_LEFT_BUTTON_TEXT = "EXTRA_POPUP_LEFT_BUTTON_TEXT"
+        private const val EXTRA_POPUP_RIGHT_BUTTON_TEXT = "EXTRA_POPUP_RIGHT_BUTTON_TEXT"
 
-        fun getNewInstance(lastRound: Int): DanggnFirstPlaceBottomPopup {
-            return DanggnFirstPlaceBottomPopup().apply {
+        fun getNewInstance(entity: MashUpPopupEntity): DanggnFirstPlaceBottomPopup =
+            DanggnFirstPlaceBottomPopup().apply {
                 arguments = Bundle().apply {
-                    putInt(KEY_LAST_ROUND, lastRound)
+                    putString(EXTRA_POPUP_KEY, DanggnPopupType.DANGGN_REWARD.name)
+
+                    putString(EXTRA_POPUP_TITLE, entity.title)
+                    putString(EXTRA_POPUP_DESCRIPTION, entity.description)
+                    putString(EXTRA_POPUP_IMG_RES_NAME, entity.imageResName)
+                    putString(EXTRA_POPUP_LEFT_BUTTON_TEXT, entity.leftButtonText)
+                    putString(EXTRA_POPUP_RIGHT_BUTTON_TEXT, entity.rightButtonText)
                 }
             }
-        }
     }
 }

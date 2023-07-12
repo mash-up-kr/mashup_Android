@@ -6,8 +6,10 @@ import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.extensions.combineWithEightValue
 import com.mashup.core.common.utils.TimerUtils
 import com.mashup.core.data.repository.PopUpRepository
+import com.mashup.core.data.repository.StorageRepository
 import com.mashup.core.model.data.local.DanggnPreference
 import com.mashup.core.model.data.local.UserPreference
+import com.mashup.core.ui.widget.MashUpPopupEntity
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
@@ -34,6 +36,7 @@ import javax.inject.Inject
 class DanggnRankingViewModel @Inject constructor(
     private val danggnRepository: DanggnRepository,
     private val popupRepository: PopUpRepository,
+    private val storageRepository: StorageRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
     private val danggnPreferenceRepository: DanggnPreferenceRepository,
 ) : BaseViewModel() {
@@ -298,9 +301,11 @@ class DanggnRankingViewModel @Inject constructor(
         val currentPlatformRanking = platformRankingList.indexOfFirst { it.text == myPlatform }
 
         if (shouldCheckDanggnPopup.value && checkFirstPlaceLastRound()) {
+            val entity = getBottomPopupMessageFromStorage() ?: return FirstRankingState.Empty
             return FirstRankingState.FirstRankingLastRound(
                 name = myName,
-                round = allDanggnRoundList.value.size - 1
+                round = currentRoundId.value - 1,
+                entity = entity
             )
         }
 
@@ -339,7 +344,7 @@ class DanggnRankingViewModel @Inject constructor(
         return kotlin.runCatching {
             popupRepository.getPopupKeyList().data
         }.getOrNull()
-            ?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_FIRST_PLACE }
+            ?.find { DanggnPopupType.getDanggnPopupType(it) == DanggnPopupType.DANGGN_REWARD }
             .isNullOrBlank()
             .not()
     }
@@ -348,14 +353,29 @@ class DanggnRankingViewModel @Inject constructor(
         shouldCheckDanggnPopup.value = flag
     }
 
-    fun registerRewardNotice(round: Int, comment: String) {
+    fun registerRewardNotice(comment: String) {
         mashUpScope {
             kotlin.runCatching {
-                danggnRepository.postDanggnRankingRewardComment(round, comment)
+                danggnRepository.postDanggnRankingRewardComment(currentRoundId.value - 1, comment)
             }.onSuccess {
                 // TODO: 랭킹 단건조회 & 리프레쉬
             }
         }
+    }
+
+    private suspend fun getBottomPopupMessageFromStorage(): MashUpPopupEntity? {
+        return kotlin.runCatching {
+            storageRepository.getStorage(DanggnPopupType.DANGGN_REWARD.name).data
+        }.getOrNull()
+            ?.let { result ->
+                MashUpPopupEntity(
+                    title = result.valueMap["title"] ?: "",
+                    description = result.valueMap["subtitle"] ?: "",
+                    imageResName = result.valueMap["imageName"] ?: "",
+                    leftButtonText = result.valueMap["leftButtonTitle"] ?: "",
+                    rightButtonText = result.valueMap["rightButtonTitle"] ?: ""
+                )
+            }
     }
 
     internal fun updateFirstRanking() = mashUpScope {
@@ -441,7 +461,7 @@ class DanggnRankingViewModel @Inject constructor(
     sealed interface FirstRankingState {
         object Empty : FirstRankingState
         data class FirstRanking(val text: String) : FirstRankingState
-        data class FirstRankingLastRound(val name: String, val round: Int) : FirstRankingState
+        data class FirstRankingLastRound(val name: String, val round: Int, val entity: MashUpPopupEntity) : FirstRankingState
     }
 
     data class AllRound(

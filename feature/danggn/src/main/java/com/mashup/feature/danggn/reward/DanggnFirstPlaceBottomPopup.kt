@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -22,6 +23,8 @@ import com.mashup.feature.danggn.reward.model.DanggnPopupType
 
 class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
 
+    private val bottomPopupViewModel: DanggnBottomPopupViewModel by viewModels()
+
     private val behavior: BottomSheetBehavior<View>?
         get() {
             val bottomSheet =
@@ -30,6 +33,11 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                 BottomSheetBehavior.from(bottomSheet)
             }
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bottomPopupViewModel.patchPopupViewed()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

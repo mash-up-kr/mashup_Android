@@ -18,6 +18,7 @@ import com.mashup.core.common.R as CR
 @Composable
 fun DanggnInfoScreen(
     modifier: Modifier = Modifier,
+    hasMoveToDanggnButton: Boolean = true,
     onClickBackButton: () -> Unit,
 ) {
     val scrollState = rememberScrollState()

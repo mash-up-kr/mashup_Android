@@ -45,11 +45,11 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val entity = MashUpPopupEntity(
-            title = arguments?.getString(EXTRA_POPUP_TITLE) ?: "",
-            description = arguments?.getString(EXTRA_POPUP_DESCRIPTION) ?: "",
-            imageResName = arguments?.getString(EXTRA_POPUP_IMG_RES_NAME) ?: "img_danggn_reward_info",
-            leftButtonText = arguments?.getString(EXTRA_POPUP_LEFT_BUTTON_TEXT) ?: "",
-            rightButtonText = arguments?.getString(EXTRA_POPUP_RIGHT_BUTTON_TEXT) ?: ""
+            title = arguments?.getString(EXTRA_POPUP_TITLE).orEmpty(),
+            description = arguments?.getString(EXTRA_POPUP_DESCRIPTION).orEmpty(),
+            imageResName = arguments?.getString(EXTRA_POPUP_IMG_RES_NAME).orEmpty(),
+            leftButtonText = arguments?.getString(EXTRA_POPUP_LEFT_BUTTON_TEXT).orEmpty(),
+            rightButtonText = arguments?.getString(EXTRA_POPUP_RIGHT_BUTTON_TEXT).orEmpty(),
         )
 
         return ComposeView(requireContext()).apply {

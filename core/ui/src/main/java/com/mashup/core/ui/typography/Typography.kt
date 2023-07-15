@@ -103,12 +103,19 @@ val Body2 = TextStyle(
 
 val Body3 = TextStyle(
     fontFamily = mashupFontFamily,
-    fontWeight = FontWeight.Medium,
+    fontWeight = FontWeight.Bold,
     fontSize = 14.sp,
     letterSpacing = (-0.01).em
 )
 
 val Body4 = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Medium,
+    fontSize = 14.sp,
+    letterSpacing = (-0.01).em
+)
+
+val Body5 = TextStyle(
     fontFamily = mashupFontFamily,
     fontWeight = FontWeight.Normal,
     fontSize = 14.sp,

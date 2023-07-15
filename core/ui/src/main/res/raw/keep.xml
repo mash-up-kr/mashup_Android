@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:shrinkMode="strict"
+    tools:keep="@drawable/ic_img_carrot,@drawable/img_carrot_reward_bottom_popup" />

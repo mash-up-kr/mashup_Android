@@ -1,27 +1,23 @@
 package com.mashup.feature.danggn
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
@@ -34,11 +30,16 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mashup.core.common.extensions.haptic
+import com.mashup.core.common.utils.safeShow
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
+import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.*
+import com.mashup.feature.danggn.ranking.DanggnWeeklyRankingContent
+import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
+import com.mashup.feature.danggn.reward.DanggnRewardContent
 import com.mashup.feature.danggn.shake.DanggnShakeContent
 import com.mashup.feature.danggn.shake.DanggnShakeEffect
 import kotlinx.coroutines.flow.collectLatest
@@ -48,24 +49,26 @@ import com.mashup.core.common.R as CR
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShakeDanggnScreen(
-    modifier: Modifier = Modifier,
     viewModel: DanggnViewModel,
     rankingViewModel: DanggnRankingViewModel,
-    onClickBackButton: () -> Unit,
-    onClickDanggnInfoButton: () -> Unit,
+    modifier: Modifier = Modifier,
+    onClickBackButton: () -> Unit = {},
+    onClickDanggnInfoButton: () -> Unit = {},
+    onClickHelpButton: () -> Unit = {},
+    onClickAnotherRounds: () -> Unit = {},
+    onClickReward: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val randomTodayMessage by viewModel.randomMessage.collectAsState()
     val danggnMode by viewModel.danggnMode.collectAsState()
-
     val rankUiState by rankingViewModel.uiState.collectAsState()
-
     val context = LocalContext.current
-
+    val danggnRound by rankingViewModel.currentRound.collectAsState()
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
-
     val isRefreshing = rankingViewModel.isRefreshing.collectAsState().value
+    val currentRoundId by rankingViewModel.currentRoundId.collectAsState(0)
+
     val pullRefreshState = rememberSwipeRefreshState(isRefreshing)
     val refreshTriggerDistance = 80.dp
 
@@ -119,11 +122,24 @@ fun ShakeDanggnScreen(
                     refreshTriggerDistance = refreshTriggerDistance
                 )
 
-                // 당근 흔들기 UI
-                DanggnShakeContent(
-                    randomTodayMessage = randomTodayMessage,
-                    danggnMode = danggnMode
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    danggnRound?.danggnRankingReward?.let { reward ->
+                        if (reward.isFirstPlaceMember) {
+                            DanggnRewardContent(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 20.dp),
+                                reward = reward,
+                                onClickReward = onClickReward
+                            )
+                        }
+                    }
+                    // 당근 흔들기 UI
+                    DanggnShakeContent(
+                        randomTodayMessage = randomTodayMessage,
+                        danggnMode = danggnMode
+                    )
+                }
 
                 // 중간 Divider
                 Divider(
@@ -132,11 +148,21 @@ fun ShakeDanggnScreen(
                     thickness = 4.dp
                 )
 
+                (rankUiState.danggnAllRoundList.find { it.id == currentRoundId })?.let { round ->
+                    // 당근 회차 알리미
+                    DanggnWeeklyRankingContent(
+                        round = round,
+                        timerCount = rankUiState.timer.timerString,
+                        onClickAnotherRounds = onClickAnotherRounds,
+                        onClickHelpButton = onClickHelpButton
+                    )
+                }
+
                 // 당근 흔들기 랭킹 UI
                 DanggnRankingContent(
-                    allMashUpMemberRankState = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
-                    personalRank = rankUiState.myPersonalRanking,
-                    allPlatformRank = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
+                    personalRankList = rankUiState.personalRankingList.sortedByDescending { it.totalShakeScore },
+                    myPersonalRank = rankUiState.myPersonalRanking,
+                    platformRankList = rankUiState.platformRankingList.sortedByDescending { it.totalShakeScore },
                     platformRank = rankUiState.myPlatformRanking,
                     onClickScrollTopButton = {
                         coroutineScope.launch {
@@ -155,13 +181,31 @@ fun ShakeDanggnScreen(
                     ?: emptyList(),
             )
 
-            (rankUiState.firstPlaceState as? DanggnRankingViewModel.FirstRankingState.FirstRanking)?.run {
-                DanggnFirstPlaceScreen(
-                    name = text,
-                    onClickCloseButton = {
-                        rankingViewModel.updateFirstRanking()
-                    }
-                )
+            when (val state = rankUiState.firstPlaceState) {
+                is FirstRanking -> {
+                    DanggnFirstPlaceScreen(
+                        name = state.text,
+                        onClickCloseButton = {
+                            rankingViewModel.updateFirstRanking()
+                        }
+                    )
+                }
+
+                is FirstRankingLastRound -> {
+                    DanggnLastRoundFirstPlaceScreen(
+                        round = state.round,
+                        name = state.name,
+                        onClickCloseButton = {
+                            rankingViewModel.setShouldCheckFirstPlaceLastRound(false)
+                            DanggnFirstPlaceBottomPopup
+                                .getNewInstance(state.round)
+                                .safeShow((context as AppCompatActivity).supportFragmentManager)
+                        })
+                }
+
+                Empty -> {
+
+                }
             }
         }
     }
@@ -184,7 +228,11 @@ fun DanggnPullToRefreshIndicator(
         )
     )
 
-    Box(modifier.fillMaxWidth().padding(vertical = 150.dp * progress)) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .padding(vertical = 150.dp * progress)
+    ) {
         Image(
             painter = painterResource(id = com.mashup.core.common.R.drawable.img_carrot_pulltorefresh),
             contentDescription = null,

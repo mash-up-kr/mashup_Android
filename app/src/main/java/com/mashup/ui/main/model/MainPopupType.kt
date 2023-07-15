@@ -1,7 +1,7 @@
 package com.mashup.ui.main.model
 
 enum class MainPopupType {
-    DANGGN, UNKNOWN;
+    DANGGN, DANGGN_UPDATE, UNKNOWN;
 
     companion object {
         fun getMainPopupType(type: String): MainPopupType {

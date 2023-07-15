@@ -182,7 +182,7 @@ class DanggnRankingViewModel @Inject constructor(
                             danggnRepository.getDanggnSingleRound(item.id).data.also {
                                 val detailEndDate = it?.endDate?.let { date ->
                                     detailDateFormat.format(date)
-                                } ?: ""
+                                }.orEmpty()
                                 val endDateForDiff = detailDateFormat.parse(detailEndDate)
                                 currentDateDiff.value =
                                     ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_UNIT).toInt()

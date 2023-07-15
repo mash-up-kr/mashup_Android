@@ -102,7 +102,7 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                             dismiss()
                         },
                         onClickRightButton = {
-                            mainViewModel.onClickPopup(viewModel.popupKey ?: "")
+                            mainViewModel.onClickPopup(viewModel.popupKey.orEmpty())
                             AnalyticsManager.addEvent(LOG_COMMON_POPUP_CONFIRM, bundleOf("key" to viewModel.popupKey))
                             dismiss()
                         }

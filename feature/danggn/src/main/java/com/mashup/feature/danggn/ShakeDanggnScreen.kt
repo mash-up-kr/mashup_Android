@@ -213,8 +213,8 @@ fun ShakeDanggnScreen(
             if (showDanggnRewardDialog && danggnRound?.danggnRankingReward?.status == DANGGN_REWARD_REGISTERED.name) {
                 DanggnRewardNoticeScreen(
                     modifier = Modifier.fillMaxSize(),
-                    name = danggnRound?.danggnRankingReward?.name ?: "",
-                    message = danggnRound?.danggnRankingReward?.comment ?: "",
+                    name = danggnRound?.danggnRankingReward?.name.orEmpty(),
+                    message = danggnRound?.danggnRankingReward?.comment.orEmpty(),
                     onClickCloseButton = rankingViewModel::confirmDanggnRewardNotice
                 )
             }

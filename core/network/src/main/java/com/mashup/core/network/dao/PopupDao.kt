@@ -1,6 +1,6 @@
-package com.mashup.network.dao
+package com.mashup.core.network.dao
 
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Path

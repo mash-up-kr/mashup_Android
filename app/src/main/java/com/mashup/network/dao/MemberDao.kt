@@ -8,7 +8,7 @@ import com.mashup.data.dto.PushNotificationRequest
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
 import com.mashup.data.dto.ValidResponse
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

@@ -1,6 +1,5 @@
 package com.mashup.feature.danggn.ranking
 
-import android.graphics.Paint.Cap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,10 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,18 +30,27 @@ import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray50
-import com.mashup.core.ui.colors.RankingGrayColor
+import com.mashup.core.ui.colors.Gray500
+import com.mashup.core.ui.colors.Gray600
+import com.mashup.core.ui.colors.Gray950
+import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.Caption3
-import com.mashup.core.ui.typography.Title1
-import com.mashup.core.ui.typography.Title3
+import com.mashup.core.ui.typography.Body2
+import com.mashup.core.ui.typography.Caption2
+import com.mashup.core.ui.typography.Header2
+import com.mashup.core.ui.typography.SubTitle2
 
 @Composable
 fun DanggnWeeklyRankingContent(
+    round: DanggnRankingViewModel.AllRound,
+    timerCount: String,
     modifier: Modifier = Modifier,
-    ) {
+    onClickAnotherRounds: () -> Unit = {},  // 이걸 누를 때 랭킹 회차 팝업 보여줌
+    onClickHelpButton: () -> Unit = {},
+) {
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Gray50),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,13 +68,18 @@ fun DanggnWeeklyRankingContent(
                 Text(
                     modifier = Modifier,
                     text = "2주의 당근 랭킹",
-                    style = Title3,
+                    style = SubTitle2,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Gray950,
                 )
 
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 16.dp),
+                        .padding(end = 16.dp)
+                        .noRippleClickable {
+                            onClickHelpButton()
+                        },
                     painter = painterResource(id = R.drawable.ic_info_inverse),
                     contentDescription = null,
                     alignment = Alignment.CenterEnd
@@ -76,52 +89,72 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(27.dp))
 
-        Text(modifier = Modifier, text = "3회차", style = Title1, color = Brand500)
+        Text(
+            modifier = Modifier,
+            text = "${round.number}회차",
+            style = Header2,
+            color = Brand500,
+            fontWeight = FontWeight.Bold
+        )
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        Box(
+        Row(
             modifier = Modifier
-                .size(width = 139.dp, height = 25.dp)
                 .clip(shape = RoundedCornerShape(8.dp))
                 .background(Gray100)
-                .padding(5.dp)
+                .noRippleClickable {
+                    onClickAnotherRounds()
+                }
+                .padding(horizontal = 8.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
+            Text(
+                text = "${round.startDate} - ${round.endDate}",
+                style = Caption2,
+                color = Gray500,
+                fontWeight = FontWeight.Medium
+            )
+            Image(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                // TODO 컬러, 스타일 모두 변경 될 여지가 있습니다 ^^ 배선영 일해라~
-                Text(text = "23.06.05", style = Caption3, color = RankingGrayColor)
-                Text(text = "-", style = Caption3, color = RankingGrayColor)
-                Text(text = "23.06.18", style = Caption3, color = RankingGrayColor)
-                Image(
-                    modifier = Modifier
-                        .padding(start = 4.dp),
-                    painter = painterResource(id = R.drawable.ic_chevron_down),
-                    contentDescription = null,
-                    alignment = Alignment.BottomCenter
-                )
-            }
+                    .padding(start = 4.dp)
+                    .size(12.dp),
+                painter = painterResource(id = R.drawable.ic_chevron_down),
+                contentDescription = null,
+                alignment = Alignment.BottomCenter
+            )
         }
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        Text(text = buildAnnotatedString {
-            append("랭킹 종료까지" )
-            withStyle(
-                SpanStyle(
-                    color = Brand500
-                )
-            ) {
-                // TODO 서버 값 넣기
-                append("3일 ")
-            }
-            append("남았어요")
-        })
+        if(round.isRunning) { // 현재 진행 중인 랭킹을 보고 있을 때
+            Text(
+                color = Gray600,
+                style = Body2,
+                text = buildAnnotatedString {
+                    append("랭킹 종료까지 ")
+                    withStyle(
+                        SpanStyle(
+                            fontWeight = FontWeight.Bold,
+                        )
+                    ) {
+                        if (round.dateDiff > 0) {
+                            append("${round.dateDiff}일")
+                        } else {
+                            append(timerCount.ifBlank { "00:00:00" })
+                        }
+                    }
+                    append(" 남았어요")
+                })
+        } else {
+            // 이전 회차의 랭킹을 보고 있을 때
+            Text(
+                color = Gray600,
+                style = Body2,
+                text = "종료된 랭킹이에요"
+            )
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
     }
@@ -131,6 +164,14 @@ fun DanggnWeeklyRankingContent(
 @Preview
 fun WeeklyRankingPreview() {
     MashUpTheme {
-        DanggnWeeklyRankingContent()
+        DanggnWeeklyRankingContent(
+            round = DanggnRankingViewModel.AllRound(
+                id = 0,
+                number = 3,
+                startDate = "23.02.10",
+                endDate = "23.02.11"
+            ),
+            timerCount = ""
+        )
     }
 }

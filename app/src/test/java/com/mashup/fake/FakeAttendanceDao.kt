@@ -1,7 +1,7 @@
 package com.mashup.fake
 
 import com.mashup.data.dto.*
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import com.mashup.network.dao.AttendanceDao
 
 class FakeAttendanceDao : AttendanceDao {

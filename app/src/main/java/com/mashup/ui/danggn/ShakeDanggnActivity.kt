@@ -19,6 +19,7 @@ import com.mashup.feature.danggn.DanggnUiState
 import com.mashup.feature.danggn.DanggnViewModel
 import com.mashup.feature.danggn.ShakeDanggnScreen
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
+import com.mashup.feature.danggn.reward.DanggnRewardPopup
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -39,8 +40,11 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     modifier = Modifier.fillMaxSize(),
                     viewModel = viewModel,
                     rankingViewModel = rankingViewModel,
-                    onClickBackButton = { onBackPressed() },
-                    onClickDanggnInfoButton = { openDanggnInfoActivity() }
+                    onClickBackButton = this::onBackPressed,
+                    onClickDanggnInfoButton = this::openDanggnInfoActivity,
+                    onClickHelpButton = this::openDanggnUpdateActivity,
+                    onClickAnotherRounds = this::showDanggnRoundSelectDialog,
+                    onClickReward = this::showDanggnRewardPopup
                 )
             }
         }
@@ -54,16 +58,33 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     is DanggnUiState.Error -> {
                         handleCommonError(state.code)
                     }
+
                     else -> {}
                 }
             }
         }
     }
 
+    private fun openDanggnUpdateActivity() {
+        val intent = DanggnUpdateActivity.newIntent(context = this, hasMoveToDanggnButton = false)
+        startActivity(intent)
+    }
+
     private fun openDanggnInfoActivity() {
         sendActivityEnterType(LOG_DANGGN_HELP)
         val intent = DanggnInfoActivity.newIntent(this)
         startActivity(intent)
+    }
+
+    private fun showDanggnRoundSelectDialog() {
+        DanggnRoundSelectorDialog().show(
+            supportFragmentManager,
+            DanggnRoundSelectorDialog::class.simpleName
+        )
+    }
+
+    private fun showDanggnRewardPopup() {
+        DanggnRewardPopup().show(supportFragmentManager, DanggnRewardPopup::class.simpleName)
     }
 
     companion object {

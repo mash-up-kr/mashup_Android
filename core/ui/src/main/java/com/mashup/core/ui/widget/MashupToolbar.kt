@@ -96,7 +96,7 @@ fun MashUpToolbar(
 
 @Preview
 @Composable
-fun MashupToolbarOnlyTitlePrev() {
+private fun MashupToolbarOnlyTitlePrev() {
     MashUpTheme {
         Surface {
             MashUpToolbar(
@@ -109,7 +109,7 @@ fun MashupToolbarOnlyTitlePrev() {
 
 @Preview("back Button을 포함한 toolbar")
 @Composable
-fun MashupToolbarIncludeBackButtonPrev() {
+private fun MashupToolbarIncludeBackButtonPrev() {
     MashUpTheme {
         Surface {
             MashUpToolbar(

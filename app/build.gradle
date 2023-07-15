@@ -78,13 +78,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += [
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xuse-experimental=androidx.compose.animation.ExperimentalAnimationApi",
-                "-Xuse-experimental=androidx.compose.foundation.ExperimentalFoundationApi"
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
         ]
     }
     composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
+        kotlinCompilerExtensionVersion composeCompiler
     }
     packagingOptions {
         resources {
@@ -101,6 +101,7 @@ dependencies {
     implementation project(":core:network")
     implementation project(":core:datastore")
     implementation project(":core:firebase")
+    implementation project(":core:data")
     implementation project(":feature:setting")
     implementation project(":feature:danggn")
 

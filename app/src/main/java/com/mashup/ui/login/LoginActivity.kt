@@ -137,7 +137,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun moveNextScreen(loginType: LoginType) {
-        val deepLink = intent.getStringExtra(EXTRA_LINK) ?: ""
+        val deepLink = intent.getStringExtra(EXTRA_LINK).orEmpty()
         val baseIntent = MainActivity.newIntent(
             context = this,
             loginType = loginType,

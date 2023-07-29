@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,14 +57,15 @@ private fun DanggnRewardNoticeContent(
 ) {
     Column(
         modifier = modifier
-            .background(color = Color(0xB3000000))
-            .padding(horizontal = 48.dp),
+            .background(color = Color(0xB3000000)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
 
         Column(
             modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 48.dp)
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(23.dp)

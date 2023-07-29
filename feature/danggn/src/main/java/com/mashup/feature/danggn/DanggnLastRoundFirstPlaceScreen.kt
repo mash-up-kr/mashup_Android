@@ -26,7 +26,6 @@ import com.mashup.core.ui.widget.MashUpButton
 
 @Composable
 fun DanggnLastRoundFirstPlaceScreen(
-    round: Int,
     name: String,
     modifier: Modifier = Modifier,
     onClickCloseButton: () -> Unit = {},
@@ -34,7 +33,6 @@ fun DanggnLastRoundFirstPlaceScreen(
     Box(modifier = modifier) {
         DanggnLastRoundFirstPlaceContent(
             name = name,
-            round = round,
             modifier = Modifier.fillMaxSize(),
             onClickCloseButton = onClickCloseButton
         )
@@ -44,7 +42,6 @@ fun DanggnLastRoundFirstPlaceScreen(
 
 @Composable
 private fun DanggnLastRoundFirstPlaceContent(
-    round: Int,
     name: String,
     modifier: Modifier = Modifier,
     onClickCloseButton: () -> Unit = {}
@@ -67,7 +64,7 @@ private fun DanggnLastRoundFirstPlaceContent(
         Text(
             modifier = Modifier,
             text = "축하드려요!\n" +
-                    "이번 ${round}회차\n" +
+                    "이전 회차에서\n" +
                     "${name}님이 1등을 차지했어요!",
             textAlign = TextAlign.Center,
             color = Color.White,
@@ -91,7 +88,6 @@ fun PreviewDanggnLastRoundFirstPlace() {
     MashUpTheme {
         Surface(color = Color.White) {
             DanggnLastRoundFirstPlaceScreen(
-                round = 1,
                 name = "매숑이"
             )
         }

@@ -9,7 +9,7 @@ import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

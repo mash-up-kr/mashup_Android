@@ -5,7 +5,7 @@ import com.mashup.data.dto.AttendanceCheckResponse
 import com.mashup.data.dto.AttendanceInfoResponse
 import com.mashup.data.dto.PlatformAttendanceResponse
 import com.mashup.data.dto.TotalAttendanceResponse
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

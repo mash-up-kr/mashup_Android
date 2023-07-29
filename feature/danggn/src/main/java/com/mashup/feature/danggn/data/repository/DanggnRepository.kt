@@ -10,7 +10,7 @@ import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import javax.inject.Inject
 
 class DanggnRepository @Inject constructor(

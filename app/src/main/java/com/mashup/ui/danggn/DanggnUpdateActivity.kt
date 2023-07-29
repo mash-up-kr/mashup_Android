@@ -23,6 +23,7 @@ class DanggnUpdateActivity : BaseActivity<ActivityDanggnInfoBinding>() {
             MashUpTheme {
                 DanggnUpdateScreen(
                     modifier = Modifier.fillMaxSize(),
+                    hasMoveToDanggnButton = intent.getBooleanExtra(EXTRA_MOVE_TO_DANGGN_BUTTON, true),
                     onClickCloseButton = {
                         finish()
                     },
@@ -42,8 +43,13 @@ class DanggnUpdateActivity : BaseActivity<ActivityDanggnInfoBinding>() {
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, DanggnUpdateActivity::class.java).apply {
+        private const val EXTRA_MOVE_TO_DANGGN_BUTTON = "EXTRA_MOVE_TO_DANGGN_BUTTON"
+        fun newIntent(
+            context: Context,
+            hasMoveToDanggnButton: Boolean = true
+        ) = Intent(context, DanggnUpdateActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.PULL)
+            putExtra(EXTRA_MOVE_TO_DANGGN_BUTTON, hasMoveToDanggnButton)
         }
     }
 }

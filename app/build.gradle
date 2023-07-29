@@ -101,6 +101,7 @@ dependencies {
     implementation project(":core:network")
     implementation project(":core:datastore")
     implementation project(":core:firebase")
+    implementation project(":core:data")
     implementation project(":feature:setting")
     implementation project(":feature:danggn")
 

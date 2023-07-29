@@ -14,6 +14,7 @@ import com.mashup.constant.log.LOG_DANGGN_HELP
 import com.mashup.core.common.constant.RANKING_ROUND_NOT_FOUND
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
+import com.mashup.core.common.utils.safeShow
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityShakeDanggnBinding
 import com.mashup.feature.danggn.DanggnUiState
@@ -93,7 +94,7 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
     }
 
     private fun showDanggnRewardPopup() {
-        DanggnRewardPopup().show(supportFragmentManager, DanggnRewardPopup::class.simpleName)
+        DanggnRewardPopup.getNewInstance(rankingViewModel.currentRoundId.value).safeShow(supportFragmentManager)
     }
 
     override fun handleCommonError(code: String) {

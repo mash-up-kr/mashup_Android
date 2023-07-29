@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -113,11 +114,12 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
     }
 
     private fun showSubmitRewardDialog(text: String) {
+        val roundId = arguments?.getInt(KEY_ROUND_ID) ?: return
         CommonDialog(requireContext()).apply {
             setTitle(text = "공지로 등록하시겠어요?")
             setMessage(text = "등록하면 이제 수정할 수 없고 다음 랭킹까지 당근 흔들기 상단에 모두에게 노출돼요!")
             setPositiveButton("등록하기") {
-                rankingViewModel.registerRewardNotice(text)
+                rankingViewModel.registerRewardNotice(roundId, text)
                 this@DanggnRewardPopup.dismiss()
             }
             setNegativeButton("아니오")
@@ -127,8 +129,11 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
 
     companion object {
         const val MAX_LENGTH = 20
+        const val KEY_ROUND_ID = "KEY_ROUND_ID"
 
-        fun getNewInstance(): DanggnRewardPopup = DanggnRewardPopup()
+        fun getNewInstance(roundId: Int): DanggnRewardPopup = DanggnRewardPopup().apply {
+            arguments = bundleOf(KEY_ROUND_ID to roundId)
+        }
     }
 }
 

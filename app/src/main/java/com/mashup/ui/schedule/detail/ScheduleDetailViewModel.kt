@@ -73,7 +73,7 @@ class ScheduleDetailViewModel @Inject constructor(
                             event.eventId,
                             EventDetailType.CONTENT,
                             null,
-                            Body("${eventIndex + 1}", it.title, it.content ?: "", it.startedAt)
+                            Body("${eventIndex + 1}", it.title, it.content.orEmpty(), it.startedAt)
                         )
                     )
                 }

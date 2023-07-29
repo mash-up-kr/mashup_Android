@@ -1,6 +1,7 @@
 package com.mashup.feature.danggn.ranking
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.extensions.combineWithEightValue
@@ -12,6 +13,7 @@ import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.widget.MashUpPopupEntity
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
+import com.mashup.feature.danggn.constant.EXTRA_SHOW_DANGGN_REWARD_NOTICE
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import com.mashup.feature.danggn.reward.model.DanggnPopupType
@@ -39,6 +41,7 @@ class DanggnRankingViewModel @Inject constructor(
     private val storageRepository: StorageRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
     private val danggnPreferenceRepository: DanggnPreferenceRepository,
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     companion object {
         private const val DEFAULT_SHAKE_NUMBER = -1
@@ -65,7 +68,8 @@ class DanggnRankingViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val timer = TimerUtils()
-    private val timerCount: MutableStateFlow<RankingItem.Timer> = MutableStateFlow(RankingItem.Timer(""))
+    private val timerCount: MutableStateFlow<RankingItem.Timer> =
+        MutableStateFlow(RankingItem.Timer(""))
 
     private val currentTabIndex = MutableStateFlow(0)
 
@@ -113,6 +117,8 @@ class DanggnRankingViewModel @Inject constructor(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    val showRewardNoticeDialog = savedStateHandle.getStateFlow(EXTRA_SHOW_DANGGN_REWARD_NOTICE, false)
+
     init {
         getRankingData()
     }
@@ -153,7 +159,8 @@ class DanggnRankingViewModel @Inject constructor(
     internal fun getRankingData() = mashUpScope {
         updateAllRanking()
         if (currentDateDiff.value <= 0) {
-            getTimerData(currentRoundId.value) }
+            getTimerData(currentRoundId.value)
+        }
     }
 
     internal fun updateCurrentTabIndex(index: Int) = mashUpScope {
@@ -181,7 +188,7 @@ class DanggnRankingViewModel @Inject constructor(
                             danggnRepository.getDanggnSingleRound(item.id).data.also {
                                 val detailEndDate = it?.endDate?.let { date ->
                                     detailDateFormat.format(date)
-                                } ?: ""
+                                }.orEmpty()
                                 val endDateForDiff = detailDateFormat.parse(detailEndDate)
                                 currentDateDiff.value =
                                     ((endDateForDiff.time - Calendar.getInstance().time.time) / DATE_UNIT).toInt()
@@ -395,6 +402,10 @@ class DanggnRankingViewModel @Inject constructor(
 
     fun updateCurrentRound(roundId: Int) = mashUpScope {
         _currentRoundId.emit(roundId)
+    }
+
+    fun confirmDanggnRewardNotice() {
+        savedStateHandle[EXTRA_SHOW_DANGGN_REWARD_NOTICE] = false
     }
 
     /**

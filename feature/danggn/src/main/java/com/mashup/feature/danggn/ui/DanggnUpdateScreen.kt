@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Brand500
+import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.Gray700
 import com.mashup.core.ui.colors.Gray900
 import com.mashup.core.ui.theme.MashUpTheme
@@ -32,28 +34,27 @@ import com.mashup.feature.danggn.R
 @Composable
 fun DanggnUpdateScreen(
     modifier: Modifier = Modifier,
+    hasMoveToDanggnButton: Boolean = true,
     onClickCloseButton: () -> Unit = {},
     onClickMoveDanggn: () -> Unit = {}
 ) {
-    Column(
-        modifier = modifier
-    ) {
-        DanggnUpdateContent(
-            modifier = Modifier.fillMaxSize(),
-            onClickCloseButton = onClickCloseButton,
-            onClickMoveDanggn = onClickMoveDanggn
-        )
-    }
+    DanggnUpdateContent(
+        modifier = modifier,
+        hasMoveToDanggnButton = hasMoveToDanggnButton,
+        onClickCloseButton = onClickCloseButton,
+        onClickMoveDanggn = onClickMoveDanggn
+    )
 }
 
 @Composable
 fun DanggnUpdateContent(
     modifier: Modifier = Modifier,
+    hasMoveToDanggnButton: Boolean = true,
     onClickCloseButton: () -> Unit = {},
     onClickMoveDanggn: () -> Unit = {}
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.background(Gray50)
     ) {
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
@@ -136,14 +137,16 @@ fun DanggnUpdateContent(
                 text = "확인 완료",
                 onClick = onClickCloseButton
             )
-            MashUpButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 9.dp),
-                text = "업데이트된 당근 흔들기 구경하기",
-                onClick = onClickMoveDanggn
-            )
+            if (hasMoveToDanggnButton) {
+                MashUpButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 9.dp),
+                    text = "업데이트된 당근 흔들기 구경하기",
+                    onClick = onClickMoveDanggn
+                )
+            }
             Spacer(modifier = Modifier.height(20.dp))
         }
     }

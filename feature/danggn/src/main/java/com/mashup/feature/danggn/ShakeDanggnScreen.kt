@@ -56,7 +56,6 @@ fun ShakeDanggnScreen(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit = {},
     onClickDanggnInfoButton: () -> Unit = {},
-    onClickHelpButton: () -> Unit = {},
     onClickAnotherRounds: () -> Unit = {},
     onClickReward: (rewardId: Int) -> Unit = {}
 ) {
@@ -154,8 +153,7 @@ fun ShakeDanggnScreen(
                     DanggnWeeklyRankingContent(
                         round = round,
                         timerCount = rankUiState.timer.timerString,
-                        onClickAnotherRounds = onClickAnotherRounds,
-                        onClickHelpButton = onClickHelpButton
+                        onClickAnotherRounds = onClickAnotherRounds
                     )
                 }
 

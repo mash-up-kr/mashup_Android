@@ -12,7 +12,7 @@ import com.mashup.network.dao.MemberDao
 import com.mashup.core.network.dao.PopupDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
-import com.mashup.network.dao.StorageDao
+import com.mashup.core.network.dao.StorageDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi

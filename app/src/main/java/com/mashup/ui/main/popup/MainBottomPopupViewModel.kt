@@ -33,11 +33,11 @@ class MainBottomPopupViewModel @Inject constructor(
         if (result.isSuccess()) {
             _uiState.value = MainBottomPopupUiState.Success(
                 MainPopupEntity(
-                    title = result.data?.valueMap?.get("title") ?: "",
-                    description = result.data?.valueMap?.get("subtitle") ?: "",
-                    imageResName = result.data?.valueMap?.get("imageName") ?: "",
-                    leftButtonText = result.data?.valueMap?.get("leftButtonTitle") ?: "",
-                    rightButtonText = result.data?.valueMap?.get("rightButtonTitle") ?: ""
+                    title = result.data?.valueMap?.get("title").orEmpty(),
+                    description = result.data?.valueMap?.get("subtitle").orEmpty(),
+                    imageResName = result.data?.valueMap?.get("imageName").orEmpty(),
+                    leftButtonText = result.data?.valueMap?.get("leftButtonTitle").orEmpty(),
+                    rightButtonText = result.data?.valueMap?.get("rightButtonTitle").orEmpty()
                 )
             )
         }

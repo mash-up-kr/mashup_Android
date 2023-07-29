@@ -18,6 +18,7 @@ import com.mashup.databinding.ActivityShakeDanggnBinding
 import com.mashup.feature.danggn.DanggnUiState
 import com.mashup.feature.danggn.DanggnViewModel
 import com.mashup.feature.danggn.ShakeDanggnScreen
+import com.mashup.feature.danggn.constant.EXTRA_SHOW_DANGGN_REWARD_NOTICE
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.reward.DanggnRewardPopup
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,9 +91,11 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
     companion object {
         fun newIntent(
             context: Context,
+            showDanggnRewardNotice: Boolean = false,
             type: ActivityEnterType = ActivityEnterType.NORMAL
         ) = Intent(context, ShakeDanggnActivity::class.java).apply {
             putExtra(EXTRA_ANIMATION, NavigationAnimationType.SLIDE)
+            putExtra(EXTRA_SHOW_DANGGN_REWARD_NOTICE, showDanggnRewardNotice)
             putExtra(EXTRA_ACTIVITY_ENTER_TYPE, type.name)
         }
     }

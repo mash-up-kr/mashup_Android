@@ -18,7 +18,7 @@ abstract class BaseViewModel : ViewModel() {
 
     private val exceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
-            Log.e("coroutine throwable", throwable.message ?: "")
+            Log.e("coroutine throwable", throwable.message.orEmpty())
             when (throwable) {
                 is UnknownHostException, is EOFException -> {
                     handleErrorCode(DISCONNECT_NETWORK)

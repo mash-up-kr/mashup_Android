@@ -29,7 +29,11 @@ class DanggnUpdateActivity : BaseActivity<ActivityDanggnInfoBinding>() {
                     },
                     onClickMoveDanggn = {
                         startActivity(
-                            ShakeDanggnActivity.newIntent(this, ActivityEnterType.UPDATE)
+                            ShakeDanggnActivity.newIntent(
+                                context = this,
+                                showDanggnRewardNotice = false,
+                                type = ActivityEnterType.UPDATE
+                            )
                         )
                         finish()
                     }

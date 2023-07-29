@@ -2,6 +2,7 @@ name: Lint Check
 
 on:
   pull_request:
+    types: [opened, synchronize, ready_for_review, edited]
     branches: [ "develop", "feature*", "hotfix*", "release*" ]
 
 jobs:

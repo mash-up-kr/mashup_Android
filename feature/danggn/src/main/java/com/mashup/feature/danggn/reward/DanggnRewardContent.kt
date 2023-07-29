@@ -28,31 +28,34 @@ fun DanggnRewardContent(
     onClickReward: () -> Unit = {}
 ) {
     val shape = RoundedCornerShape(8.dp)
+
     when (
         DanggnRewardStatus.getDanggnRankingRewardStatus(reward.status)
     ) {
         DanggnRewardStatus.FIRST_PLACE_MEMBER_NOT_REGISTERED -> {
-            Row(
-                modifier = modifier
-                    .background(
-                        shape = shape,
-                        color = Color(0xFFDFE0EE)
+            if (reward.isFirstPlaceMember) {
+                Row(
+                    modifier = modifier
+                        .background(
+                            shape = shape,
+                            color = Color(0xFFDFE0EE)
+                        )
+                        .noRippleClickable(onClick = onClickReward)
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "1등 리워드인 전체 공지 한마디를 작성해주세요!",
+                        style = Body3,
+                        color = Color(0xFF737598)
                     )
-                    .noRippleClickable(onClick = onClickReward)
-                    .padding(horizontal = 14.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "1등 리워드인 전체 공지 한마디를 작성해주세요!",
-                    style = Body3,
-                    color = Color(0xFF737598)
-                )
 
-                Icon(
-                    painter = painterResource(com.mashup.core.common.R.drawable.ic_chevron_right),
-                    tint = Color(0xFFABB2C1),
-                    contentDescription = null
-                )
+                    Icon(
+                        painter = painterResource(com.mashup.core.common.R.drawable.ic_chevron_right),
+                        tint = Color(0xFFABB2C1),
+                        contentDescription = null
+                    )
+                }
             }
         }
 

@@ -126,15 +126,13 @@ fun ShakeDanggnScreen(
 
                 Box(modifier = Modifier.fillMaxWidth()) {
                     danggnRound?.danggnRankingReward?.let { reward ->
-                        if (reward.isFirstPlaceMember) {
-                            DanggnRewardContent(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 20.dp),
-                                reward = reward,
-                                onClickReward = onClickReward
-                            )
-                        }
+                        DanggnRewardContent(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            reward = reward,
+                            onClickReward = onClickReward
+                        )
                     }
                     // 당근 흔들기 UI
                     DanggnShakeContent(

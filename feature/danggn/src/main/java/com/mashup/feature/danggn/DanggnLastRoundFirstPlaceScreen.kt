@@ -2,7 +2,14 @@ package com.mashup.feature.danggn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +35,7 @@ fun DanggnLastRoundFirstPlaceScreen(
         DanggnLastRoundFirstPlaceContent(
             name = name,
             round = round,
-            modifier = modifier,
+            modifier = Modifier.fillMaxSize(),
             onClickCloseButton = onClickCloseButton
         )
         DanggnKonfettiView(modifier = Modifier.fillMaxSize())
@@ -45,7 +52,6 @@ private fun DanggnLastRoundFirstPlaceContent(
     Column(
         modifier = modifier
             .background(color = Color(0xB3000000))
-            .fillMaxSize()
             .padding(horizontal = 38.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

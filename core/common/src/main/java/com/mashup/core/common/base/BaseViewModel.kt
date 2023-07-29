@@ -1,6 +1,7 @@
 package com.mashup.core.common.base
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.constant.BAD_REQUEST
@@ -8,6 +9,9 @@ import com.mashup.core.common.constant.DISCONNECT_NETWORK
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.io.EOFException
 import java.net.UnknownHostException
@@ -15,6 +19,9 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class BaseViewModel : ViewModel() {
+
+    protected val _errorCode = MutableSharedFlow<String>()
+    open val errorCode: SharedFlow<String> = _errorCode
 
     private val exceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
@@ -39,5 +46,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    open fun handleErrorCode(code: String) {}
+    open fun handleErrorCode(code: String) = mashUpScope {
+        _errorCode.emit(code)
+    }
 }

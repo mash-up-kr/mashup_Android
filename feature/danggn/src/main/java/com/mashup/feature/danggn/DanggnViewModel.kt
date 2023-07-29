@@ -51,6 +51,7 @@ class DanggnViewModel @Inject constructor(
     private fun initDanggnGame() {
         danggnGameController.setListener(
             frameCallbackListener = {
+                //
                 viewModelScope.launch {
                     _uiState.emit(DanggnUiState.Success(it))
                     _danggnMode.emit(it.currentMode)

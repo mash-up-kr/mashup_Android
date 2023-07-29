@@ -200,7 +200,7 @@ fun ShakeDanggnScreen(
                         onClickCloseButton = {
                             rankingViewModel.setShouldCheckFirstPlaceLastRound(false)
                             DanggnFirstPlaceBottomPopup
-                                .getNewInstance(state.round)
+                                .getNewInstance(state.entity)
                                 .safeShow((context as AppCompatActivity).supportFragmentManager)
                         })
                 }

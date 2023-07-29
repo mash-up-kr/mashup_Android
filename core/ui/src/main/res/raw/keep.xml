@@ -2,4 +2,6 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:shrinkMode="strict"
-    tools:keep="@drawable/ic_img_carrot,@drawable/img_carrot_reward_bottom_popup" />
+    tools:keep="@drawable/ic_img_carrot,@drawable/img_carrot_reward_bottom_popup,@drawable/img_carrot_new" />
+
+<!--img_carrot_new iOS에서 큰 이미지를 별도로 사용하고 있어서 안드에서는 중복 이미지이지만 추가함-->

@@ -15,6 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.core.ui.colors.Gray200
+import com.mashup.core.ui.colors.Gray50
+import com.mashup.core.ui.colors.Gray700
+import com.mashup.core.ui.colors.Gray950
 import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
@@ -38,7 +42,7 @@ fun DanggnRewardContent(
                     modifier = modifier
                         .background(
                             shape = shape,
-                            color = Color(0xFFDFE0EE)
+                            color = Gray200
                         )
                         .noRippleClickable(onClick = onClickReward)
                         .padding(horizontal = 14.dp, vertical = 8.dp),
@@ -47,12 +51,12 @@ fun DanggnRewardContent(
                     Text(
                         text = "1등 리워드인 전체 공지 한마디를 작성해주세요!",
                         style = Body3,
-                        color = Color(0xFF737598)
+                        color = Gray700
                     )
 
                     Icon(
                         painter = painterResource(com.mashup.core.common.R.drawable.ic_chevron_right),
-                        tint = Color(0xFFABB2C1),
+                        tint = Gray50,
                         contentDescription = null
                     )
                 }
@@ -64,7 +68,7 @@ fun DanggnRewardContent(
                 modifier = modifier
                     .background(
                         shape = shape,
-                        color = Color(0xFF232030)
+                        color = Gray950
                     )
                     .padding(horizontal = 14.dp, vertical = 8.dp)
             ) {

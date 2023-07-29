@@ -160,9 +160,21 @@ class SignUpAuthViewModel @Inject constructor(
         buttonState.emit(SignUpButtonState.Loading)
         try {
             memberRepository.validateId(id.value)
-                .onSuccess {
-                    buttonState.emit(SignUpButtonState.Enable)
-                    idState.emit(SignUpIdState.Success(validId = true))
+                .onSuccess { validResponse ->
+                    buttonState.emit(
+                        if (validResponse.valid) {
+                            SignUpButtonState.Enable
+                        } else {
+                            SignUpButtonState.Disable
+                        }
+                    )
+                    idState.emit(
+                        if (validResponse.valid) {
+                            SignUpIdState.Success(true)
+                        } else {
+                            SignUpIdState.Error(code = MEMBER_DUPLICATED_IDENTIFICATION)
+                        }
+                    )
                 }.onFailure {
                     buttonState.emit(SignUpButtonState.Disable)
                     idState.emit(SignUpIdState.Error(code = MEMBER_DUPLICATED_IDENTIFICATION))

@@ -73,6 +73,7 @@ fun ShakeDanggnScreen(
     val showDanggnRewardDialog by rankingViewModel.showRewardNoticeDialog.collectAsState(false)
     val pullRefreshState = rememberSwipeRefreshState(isRefreshing)
     val refreshTriggerDistance = 80.dp
+    val showLastRoundRewardPopup by rankingViewModel.showLastRoundRewardPopup.collectAsState(null)
 
     LaunchedEffect(Unit) {
         viewModel.startDanggnGame()
@@ -191,17 +192,6 @@ fun ShakeDanggnScreen(
                     )
                 }
 
-                is FirstRankingLastRound -> {
-                    DanggnLastRoundFirstPlaceScreen(
-                        name = state.name,
-                        onClickCloseButton = {
-                            rankingViewModel.setShouldCheckFirstPlaceLastRound(false)
-                            DanggnFirstPlaceBottomPopup
-                                .getNewInstance(state.entity, rankingViewModel.currentRound.value?.danggnRankingReward?.id ?: return@DanggnLastRoundFirstPlaceScreen)
-                                .safeShow((context as AppCompatActivity).supportFragmentManager)
-                        })
-                }
-
                 Empty -> {
 
                 }
@@ -214,6 +204,21 @@ fun ShakeDanggnScreen(
                     message = danggnRound?.danggnRankingReward?.comment.orEmpty(),
                     onClickCloseButton = rankingViewModel::confirmDanggnRewardNotice
                 )
+            }
+
+            showLastRoundRewardPopup?.let { (name, entity) ->
+                DanggnLastRoundFirstPlaceScreen(
+                    name = name,
+                    onClickCloseButton = {
+                        rankingViewModel.dismissLastRoundFirstPlacePopup()
+                        DanggnFirstPlaceBottomPopup
+                            .getNewInstance(
+                                entity,
+                                rankingViewModel.currentRound.value?.danggnRankingReward?.id
+                                    ?: return@DanggnLastRoundFirstPlaceScreen
+                            )
+                            .safeShow((context as AppCompatActivity).supportFragmentManager)
+                    })
             }
         }
     }

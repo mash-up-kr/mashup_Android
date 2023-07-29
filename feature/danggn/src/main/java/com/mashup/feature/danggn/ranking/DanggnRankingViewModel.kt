@@ -1,9 +1,11 @@
 package com.mashup.feature.danggn.ranking
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.core.common.constant.BAD_REQUEST
 import com.mashup.core.common.extensions.combineWithEightValue
 import com.mashup.core.common.utils.TimerUtils
 import com.mashup.core.data.repository.PopUpRepository
@@ -16,6 +18,7 @@ import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import com.mashup.feature.danggn.reward.model.DanggnPopupType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import java.text.ParseException
@@ -52,17 +55,12 @@ class DanggnRankingViewModel @Inject constructor(
     private val _currentRoundId: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentRoundId: StateFlow<Int> = _currentRoundId.asStateFlow()
 
-    val currentRound: StateFlow<DanggnRankingSingleRoundCheckResponse?> =
-        currentRoundId.map(this::mapSingleRound)
-            .stateIn(viewModelScope, SharingStarted.Lazily, null)
+    private val _currentRound = MutableStateFlow<DanggnRankingSingleRoundCheckResponse?>(null)
+    val currentRound: StateFlow<DanggnRankingSingleRoundCheckResponse?> = _currentRound.asStateFlow()
 
-    private val personalRankingList: StateFlow<List<RankingItem>> =
-        currentRoundId.map(this::mapPersonalRankingList)
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    private val personalRankingList = MutableStateFlow<List<RankingItem>>(emptyList())
 
-    private val platformRankingList: StateFlow<List<RankingItem>> =
-        currentRoundId.map(this::mapPlatformRanking)
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    private val platformRankingList = MutableStateFlow<List<RankingItem>>(emptyList())
 
     private val timer = TimerUtils()
     private val timerCount: MutableStateFlow<RankingItem.Timer> =
@@ -205,7 +203,8 @@ class DanggnRankingViewModel @Inject constructor(
                         isRunning = index == 0,
                     )
                 }.sortedByDescending { it.number }
-                _currentRoundId.emit(allRoundList.first().id)
+
+                updateCurrentRoundId(allRoundList.first().id)
                 _allDanggnRoundList.emit(allRoundList)
             }
         }
@@ -214,35 +213,35 @@ class DanggnRankingViewModel @Inject constructor(
     /**
      * 모든 멤버의 랭킹 리스트를 얻어옵니다
      */
-    private suspend fun mapPersonalRankingList(rankingRoundId: Int): List<RankingItem> {
+    private suspend fun updatePersonalRankingList(rankingRoundId: Int) {
         val allMemberRankingResult = danggnRepository.getAllDanggnRank(
             danggnRankingRoundId = rankingRoundId,
             generationNumber = userPreferenceRepository.getCurrentGenerationNumber()
         )
-        return if (allMemberRankingResult.isSuccess()) {
+        if (allMemberRankingResult.isSuccess()) {
             val rankingList = allMemberRankingResult.data ?: listOf()
-            rankingList.map {
-                RankingItem.Ranking(
-                    memberId = it.memberId.toString(),
-                    text = it.memberName,
-                    totalShakeScore = it.totalShakeScore
-                )
-            }
-        } else {
-            emptyList()
+            personalRankingList.emit(
+                rankingList.map {
+                    RankingItem.Ranking(
+                        memberId = it.memberId.toString(),
+                        text = it.memberName,
+                        totalShakeScore = it.totalShakeScore
+                    )
+                }
+            )
         }
     }
 
     /**
      * 플랫폼 랭킹을 얻어와 내 플랫폼 랭킹까지 업데이트 합니다.
      */
-    private suspend fun mapPlatformRanking(rankingRoundId: Int): List<RankingItem> {
+    private suspend fun updatePlatformRanking(rankingRoundId: Int) {
         val result = danggnRepository.getPlatformDanggnRank(
             danggnRankingRoundId = rankingRoundId,
             generationNumber = userPreferenceRepository.getCurrentGenerationNumber()
         )
-        return if (result.isSuccess()) {
-            (0..5).map { index ->
+        if (result.isSuccess()) {
+            val updatedPlatformRankingList = (0..5).map { index ->
                 result.data?.getOrNull(index)?.let {
                     RankingItem.PlatformRanking(
                         memberId = it.platform.detailName,
@@ -251,8 +250,7 @@ class DanggnRankingViewModel @Inject constructor(
                     )
                 } ?: RankingItem.EmptyRanking()
             }
-        } else {
-            emptyList()
+            platformRankingList.emit(updatedPlatformRankingList)
         }
     }
 
@@ -359,8 +357,20 @@ class DanggnRankingViewModel @Inject constructor(
         mashUpScope {
             kotlin.runCatching {
                 danggnRepository.postDanggnRankingRewardComment(round, comment)
-            }.onSuccess {
-                // TODO: 랭킹 단건조회 & 리프레쉬
+            }.onSuccess { result ->
+                when {
+                    result.isSuccess() && result.data == true -> {
+                        updateSingleRound(currentRoundId.value)
+                    }
+
+                    result.isSuccess() && result.data != true -> {
+                        handleErrorCode(BAD_REQUEST)
+                    }
+
+                    else -> handleErrorCode(result.code)
+                }
+            }.onFailure {
+                handleErrorCode(BAD_REQUEST)
             }
         }
     }
@@ -380,7 +390,13 @@ class DanggnRankingViewModel @Inject constructor(
         }
     }
 
-    fun updateCurrentRound(roundId: Int) = mashUpScope {
+    fun updateCurrentRoundId(roundId: Int) = mashUpScope {
+        if (currentRoundId.value != roundId) {
+            updateSingleRound(roundId)
+            updatePersonalRankingList(roundId)
+            updatePlatformRanking(roundId)
+        }
+
         _currentRoundId.emit(roundId)
     }
 
@@ -391,14 +407,12 @@ class DanggnRankingViewModel @Inject constructor(
     /**
      * 모든 멤버의 랭킹 리스트를 얻어옵니다
      */
-    private suspend fun mapSingleRound(rankingRoundId: Int): DanggnRankingSingleRoundCheckResponse? {
+    private suspend fun updateSingleRound(rankingRoundId: Int) {
         val singleRoundResult = danggnRepository.getDanggnSingleRound(
             danggnRankingRoundId = rankingRoundId
         )
-        return if (singleRoundResult.isSuccess()) {
-            singleRoundResult.data
-        } else {
-            null
+        if (singleRoundResult.isSuccess()) {
+            _currentRound.emit(singleRoundResult.data)
         }
     }
 

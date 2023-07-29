@@ -46,7 +46,7 @@ fun DanggnRoundScreen(
         rounds = rounds,
         currentSelectedRoundId = currentRoundId,
         onRoundSelected = {
-            viewModel.updateCurrentRound(it)
+            viewModel.updateCurrentRoundId(it)
             onDismiss()
         }
     )

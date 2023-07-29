@@ -29,7 +29,7 @@ import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse.
 fun DanggnRewardContent(
     reward: DanggnRankingSingleRoundCheckResponse.DanggnRankingReward,
     modifier: Modifier = Modifier,
-    onClickReward: () -> Unit = {}
+    onClickReward: (rewardId: Int) -> Unit = {}
 ) {
     val shape = RoundedCornerShape(8.dp)
 
@@ -44,7 +44,7 @@ fun DanggnRewardContent(
                             shape = shape,
                             color = Gray200
                         )
-                        .noRippleClickable(onClick = onClickReward)
+                        .noRippleClickable(onClick = { onClickReward(reward.id ?: return@noRippleClickable) })
                         .padding(horizontal = 14.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {

@@ -122,7 +122,7 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
         }
     }
 
-    protected fun handleCommonError(code: String) {
+    open fun handleCommonError(code: String) {
         when (code) {
             BAD_REQUEST, INTERNAL_SERVER_ERROR -> {
                 showToast("잠시 후 다시 시도해주세요.")

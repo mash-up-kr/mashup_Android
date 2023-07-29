@@ -46,7 +46,6 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                     rankingViewModel = rankingViewModel,
                     onClickBackButton = this::onBackPressed,
                     onClickDanggnInfoButton = this::openDanggnInfoActivity,
-                    onClickHelpButton = this::openDanggnUpdateActivity,
                     onClickAnotherRounds = this::showDanggnRoundSelectDialog,
                     onClickReward = this::showDanggnRewardPopup
                 )
@@ -73,11 +72,6 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
                 rankingViewModel.errorCode.collect(this@ShakeDanggnActivity::handleCommonError)
             }
         }
-    }
-
-    private fun openDanggnUpdateActivity() {
-        val intent = DanggnUpdateActivity.newIntent(context = this, hasMoveToDanggnButton = false)
-        startActivity(intent)
     }
 
     private fun openDanggnInfoActivity() {

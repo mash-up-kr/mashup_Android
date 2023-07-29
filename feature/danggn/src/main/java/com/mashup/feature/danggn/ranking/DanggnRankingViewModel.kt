@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.extensions.combineWithEightValue
+import com.mashup.core.common.extensions.suspendRunCatching
 import com.mashup.core.common.utils.TimerUtils
 import com.mashup.core.data.repository.PopUpRepository
 import com.mashup.core.data.repository.StorageRepository
@@ -139,7 +140,7 @@ class DanggnRankingViewModel @Inject constructor(
     private fun getTimerData(value: Int) = mashUpScope {
         danggnRepository.getDanggnSingleRound(value).also {
             if (it.isSuccess()) {
-                kotlin.runCatching {
+                suspendRunCatching {
                     if (uiState.value.danggnAllRoundList.firstOrNull()?.dateDiff!! <= 1) {
                         timer.startTimer(
                             endTime = it.data?.endDate ?: throw ParseException("", 0)

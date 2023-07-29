@@ -20,7 +20,9 @@ import com.mashup.core.ui.widget.MashUpBottomPopupScreen
 import com.mashup.core.ui.widget.MashUpBottomPopupUiState
 import com.mashup.core.ui.widget.MashUpPopupEntity
 import com.mashup.feature.danggn.reward.model.DanggnPopupType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
 
     private val bottomPopupViewModel: DanggnBottomPopupViewModel by viewModels()

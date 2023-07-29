@@ -58,7 +58,7 @@ fun ShakeDanggnScreen(
     onClickDanggnInfoButton: () -> Unit = {},
     onClickHelpButton: () -> Unit = {},
     onClickAnotherRounds: () -> Unit = {},
-    onClickReward: () -> Unit = {}
+    onClickReward: (rewardId: Int) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val randomTodayMessage by viewModel.randomMessage.collectAsState()
@@ -197,7 +197,7 @@ fun ShakeDanggnScreen(
                         onClickCloseButton = {
                             rankingViewModel.setShouldCheckFirstPlaceLastRound(false)
                             DanggnFirstPlaceBottomPopup
-                                .getNewInstance(state.entity, rankingViewModel.allDanggnRoundList.value.getOrNull(1)?.id ?: return@DanggnLastRoundFirstPlaceScreen)
+                                .getNewInstance(state.entity, rankingViewModel.currentRound.value?.danggnRankingReward?.id ?: return@DanggnLastRoundFirstPlaceScreen)
                                 .safeShow((context as AppCompatActivity).supportFragmentManager)
                         })
                 }

@@ -5,7 +5,7 @@ on:
     branches: [ "develop" ]
   pull_request:
     types: [opened, synchronize, ready_for_review, edited]
-    branches: [ "develop", "refactor*", "fix*", "feat*", "feature*", "chore*", "test*" ]
+    branches: [ "develop", "refactor**", "fix**", "feat**", "feature**", "chore**", "test**" ]
 
 jobs:
   build:

@@ -93,8 +93,8 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
         )
     }
 
-    private fun showDanggnRewardPopup() {
-        DanggnRewardPopup.getNewInstance(rankingViewModel.currentRoundId.value).safeShow(supportFragmentManager)
+    private fun showDanggnRewardPopup(rewardId: Int) {
+        DanggnRewardPopup.getNewInstance(rewardId).safeShow(supportFragmentManager)
     }
 
     override fun handleCommonError(code: String) {

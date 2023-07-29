@@ -206,14 +206,14 @@ fun ShakeDanggnScreen(
                 )
             }
 
-            showLastRoundRewardPopup?.let {
+            showLastRoundRewardPopup?.let { (name, entity) ->
                 DanggnLastRoundFirstPlaceScreen(
-                    name = it.first,
+                    name = name,
                     onClickCloseButton = {
                         rankingViewModel.dismissLastRoundFirstPlacePopup()
                         DanggnFirstPlaceBottomPopup
                             .getNewInstance(
-                                it.second,
+                                entity,
                                 rankingViewModel.currentRound.value?.danggnRankingReward?.id
                                     ?: return@DanggnLastRoundFirstPlaceScreen
                             )

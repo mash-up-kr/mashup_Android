@@ -65,7 +65,8 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                             showRewardInformationDialog()
                         },
                         onClickRightButton = {
-                            DanggnRewardPopup.getNewInstance().safeShow(parentFragmentManager)
+                            val roundId = arguments?.getInt(EXTRA_ROUND_ID) ?: return@MashUpBottomPopupScreen
+                            DanggnRewardPopup.getNewInstance(roundId).safeShow(parentFragmentManager)
                             dismiss()
                         }
                     )
@@ -127,7 +128,9 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
         private const val EXTRA_POPUP_LEFT_BUTTON_TEXT = "EXTRA_POPUP_LEFT_BUTTON_TEXT"
         private const val EXTRA_POPUP_RIGHT_BUTTON_TEXT = "EXTRA_POPUP_RIGHT_BUTTON_TEXT"
 
-        fun getNewInstance(entity: MashUpPopupEntity): DanggnFirstPlaceBottomPopup =
+        private const val EXTRA_ROUND_ID = "EXTRA_ROUND_ID"
+
+        fun getNewInstance(entity: MashUpPopupEntity, roundId: Int): DanggnFirstPlaceBottomPopup =
             DanggnFirstPlaceBottomPopup().apply {
                 arguments = Bundle().apply {
                     putString(EXTRA_POPUP_KEY, DanggnPopupType.DANGGN_REWARD.name)
@@ -137,6 +140,8 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
                     putString(EXTRA_POPUP_IMG_RES_NAME, entity.imageResName)
                     putString(EXTRA_POPUP_LEFT_BUTTON_TEXT, entity.leftButtonText)
                     putString(EXTRA_POPUP_RIGHT_BUTTON_TEXT, entity.rightButtonText)
+
+                    putInt(EXTRA_ROUND_ID, roundId)
                 }
             }
     }

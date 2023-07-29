@@ -309,7 +309,6 @@ class DanggnRankingViewModel @Inject constructor(
             val entity = getBottomPopupMessageFromStorage() ?: return FirstRankingState.Empty
             return FirstRankingState.FirstRankingLastRound(
                 name = myName,
-                round = currentRoundId.value - 1,
                 entity = entity
             )
         }
@@ -358,10 +357,10 @@ class DanggnRankingViewModel @Inject constructor(
         shouldCheckDanggnPopup.value = flag
     }
 
-    fun registerRewardNotice(comment: String) {
+    fun registerRewardNotice(roundId: Int, comment: String) {
         mashUpScope {
             kotlin.runCatching {
-                danggnRepository.postDanggnRankingRewardComment(currentRoundId.value - 1, comment)
+                danggnRepository.postDanggnRankingRewardComment(roundId, comment)
             }.onSuccess { result ->
                 when {
                     result.isSuccess() && result.data == true -> {
@@ -491,7 +490,7 @@ class DanggnRankingViewModel @Inject constructor(
     sealed interface FirstRankingState {
         object Empty : FirstRankingState
         data class FirstRanking(val text: String) : FirstRankingState
-        data class FirstRankingLastRound(val name: String, val round: Int, val entity: MashUpPopupEntity) : FirstRankingState
+        data class FirstRankingLastRound(val name: String, val entity: MashUpPopupEntity) : FirstRankingState
     }
 
     data class AllRound(

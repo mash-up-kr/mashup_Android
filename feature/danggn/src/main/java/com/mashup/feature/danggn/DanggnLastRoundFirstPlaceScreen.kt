@@ -67,7 +67,7 @@ private fun DanggnLastRoundFirstPlaceContent(
         Text(
             modifier = Modifier,
             text = "축하드려요!\n" +
-                    "이번 ${round}회차\n" +
+                    "이전 회차에서\n" +
                     "${name}님이 1등을 차지했어요!",
             textAlign = TextAlign.Center,
             color = Color.White,

@@ -1,16 +1,12 @@
 package com.mashup.core.common.utils
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import kotlin.coroutines.EmptyCoroutineContext
 
 class TimerUtils {
     companion object {
@@ -41,7 +37,7 @@ class TimerUtils {
         }
     }
 
-    private fun stopTimer() {
+    fun stopTimer() {
         job.cancel()
     }
 }

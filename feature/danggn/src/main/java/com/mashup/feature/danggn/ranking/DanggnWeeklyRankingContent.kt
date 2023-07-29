@@ -46,46 +46,22 @@ fun DanggnWeeklyRankingContent(
     timerCount: String,
     modifier: Modifier = Modifier,
     onClickAnotherRounds: () -> Unit = {},  // 이걸 누를 때 랭킹 회차 팝업 보여줌
-    onClickHelpButton: () -> Unit = {},
 ) {
-
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(Gray50),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(15.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Box(
-                modifier = Modifier.wrapContentSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    modifier = Modifier,
-                    text = "2주의 당근 랭킹",
-                    style = SubTitle2,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Gray950,
-                )
-
-                Image(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 16.dp)
-                        .noRippleClickable {
-                            onClickHelpButton()
-                        },
-                    painter = painterResource(id = R.drawable.ic_info_inverse),
-                    contentDescription = null,
-                    alignment = Alignment.CenterEnd
-                )
-            }
-        }
+        Text(
+            modifier = Modifier,
+            text = "2주의 당근 랭킹",
+            style = SubTitle2,
+            fontWeight = FontWeight.SemiBold,
+            color = Gray950,
+        )
 
         Spacer(modifier = Modifier.height(27.dp))
 
@@ -128,7 +104,7 @@ fun DanggnWeeklyRankingContent(
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        if(round.isRunning) { // 현재 진행 중인 랭킹을 보고 있을 때
+        if (round.isRunning) { // 현재 진행 중인 랭킹을 보고 있을 때
             Text(
                 color = Gray600,
                 style = Body2,

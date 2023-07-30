@@ -409,11 +409,9 @@ class DanggnRankingViewModel @Inject constructor(
     }
 
     fun updateCurrentRoundId(roundId: Int) = mashUpScope {
-        if (currentRoundId.value != roundId) {
-            updateSingleRound(roundId)
-            updatePersonalRankingList(roundId)
-            updatePlatformRanking(roundId)
-        }
+        updateSingleRound(roundId)
+        updatePersonalRankingList(roundId)
+        updatePlatformRanking(roundId)
 
         _currentRoundId.emit(roundId)
     }

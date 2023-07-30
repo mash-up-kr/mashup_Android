@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -119,21 +120,24 @@ fun ShakeDanggnScreen(
                     actionButtonDrawableRes = CR.drawable.ic_info
                 )
 
+                danggnRound?.danggnRankingReward?.let { reward ->
+                    DanggnRewardContent(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        reward = reward,
+                        onClickReward = onClickReward
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(10.dp))
+
                 DanggnPullToRefreshIndicator(
                     pullRefreshState = pullRefreshState,
                     refreshTriggerDistance = refreshTriggerDistance
                 )
 
                 Box(modifier = Modifier.fillMaxWidth()) {
-                    danggnRound?.danggnRankingReward?.let { reward ->
-                        DanggnRewardContent(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            reward = reward,
-                            onClickReward = onClickReward
-                        )
-                    }
                     // 당근 흔들기 UI
                     DanggnShakeContent(
                         randomTodayMessage = randomTodayMessage,

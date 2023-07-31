@@ -35,7 +35,7 @@ fun DanggnRewardNoticeScreen(
     name: String,
     message: String,
     modifier: Modifier = Modifier,
-    onClickCloseButton: () -> Unit = {},
+    onClickCloseButton: () -> Unit = {}
 ) {
     Box(modifier = modifier) {
         DanggnRewardNoticeContent(
@@ -61,7 +61,6 @@ private fun DanggnRewardNoticeContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()

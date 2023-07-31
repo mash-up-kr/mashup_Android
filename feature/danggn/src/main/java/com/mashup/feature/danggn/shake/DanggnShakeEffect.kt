@@ -33,15 +33,15 @@ import com.mashup.feature.danggn.data.danggn.DanggnMode
 import com.mashup.feature.danggn.data.danggn.DanggnScoreModel
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
-import kotlin.random.Random
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 import com.mashup.core.common.R as CR
 
 @Composable
 fun DanggnShakeEffect(
     modifier: Modifier = Modifier,
     danggnMode: DanggnMode,
-    effectList: List<DanggnScoreModel> = emptyList(),
+    effectList: List<DanggnScoreModel> = emptyList()
 ) {
     Box(
         modifier = modifier.background(if (danggnMode is GoldenDanggnMode) Color(0xCC000000) else Color.Transparent)
@@ -61,7 +61,7 @@ fun DanggnShakeEffect(
 
                 val countDown = danggnMode.remainTimeInSeconds.toInt()
                 val countDownDrawableRes = remember(countDown) {
-                    when(countDown) {
+                    when (countDown) {
                         1 -> CR.drawable.img_fevertime_countdown_1
                         2 -> CR.drawable.img_fevertime_countdown_2
                         3 -> CR.drawable.img_fevertime_countdown_3
@@ -125,24 +125,23 @@ fun ShakeEffect(danggnMode: DanggnMode) {
                 animationSpec = tween(
                     durationMillis = 1000
                 )
-            ),
+            )
         ) {
             Image(
                 painterResource(id = if (danggnMode is NormalDanggnMode) CR.drawable.img_carrot else CR.drawable.img_fever_danggn),
                 contentDescription = null,
-                modifier = Modifier.size(danggnSize),
+                modifier = Modifier.size(danggnSize)
             )
         }
     }
 }
-
 
 @Preview
 @Composable
 fun NormalDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
-        danggnMode = NormalDanggnMode,
+        danggnMode = NormalDanggnMode
     )
 }
 
@@ -151,6 +150,6 @@ fun NormalDanggnModeEffectPrev() {
 fun GoldenDanggnModeEffectPrev() {
     DanggnShakeEffect(
         modifier = Modifier.fillMaxSize(),
-        danggnMode = GoldenDanggnMode(),
+        danggnMode = GoldenDanggnMode()
     )
 }

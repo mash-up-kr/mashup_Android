@@ -47,7 +47,7 @@ class ScheduleViewModel @Inject constructor(
                                     ScheduleTitleState.Empty
                                 }
                                 response.progress == SchedulesProgress.ON_GOING &&
-                                        response.dateCount != null -> {
+                                    response.dateCount != null -> {
                                     ScheduleTitleState.DateCount(response.dateCount)
                                 }
                                 else -> {

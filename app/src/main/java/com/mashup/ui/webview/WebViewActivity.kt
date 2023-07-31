@@ -45,7 +45,6 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
         }
     }
 
-
     override val layoutId: Int
         get() = R.layout.activity_web_view
 

@@ -34,7 +34,7 @@ fun TogglePushItem(
     @ColorRes descriptionRes: Int,
     checked: Boolean,
     modifier: Modifier = Modifier,
-    onCheckedChange: (Boolean) -> Unit = {},
+    onCheckedChange: (Boolean) -> Unit = {}
 ) {
     Column(
         modifier = modifier

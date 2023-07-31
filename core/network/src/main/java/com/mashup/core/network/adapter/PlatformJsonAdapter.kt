@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 
-class PlatformJsonAdapter: JsonAdapter<Platform>() {
+class PlatformJsonAdapter : JsonAdapter<Platform>() {
 
     override fun fromJson(reader: JsonReader): Platform {
         return Platform.getPlatform(reader.nextString())

@@ -9,7 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DanggnBottomPopupViewModel @Inject constructor(
     private val popUpRepository: PopUpRepository,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     val popupKey = savedStateHandle.get<String>(EXTRA_POPUP_KEY)
 

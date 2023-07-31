@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Title1
 import com.mashup.core.ui.widget.MashUpButton
-import java.util.concurrent.TimeUnit
 import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
@@ -33,6 +32,7 @@ import nl.dionsegijn.konfetti.core.Rotation
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.core.models.Shape
 import nl.dionsegijn.konfetti.core.models.Size
+import java.util.concurrent.TimeUnit
 import com.mashup.core.common.R as CR
 
 /**
@@ -49,7 +49,7 @@ fun DanggnFirstPlaceScreen(
 ) {
     Box(modifier = modifier) {
         DanggnFirstPlaceContent(
-            modifier = modifier,
+            modifier = Modifier.fillMaxSize(),
             name = name,
             onClickCloseButton = onClickCloseButton
         )
@@ -66,7 +66,6 @@ private fun DanggnFirstPlaceContent(
     Column(
         modifier = modifier
             .background(color = Color(0xB3000000))
-            .fillMaxSize()
             .padding(horizontal = 38.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

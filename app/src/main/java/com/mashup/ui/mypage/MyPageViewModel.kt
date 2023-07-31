@@ -24,9 +24,6 @@ class MyPageViewModel @Inject constructor(
     private val _attendanceList = MutableLiveData<List<AttendanceModel>>()
     val attendanceList: LiveData<List<AttendanceModel>> = _attendanceList
 
-    private val _errorCode = MutableSharedFlow<String>()
-    val errorCode: SharedFlow<String> = _errorCode
-
     init {
         getMember()
     }

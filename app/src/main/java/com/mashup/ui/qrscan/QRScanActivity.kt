@@ -19,6 +19,7 @@ import com.mashup.constant.log.LOG_QR_DONE
 import com.mashup.constant.log.LOG_QR_SUCCESS
 import com.mashup.constant.log.LOG_QR_TIME_FAIL
 import com.mashup.constant.log.LOG_QR_WRONG
+import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.widget.CommonDialog
@@ -29,7 +30,6 @@ import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
 import com.mashup.network.errorcode.ATTENDANCE_CODE_NOT_FOUND
 import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
-import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +59,6 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         initButtons()
         initCamera()
     }
-
 
     private fun initStatusBarMargin() {
         ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { _, insets ->

@@ -1,13 +1,13 @@
 package com.mashup.feature.danggn.data.danggn
 
 import com.mashup.feature.danggn.data.ShakeDetector
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ShakeDetector의 shake 이벤트를 탐지하여 콤보 카운트를 계산합니다.

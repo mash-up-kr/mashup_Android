@@ -11,7 +11,6 @@ import com.mashup.feature.danggn.data.danggn.NormalDanggnMode
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,12 +19,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class DanggnViewModel @Inject constructor(
     private val danggnGameController: DanggnGameController,
     private val danggnRepository: DanggnRepository,
-    private val userPreferenceRepository: UserPreferenceRepository,
+    private val userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow<DanggnUiState>(DanggnUiState.Loading)
@@ -134,4 +134,3 @@ sealed interface DanggnUiState {
 
     data class Error(val code: String) : DanggnUiState
 }
-

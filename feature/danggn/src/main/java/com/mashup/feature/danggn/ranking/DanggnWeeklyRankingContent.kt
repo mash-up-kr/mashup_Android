@@ -3,16 +3,13 @@ package com.mashup.feature.danggn.ranking
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,13 +42,13 @@ fun DanggnWeeklyRankingContent(
     round: DanggnRankingViewModel.AllRound,
     timerCount: String,
     modifier: Modifier = Modifier,
-    onClickAnotherRounds: () -> Unit = {},  // 이걸 누를 때 랭킹 회차 팝업 보여줌
+    onClickAnotherRounds: () -> Unit = {} // 이걸 누를 때 랭킹 회차 팝업 보여줌
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(Gray50),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(15.dp))
 
@@ -60,7 +57,7 @@ fun DanggnWeeklyRankingContent(
             text = "2주의 당근 랭킹",
             style = SubTitle2,
             fontWeight = FontWeight.SemiBold,
-            color = Gray950,
+            color = Gray950
         )
 
         Spacer(modifier = Modifier.height(27.dp))
@@ -84,7 +81,7 @@ fun DanggnWeeklyRankingContent(
                 }
                 .padding(horizontal = 8.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "${round.startDate} - ${round.endDate}",
@@ -112,7 +109,7 @@ fun DanggnWeeklyRankingContent(
                     append("랭킹 종료까지 ")
                     withStyle(
                         SpanStyle(
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.Bold
                         )
                     ) {
                         if (round.dateDiff > 0) {
@@ -122,7 +119,8 @@ fun DanggnWeeklyRankingContent(
                         }
                     }
                     append(" 남았어요")
-                })
+                }
+            )
         } else {
             // 이전 회차의 랭킹을 보고 있을 때
             Text(

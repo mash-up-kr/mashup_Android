@@ -45,7 +45,7 @@ import com.mashup.core.common.R as CR
 fun DanggnFirstPlaceScreen(
     name: String,
     modifier: Modifier = Modifier,
-    onClickCloseButton: () -> Unit = {},
+    onClickCloseButton: () -> Unit = {}
 ) {
     Box(modifier = modifier) {
         DanggnFirstPlaceContent(
@@ -92,7 +92,8 @@ private fun DanggnFirstPlaceContent(
             modifier = Modifier
                 .width(120.dp)
                 .height(52.dp),
-            text = "확인", onClick = onClickCloseButton
+            text = "확인",
+            onClick = onClickCloseButton
         )
     }
 }

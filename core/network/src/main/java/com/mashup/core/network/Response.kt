@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.mashup.network
+package com.mashup.core.network
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

@@ -4,7 +4,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,8 +33,6 @@ import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.*
 import com.mashup.core.ui.widget.MashUpButton
-import com.mashup.core.ui.widget.MashUpTabRow
-import com.mashup.core.ui.widget.mashupTabIndicatorOffset
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
 
@@ -40,9 +40,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    allMashUpMemberRankState: List<DanggnRankingViewModel.RankingItem>,
-    personalRank: DanggnRankingViewModel.RankingItem,
-    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    personalRankList: List<DanggnRankingViewModel.RankingItem>,
+    myPersonalRank: DanggnRankingViewModel.RankingItem,
+    platformRankList: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
     onClickScrollTopButton: () -> Unit = {},
     onChangedTabIndex: (index: Int) -> Unit = {}
@@ -56,35 +56,32 @@ fun DanggnRankingContent(
     }
 
     Column(modifier = modifier.background(Gray50)) {
-        Text(
+        TabRow(
             modifier = Modifier
-                .padding(start = 20.dp, top = 24.dp)
-                .fillMaxWidth(),
-            text = "랭킹",
-            style = Title1,
-        )
-        MashUpTabRow(
-            modifier = Modifier.wrapContentSize(),
-            horizontalSpace = 24.dp,
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            containerColor = Gray50,
+            selectedTabIndex = pagerState.currentPage,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier
-                        .mashupTabIndicatorOffset(
-                            currentTabPosition = tabPositions[pagerState.currentPage]
-                        )
+                        .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                         .clip(RoundedCornerShape(20.dp)),
                     color = Black,
                     height = 2.dp
                 )
-            }
+            },
+            divider = {}
         ) {
             pages.forEachIndexed { index, title ->
                 MashUpPagerColorAnimatedTab(
-                    modifier = Modifier.noRippleClickable {
-                        coroutineScope.launch {
-                            pagerState.scrollToPage(index)
-                        }
-                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .noRippleClickable {
+                            coroutineScope.launch {
+                                pagerState.scrollToPage(index)
+                            }
+                        },
                     title = title,
                     selected = pagerState.currentPage == index
                 )
@@ -102,9 +99,9 @@ fun DanggnRankingContent(
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
             PagerContents(
-                allMashUpMemberRankState,
-                personalRank,
-                allPlatformRank,
+                personalRankList,
+                myPersonalRank,
+                platformRankList,
                 platformRank,
                 index,
                 onClickScrollTopButton = onClickScrollTopButton
@@ -115,14 +112,14 @@ fun DanggnRankingContent(
 
 @Composable
 private fun PagerContents(
-    allRankList: List<DanggnRankingViewModel.RankingItem>,
-    personalRank: DanggnRankingViewModel.RankingItem,
-    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    personalRankList: List<DanggnRankingViewModel.RankingItem>,
+    myPersonalRank: DanggnRankingViewModel.RankingItem,
+    platformRankList: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
     pagerIndex: Int,
     onClickScrollTopButton: () -> Unit = {}
 ) {
-    if (allRankList.isEmpty()) {
+    if (personalRankList.isEmpty()) {
         Text(
             modifier = Modifier,
             textAlign = TextAlign.Center,
@@ -132,61 +129,36 @@ private fun PagerContents(
         )
     } else {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             /**
              * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
              * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
              * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
              */
-            if (personalRank.text.isNotEmpty() && pagerIndex == 0
+            if (myPersonalRank.text.isNotEmpty() && pagerIndex == 0
                 || platformRank.text.isNotEmpty() && pagerIndex == 1
             ) {
-                MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
+                MyRanking(if (pagerIndex == 0) myPersonalRank else platformRank, pagerIndex)
             }
 
-            (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
+            (if (pagerIndex == 0) personalRankList else platformRankList).forEachIndexed { index, rankingUiState ->
                 key(rankingUiState.memberId) {
                     /**
-                     * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
+                     * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
                      */
-                    if (pagerIndex == 0) { // 크루원일 때
-                        if (index < 11) {
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState,
-                            )
-                        }
-                    } else {
-                        if (index < 6) {               // 플랫폼 팀일 때
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState
-                            )
-                        }
-                    }
+                    RankingContent(
+                        modifier = Modifier.fillMaxWidth(),
+                        index = index,
+                        item = rankingUiState
+                    )
                     if (index == 2) {
                         DrawDottedLine()
                     }
                 }
             }
 
-            /**
-             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
-             */
-            if (allRankList.count() <= 11) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 28.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                    style = Body3,
-                    color = Gray500
-                )
-            }
             MashUpButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -308,7 +280,7 @@ private fun RankingContent(
                     painter = painterResource(id = imageResourceList[index]),
                     contentDescription = null
                 )
-            } else { //3 ~ 10
+            } else { // 4등부터 나머지 다보여 줌
                 Text(
                     modifier = Modifier
                         .size(20.dp)
@@ -371,9 +343,9 @@ private fun MashUpPagerColorAnimatedTab(
         targetValue = if (selected) Black else Gray400
     )
     Text(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 8.dp),
         text = title,
-        textAlign = TextAlign.Start,
+        textAlign = TextAlign.Center,
         color = textColorAnimation,
         style = SubTitle1
     )
@@ -384,16 +356,25 @@ private fun MashUpPagerColorAnimatedTab(
 fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
-            allMashUpMemberRankState = listOf(
+            personalRankList = listOf(
                 DanggnRankingViewModel.RankingItem.Ranking(
                     "39", "정종노드", 150
                 ),
                 DanggnRankingViewModel.RankingItem.Ranking(
                     "56", "정종드투", 1510
                 ),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "57", "정종드썬더일레븐", 1511
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "58", "정종드썬더트웰브", 1512
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "59", "정종드썬더썰틴", 1513
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "60", "정종드썬더피프티피프티", 1514
+                ),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
@@ -401,10 +382,10 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnRankingViewModel.RankingItem.MyRanking(
-                memberId = "560", totalShakeScore = 1510, text = "1위",
+            myPersonalRank = DanggnRankingViewModel.RankingItem.MyRanking(
+                memberId = "60", totalShakeScore = 1514, text = "1위",
             ),
-            allPlatformRank = listOf(
+            platformRankList = listOf(
                 DanggnRankingViewModel.RankingItem.PlatformRanking(
                     memberId = "Android",
                     text = "Android", totalShakeScore = 120,

@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -21,7 +22,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
+        kotlinCompilerExtensionVersion composeCompiler
     }
 
     kotlinOptions {
@@ -36,6 +37,7 @@ dependencies {
     debugImplementation project(':core:testing')
     implementation project(':core:datastore')
     implementation project(':core:network')
+    implementation project(':core:data')
 
     // compose swipe refresh
     implementation "com.google.accompanist:accompanist-swiperefresh:0.25.1"

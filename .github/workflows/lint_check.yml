@@ -1,9 +1,10 @@
 name: Lint Check
 
 on:
+  push:
+    branches: [ "develop" ]
   pull_request:
-    types: [opened, synchronize, ready_for_review, edited]
-    branches: [ "develop", "feature*", "hotfix*", "release*" ]
+    branches: [ "develop", "refactor**", "fix**", "feat**", "feature**", "chore**", "test**" ]
 
 jobs:
   build:

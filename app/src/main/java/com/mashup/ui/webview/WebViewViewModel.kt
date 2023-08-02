@@ -2,9 +2,9 @@ package com.mashup.ui.webview
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.mashup.core.common.base.BaseViewModel
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
+import com.mashup.core.common.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

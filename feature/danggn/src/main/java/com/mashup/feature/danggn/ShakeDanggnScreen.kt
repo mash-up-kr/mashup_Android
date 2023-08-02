@@ -18,7 +18,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
@@ -37,7 +42,6 @@ import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.danggn.data.danggn.GoldenDanggnMode
 import com.mashup.feature.danggn.ranking.DanggnRankingContent
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
-import com.mashup.feature.danggn.ranking.DanggnRankingViewModel.FirstRankingState.*
 import com.mashup.feature.danggn.ranking.DanggnWeeklyRankingContent
 import com.mashup.feature.danggn.reward.DanggnFirstPlaceBottomPopup
 import com.mashup.feature.danggn.reward.DanggnRewardContent
@@ -129,7 +133,7 @@ fun ShakeDanggnScreen(
                         onClickReward = onClickReward
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.height(10.dp))
 
                 DanggnPullToRefreshIndicator(
@@ -181,11 +185,11 @@ fun ShakeDanggnScreen(
                 modifier = Modifier.fillMaxSize(),
                 danggnMode = danggnMode,
                 effectList = (uiState as? DanggnUiState.Success)?.danggnGameState?.danggnScoreModelList
-                    ?: emptyList(),
+                    ?: emptyList()
             )
 
             when (val state = rankUiState.firstPlaceState) {
-                is FirstRanking -> {
+                is DanggnRankingViewModel.FirstRankingState.FirstRanking -> {
                     DanggnFirstPlaceScreen(
                         name = state.text,
                         onClickCloseButton = {
@@ -194,8 +198,7 @@ fun ShakeDanggnScreen(
                     )
                 }
 
-                Empty -> {
-
+                DanggnRankingViewModel.FirstRankingState.Empty -> {
                 }
             }
 
@@ -220,7 +223,8 @@ fun ShakeDanggnScreen(
                                     ?: return@DanggnLastRoundFirstPlaceScreen
                             )
                             .safeShow((context as AppCompatActivity).supportFragmentManager)
-                    })
+                    }
+                )
             }
         }
     }

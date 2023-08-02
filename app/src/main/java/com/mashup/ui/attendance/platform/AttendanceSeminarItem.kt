@@ -33,7 +33,8 @@ import com.mashup.core.ui.typography.Caption1
 import com.mashup.core.ui.typography.Caption3
 import com.mashup.core.ui.typography.MashTextView
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @SuppressLint("SimpleDateFormat")
 @Composable

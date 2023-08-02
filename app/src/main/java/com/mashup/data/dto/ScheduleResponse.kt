@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @JsonClass(generateAdapter = true)
 data class ScheduleResponse(

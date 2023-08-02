@@ -8,12 +8,20 @@ import android.view.ViewTreeObserver
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -66,7 +74,7 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
                 MashUpTheme {
                     DanggnRewardPopupScreen(
                         onClickDismissButton = ::showCancelRewardDialog,
-                        onClickSubmitButton = ::showSubmitRewardDialog,
+                        onClickSubmitButton = ::showSubmitRewardDialog
                     )
                 }
             }
@@ -92,13 +100,13 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
 
     private fun addGlobalLayoutListener(view: View) {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (this@DanggnRewardPopup.view?.height == 0) return
-                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior?.peekHeight = this@DanggnRewardPopup.view?.height ?: 0
-            }
-        })
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (this@DanggnRewardPopup.view?.height == 0) return
+                    behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior?.peekHeight = this@DanggnRewardPopup.view?.height ?: 0
+                }
+            })
     }
 
     private fun showCancelRewardDialog() {
@@ -137,12 +145,11 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
     }
 }
 
-
 @Composable
 fun DanggnRewardPopupScreen(
     modifier: Modifier = Modifier,
     onClickDismissButton: () -> Unit,
-    onClickSubmitButton: (String) -> Unit,
+    onClickSubmitButton: (String) -> Unit
 ) {
     var text by remember { mutableStateOf("") }
 
@@ -162,7 +169,7 @@ fun DanggnRewardPopupScreen(
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable { onClickDismissButton() },
+                    .clickable { onClickDismissButton() }
             )
         }
 
@@ -170,17 +177,17 @@ fun DanggnRewardPopupScreen(
             text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
             style = Body5,
             color = Gray600,
-            modifier = Modifier.padding(top = 8.dp, bottom = 26.dp),
+            modifier = Modifier.padding(top = 8.dp, bottom = 26.dp)
         )
 
         Row(
             modifier = Modifier.padding(vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             BasicTextField(
                 value = text,
                 onValueChange = { if (it.length <= DanggnRewardPopup.MAX_LENGTH) text = it },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f)
             )
             Image(
                 painter = painterResource(id = CR.drawable.ic_xmark),
@@ -188,7 +195,7 @@ fun DanggnRewardPopupScreen(
                 modifier = Modifier
                     .padding(4.dp)
                     .size(16.dp)
-                    .clickable { text = "" },
+                    .clickable { text = "" }
             )
         }
 
@@ -200,7 +207,7 @@ fun DanggnRewardPopupScreen(
             color = Gray400,
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(4.dp),
+                .padding(4.dp)
         )
 
         MashUpButton(
@@ -209,7 +216,7 @@ fun DanggnRewardPopupScreen(
             isEnabled = text.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp),
+                .padding(top = 20.dp)
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.mashup.data.repository
 
 import com.mashup.core.model.Platform
+import com.mashup.core.network.Response
 import com.mashup.data.dto.AccessResponse
 import com.mashup.data.dto.LoginRequest
 import com.mashup.data.dto.MemberInfoResponse
@@ -8,7 +9,6 @@ import com.mashup.data.dto.PushNotificationRequest
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
 import com.mashup.data.dto.ValidResponse
-import com.mashup.core.network.Response
 import com.mashup.network.dao.MemberDao
 import javax.inject.Inject
 

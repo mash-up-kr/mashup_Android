@@ -51,7 +51,7 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
             description = arguments?.getString(EXTRA_POPUP_DESCRIPTION).orEmpty(),
             imageResName = arguments?.getString(EXTRA_POPUP_IMG_RES_NAME).orEmpty(),
             leftButtonText = arguments?.getString(EXTRA_POPUP_LEFT_BUTTON_TEXT).orEmpty(),
-            rightButtonText = arguments?.getString(EXTRA_POPUP_RIGHT_BUTTON_TEXT).orEmpty(),
+            rightButtonText = arguments?.getString(EXTRA_POPUP_RIGHT_BUTTON_TEXT).orEmpty()
         )
 
         return ComposeView(requireContext()).apply {
@@ -98,14 +98,14 @@ class DanggnFirstPlaceBottomPopup : BottomSheetDialogFragment() {
 
     private fun addGlobalLayoutListener(view: View) {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (this@DanggnFirstPlaceBottomPopup.view?.height == 0) return
-                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior?.peekHeight = this@DanggnFirstPlaceBottomPopup.view?.height ?: 0
-            }
-        })
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (this@DanggnFirstPlaceBottomPopup.view?.height == 0) return
+                    view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior?.peekHeight = this@DanggnFirstPlaceBottomPopup.view?.height ?: 0
+                }
+            })
     }
 
     private fun showRewardInformationDialog() {

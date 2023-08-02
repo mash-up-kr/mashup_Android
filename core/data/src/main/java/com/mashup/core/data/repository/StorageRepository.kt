@@ -1,8 +1,8 @@
 package com.mashup.core.data.repository
 
-import com.mashup.core.network.dto.StorageResponse
 import com.mashup.core.network.Response
 import com.mashup.core.network.dao.StorageDao
+import com.mashup.core.network.dto.StorageResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 

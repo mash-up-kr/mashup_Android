@@ -24,12 +24,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
@@ -199,14 +199,13 @@ class DanggnRankingViewModel @Inject constructor(
                         ("????.??.??" to "????.??.??") trip null
                     }
 
-
                     AllRound(
                         id = item.id,
                         number = item.number,
                         startDate = startDateString,
                         endDate = endDateString,
                         dateDiff = dateDiff ?: -1,
-                        isRunning = index == 0,
+                        isRunning = index == 0
                     )
                 }.sortedByDescending { it.number }
 
@@ -449,13 +448,13 @@ class DanggnRankingViewModel @Inject constructor(
         data class Ranking(
             override val memberId: String = "",
             override val text: String = "",
-            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingItem
 
         data class EmptyRanking(
             override val memberId: String = UUID.randomUUID().toString(),
             override val text: String = "",
-            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingItem
 
         /**
@@ -464,23 +463,23 @@ class DanggnRankingViewModel @Inject constructor(
         data class PlatformRanking(
             override val memberId: String = UUID.randomUUID().toString(),
             override val text: String = "",
-            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingItem
 
         data class MyRanking(
             override val memberId: String = "",
             override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
-            override val text: String = "",
+            override val text: String = ""
         ) : RankingItem
 
         data class MyPlatformRanking(
             override val text: String = "",
             override val memberId: String = UUID.randomUUID().toString(),
-            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER,
+            override val totalShakeScore: Int = DEFAULT_SHAKE_NUMBER
         ) : RankingItem
 
         data class Timer(
-            val timerString: String = "",
+            val timerString: String = ""
         )
     }
 
@@ -495,7 +494,7 @@ class DanggnRankingViewModel @Inject constructor(
         val startDate: String = "",
         val endDate: String = "",
         val dateDiff: Int = 0,
-        val isRunning: Boolean = false,
+        val isRunning: Boolean = false
     )
 }
 

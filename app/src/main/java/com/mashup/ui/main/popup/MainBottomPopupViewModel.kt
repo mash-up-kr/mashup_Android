@@ -37,7 +37,7 @@ class MainBottomPopupViewModel @Inject constructor(
                     description = result.data?.valueMap?.get("subtitle").orEmpty(),
                     imageResName = result.data?.valueMap?.get("imageName").orEmpty(),
                     leftButtonText = result.data?.valueMap?.get("leftButtonTitle").orEmpty(),
-                    rightButtonText = result.data?.valueMap?.get("rightButtonTitle").orEmpty(),
+                    rightButtonText = result.data?.valueMap?.get("rightButtonTitle").orEmpty()
                 )
             )
         }

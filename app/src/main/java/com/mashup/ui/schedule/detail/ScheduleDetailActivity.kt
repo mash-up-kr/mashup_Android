@@ -6,8 +6,8 @@ import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
-import com.mashup.databinding.ActivityScheduleDetailBinding
 import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
+import com.mashup.databinding.ActivityScheduleDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

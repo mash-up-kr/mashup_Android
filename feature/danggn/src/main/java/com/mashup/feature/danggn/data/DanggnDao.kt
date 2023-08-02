@@ -1,15 +1,15 @@
 package com.mashup.feature.danggn.data
 
+import com.mashup.core.network.Response
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
-import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
-import com.mashup.core.network.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -33,7 +33,7 @@ interface DanggnDao {
     @GET("api/v1/danggn/rank/platform")
     suspend fun getDanggnPlatformRank(
         @Query("danggnRankingRoundId") danggnRankingRoundId: Int,
-        @Query("generationNumber") generationNumber: Int,
+        @Query("generationNumber") generationNumber: Int
     ): Response<List<DanggnPlatformRankResponse>>
 
     // 당근 흔들기 플랫폼별 랭킹
@@ -63,6 +63,6 @@ interface DanggnDao {
     @POST("api/v1/danggn/ranking-reward-comment/{danggnRankingRewardId}")
     suspend fun postDanggnRankingRewardComment(
         @Path("danggnRankingRewardId") danggnRankingRewardId: Int,
-        @Body commentRequest: DanggnRankingRewardCommentRequest,
+        @Body commentRequest: DanggnRankingRewardCommentRequest
     ): Response<Boolean>
 }

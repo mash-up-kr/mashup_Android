@@ -18,7 +18,7 @@ fun RandomTodayMessage(modifier: Modifier, message: String) {
     Surface(
         modifier = modifier,
         color = Gray100,
-        shape = CircleShape,
+        shape = CircleShape
     ) {
         Text(
             text = message,

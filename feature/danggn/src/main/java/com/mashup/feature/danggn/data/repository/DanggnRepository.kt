@@ -1,16 +1,16 @@
 package com.mashup.feature.danggn.data.repository
 
+import com.mashup.core.network.Response
 import com.mashup.feature.danggn.data.DanggnDao
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnRandomTodayMessageResponse
 import com.mashup.feature.danggn.data.dto.DanggnRankingMultipleRoundCheckResponse
+import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
-import com.mashup.feature.danggn.data.dto.DanggnRankingRewardCommentRequest
-import com.mashup.core.network.Response
 import javax.inject.Inject
 
 class DanggnRepository @Inject constructor(
@@ -18,7 +18,7 @@ class DanggnRepository @Inject constructor(
 ) {
     suspend fun getAllDanggnRank(
         danggnRankingRoundId: Int,
-        generationNumber: Int,
+        generationNumber: Int
     ): Response<List<DanggnMemberRankResponse>> {
         return danggnDao.getDanggnAllMemberRank(
             danggnRankingRoundId = danggnRankingRoundId,
@@ -28,7 +28,7 @@ class DanggnRepository @Inject constructor(
 
     suspend fun getPlatformDanggnRank(
         danggnRankingRoundId: Int,
-        generationNumber: Int,
+        generationNumber: Int
     ): Response<List<DanggnPlatformRankResponse>> {
         return danggnDao.getDanggnPlatformRank(
             danggnRankingRoundId = danggnRankingRoundId,

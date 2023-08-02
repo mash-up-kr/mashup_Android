@@ -5,14 +5,14 @@ import com.mashup.core.model.Platform
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 data class AttendanceModel(
     val id: Int,
     val myPageType: MyPageAdapterType,
     val profile: Profile? = null,
     val generationNum: Int? = null,
-    val activityHistory: ActivityHistory? = null,
+    val activityHistory: ActivityHistory? = null
 ) {
     fun getGeneration() = "${generationNum}기"
 }

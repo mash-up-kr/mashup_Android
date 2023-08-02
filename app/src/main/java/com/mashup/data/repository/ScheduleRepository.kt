@@ -1,8 +1,8 @@
 package com.mashup.data.repository
 
+import com.mashup.core.network.Response
 import com.mashup.data.dto.ScheduleListResponse
 import com.mashup.data.dto.ScheduleResponse
-import com.mashup.core.network.Response
 import com.mashup.network.dao.ScheduleDao
 import javax.inject.Inject
 

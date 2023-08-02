@@ -1,5 +1,6 @@
 package com.mashup.fake
 
+import com.mashup.core.network.Response
 import com.mashup.feature.danggn.data.DanggnDao
 import com.mashup.feature.danggn.data.dto.DanggnMemberRankResponse
 import com.mashup.feature.danggn.data.dto.DanggnPlatformRankResponse
@@ -9,7 +10,6 @@ import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.dto.DanggnScoreRequest
 import com.mashup.feature.danggn.data.dto.DanggnScoreResponse
 import com.mashup.feature.danggn.data.dto.GoldenDanggnPercentResponse
-import com.mashup.core.network.Response
 
 class FakeDanggnDao : DanggnDao {
 
@@ -23,25 +23,37 @@ class FakeDanggnDao : DanggnDao {
             message = "",
             data = listOf(
                 DanggnMemberRankResponse(
-                    39, "정종노드", 150
+                    39,
+                    "정종노드",
+                    150
                 ),
                 DanggnMemberRankResponse(
-                    40, "정종드투", 151
+                    40,
+                    "정종드투",
+                    151
                 ),
                 DanggnMemberRankResponse(
-                    41, "정종민", 152
+                    41,
+                    "정종민",
+                    152
                 ),
                 DanggnMemberRankResponse(
-                    42, "정종웹", 153
+                    42,
+                    "정종웹",
+                    153
                 ),
                 DanggnMemberRankResponse(
-                    43, "정종오스", 154
+                    43,
+                    "정종오스",
+                    154
                 ),
                 DanggnMemberRankResponse(
-                    44, "정종자인", 155
-                ),
+                    44,
+                    "정종자인",
+                    155
+                )
             ),
-            page = null,
+            page = null
         )
     }
 
@@ -57,25 +69,36 @@ class FakeDanggnDao : DanggnDao {
         scoreRequest: DanggnScoreRequest
     ): Response<DanggnScoreResponse> {
         return Response(
-            "null", null, null, null
+            "null",
+            null,
+            null,
+            null
         )
     }
 
     override suspend fun getDanggnRandomTodayMessage(): Response<DanggnRandomTodayMessageResponse> {
         return Response(
-            "null", null, null, null
+            "null",
+            null,
+            null,
+            null
         )
     }
 
     override suspend fun getGoldenDanggnPercent(): Response<GoldenDanggnPercentResponse> {
         return Response(
-            "null", null, null, null
+            "null",
+            null,
+            null,
+            null
         )
     }
 
     override suspend fun getDanggnMultipleRound(): Response<DanggnRankingMultipleRoundCheckResponse> {
         return Response(
-            "SUCCESS", null, DanggnRankingMultipleRoundCheckResponse(
+            "SUCCESS",
+            null,
+            DanggnRankingMultipleRoundCheckResponse(
                 listOf(
                     DanggnRankingMultipleRoundCheckResponse.DanggnRankingRound(
                         id = 2,
@@ -88,15 +111,19 @@ class FakeDanggnDao : DanggnDao {
                         number = 1,
                         startDate = "2023-06-18",
                         endDate = "2023-06-18"
-                    ),
+                    )
                 )
-            ), null
+            ),
+            null
         )
     }
 
     override suspend fun getDanggnSingleRound(danggnRankingRoundId: Int): Response<DanggnRankingSingleRoundCheckResponse> {
         return Response(
-            "null", null, null, null
+            "null",
+            null,
+            null,
+            null
         )
     }
 }

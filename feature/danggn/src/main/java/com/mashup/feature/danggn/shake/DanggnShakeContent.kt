@@ -19,9 +19,8 @@ import com.mashup.core.common.R as CR
 fun DanggnShakeContent(
     randomTodayMessage: String,
     danggnMode: DanggnMode,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
-
     Box(
         modifier = modifier
             .fillMaxWidth()

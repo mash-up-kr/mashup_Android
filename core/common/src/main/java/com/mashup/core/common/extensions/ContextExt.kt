@@ -11,12 +11,10 @@ fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-
 /**
  * @param amplitude: 진동 세기. must 1<= amplitude <=255
  */
 fun Context.haptic(time: Long = 500L, amplitude: Int) {
-
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val vibratorManager: VibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         vibratorManager.defaultVibrator

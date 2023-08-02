@@ -6,6 +6,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.core.common.constant.INVALID_PLATFORM_NAME
+import com.mashup.core.common.constant.MEMBER_INVALID_INVITE
 import com.mashup.core.common.extensions.setEmptyUIOfTextField
 import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
@@ -13,8 +15,6 @@ import com.mashup.core.common.model.Validation
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
 import com.mashup.databinding.FragmentSignUpCodeBinding
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
-import com.mashup.core.common.constant.INVALID_PLATFORM_NAME
-import com.mashup.core.common.constant.MEMBER_INVALID_INVITE
 import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.signup.SignUpState

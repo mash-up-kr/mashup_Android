@@ -75,12 +75,12 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
 
     private fun addGlobalLayoutListener(view: View) {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (this@DanggnRoundSelectorDialog.view?.height == 0) return
-                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior?.peekHeight = this@DanggnRoundSelectorDialog.view?.height ?: 0
-            }
-        })
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (this@DanggnRoundSelectorDialog.view?.height == 0) return
+                    behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior?.peekHeight = this@DanggnRoundSelectorDialog.view?.height ?: 0
+                }
+            })
     }
 }

@@ -18,7 +18,7 @@ fun SettingMenuList(
     modifier: Modifier = Modifier,
     onClickPush: () -> Unit = {},
     onLogout: () -> Unit = {},
-    onDeleteUser: () -> Unit = {},
+    onDeleteUser: () -> Unit = {}
 ) {
     Column(modifier = modifier) {
         RightArrowSettingItem(

@@ -58,7 +58,6 @@ class DanggnModeController @Inject constructor() {
         }
     }
 
-
     fun reset() {
         currentMode = NormalDanggnMode
         danggnChangedTimeMillis = 0

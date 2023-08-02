@@ -48,7 +48,7 @@ import com.mashup.core.common.R as CR
 @Composable
 fun DanggnInfoScreen(
     modifier: Modifier = Modifier,
-    onClickBackButton: () -> Unit = {},
+    onClickBackButton: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
 
@@ -250,7 +250,6 @@ fun DanggnInfoScreen(
                 }
             }
         }
-
     }
 }
 

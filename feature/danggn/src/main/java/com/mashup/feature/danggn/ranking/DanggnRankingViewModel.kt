@@ -11,11 +11,11 @@ import com.mashup.core.common.utils.TimerUtils
 import com.mashup.core.common.utils.trip
 import com.mashup.core.data.repository.PopUpRepository
 import com.mashup.core.data.repository.StorageRepository
-import com.mashup.core.model.data.local.DanggnPreference
-import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.widget.MashUpPopupEntity
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
+import com.mashup.datastore.model.DanggnPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.feature.danggn.constant.EXTRA_SHOW_DANGGN_REWARD_NOTICE
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.repository.DanggnRepository

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.datastore.model.DanggnPreference
-import com.mashup.datastore.model.UserPreference
 import com.mashup.core.common.constant.BAD_REQUEST
 import com.mashup.core.common.extensions.combineWithSevenValue
 import com.mashup.core.common.extensions.suspendRunCatching
@@ -16,6 +14,8 @@ import com.mashup.core.data.repository.StorageRepository
 import com.mashup.core.ui.widget.MashUpPopupEntity
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
+import com.mashup.datastore.model.DanggnPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.feature.danggn.constant.EXTRA_SHOW_DANGGN_REWARD_NOTICE
 import com.mashup.feature.danggn.data.dto.DanggnRankingSingleRoundCheckResponse
 import com.mashup.feature.danggn.data.repository.DanggnRepository

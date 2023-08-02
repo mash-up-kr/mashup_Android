@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mashup.core.common.R
-import com.mashup.datastore.model.UserPreference
 import com.mashup.core.ui.widget.MashUpToolbar
+import com.mashup.datastore.model.UserPreference
 
 @Composable
 fun PushScreen(

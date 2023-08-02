@@ -1,10 +1,10 @@
 package com.mashup.feature.danggn.ranking
 
 import app.cash.turbine.test
-import com.mashup.datastore.model.DanggnPreference
-import com.mashup.datastore.model.UserPreference
 import com.mashup.datastore.data.repository.DanggnPreferenceRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
+import com.mashup.datastore.model.DanggnPreference
+import com.mashup.datastore.model.UserPreference
 import com.mashup.fake.FakeDanggnDao
 import com.mashup.feature.danggn.data.repository.DanggnRepository
 import com.mashup.util.CoroutineRule

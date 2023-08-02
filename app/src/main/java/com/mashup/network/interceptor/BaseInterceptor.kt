@@ -1,7 +1,8 @@
 package com.mashup.network.interceptor
 
 import android.os.Build
-import android.util.Base64.*
+import android.util.Base64.NO_WRAP
+import android.util.Base64.encode
 import com.mashup.BuildConfig
 import okhttp3.Interceptor
 import java.util.Base64

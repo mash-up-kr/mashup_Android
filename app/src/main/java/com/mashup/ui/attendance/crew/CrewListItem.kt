@@ -30,7 +30,7 @@ import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
-import java.util.*
+import java.util.Date
 
 @Composable
 fun CrewListItem(

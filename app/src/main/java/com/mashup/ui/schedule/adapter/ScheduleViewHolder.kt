@@ -17,7 +17,8 @@ import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
 import com.mashup.ui.schedule.model.ScheduleCard
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class EndScheduleCard(

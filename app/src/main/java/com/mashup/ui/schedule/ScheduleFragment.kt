@@ -123,7 +123,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
             offscreenPageLimit = 4
         }
     }
-    
+
     private fun initButtons() {
         viewBinding.btnDanggnEntryPoint.onThrottleFirstClick(lifecycleScope) {
             mainViewModel.disablePopup(MainPopupType.DANGGN)

@@ -40,7 +40,7 @@ fun BottomSheetTitle(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 20.dp),
+            .padding(vertical = 12.dp, horizontal = 20.dp)
     ) {
         Text(
             text = title,

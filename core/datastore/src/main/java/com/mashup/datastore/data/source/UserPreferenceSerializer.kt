@@ -2,7 +2,7 @@ package com.mashup.datastore.data.source
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.model.UserPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException

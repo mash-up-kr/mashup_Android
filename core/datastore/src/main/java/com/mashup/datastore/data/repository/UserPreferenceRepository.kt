@@ -2,7 +2,7 @@ package com.mashup.datastore.data.repository
 
 import androidx.datastore.core.DataStore
 import com.mashup.core.model.Platform
-import com.mashup.core.model.data.local.UserPreference
+import com.mashup.datastore.model.UserPreference
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton

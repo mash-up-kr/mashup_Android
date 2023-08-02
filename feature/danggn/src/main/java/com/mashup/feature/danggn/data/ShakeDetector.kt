@@ -9,7 +9,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class ShakeDetector @Inject constructor(
-    private val sensorManager: SensorManager,
+    private val sensorManager: SensorManager
 ) {
 
     private var lastUpdateTime: Long = 0
@@ -68,6 +68,5 @@ class ShakeDetector @Inject constructor(
     companion object {
         private const val DEFAULT_SHAKE_INTERVAL_TIME = 100L
         private const val DEFAULT_SHAKE_THRESHOLD = 3.0f
-
     }
 }

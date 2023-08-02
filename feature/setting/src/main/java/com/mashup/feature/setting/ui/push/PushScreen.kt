@@ -13,7 +13,7 @@ fun PushScreen(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit = {},
     onToggleMashUpPush: (Boolean) -> Unit = {},
-    onToggleDanggnPush: (Boolean) -> Unit = {},
+    onToggleDanggnPush: (Boolean) -> Unit = {}
 ) {
     PushContent(
         modifier = modifier,
@@ -32,7 +32,7 @@ fun PushContent(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit = {},
     onToggleMashupPush: (Boolean) -> Unit = {},
-    onToggleDanggnPush: (Boolean) -> Unit = {},
+    onToggleDanggnPush: (Boolean) -> Unit = {}
 ) {
     Column(modifier = modifier) {
         MashUpToolbar(

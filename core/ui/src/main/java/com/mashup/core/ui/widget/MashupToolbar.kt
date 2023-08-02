@@ -36,7 +36,7 @@ fun MashUpToolbar(
     showBottomDivider: Boolean = false,
     onClickBackButton: () -> Unit = {},
     onClickActionButton: () -> Unit = {},
-    @DrawableRes actionButtonDrawableRes: Int = R.drawable.ic_close,
+    @DrawableRes actionButtonDrawableRes: Int = R.drawable.ic_close
 ) {
     Column(modifier = modifier) {
         Row(

@@ -49,25 +49,36 @@ class DanggnRankingViewModelTest {
         coroutineRule.testDispatcher.scheduler.advanceUntilIdle()
         val list = listOf(
             DanggnRankingViewModel.RankingItem.Ranking(
-                "39", "정종노드", 150
+                "39",
+                "정종노드",
+                150
             ),
             DanggnRankingViewModel.RankingItem.Ranking(
-                "40", "정종드투", 151
+                "40",
+                "정종드투",
+                151
             ),
             DanggnRankingViewModel.RankingItem.Ranking(
-                "41", "정종민", 152
+                "41",
+                "정종민",
+                152
             ),
             DanggnRankingViewModel.RankingItem.Ranking(
-                "42", "정종웹", 153
+                "42",
+                "정종웹",
+                153
             ),
             DanggnRankingViewModel.RankingItem.Ranking(
-                "43", "정종오스", 154
+                "43",
+                "정종오스",
+                154
             ),
             DanggnRankingViewModel.RankingItem.Ranking(
-                "44", "정종자인", 155
+                "44",
+                "정종자인",
+                155
             )
         )
-
 
         // then
         rankingViewModel.uiState.test {

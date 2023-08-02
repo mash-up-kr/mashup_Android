@@ -10,8 +10,6 @@ import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 

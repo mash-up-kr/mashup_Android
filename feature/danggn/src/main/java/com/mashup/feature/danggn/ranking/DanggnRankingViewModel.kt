@@ -168,16 +168,16 @@ class DanggnRankingViewModel @Inject constructor(
         if (allRoundListResponse.isSuccess()) {
             withContext(Dispatchers.Default) {
                 val roundListData = allRoundListResponse.data?.danggnRankingRounds ?: listOf()
-                val allRoundList = roundListData.mapIndexed { index, item ->
+                val allRoundList = roundListData.map { round ->
                     val (startDateString, endDateString, dateDiff) = try {
                         val roundFormat = SimpleDateFormat("yy.mm.dd")
                         val detailDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
-                        val startDate = SimpleDateFormat("yyyy-mm-dd").parse(item.startDate)!!
-                        val endDate = SimpleDateFormat("yyyy-mm-dd").parse(item.endDate)!!
+                        val startDate = SimpleDateFormat("yyyy-mm-dd").parse(round.startDate)!!
+                        val endDate = SimpleDateFormat("yyyy-mm-dd").parse(round.endDate)!!
 
-                        val currentRoundDateDiff = if (index == 0) { // 현재 진행중인 랭킹일 때만 날짜 차이를 계산
-                            val dateDiff = danggnRepository.getDanggnSingleRound(item.id).data.let {
+                        val currentRoundDateDiff = if (round.isRunning) { // 현재 진행중인 랭킹일 때만 날짜 차이를 계산
+                            val dateDiff = danggnRepository.getDanggnSingleRound(round.id).data.let {
                                 val detailEndDate = it?.endDate?.let { date ->
                                     detailDateFormat.format(date)
                                 }.orEmpty()
@@ -186,7 +186,7 @@ class DanggnRankingViewModel @Inject constructor(
                             }
 
                             if (dateDiff != -1) {
-                                getTimerData(item.id)
+                                getTimerData(round.id)
                             }
                             dateDiff
                         } else {
@@ -200,12 +200,12 @@ class DanggnRankingViewModel @Inject constructor(
                     }
 
                     AllRound(
-                        id = item.id,
-                        number = item.number,
+                        id = round.id,
+                        number = round.number,
                         startDate = startDateString,
                         endDate = endDateString,
                         dateDiff = dateDiff ?: -1,
-                        isRunning = index == 0
+                        isRunning = round.isRunning
                     )
                 }.sortedByDescending { it.number }
 

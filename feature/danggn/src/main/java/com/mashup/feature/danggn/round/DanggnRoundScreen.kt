@@ -74,7 +74,7 @@ fun DanggnRoundContent(
             itemsIndexed(rounds, key = { _, round -> round.id }) { index, round ->
                 DnaggnRoundItem(
                     round = round,
-                    isRunning = index == 0,
+                    isRunning = round.isRunning,
                     isSelected = currentSelectedRoundId == round.id,
                     modifier = Modifier
                         .fillMaxWidth()

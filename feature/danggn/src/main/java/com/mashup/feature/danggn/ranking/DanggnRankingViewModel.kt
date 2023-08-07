@@ -209,7 +209,9 @@ class DanggnRankingViewModel @Inject constructor(
                     )
                 }.sortedByDescending { it.number }
 
-                updateCurrentRoundId(allRoundList.first().id)
+                allRoundList.find { it.isRunning }?.run {
+                    updateCurrentRoundId(id)
+                }
                 _allDanggnRoundList.emit(allRoundList)
             }
         }

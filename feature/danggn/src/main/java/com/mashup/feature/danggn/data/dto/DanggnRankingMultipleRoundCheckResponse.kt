@@ -14,6 +14,8 @@ data class DanggnRankingMultipleRoundCheckResponse(
         val endDate: String,
         @Json(name = "id")
         val id: Int,
+        @Json(name = "isRunning")
+        val isRunning: Boolean,
         @Json(name = "number")
         val number: Int,
         @Json(name = "startDate")

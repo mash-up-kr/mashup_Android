@@ -4,16 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mashup.core.common.R
-import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.widget.MashUpToolbar
+import com.mashup.datastore.model.UserPreference
 
 @Composable
 fun PushScreen(
-    userPreference: UserPreference,
+    userPreference: com.mashup.datastore.model.UserPreference,
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit = {},
     onToggleMashUpPush: (Boolean) -> Unit = {},
-    onToggleDanggnPush: (Boolean) -> Unit = {},
+    onToggleDanggnPush: (Boolean) -> Unit = {}
 ) {
     PushContent(
         modifier = modifier,
@@ -32,7 +32,7 @@ fun PushContent(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit = {},
     onToggleMashupPush: (Boolean) -> Unit = {},
-    onToggleDanggnPush: (Boolean) -> Unit = {},
+    onToggleDanggnPush: (Boolean) -> Unit = {}
 ) {
     Column(modifier = modifier) {
         MashUpToolbar(

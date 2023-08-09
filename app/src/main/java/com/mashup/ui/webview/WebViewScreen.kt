@@ -20,8 +20,7 @@ fun WebViewScreen(
     Column(modifier = modifier) {
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
-            title = (webViewUiState as? WebViewUiState.Success)?.title
-                ?: "",
+            title = (webViewUiState as? WebViewUiState.Success)?.title.orEmpty(),
             showBackButton = true,
             showBottomDivider = (webViewUiState as? WebViewUiState.Success)?.showToolbarDivider
                 ?: false,
@@ -43,7 +42,7 @@ private fun MashUpWebView(
     isScrollTop: (Boolean) -> Unit = {},
     onBackPressed: () -> Unit
 ) {
-    val webViewState = rememberWebViewState(url = webViewUrl ?: "")
+    val webViewState = rememberWebViewState(url = webViewUrl.orEmpty())
     val webViewNavigator = rememberWebViewNavigator()
 
     WebView(

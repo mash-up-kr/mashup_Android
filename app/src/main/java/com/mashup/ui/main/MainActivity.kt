@@ -24,6 +24,7 @@ import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.utils.safeShow
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivityMainBinding
+import com.mashup.ui.danggn.DanggnInfoActivity
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainPopupType
@@ -67,6 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initViews() {
         super.initViews()
+
         initComposeView()
         initTabButtons()
         requestNotificationPermission()
@@ -120,6 +122,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 ShakeDanggnActivity.newIntent(
                                     context = this@MainActivity,
                                     type = ActivityEnterType.POPUP
+                                )
+                            )
+                        }
+
+                        MainPopupType.DANGGN_UPDATE -> {
+                            viewModel.disablePopup(popupType)
+                            startActivity(
+                                DanggnInfoActivity.newIntent(
+                                    context = this@MainActivity
                                 )
                             )
                         }

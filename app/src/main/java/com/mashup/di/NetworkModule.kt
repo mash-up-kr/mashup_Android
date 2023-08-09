@@ -4,15 +4,15 @@ import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.core.model.Platform
+import com.mashup.core.network.adapter.PlatformJsonAdapter
+import com.mashup.core.network.dao.PopupDao
+import com.mashup.core.network.dao.StorageDao
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
-import com.mashup.network.adapter.PlatformJsonAdapter
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
-import com.mashup.network.dao.PopupDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
-import com.mashup.network.dao.StorageDao
 import com.mashup.network.interceptor.AuthInterceptor
 import com.mashup.network.interceptor.BaseInterceptor
 import com.squareup.moshi.Moshi
@@ -26,7 +26,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import java.util.*
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -55,9 +55,8 @@ class NetworkModule {
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
         baseInterceptor: BaseInterceptor,
-        flipperInterceptor: FlipperOkhttpInterceptor,
+        flipperInterceptor: FlipperOkhttpInterceptor
     ): OkHttpClient {
-
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(baseInterceptor)

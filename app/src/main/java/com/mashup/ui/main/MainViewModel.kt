@@ -6,9 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.core.data.repository.PopUpRepository
 import com.mashup.core.model.Platform
 import com.mashup.data.repository.MemberRepository
-import com.mashup.data.repository.PopUpRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.login.LoginType
 import com.mashup.ui.main.model.MainPopupType
@@ -41,7 +41,6 @@ class MainViewModel @Inject constructor(
 
     private val _onClickPopupConfirm = MutableSharedFlow<MainPopupType>()
     val onClickPopupConfirm: SharedFlow<MainPopupType> = _onClickPopupConfirm.asSharedFlow()
-
 
     init {
         savedStateHandle.get<LoginType>(EXTRA_LOGIN_TYPE)?.run {

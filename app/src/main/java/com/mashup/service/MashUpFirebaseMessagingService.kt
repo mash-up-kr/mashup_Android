@@ -1,5 +1,6 @@
 package com.mashup.service
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -50,6 +51,7 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun notifyPushMessage(
         title: String,
         body: String,
@@ -83,7 +85,6 @@ class MashUpFirebaseMessagingService : FirebaseMessagingService() {
                 .setStyle(
                     NotificationCompat.BigPictureStyle()
                         .bigPicture(bitmapImage)
-                        .bigLargeIcon(null)
                 )
         }
 

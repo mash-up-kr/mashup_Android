@@ -36,7 +36,7 @@ fun MashUpToolbar(
     showBottomDivider: Boolean = false,
     onClickBackButton: () -> Unit = {},
     onClickActionButton: () -> Unit = {},
-    @DrawableRes actionButtonDrawableRes: Int = R.drawable.ic_close,
+    @DrawableRes actionButtonDrawableRes: Int = R.drawable.ic_close
 ) {
     Column(modifier = modifier) {
         Row(
@@ -96,7 +96,7 @@ fun MashUpToolbar(
 
 @Preview
 @Composable
-fun MashupToolbarOnlyTitlePrev() {
+private fun MashupToolbarOnlyTitlePrev() {
     MashUpTheme {
         Surface {
             MashUpToolbar(
@@ -109,7 +109,7 @@ fun MashupToolbarOnlyTitlePrev() {
 
 @Preview("back Button을 포함한 toolbar")
 @Composable
-fun MashupToolbarIncludeBackButtonPrev() {
+private fun MashupToolbarIncludeBackButtonPrev() {
     MashUpTheme {
         Surface {
             MashUpToolbar(

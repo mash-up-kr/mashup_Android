@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class DanggnRandomTodayMessageResponse(
     @field:Json(name = "todayMessage")
-    val todayMessage: String,
+    val todayMessage: String
 )

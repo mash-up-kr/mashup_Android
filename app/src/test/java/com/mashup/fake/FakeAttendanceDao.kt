@@ -1,7 +1,6 @@
 package com.mashup.fake
 
-import com.mashup.data.dto.*
-import com.mashup.network.Response
+import com.mashup.core.network.Response
 import com.mashup.network.dao.AttendanceDao
 
 class FakeAttendanceDao : AttendanceDao {
@@ -25,13 +24,14 @@ class FakeAttendanceDao : AttendanceDao {
             data = TotalAttendanceResponse(
                 isEnd = isEnd,
                 eventNum = eventNum,
-                platformInfos = emptyList(),
-            ),
+                platformInfos = emptyList()
+            )
         )
     }
 
     override suspend fun getAttendancePlatformCrew(
-        platformName: String, scheduleId: Int
+        platformName: String,
+        scheduleId: Int
     ): Response<PlatformAttendanceResponse> {
         return Response(
             code = "",

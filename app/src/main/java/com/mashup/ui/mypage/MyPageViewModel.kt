@@ -10,8 +10,6 @@ import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -23,9 +21,6 @@ class MyPageViewModel @Inject constructor(
 
     private val _attendanceList = MutableLiveData<List<AttendanceModel>>()
     val attendanceList: LiveData<List<AttendanceModel>> = _attendanceList
-
-    private val _errorCode = MutableSharedFlow<String>()
-    val errorCode: SharedFlow<String> = _errorCode
 
     init {
         getMember()

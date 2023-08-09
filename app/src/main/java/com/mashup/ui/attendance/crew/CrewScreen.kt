@@ -26,7 +26,7 @@ fun CrewScreen(
             .background(color = Color.White)
     ) {
         MashUpToolbar(
-            title = (crewAttendanceState as? CrewAttendanceState.Success)?.title ?: "",
+            title = (crewAttendanceState as? CrewAttendanceState.Success)?.title.orEmpty(),
             showBackButton = true,
             onClickBackButton = onClickBackButton
         )

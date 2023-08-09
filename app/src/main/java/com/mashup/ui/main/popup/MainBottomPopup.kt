@@ -14,18 +14,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -51,12 +47,12 @@ import com.mashup.core.ui.typography.Body4
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
+import com.mashup.core.ui.widget.bottomsheet.BottomSheetHandler
 import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.main.model.MainPopupEntity
 import com.mashup.ui.main.model.MainPopupType
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
@@ -70,7 +66,6 @@ class MainBottomPopup : BottomSheetDialogFragment() {
             )
         }
     }
-
 
     private val viewModel: MainBottomPopupViewModel by viewModels()
 
@@ -105,7 +100,7 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                             dismiss()
                         },
                         onClickRightButton = {
-                            mainViewModel.onClickPopup(viewModel.popupKey ?: "")
+                            mainViewModel.onClickPopup(viewModel.popupKey.orEmpty())
                             AnalyticsManager.addEvent(LOG_COMMON_POPUP_CONFIRM, bundleOf("key" to viewModel.popupKey))
                             dismiss()
                         }
@@ -133,14 +128,14 @@ class MainBottomPopup : BottomSheetDialogFragment() {
 
     private fun addGlobalLayoutListener(view: View) {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (this@MainBottomPopup.view?.height == 0) return
-                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior?.peekHeight = this@MainBottomPopup.view?.height ?: 0
-            }
-        })
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (this@MainBottomPopup.view?.height == 0) return
+                    view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior?.peekHeight = this@MainBottomPopup.view?.height ?: 0
+                }
+            })
     }
 }
 
@@ -165,7 +160,6 @@ fun MainBottomPopupScreen(
     }
 }
 
-
 @Composable
 fun MainBottomPopupContent(
     mainPopupEntity: MainPopupEntity,
@@ -180,14 +174,7 @@ fun MainBottomPopupContent(
                 shape = RoundedCornerShape(20.dp)
             )
     ) {
-        Divider(
-            modifier = Modifier
-                .width(24.dp)
-                .align(CenterHorizontally)
-                .padding(vertical = 10.dp),
-            color = Color(0xFFD9D9D9),
-            thickness = 3.dp
-        )
+        BottomSheetHandler()
 
         Text(
             modifier = Modifier

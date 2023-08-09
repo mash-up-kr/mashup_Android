@@ -11,9 +11,9 @@ import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.model.NavigationAnimationType
-import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
+import com.mashup.datastore.model.UserPreference
 import com.mashup.feature.setting.ui.push.PushScreen
 import dagger.hilt.android.AndroidEntryPoint
 

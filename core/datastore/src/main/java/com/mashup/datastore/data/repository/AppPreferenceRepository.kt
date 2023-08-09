@@ -1,7 +1,7 @@
 package com.mashup.datastore.data.repository
 
 import androidx.datastore.core.DataStore
-import com.mashup.core.model.data.local.AppPreference
+import com.mashup.datastore.model.AppPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 

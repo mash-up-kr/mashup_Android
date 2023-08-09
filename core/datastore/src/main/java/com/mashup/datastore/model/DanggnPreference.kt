@@ -1,11 +1,11 @@
-package com.mashup.core.model.data.local
+package com.mashup.datastore.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class DanggnPreference(
     val personalFirstRanking: Int,
-    val platformFirstRanking: Int,
+    val platformFirstRanking: Int
 ) {
     companion object {
         fun getDefaultInstance() = DanggnPreference(

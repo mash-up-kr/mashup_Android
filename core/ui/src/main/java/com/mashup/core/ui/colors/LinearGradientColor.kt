@@ -23,7 +23,7 @@ val rankingOneGradient = listOf(
 
 val rankingTwoGradient = listOf(
     rankingTwoGradient1,
-    rankingTwoGradient2,
+    rankingTwoGradient2
 )
 
 val rankingThreeGradient = listOf(

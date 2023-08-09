@@ -1,10 +1,21 @@
 package com.mashup.feature.danggn.ranking
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,13 +37,24 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.core.common.utils.thousandFormat
-import com.mashup.core.ui.colors.*
+import com.mashup.core.ui.colors.Black
+import com.mashup.core.ui.colors.Brand200
+import com.mashup.core.ui.colors.Brand600
+import com.mashup.core.ui.colors.Gray200
+import com.mashup.core.ui.colors.Gray300
+import com.mashup.core.ui.colors.Gray400
+import com.mashup.core.ui.colors.Gray50
+import com.mashup.core.ui.colors.Gray900
+import com.mashup.core.ui.colors.rankingOneGradient
+import com.mashup.core.ui.colors.rankingThreeGradient
+import com.mashup.core.ui.colors.rankingTwoGradient
 import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.*
+import com.mashup.core.ui.typography.Body3
+import com.mashup.core.ui.typography.Caption1
+import com.mashup.core.ui.typography.GilroyExtraBold
+import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.MashUpButton
-import com.mashup.core.ui.widget.MashUpTabRow
-import com.mashup.core.ui.widget.mashupTabIndicatorOffset
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
 
@@ -40,9 +62,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun DanggnRankingContent(
     modifier: Modifier = Modifier,
-    allMashUpMemberRankState: List<DanggnRankingViewModel.RankingItem>,
-    personalRank: DanggnRankingViewModel.RankingItem,
-    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    personalRankList: List<DanggnRankingViewModel.RankingItem>,
+    myPersonalRank: DanggnRankingViewModel.RankingItem,
+    platformRankList: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
     onClickScrollTopButton: () -> Unit = {},
     onChangedTabIndex: (index: Int) -> Unit = {}
@@ -56,35 +78,32 @@ fun DanggnRankingContent(
     }
 
     Column(modifier = modifier.background(Gray50)) {
-        Text(
+        TabRow(
             modifier = Modifier
-                .padding(start = 20.dp, top = 24.dp)
-                .fillMaxWidth(),
-            text = "랭킹",
-            style = Title1,
-        )
-        MashUpTabRow(
-            modifier = Modifier.wrapContentSize(),
-            horizontalSpace = 24.dp,
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            containerColor = Gray50,
+            selectedTabIndex = pagerState.currentPage,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier
-                        .mashupTabIndicatorOffset(
-                            currentTabPosition = tabPositions[pagerState.currentPage]
-                        )
+                        .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                         .clip(RoundedCornerShape(20.dp)),
                     color = Black,
                     height = 2.dp
                 )
-            }
+            },
+            divider = {}
         ) {
             pages.forEachIndexed { index, title ->
                 MashUpPagerColorAnimatedTab(
-                    modifier = Modifier.noRippleClickable {
-                        coroutineScope.launch {
-                            pagerState.scrollToPage(index)
-                        }
-                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .noRippleClickable {
+                            coroutineScope.launch {
+                                pagerState.scrollToPage(index)
+                            }
+                        },
                     title = title,
                     selected = pagerState.currentPage == index
                 )
@@ -96,15 +115,15 @@ fun DanggnRankingContent(
                 .fillMaxSize(),
             count = pages.size,
             state = pagerState,
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.Top
         ) { index ->
             /**
              * 아직 아무도 흔들지 않아요 테스트는, 아래의 리스트를 emptyList()로 주세요!
              */
             PagerContents(
-                allMashUpMemberRankState,
-                personalRank,
-                allPlatformRank,
+                personalRankList,
+                myPersonalRank,
+                platformRankList,
                 platformRank,
                 index,
                 onClickScrollTopButton = onClickScrollTopButton
@@ -115,14 +134,14 @@ fun DanggnRankingContent(
 
 @Composable
 private fun PagerContents(
-    allRankList: List<DanggnRankingViewModel.RankingItem>,
-    personalRank: DanggnRankingViewModel.RankingItem,
-    allPlatformRank: List<DanggnRankingViewModel.RankingItem>,
+    personalRankList: List<DanggnRankingViewModel.RankingItem>,
+    myPersonalRank: DanggnRankingViewModel.RankingItem,
+    platformRankList: List<DanggnRankingViewModel.RankingItem>,
     platformRank: DanggnRankingViewModel.RankingItem,
     pagerIndex: Int,
     onClickScrollTopButton: () -> Unit = {}
 ) {
-    if (allRankList.isEmpty()) {
+    if (personalRankList.isEmpty()) {
         Text(
             modifier = Modifier,
             textAlign = TextAlign.Center,
@@ -132,61 +151,36 @@ private fun PagerContents(
         )
     } else {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             /**
              * 내 랭킹, 내 플랫폼 랭킹을 표시할 때, viewModel에서 indexOfFirst 함수를 사용했는데,
              * 매치되는 값이 없을 때 -1을 리턴합니다. -1의 경우 빈문자열로 치환했기 때문에
              * 해당 텍스트가 empty이면 + 페이지 인덱스를 보고 MyRanking을 그릴지 말지 분기합니다
              */
-            if (personalRank.text.isNotEmpty() && pagerIndex == 0
-                || platformRank.text.isNotEmpty() && pagerIndex == 1
+            if (myPersonalRank.text.isNotEmpty() && pagerIndex == 0 ||
+                platformRank.text.isNotEmpty() && pagerIndex == 1
             ) {
-                MyRanking(if (pagerIndex == 0) personalRank else platformRank, pagerIndex)
+                MyRanking(if (pagerIndex == 0) myPersonalRank else platformRank, pagerIndex)
             }
 
-            (if (pagerIndex == 0) allRankList else allPlatformRank).forEachIndexed { index, rankingUiState ->
+            (if (pagerIndex == 0) personalRankList else platformRankList).forEachIndexed { index, rankingUiState ->
                 key(rankingUiState.memberId) {
                     /**
-                     * 크루원 랭킹은 11명, 플랫폼 랭킹은 6개 보여줍니다.
+                     * 크루원 랭킹은 매시업 인원 전체, 플랫폼 랭킹은 6개 보여줍니다.
                      */
-                    if (pagerIndex == 0) { // 크루원일 때
-                        if (index < 11) {
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState,
-                            )
-                        }
-                    } else {
-                        if (index < 6) {               // 플랫폼 팀일 때
-                            RankingContent(
-                                modifier = Modifier.fillMaxWidth(),
-                                index = index,
-                                item = rankingUiState
-                            )
-                        }
-                    }
+                    RankingContent(
+                        modifier = Modifier.fillMaxWidth(),
+                        index = index,
+                        item = rankingUiState
+                    )
                     if (index == 2) {
                         DrawDottedLine()
                     }
                 }
             }
 
-            /**
-             * 랭킹 안에 11명이 없다면 해당 텍스트를 보여줍니다.
-             */
-            if (allRankList.count() <= 11) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 28.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "당근을 더 흔들어서 랭킹 안에 들어보세요",
-                    style = Body3,
-                    color = Gray500
-                )
-            }
             MashUpButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -206,7 +200,7 @@ private fun PagerContents(
 @Composable
 private fun MyRanking(
     personalRank: DanggnRankingViewModel.RankingItem,
-    pagerIndex: Int,
+    pagerIndex: Int
 ) {
     val isAllCrewRanking = pagerIndex == 0
     val myRankingText = if (isAllCrewRanking) "내 랭킹 " else "내 팀 랭킹 "
@@ -216,7 +210,7 @@ private fun MyRanking(
 @Composable
 private fun MyRankingInnerContent(
     myRankingText: String,
-    matchedPersonalRanking: DanggnRankingViewModel.RankingItem,
+    matchedPersonalRanking: DanggnRankingViewModel.RankingItem
 ) {
     Row(
         modifier = Modifier
@@ -290,7 +284,7 @@ private fun DrawDottedLine() {
 private fun RankingContent(
     modifier: Modifier,
     index: Int,
-    item: DanggnRankingViewModel.RankingItem,
+    item: DanggnRankingViewModel.RankingItem
 ) {
     val imageResourceList =
         listOf(R.drawable.img_rank_1, R.drawable.img_rank_2, R.drawable.img_rank_3)
@@ -308,7 +302,7 @@ private fun RankingContent(
                     painter = painterResource(id = imageResourceList[index]),
                     contentDescription = null
                 )
-            } else { //3 ~ 10
+            } else { // 4등부터 나머지 다보여 줌
                 Text(
                     modifier = Modifier
                         .size(20.dp)
@@ -371,9 +365,9 @@ private fun MashUpPagerColorAnimatedTab(
         targetValue = if (selected) Black else Gray400
     )
     Text(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 8.dp),
         text = title,
-        textAlign = TextAlign.Start,
+        textAlign = TextAlign.Center,
         color = textColorAnimation,
         style = SubTitle1
     )
@@ -384,16 +378,37 @@ private fun MashUpPagerColorAnimatedTab(
 fun MashUpRankingPreview() {
     MashUpTheme {
         DanggnRankingContent(
-            allMashUpMemberRankState = listOf(
+            personalRankList = listOf(
                 DanggnRankingViewModel.RankingItem.Ranking(
-                    "39", "정종노드", 150
+                    "39",
+                    "정종노드",
+                    150
                 ),
                 DanggnRankingViewModel.RankingItem.Ranking(
-                    "56", "정종드투", 1510
+                    "56",
+                    "정종드투",
+                    1510
                 ),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "57",
+                    "정종드썬더일레븐",
+                    1511
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "58",
+                    "정종드썬더트웰브",
+                    1512
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "59",
+                    "정종드썬더썰틴",
+                    1513
+                ),
+                DanggnRankingViewModel.RankingItem.Ranking(
+                    "60",
+                    "정종드썬더피프티피프티",
+                    1514
+                ),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
@@ -401,27 +416,32 @@ fun MashUpRankingPreview() {
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking()
             ).sortedByDescending { it.totalShakeScore },
-            personalRank = DanggnRankingViewModel.RankingItem.MyRanking(
-                memberId = "560", totalShakeScore = 1510, text = "1위",
+            myPersonalRank = DanggnRankingViewModel.RankingItem.MyRanking(
+                memberId = "60",
+                totalShakeScore = 1514,
+                text = "1위"
             ),
-            allPlatformRank = listOf(
+            platformRankList = listOf(
                 DanggnRankingViewModel.RankingItem.PlatformRanking(
                     memberId = "Android",
-                    text = "Android", totalShakeScore = 120,
+                    text = "Android",
+                    totalShakeScore = 120
                 ),
                 DanggnRankingViewModel.RankingItem.PlatformRanking(
                     memberId = "iOS",
-                    text = "iOS", totalShakeScore = 119,
+                    text = "iOS",
+                    totalShakeScore = 119
                 ),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
                 DanggnRankingViewModel.RankingItem.EmptyRanking(),
-                DanggnRankingViewModel.RankingItem.EmptyRanking(),
+                DanggnRankingViewModel.RankingItem.EmptyRanking()
             ),
             platformRank = DanggnRankingViewModel.RankingItem.PlatformRanking(
                 memberId = "Android",
-                text = "1위", totalShakeScore = 120,
-            ),
+                text = "1위",
+                totalShakeScore = 120
+            )
         )
     }
 }

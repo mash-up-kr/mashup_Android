@@ -4,7 +4,7 @@ import com.mashup.core.model.AttendanceStatus
 import com.mashup.data.model.AttendanceInfo
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.*
+import java.util.Date
 
 @JsonClass(generateAdapter = true)
 data class AttendanceInfoResponse(

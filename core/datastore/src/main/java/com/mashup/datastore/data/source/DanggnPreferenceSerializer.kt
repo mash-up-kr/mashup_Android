@@ -2,13 +2,13 @@ package com.mashup.datastore.data.source
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.mashup.core.model.data.local.DanggnPreference
-import java.io.InputStream
-import java.io.OutputStream
+import com.mashup.datastore.model.DanggnPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import java.io.InputStream
+import java.io.OutputStream
 
 class DanggnPreferenceSerializer : Serializer<DanggnPreference> {
     override val defaultValue: DanggnPreference

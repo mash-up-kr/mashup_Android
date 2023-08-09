@@ -8,6 +8,8 @@ import com.mashup.core.common.constant.DISCONNECT_NETWORK
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.io.EOFException
 import java.net.UnknownHostException
@@ -16,9 +18,12 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class BaseViewModel : ViewModel() {
 
+    protected val _errorCode = MutableSharedFlow<String>()
+    open val errorCode: SharedFlow<String> = _errorCode
+
     private val exceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
-            Log.e("coroutine throwable", throwable.message ?: "")
+            Log.e("coroutine throwable", throwable.message.orEmpty())
             when (throwable) {
                 is UnknownHostException, is EOFException -> {
                     handleErrorCode(DISCONNECT_NETWORK)
@@ -39,5 +44,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    open fun handleErrorCode(code: String) {}
+    open fun handleErrorCode(code: String) = mashUpScope {
+        _errorCode.emit(code)
+    }
 }

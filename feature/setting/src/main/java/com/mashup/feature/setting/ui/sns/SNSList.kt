@@ -31,7 +31,7 @@ val snsList = listOf(
     SNSModel(R.string.tistory, CR.drawable.ic_tistory, TISTORY),
     SNSModel(R.string.youtube, CR.drawable.ic_youtube, YOUTUBE),
     SNSModel(R.string.mHome, CR.drawable.ic_mashup, MASHUP_UP_HOME),
-    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, MASHUP_UP_RECRUIT),
+    SNSModel(R.string.mRecruit, CR.drawable.ic_mashup_dark, MASHUP_UP_RECRUIT)
 )
 
 @ExperimentalFoundationApi

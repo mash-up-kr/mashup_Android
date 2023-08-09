@@ -5,8 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.URL
@@ -22,7 +20,6 @@ import com.mashup.constant.log.LOG_SNS_TISTORY
 import com.mashup.constant.log.LOG_SNS_YOUTUBE
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.widget.CommonDialog
-import com.mashup.core.model.data.local.UserPreference
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.feature.setting.SettingScreen

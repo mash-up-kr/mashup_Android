@@ -66,26 +66,27 @@ fun MashUpTextField(
     Column(
         modifier = modifier
     ) {
-        BasicTextField(modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-            .height(84.dp)
-            .animateContentSize()
-            .clip(cornerShape)
-            .border(
-                shape = cornerShape,
-                width = 1.dp,
-                color = when (validation) {
-                    Validation.SUCCESS -> Brand500
-                    Validation.EMPTY -> Color.Transparent
-                    else -> Red500
+        BasicTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
+                .height(84.dp)
+                .animateContentSize()
+                .clip(cornerShape)
+                .border(
+                    shape = cornerShape,
+                    width = 1.dp,
+                    color = when (validation) {
+                        Validation.SUCCESS -> Brand500
+                        Validation.EMPTY -> Color.Transparent
+                        else -> Red500
+                    }
+                )
+                .background(Color.White)
+                .onFocusChanged {
+                    focus = it.hasFocus
                 }
-            )
-            .background(Color.White)
-            .onFocusChanged {
-                focus = it.hasFocus
-            }
-            .focusRequester(focusRequester),
+                .focusRequester(focusRequester),
             value = text,
             textStyle = Title2,
             singleLine = true,
@@ -137,7 +138,8 @@ fun MashUpTextField(
                         }
                     }
                 }
-            })
+            }
+        )
         Text(
             modifier = Modifier.padding(top = 8.dp, start = 4.dp),
             text = setDescriptionText(validation),
@@ -173,7 +175,7 @@ private fun setDescriptionText(codeState: Validation): String {
 @Composable
 fun MashUpTextFieldPrev(
     labelText: String = "탈퇴할게요",
-    requestFocus: Boolean = false,
+    requestFocus: Boolean = false
 ) {
     var text by remember { mutableStateOf("") }
     var textValidation by remember {
@@ -191,7 +193,7 @@ fun MashUpTextFieldPrev(
             },
             labelText = "탈퇴할게요",
             requestFocus = requestFocus,
-            validation = textValidation,
+            validation = textValidation
         )
     }
 }

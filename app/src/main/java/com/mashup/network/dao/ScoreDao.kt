@@ -1,7 +1,7 @@
 package com.mashup.network.dao
 
+import com.mashup.core.network.Response
 import com.mashup.data.dto.ScoreHistoryResponseList
-import com.mashup.network.Response
 import retrofit2.http.GET
 
 interface ScoreDao {

@@ -22,7 +22,7 @@ class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
             MashUpTheme {
                 DanggnInfoScreen(
                     modifier = Modifier.fillMaxSize(),
-                    onClickBackButton = { onBackPressed() },
+                    onClickBackButton = { onBackPressed() }
                 )
             }
         }

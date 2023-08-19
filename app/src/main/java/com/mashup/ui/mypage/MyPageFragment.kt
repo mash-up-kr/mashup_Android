@@ -1,10 +1,7 @@
 package com.mashup.ui.mypage
 
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
@@ -47,36 +44,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     }
 
     private fun initRecyclerView() {
-        viewBinding.rvMypage.apply {
-            adapter = attendanceAdapter
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    // 현재 뷰에서 최상단에 보이는 아이템의 위치 (조금이라도 보여도 인식됨)
-                    val firstVisibleItemPosition =
-                        (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if (firstVisibleItemPosition == 0) {
-                        viewBinding.layoutTitle.visibility = View.GONE
-                    } else {
-                        viewBinding.layoutTitle.visibility = View.VISIBLE
-                        viewBinding.layoutTitle.setOnClickListener {
-                            showAttendanceInfoDialog()
-                        }
-                    }
-                }
-            })
-        }
+        viewBinding.rvMypage.adapter = attendanceAdapter
     }
 
     override fun initObserves() {
-        viewModel.attendanceList.observe(viewLifecycleOwner) { it ->
+        viewModel.attendanceList.observe(viewLifecycleOwner) {
             viewBinding.layoutSwipe.isRefreshing = false
             attendanceAdapter.submitList(it)
-            it.firstOrNull()?.profile?.let {
-                viewBinding.tvTitle.text = it.name
-                viewBinding.tvNum.text = it.getAttendanceScore()
-            }
         }
 
         flowViewLifecycleScope {
@@ -88,10 +62,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     }
 
     private fun showAttendanceInfoDialog() {
-        AttendanceExplainDialog().show(
-            childFragmentManager,
-            null
-        )
+        AttendanceExplainDialog().show(childFragmentManager, AttendanceExplainDialog::class.simpleName)
     }
 
     companion object {

@@ -56,4 +56,8 @@
 
 	<string name="mash_up_alarm_title">매시업 소식 알림</string>
 	<string name="mash_up_alarm_description">출석 시간과 세미나 일정, 그리고 활동 점수\n업데이트 소식을 받을 수 있어요</string>
+
+	<string name="title_introduce_my_self">내 소개</string>
+	<string name="empty_introduce_my_self">아직 소개글이 없어요</string>
+	<string name="txt_edit">편집</string>
 </resources>

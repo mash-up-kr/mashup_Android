@@ -22,7 +22,6 @@ import com.mashup.core.ui.widget.MashUpToolbar
 
 @Composable
 fun ProfileCardDetailScreen() {
-
 }
 
 @Composable

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -53,13 +54,13 @@ fun MyPageEditWriteCell(
     value: String,
     hint: String,
     onValueChanged: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             modifier = Modifier.width(80.dp),
@@ -73,6 +74,7 @@ fun MyPageEditWriteCell(
             value = value,
             onValueChange = onValueChanged,
             textStyle = Body4,
+            keyboardOptions = keyboardOptions,
             decorationBox = { innerTextField ->
                 Box {
                     if (value.isEmpty()) {

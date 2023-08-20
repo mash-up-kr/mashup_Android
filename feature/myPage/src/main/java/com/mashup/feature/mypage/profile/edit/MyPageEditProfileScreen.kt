@@ -30,7 +30,6 @@ import com.mashup.feature.mypage.profile.MyPageEditWriteCell
 
 @Composable
 fun MyPageEditProfileScreen() {
-
 }
 
 @Composable

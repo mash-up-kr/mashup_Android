@@ -28,7 +28,6 @@ import com.mashup.feature.mypage.profile.MyPageEditWriteCell
 
 @Composable
 fun MyPageEditCardScreen() {
-
 }
 
 @Composable
@@ -38,7 +37,7 @@ fun MyPageEditCardContent(
     onSaveButtonClicked: (team: String, staff: String) -> Unit,
     modifier: Modifier = Modifier,
     team: String = "",
-    staff: String = "",
+    staff: String = ""
 ) {
     var teamState by remember(team) { mutableStateOf(team) }
     var staffState by remember(staff) { mutableStateOf(staff) }
@@ -106,7 +105,6 @@ fun MyPageEditContentPrev() {
                 generationNumber = 12,
                 platform = Platform.DESIGN,
                 onSaveButtonClicked = { _, _ ->
-
                 }
             )
         }

@@ -104,6 +104,24 @@ class AttendanceListAdapter :
         }
     }
 
+    class MyPageScoreViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
+        RecyclerView.ViewHolder(
+            ItemMypageAttendanceScoreBinding.inflate(
+                LayoutInflater.from(view.context),
+                view,
+                false
+            ).root
+        ) {
+        private val binding: ItemMypageAttendanceScoreBinding? =
+            androidx.databinding.DataBindingUtil.bind(itemView)
+
+        fun bind(item: AttendanceModel) {
+            binding?.let {
+                it.model = item
+            }
+        }
+    }
+
     class MyPageTitleViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
         RecyclerView.ViewHolder(
             ItemMypageAttendanceTitleBinding.inflate(
@@ -123,24 +141,6 @@ class AttendanceListAdapter :
                 }
             }
             binding?.model = item
-        }
-    }
-
-    class MyPageScoreViewHolder(view: ViewGroup, val listener: OnItemEventListener?) :
-        RecyclerView.ViewHolder(
-            ItemMypageAttendanceScoreBinding.inflate(
-                LayoutInflater.from(view.context),
-                view,
-                false
-            ).root
-        ) {
-        private val binding: ItemMypageAttendanceScoreBinding? =
-            androidx.databinding.DataBindingUtil.bind(itemView)
-
-        fun bind(item: AttendanceModel) {
-            binding?.let {
-                it.model = item
-            }
         }
     }
 

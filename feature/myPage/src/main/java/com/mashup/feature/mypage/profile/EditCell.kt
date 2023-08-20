@@ -30,7 +30,7 @@ fun MyPageEditReadOnlyCell(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier.width(80.dp),
@@ -60,7 +60,7 @@ fun MyPageEditWriteCell(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp),
+            .padding(vertical = 12.dp)
     ) {
         Text(
             modifier = Modifier.width(80.dp),

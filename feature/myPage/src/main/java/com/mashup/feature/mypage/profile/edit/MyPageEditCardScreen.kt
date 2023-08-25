@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,9 +26,24 @@ import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.mypage.profile.MyPageEditCellDivider
 import com.mashup.feature.mypage.profile.MyPageEditReadOnlyCell
 import com.mashup.feature.mypage.profile.MyPageEditWriteCell
+import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 
 @Composable
-fun MyPageEditCardScreen() {
+fun MyPageEditCardScreen(
+    viewModel: MyPageProfileEditViewModel
+) {
+    val editCardState by viewModel.myProfileCard.collectAsState()
+    
+    MyPageEditCardContent(
+        generationNumber = editCardState.generationNumber,
+        platform = editCardState.platform,
+        onSaveButtonClicked = { team, staff ->
+            // 여기 온 값 post 해주세요~
+
+        },
+        team = editCardState.team,
+        staff = editCardState.staff,
+    )
 }
 
 @Composable

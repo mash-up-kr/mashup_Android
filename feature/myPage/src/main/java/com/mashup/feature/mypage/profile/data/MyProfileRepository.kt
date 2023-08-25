@@ -1,12 +1,24 @@
 package com.mashup.feature.mypage.profile.data
 
+import com.mashup.feature.mypage.profile.data.dto.MemberGenerationRequest
 import com.mashup.feature.mypage.profile.data.dto.MemberProfileRequest
 import com.mashup.feature.mypage.profile.edit.EditedProfile
 import javax.inject.Inject
 
 class MyProfileRepository @Inject constructor(
-    private val myProfileDao: MyProfileDao
+    private val myProfileDao: MyProfileDao,
+    private val memberGenerationDao: MemberGenerationDao,
 ) {
+    suspend fun getMemberGenerations() = memberGenerationDao.getMemberGeneration()
+
+    suspend fun postMemberGenerations(id: Long, projectTeamName: String, role: String) =
+        memberGenerationDao.postMemberGeneration(
+            id = id, MemberGenerationRequest(
+                projectTeamName = projectTeamName,
+                role = role
+            )
+        )
+
     suspend fun getMyProfile() = myProfileDao.getMemberProfile()
 
     suspend fun postMyProfile(

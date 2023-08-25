@@ -49,6 +49,14 @@ class MyPageProfileEditViewModel @Inject constructor(
         _loadState.emit(LoadState.Loaded)
     }
 
+    fun getMemberGenerationList() = mashUpScope {
+        myProfileRepository.getMemberGenerations()
+    }
+
+    fun postMemberGenerations(id: Long, projectTeamName: String, staff: String) = mashUpScope {
+        myProfileRepository.postMemberGenerations(id, projectTeamName, staff)
+    }
+
 }
 
 sealed class LoadState {

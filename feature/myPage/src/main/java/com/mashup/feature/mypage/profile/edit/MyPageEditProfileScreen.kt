@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,11 +26,43 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.core.ui.widget.MashUpToolbar
+import com.mashup.feature.mypage.profile.LoadState
 import com.mashup.feature.mypage.profile.MyPageEditCellDivider
 import com.mashup.feature.mypage.profile.MyPageEditWriteCell
+import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 
 @Composable
-fun MyPageEditProfileScreen() {
+fun MyPageEditProfileScreen(
+    viewModel: MyPageProfileEditViewModel,
+) {
+    val myProfile by viewModel.myPageCardEntity.collectAsState()
+    val isLoading by viewModel.loadState.collectAsState()
+    MyPageEditProfileContent(
+        onSaveButtonClicked = { editedProfile ->
+            viewModel.postMyProfileEntity(
+                editedProfile
+            )
+        },
+        onBackPressed = {
+            // 뒤로 가기 수행
+        },
+        modifier = Modifier,
+        isUploading = when (isLoading) {
+            LoadState.Initial,
+            LoadState.Loaded -> false
+            LoadState.Loading -> true
+        },
+        birthDay = myProfile.birthDay,
+        work = myProfile.work,
+        company = myProfile.company,
+        introduceMySelf = myProfile.introduceMySelf,
+        location = myProfile.location,
+        instagram = myProfile.instagram,
+        github = myProfile.github,
+        behance = myProfile.behance,
+        linkedIn = myProfile.linkedIn,
+        tistory = myProfile.tistory
+    )
 }
 
 @Composable

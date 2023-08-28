@@ -1,5 +1,6 @@
 package com.mashup.feature.mypage.profile.di
 
+import com.mashup.feature.mypage.profile.data.MemberGenerationDao
 import com.mashup.feature.mypage.profile.data.MyProfileDao
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,14 @@ class NetworkModule {
     fun provideMyProfileDao(
         retrofit: Retrofit
     ): MyProfileDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMemberGenerationDao(
+        retrofit: Retrofit
+    ): MemberGenerationDao {
         return retrofit.create()
     }
 }

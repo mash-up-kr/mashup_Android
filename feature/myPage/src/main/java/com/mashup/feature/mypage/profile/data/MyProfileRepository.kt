@@ -4,7 +4,9 @@ import com.mashup.feature.mypage.profile.data.dto.MemberGenerationRequest
 import com.mashup.feature.mypage.profile.data.dto.MemberProfileRequest
 import com.mashup.feature.mypage.profile.edit.EditedProfile
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MyProfileRepository @Inject constructor(
     private val myProfileDao: MyProfileDao,
     private val memberGenerationDao: MemberGenerationDao,

@@ -1,5 +1,6 @@
 package com.mashup.feature.mypage.profile
 
+import android.util.Log
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -30,7 +31,7 @@ class MyPageProfileEditViewModel @Inject constructor(
     private val _loadState: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.Initial)
     val loadState = _loadState.asStateFlow()
 
-    fun getMemberProfileCard() = mashUpScope {
+    private fun getMemberProfileCard() = mashUpScope {
         // 진행중인 활동 카드라서 0번째꺼 뽑아씀
         val teamAndStaff = myProfileRepository.getMemberGenerations()
         _myProfileCard.value = MyProfileCardEntity(
@@ -46,8 +47,22 @@ class MyPageProfileEditViewModel @Inject constructor(
         myProfileRepository.postMemberGenerations(id, projectTeamName, staff)
     }
 
-    fun getMemberGenerationList() = mashUpScope {
-        myProfileRepository.getMemberGenerations()
+    private fun getMemberGenerationList() = mashUpScope {
+        val profile = myProfileRepository.getMyProfile().data
+        _myPageCardEntity.value = profile?.run {
+            EditedProfile(
+                birthDay = birthDate.orEmpty(),
+                work = job.orEmpty(),
+                company = company.orEmpty(),
+                introduceMySelf = introduction.orEmpty(),
+                location = residence.orEmpty(),
+                instagram = socialNetworkServiceLink.orEmpty(),
+                github = githubLink.orEmpty(),
+                behance = portfolioLink.orEmpty(),
+                linkedIn = linkedInLink.orEmpty(),
+                tistory = blogLink.orEmpty()
+            )
+        } ?: EditedProfile()
     }
     fun patchMyProfile(
         editedProfileData: EditedProfile

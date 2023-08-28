@@ -14,6 +14,7 @@ import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.feature.danggn.DanggnInfoScreen
 import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 import com.mashup.feature.mypage.profile.edit.MyPageEditCardScreen
+import com.mashup.feature.mypage.profile.edit.MyPageEditProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +27,7 @@ class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
 
         viewBinding.shakeDanggnScreen.setContent {
             MashUpTheme {
-                MyPageEditCardScreen(editViewModel)
+                MyPageEditProfileScreen(editViewModel)
 //                DanggnInfoScreen(
 //                    modifier = Modifier.fillMaxSize(),
 //                    onClickBackButton = { onBackPressed() }

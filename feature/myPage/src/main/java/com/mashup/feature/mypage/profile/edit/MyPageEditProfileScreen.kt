@@ -39,7 +39,7 @@ fun MyPageEditProfileScreen(
     val isLoading by viewModel.loadState.collectAsState()
     MyPageEditProfileContent(
         onSaveButtonClicked = { editedProfile ->
-            viewModel.postMyProfileEntity(
+            viewModel.patchMyProfile(
                 editedProfile
             )
         },

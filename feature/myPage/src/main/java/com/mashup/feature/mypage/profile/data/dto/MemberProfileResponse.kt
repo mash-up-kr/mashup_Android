@@ -7,25 +7,25 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class MemberProfileResponse(
     @Json(name = "birthDate")
-    val birthDate: String,
+    val birthDate: String?,
     @Json(name = "blogLink")
-    val blogLink: String,
+    val blogLink: String?,
     @Json(name = "company")
-    val company: String,
+    val company: String?,
     @Json(name = "githubLink")
-    val githubLink: String,
+    val githubLink: String?,
     @Json(name = "introduction")
-    val introduction: String,
+    val introduction: String?,
     @Json(name = "job")
-    val job: String,
+    val job: String?,
     @Json(name = "linkedInLink")
-    val linkedInLink: String,
+    val linkedInLink: String?,
     @Json(name = "memberId")
     val memberId: Int,
     @Json(name = "portfolioLink")
-    val portfolioLink: String,
+    val portfolioLink: String?,
     @Json(name = "residence")
-    val residence: String,
+    val residence: String?,
     @Json(name = "socialNetworkServiceLink")
-    val socialNetworkServiceLink: String
+    val socialNetworkServiceLink: String?
 )

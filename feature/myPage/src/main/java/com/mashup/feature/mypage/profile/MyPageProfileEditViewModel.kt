@@ -1,6 +1,5 @@
 package com.mashup.feature.mypage.profile
 
-import android.util.Log
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -9,7 +8,6 @@ import com.mashup.feature.mypage.profile.edit.EditedProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +17,8 @@ class MyPageProfileEditViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     init {
-        getMyProfileCard()
+        getMemberProfileCard()
+        getMemberGenerationList()
     }
 
     private val _myProfileCard = MutableStateFlow(MyProfileCardEntity())
@@ -31,7 +30,7 @@ class MyPageProfileEditViewModel @Inject constructor(
     private val _loadState: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.Initial)
     val loadState = _loadState.asStateFlow()
 
-    fun getMyProfileCard() = mashUpScope {
+    fun getMemberProfileCard() = mashUpScope {
         // 진행중인 활동 카드라서 0번째꺼 뽑아씀
         val teamAndStaff = myProfileRepository.getMemberGenerations()
         _myProfileCard.value = MyProfileCardEntity(
@@ -43,20 +42,19 @@ class MyPageProfileEditViewModel @Inject constructor(
         )
     }
 
-    fun postMyProfileEntity(
-        editedProfileData: EditedProfile
-    ) = mashUpScope {
-        _loadState.emit(LoadState.Loading)
-        myProfileRepository.postMyProfile(editedProfileData)
-        _loadState.emit(LoadState.Loaded)
+    fun patchMemberProfileCard(id: Long, projectTeamName: String, staff: String) = mashUpScope {
+        myProfileRepository.postMemberGenerations(id, projectTeamName, staff)
     }
 
     fun getMemberGenerationList() = mashUpScope {
         myProfileRepository.getMemberGenerations()
     }
-
-    fun postMemberGenerations(id: Long, projectTeamName: String, staff: String) = mashUpScope {
-        myProfileRepository.postMemberGenerations(id, projectTeamName, staff)
+    fun patchMyProfile(
+        editedProfileData: EditedProfile
+    ) = mashUpScope {
+        _loadState.emit(LoadState.Loading)
+        myProfileRepository.postMyProfile(editedProfileData)
+        _loadState.emit(LoadState.Loaded)
     }
 
 }

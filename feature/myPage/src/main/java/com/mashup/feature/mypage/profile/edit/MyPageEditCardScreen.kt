@@ -39,7 +39,7 @@ fun MyPageEditCardScreen(
         platform = editCardState.platform,
         onSaveButtonClicked = {id, team, staff ->
             // 여기 온 값 post 해주세요~
-            viewModel.postMemberGenerations(
+            viewModel.patchMemberProfileCard(
                 id = id.toLong(),
                 projectTeamName = team,
                 staff = staff

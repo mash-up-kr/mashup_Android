@@ -1,6 +1,6 @@
 package com.mashup.feature.mypage.profile
 
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -32,12 +32,14 @@ class MyPageProfileEditViewModel @Inject constructor(
     val loadState = _loadState.asStateFlow()
 
     fun getMyProfileCard() = mashUpScope {
-        val myProfile = myProfileRepository.getMyProfile().data
+        // 진행중인 활동 카드라서 0번째꺼 뽑아씀
+        val teamAndStaff = myProfileRepository.getMemberGenerations()
         _myProfileCard.value = MyProfileCardEntity(
-            generationNumber = userPreferenceRepository.getCurrentGenerationNumber(),
-            platform = userPreferenceRepository.getUserPreference().first().platform,
-            team = myProfile?.company.orEmpty(),  // 여기 두개는 후에 바꾸셈~ 아직 api가 안나온듯합니다 ?
-            staff = myProfile?.company.orEmpty()
+            id = teamAndStaff.data?.memberGenerations?.getOrNull(0)?.id ?: -1,
+            generationNumber = teamAndStaff.data?.memberGenerations?.getOrNull(0)?.number ?: userPreferenceRepository.getCurrentGenerationNumber(),
+            platform = Platform.getPlatform(teamAndStaff.data?.memberGenerations?.getOrNull(0)?.platform),
+            team = teamAndStaff.data?.memberGenerations?.getOrNull(0)?.projectTeamName.orEmpty(),
+            staff = teamAndStaff.data?.memberGenerations?.getOrNull(0)?.role.orEmpty()
         )
     }
 
@@ -66,6 +68,7 @@ sealed class LoadState {
 }
 
 data class MyProfileCardEntity(
+    val id: Int = 0,
     val generationNumber: Int = 0,
     val platform: Platform = Platform.UNKNOWN,
     val team: String = "",

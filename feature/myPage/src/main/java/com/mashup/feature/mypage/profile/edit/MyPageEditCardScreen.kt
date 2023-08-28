@@ -37,10 +37,15 @@ fun MyPageEditCardScreen(
     MyPageEditCardContent(
         generationNumber = editCardState.generationNumber,
         platform = editCardState.platform,
-        onSaveButtonClicked = { team, staff ->
+        onSaveButtonClicked = {id, team, staff ->
             // 여기 온 값 post 해주세요~
-
+            viewModel.postMemberGenerations(
+                id = id.toLong(),
+                projectTeamName = team,
+                staff = staff
+            )
         },
+        id = editCardState.id,
         team = editCardState.team,
         staff = editCardState.staff,
     )
@@ -50,8 +55,9 @@ fun MyPageEditCardScreen(
 fun MyPageEditCardContent(
     generationNumber: Int,
     platform: Platform,
-    onSaveButtonClicked: (team: String, staff: String) -> Unit,
+    onSaveButtonClicked: (id: Int, team: String, staff: String) -> Unit,
     modifier: Modifier = Modifier,
+    id: Int = -1,
     team: String = "",
     staff: String = ""
 ) {
@@ -102,7 +108,7 @@ fun MyPageEditCardContent(
                 buttonStyle = ButtonStyle.PRIMARY,
                 isEnabled = teamState != team || staff != staffState,
                 onClick = {
-                    onSaveButtonClicked(team, staff)
+                    onSaveButtonClicked(id, teamState, staffState)
                 }
             )
         }
@@ -120,7 +126,7 @@ fun MyPageEditContentPrev() {
                 modifier = Modifier.fillMaxSize(),
                 generationNumber = 12,
                 platform = Platform.DESIGN,
-                onSaveButtonClicked = { _, _ ->
+                onSaveButtonClicked = { _, _, _ ->
                 }
             )
         }

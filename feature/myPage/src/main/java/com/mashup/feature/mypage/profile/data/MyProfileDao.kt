@@ -10,8 +10,7 @@ import retrofit2.http.PATCH
 
 interface MyProfileDao {
     @GET("api/v1/member-profiles/my")
-    suspend fun getMemberProfile(
-    ): Response<MemberProfileResponse>
+    suspend fun getMemberProfile(): Response<MemberProfileResponse>
 
     @PATCH("api/v1/member-profiles/my")
     suspend fun postMemberProfile(

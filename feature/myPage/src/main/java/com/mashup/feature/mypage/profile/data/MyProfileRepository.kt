@@ -9,13 +9,14 @@ import javax.inject.Singleton
 @Singleton
 class MyProfileRepository @Inject constructor(
     private val myProfileDao: MyProfileDao,
-    private val memberGenerationDao: MemberGenerationDao,
+    private val memberGenerationDao: MemberGenerationDao
 ) {
     suspend fun getMemberGenerations() = memberGenerationDao.getMemberGeneration()
 
     suspend fun postMemberGenerations(id: Long, projectTeamName: String, role: String) =
         memberGenerationDao.postMemberGeneration(
-            id = id, MemberGenerationRequest(
+            id = id,
+            MemberGenerationRequest(
                 projectTeamName = projectTeamName,
                 role = role
             )
@@ -36,7 +37,7 @@ class MyProfileRepository @Inject constructor(
             linkedInLink = editedProfile.linkedIn, // 링크드인
             portfolioLink = editedProfile.behance, // 포트폴리오
             residence = editedProfile.location, // 출몰지역
-            socialNetworkServiceLink = editedProfile.instagram, // sns
+            socialNetworkServiceLink = editedProfile.instagram // sns
         )
     )
 }

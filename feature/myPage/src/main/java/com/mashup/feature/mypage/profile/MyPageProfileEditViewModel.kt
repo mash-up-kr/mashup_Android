@@ -1,6 +1,5 @@
 package com.mashup.feature.mypage.profile
 
-import android.util.Log
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageProfileEditViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
-    private val myProfileRepository: MyProfileRepository,
+    private val myProfileRepository: MyProfileRepository
 ) : BaseViewModel() {
 
     init {
@@ -71,7 +70,6 @@ class MyPageProfileEditViewModel @Inject constructor(
         myProfileRepository.postMyProfile(editedProfileData)
         _loadState.emit(LoadState.Loaded)
     }
-
 }
 
 sealed class LoadState {
@@ -85,5 +83,5 @@ data class MyProfileCardEntity(
     val generationNumber: Int = 0,
     val platform: Platform = Platform.UNKNOWN,
     val team: String = "",
-    val staff: String = "",
+    val staff: String = ""
 )

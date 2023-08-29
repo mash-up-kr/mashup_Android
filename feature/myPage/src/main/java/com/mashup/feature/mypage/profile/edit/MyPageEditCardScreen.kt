@@ -33,11 +33,11 @@ fun MyPageEditCardScreen(
     viewModel: MyPageProfileEditViewModel
 ) {
     val editCardState by viewModel.myProfileCard.collectAsState()
-    
+
     MyPageEditCardContent(
         generationNumber = editCardState.generationNumber,
         platform = editCardState.platform,
-        onSaveButtonClicked = {id, team, staff ->
+        onSaveButtonClicked = { id, team, staff ->
             // 여기 온 값 post 해주세요~
             viewModel.patchMemberProfileCard(
                 id = id.toLong(),
@@ -47,7 +47,7 @@ fun MyPageEditCardScreen(
         },
         id = editCardState.id,
         team = editCardState.team,
-        staff = editCardState.staff,
+        staff = editCardState.staff
     )
 }
 

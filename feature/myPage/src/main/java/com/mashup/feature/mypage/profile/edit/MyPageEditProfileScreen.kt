@@ -33,7 +33,7 @@ import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 
 @Composable
 fun MyPageEditProfileScreen(
-    viewModel: MyPageProfileEditViewModel,
+    viewModel: MyPageProfileEditViewModel
 ) {
     val myProfile by viewModel.myPageCardEntity.collectAsState()
     val isLoading by viewModel.loadState.collectAsState()

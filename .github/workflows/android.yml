@@ -39,6 +39,7 @@ jobs:
       run: ./gradlew spotlessCheck
       
   build:
+    if: ${{ always() }}
     needs: lint_check
     runs-on: ubuntu-latest
 

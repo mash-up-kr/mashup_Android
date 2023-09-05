@@ -39,7 +39,6 @@ jobs:
       run: ./gradlew spotlessCheck
         
   spotless_apply:
-    needs: spotless_check
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps:

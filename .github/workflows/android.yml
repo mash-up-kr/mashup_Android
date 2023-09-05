@@ -77,6 +77,7 @@ jobs:
       run: |
         git remote update
         git fetch
+        git checkout origin/$GITHUB_HEAD_REF
         git add .
         git commit -m "Apply Spotless formatting"
         git push origin origin/$GITHUB_HEAD_REF

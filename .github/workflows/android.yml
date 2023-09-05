@@ -74,10 +74,6 @@ jobs:
         git remote update
         git fetch
         git checkout origin/$GITHUB_HEAD_REF
-    - name: push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.CI }}
     - name: Spotless Apply
       run: ./gradlew spotlessApply
     - name: git commit and push

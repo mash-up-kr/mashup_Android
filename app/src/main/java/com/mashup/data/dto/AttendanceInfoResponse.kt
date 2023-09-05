@@ -11,7 +11,7 @@ data class AttendanceInfoResponse(
     @field:Json(name = "attendanceInfos")
     val attendanceInfos: List<AttendanceInfo>,
     @field:Json(name = "memberName")
-    val memberName: String
+    val memberName: String,
 ) {
     fun getAttendanceStatus(position: Int): AttendanceStatus {
         return attendanceInfos.getOrNull(position)?.status ?: AttendanceStatus.NOT_YET

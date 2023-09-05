@@ -42,10 +42,12 @@ jobs:
       run: |
         ./gradlew spotlessApply
     - name: set git config
+      if: ${{ success() }}
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
     - name: git commit and push
+      if: ${{ success() }}
       run: |
         git add .
         git commit -m "Apply Spotless formatting"

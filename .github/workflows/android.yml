@@ -79,7 +79,7 @@ jobs:
         git fetch
         git add .
         git commit -m "Apply Spotless formatting"
-        git push origin $GITHUB_HEAD_REF
+        git push origin origin/$GITHUB_HEAD_REF
 
   build:
     needs: spotless_apply

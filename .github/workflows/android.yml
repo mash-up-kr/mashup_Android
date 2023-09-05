@@ -65,19 +65,19 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Spotless Apply
-      run: ./gradlew spotlessApply
     - name: set git config
       if: ${{ success() }}
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-    - name: git commit and push
-      if: ${{ success() }}
-      run: |
         git remote update
         git fetch
         git checkout origin/$GITHUB_HEAD_REF
+    - name: Spotless Apply
+      run: ./gradlew spotlessApply
+    - name: git commit and push
+      if: ${{ success() }}
+      run: |
         git add .
         git commit -m "Apply Spotless formatting"
         git push origin origin/$GITHUB_HEAD_REF

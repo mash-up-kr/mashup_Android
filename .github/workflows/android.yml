@@ -55,6 +55,7 @@ jobs:
       
   build:
     needs: lint_check_and_apply
+    if: ${{ success() }}
     runs-on: ubuntu-latest
 
     steps:

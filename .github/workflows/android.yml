@@ -73,16 +73,14 @@ jobs:
         git remote update
         git fetch
         git checkout origin/$GITHUB_HEAD_REF
-        git branch
     - name: Spotless Apply
       run: ./gradlew spotlessApply
     - name: git commit and push
       if: ${{ success() }}
       run: |
-        git branch
         git add .
         git commit -m "Apply Spotless formatting"
-        git push origin/$GITHUB_HEAD_REF HEAD
+        git push
 
   build:
     needs: spotless_apply

@@ -42,9 +42,7 @@ jobs:
     needs: spotless_check
     if: ${{ failure() }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
+  
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 11
@@ -56,10 +54,6 @@ jobs:
     - name: add local.properties
       run: |
         echo api.key=\"${{secrets.API_KEY}}\" > local.properties
-    - name: add secret 
-      uses: actions/labeler@v4
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Cache Gradle Packages
       uses: actions/cache@v3
       with:
@@ -80,6 +74,10 @@ jobs:
         git remote update
         git fetch
         git checkout origin/$GITHUB_HEAD_REF
+    - name: push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.CI }}
     - name: Spotless Apply
       run: ./gradlew spotlessApply
     - name: git commit and push

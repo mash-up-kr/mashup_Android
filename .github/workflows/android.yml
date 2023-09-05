@@ -39,6 +39,7 @@ jobs:
       run: ./gradlew spotlessCheck
         
   spotless_apply:
+    needs: spotless_check
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps:
@@ -65,9 +66,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Spotless Apply
-      if: ${{ failure() }}
-      run: |
-        ./gradlew spotlessApply
+      run: ./gradlew spotlessApply
     - name: set git config
       if: ${{ success() }}
       run: |

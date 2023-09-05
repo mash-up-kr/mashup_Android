@@ -75,9 +75,9 @@ jobs:
     - name: git commit and push
       if: ${{ success() }}
       run: |
+        git brach
         git add .
         git commit -m "Apply Spotless formatting"
-        git pull $GITHUB_HEAD_REF HEAD
         git push origin $GITHUB_HEAD_REF
 
   build:

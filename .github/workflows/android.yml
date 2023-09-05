@@ -8,7 +8,7 @@ on:
     branches: [ "develop", "refactor**", "fix**", "feat**", "feature**", "chore**", "test**" ]
 
 jobs:
-  lint_check:
+  lint_check_and_apply:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,11 +35,17 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Lint Check
+    - name: Spotless Check
       run: ./gradlew spotlessCheck
+    - name: Spotless Apply
+      run: |
+        ./gradlew spotlessApply --check
+        git add .
+        git commit -m "Apply Spotless formatting"
+        git push
       
   build:
-    needs: lint_check
+    needs: lint_check_and_apply
     runs-on: ubuntu-latest
 
     steps:

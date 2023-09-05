@@ -75,10 +75,10 @@ jobs:
     - name: git commit and push
       if: ${{ success() }}
       run: |
+        git checkout $GITHUB_HEAD_REF
         git add .
         git commit -m "Apply Spotless formatting"
-        git fetch
-        git push origin HEAD:$GITHUB_HEAD_REF
+        git push origin $GITHUB_HEAD_REF
 
   build:
     needs: spotless_apply

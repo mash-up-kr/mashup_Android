@@ -37,9 +37,6 @@ jobs:
       run: chmod +x gradlew
     - name: Spotless Check
       run: ./gradlew spotlessCheck
-    - name: set success
-      if: success()
-      run: echo "::set-output name=test::success"
         
   spotless_apply:
     needs: spotless_check
@@ -84,14 +81,11 @@ jobs:
         git add .
         git commit -m "Apply Spotless formatting"
         git push origin HEAD:$GITHUB_HEAD_REF
-    - name: set success
-      if: success()
-      run: echo "::set-output name=test::success"
 
   build:
     runs-on: ubuntu-latest
-    needs: [spotless_check, spotless_apply]
-    if: needs.spotless_check.outputs.output1 == 'success' || needs.spotless_apply.outputs.output2 == 'success'
+    needs: spotless_apply
+    if: always()
 
     steps:
     - uses: actions/checkout@v3

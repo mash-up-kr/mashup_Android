@@ -38,8 +38,9 @@ jobs:
     - name: Spotless Check
       run: ./gradlew spotlessCheck
     - name: Spotless Apply
+      if: ${{ failure() }}
       run: |
-        ./gradlew spotlessApply --check
+        ./gradlew spotlessApply
         git add .
         git commit -m "Apply Spotless formatting"
         git push

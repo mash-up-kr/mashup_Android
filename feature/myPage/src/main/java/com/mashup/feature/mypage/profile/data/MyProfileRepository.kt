@@ -2,7 +2,7 @@ package com.mashup.feature.mypage.profile.data
 
 import com.mashup.feature.mypage.profile.data.dto.MemberGenerationRequest
 import com.mashup.feature.mypage.profile.data.dto.MemberProfileRequest
-import com.mashup.feature.mypage.profile.edit.EditedProfile
+import com.mashup.feature.mypage.profile.model.ProfileData
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ class MyProfileRepository @Inject constructor(
     suspend fun getMyProfile() = myProfileDao.getMemberProfile()
 
     suspend fun postMyProfile(
-        editedProfile: EditedProfile
+        editedProfile: ProfileData
     ) = myProfileDao.postMemberProfile(
         MemberProfileRequest(
             birthDate = editedProfile.birthDay, // 생년월일

@@ -8,6 +8,6 @@ class MyPageScoreViewHolder(
 ) : MyPageBaseViewHolder(binding) {
 
     override fun bind(item: AttendanceModel) {
-        binding.model = item
+        binding.model = item as AttendanceModel.Score
     }
 }

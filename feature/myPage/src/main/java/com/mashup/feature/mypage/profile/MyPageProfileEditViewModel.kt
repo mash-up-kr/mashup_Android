@@ -4,7 +4,7 @@ import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.model.Platform
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.feature.mypage.profile.data.MyProfileRepository
-import com.mashup.feature.mypage.profile.edit.EditedProfile
+import com.mashup.feature.mypage.profile.model.ProfileData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,7 @@ class MyPageProfileEditViewModel @Inject constructor(
     private val _myProfileCard = MutableStateFlow(MyProfileCardEntity())
     val myProfileCard = _myProfileCard.asStateFlow()
 
-    private val _myPageCardEntity = MutableStateFlow(EditedProfile())
+    private val _myPageCardEntity = MutableStateFlow(ProfileData())
     val myPageCardEntity = _myPageCardEntity.asStateFlow()
 
     private val _loadState: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.Initial)
@@ -49,7 +49,7 @@ class MyPageProfileEditViewModel @Inject constructor(
     private fun getMemberGenerationList() = mashUpScope {
         val profile = myProfileRepository.getMyProfile().data
         _myPageCardEntity.value = profile?.run {
-            EditedProfile(
+            ProfileData(
                 birthDay = birthDate.orEmpty(),
                 work = job.orEmpty(),
                 company = company.orEmpty(),
@@ -61,10 +61,10 @@ class MyPageProfileEditViewModel @Inject constructor(
                 linkedIn = linkedInLink.orEmpty(),
                 tistory = blogLink.orEmpty()
             )
-        } ?: EditedProfile()
+        } ?: ProfileData()
     }
     fun patchMyProfile(
-        editedProfileData: EditedProfile
+        editedProfileData: ProfileData
     ) = mashUpScope {
         _loadState.emit(LoadState.Loading)
         myProfileRepository.postMyProfile(editedProfileData)

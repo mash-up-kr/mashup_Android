@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.mashup.ui.model.AttendanceModel" />
+            type="com.mashup.ui.model.AttendanceModel.Score" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -42,7 +42,7 @@
                 android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@{model.profile.getAttendanceScore()}"
+                android:text="@{model.getAttendanceScore()}"
                 android:textAppearance="@style/TextAppearance.Mashup.Header_32_B"
                 android:textColor="@color/brand500"
                 app:layout_constraintBottom_toBottomOf="parent"

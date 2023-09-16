@@ -16,6 +16,6 @@ class MyPageTitleViewHolder(
     }
 
     override fun bind(item: AttendanceModel) {
-        binding.model = item
+        binding.model = item as AttendanceModel.Title
     }
 }

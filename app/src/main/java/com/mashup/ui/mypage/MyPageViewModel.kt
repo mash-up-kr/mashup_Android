@@ -94,10 +94,15 @@ class MyPageViewModel @Inject constructor(
             add(AttendanceModel.ActivityCard(3, emptyList())) // TODO: 기수 활동카드 가져오기
 
             // 활동 히스토리
-            val startIndex = 4
-            add(AttendanceModel.HistoryLevel(startIndex, userData.generationNumbers.last()))
-            scoreHistoryData.second.forEachIndexed { index, activityHistory ->
-                add(AttendanceModel.HistoryItem(index + startIndex, activityHistory))
+            add(AttendanceModel.HistoryLevel(4, userData.generationNumbers.last()))
+
+            val startIndex = 5
+            if (scoreHistoryData.second.isEmpty()) {
+                add(AttendanceModel.None(startIndex))
+            } else {
+                scoreHistoryData.second.forEachIndexed { index, activityHistory ->
+                    add(AttendanceModel.HistoryItem(index + startIndex, activityHistory))
+                }
             }
         }
     }

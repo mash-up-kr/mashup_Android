@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.mashup.databinding.ItemMypageAttendanceHistoryLevelBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
@@ -14,13 +13,13 @@ import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.mypage.viewholder.*
 
 class AttendanceListAdapter :
-    ListAdapter<AttendanceModel, RecyclerView.ViewHolder>(AttendanceComparator) {
+    ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).myPageType.type
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPageBaseViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
@@ -43,24 +42,8 @@ class AttendanceListAdapter :
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is MyPageListItemViewHolder -> {
-                holder.bind(getItem(position))
-            }
-            is MyPageListLevelViewHolder -> {
-                holder.bind(getItem(position))
-            }
-            is MyPageListNoneViewHolder -> {
-                holder.bind(getItem(position))
-            }
-            is MyPageScoreViewHolder -> {
-                holder.bind(getItem(position))
-            }
-            is MyPageTitleViewHolder -> {
-                holder.bind(getItem(position))
-            }
-        }
+    override fun onBindViewHolder(holder: MyPageBaseViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
     interface OnItemEventListener {

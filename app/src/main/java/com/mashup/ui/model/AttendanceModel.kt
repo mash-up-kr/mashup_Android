@@ -6,7 +6,7 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 sealed class AttendanceModel(
     open val id: Int,
@@ -26,7 +26,7 @@ sealed class AttendanceModel(
         override val id: Int,
         val score: Double,
     ) : AttendanceModel(id, MyPageAdapterType.SCORE) {
-        fun getAttendanceScore() = "${score}점"
+        fun getAttendanceScore() = "${if (score % 1 == 0.0) score.toInt() else score}점"
     }
 
     data class ActivityCard(

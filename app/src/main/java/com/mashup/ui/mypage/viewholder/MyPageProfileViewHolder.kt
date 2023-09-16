@@ -9,10 +9,19 @@ import com.mashup.core.common.extensions.dp
 import com.mashup.databinding.ItemMypageProfileBinding
 import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.model.AttendanceModel
+import com.mashup.ui.mypage.AttendanceListAdapter
 
 class MyPageProfileViewHolder(
     private val binding: ItemMypageProfileBinding,
+    val listener: AttendanceListAdapter.OnItemEventListener?,
 ) : MyPageBaseViewHolder(binding) {
+
+    init {
+        binding.btnEditSelfIntroduce.setOnClickListener {
+            listener?.onStartEditProfileActivity()
+        }
+    }
+
     override fun bind(item: AttendanceModel) {
         val profile = (item as AttendanceModel.MyProfile).data
 

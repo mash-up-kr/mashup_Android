@@ -38,7 +38,8 @@ class AttendanceListAdapter :
                 ItemMypageAttendanceScoreBinding.inflate(layoutInflater, parent, false)
             )
             MyPageAdapterType.MY_PROFILE.type -> MyPageProfileViewHolder(
-                ItemMypageProfileBinding.inflate(layoutInflater, parent, false)
+                ItemMypageProfileBinding.inflate(layoutInflater, parent, false),
+                mListener,
             )
             else -> MyPageListNoneViewHolder(
                 ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(layoutInflater, parent, false)
@@ -53,6 +54,7 @@ class AttendanceListAdapter :
     interface OnItemEventListener {
         fun onTotalAttendanceClick()
         fun onStartSettingActivity()
+        fun onStartEditProfileActivity()
     }
 
     private var mListener: OnItemEventListener? = null

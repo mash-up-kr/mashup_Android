@@ -31,7 +31,7 @@ sealed class AttendanceModel(
 
     data class ActivityCard(
         override val id: Int,
-        val cardList: List<ActivityCard>
+        val cardList: List<ActivityCardData>
     ) : AttendanceModel(id, MyPageAdapterType.ACTIVITY_CARD)
 
     data class HistoryLevel(
@@ -51,11 +51,14 @@ sealed class AttendanceModel(
     ) : AttendanceModel(id, MyPageAdapterType.LIST_NONE)
 }
 
-data class ActivityCard(
+data class ActivityCardData(
     val generationNum: Int,
     val isRunning: Boolean,
     val name: String,
     val platform: Platform
+    val platform: Platform,
+    val projectTeamName: String,
+    val role: String,
 )
 
 data class ActivityHistory(

@@ -5,6 +5,11 @@
 
     <data>
 
+        <import type="com.mashup.feature.mypage.profile.model.ProfileData" />
+
+        <variable
+            name="data"
+            type="ProfileData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,6 +63,7 @@
             <TextView
                 android:id="@+id/tv_birthday"
                 android:layout_width="wrap_content"
+                android:text="@{data.birthDay}"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:drawablePadding="6dp"
@@ -67,12 +73,19 @@
                 tools:text="02.08.28" />
 
             <TextView
+                android:id="@+id/tv_introduce_myself"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
                 android:textColor="@color/gray600"
-                android:text="매쉬업에 뼈를 묻겠습니다!! 브랜딩팀 아자! 아자!" />
+                android:text="@{data.introduceMySelf}" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
             <View
                 android:id="@+id/divider"

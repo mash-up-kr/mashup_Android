@@ -47,7 +47,7 @@ class AttendanceListAdapter
                 ItemMypageProfileBinding.inflate(layoutInflater, parent, false),
                 mListener,
             )
-            MyPageAdapterType.ACTIVITY_CARD.type -> MyPageActivityCardViewHolder(
+            MyPageAdapterType.PROFILE_CARD.type -> MyPageProfileCardViewHolder(
                 ComposeView(parent.context),
                 pagerState,
             )

@@ -9,7 +9,7 @@ import com.mashup.feature.mypage.profile.card.MyPageProfileCardScreen
 import com.mashup.ui.model.AttendanceModel
 
 @OptIn(ExperimentalPagerApi::class)
-class MyPageActivityCardViewHolder constructor(
+class MyPageProfileCardViewHolder constructor(
     private val composeView: ComposeView,
     private val pagerState: PagerState,
 ) : MyPageBaseViewHolder(composeView) {
@@ -21,7 +21,7 @@ class MyPageActivityCardViewHolder constructor(
     }
 
     override fun bind(item: AttendanceModel) {
-        val cards = (item as AttendanceModel.ActivityCard).cardList
+        val cards = (item as AttendanceModel.ProfileCard).cardList
 
         composeView.setContent {
             MashUpTheme {

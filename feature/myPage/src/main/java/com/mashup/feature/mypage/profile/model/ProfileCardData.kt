@@ -1,6 +1,6 @@
 package com.mashup.feature.mypage.profile.model
 
-data class GenerationData(
+data class ProfileCardData(
     val id: Int = 0,
     val name: String,
     val isRunning: Boolean,

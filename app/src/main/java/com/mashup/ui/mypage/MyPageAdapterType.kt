@@ -7,5 +7,5 @@ enum class MyPageAdapterType(val type: Int) {
     LIST_ITEM(3),
     LIST_LEVEL(4),
     MY_PROFILE(5),
-    ACTIVITY_CARD(6),
+    PROFILE_CARD(6),
 }

@@ -2,7 +2,6 @@ package com.mashup.ui.mypage
 
 import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.core.model.Platform
 import com.mashup.data.model.ScoreDetails
 import com.mashup.data.repository.MyPageRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -12,7 +11,6 @@ import com.mashup.feature.mypage.profile.data.dto.MemberGenerationsResponse
 import com.mashup.feature.mypage.profile.data.dto.MemberProfileResponse
 import com.mashup.feature.mypage.profile.model.GenerationData
 import com.mashup.feature.mypage.profile.model.ProfileData
-import com.mashup.ui.model.ActivityCardData
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,7 +77,9 @@ class MyPageViewModel @Inject constructor(
 
     private fun getGenerationData() = mashUpScope {
         val response = profileRepository.getMemberGenerations().data ?: return@mashUpScope
-        generationData.value = response.memberGenerations.map { mapToGenerationData(it) }
+        userData.value?.let { user ->
+            generationData.value = response.memberGenerations.map { mapToGenerationData(user.name, user.generationNumbers.last(), it) }
+        }
     }
 
     private fun getScoreHistoryData(currentGenerationNum: Int) = mashUpScope {
@@ -111,11 +111,7 @@ class MyPageViewModel @Inject constructor(
         attendanceModelList.add(AttendanceModel.Score(2, scoreHistoryData.first))
 
         // 활동 카드
-        generationData.map {
-            mapToActivityCard(userData.name, userData.generationNumbers.last(), it)
-        }.let { activityCards ->
-            attendanceModelList.add(AttendanceModel.ActivityCard(3, activityCards))
-        }
+        attendanceModelList.add(AttendanceModel.ActivityCard(3, generationData))
 
         // 활동 히스토리
         attendanceModelList.add(AttendanceModel.HistoryLevel(4, userData.generationNumbers.last()))
@@ -143,25 +139,18 @@ class MyPageViewModel @Inject constructor(
         tistory = response.blogLink.orEmpty() // FIXME
     )
 
-    private fun mapToGenerationData(response: MemberGenerationsResponse.MemberGeneration) = GenerationData(
+    private fun mapToGenerationData(
+        name: String,
+        currentGenerationNum: Int,
+        response: MemberGenerationsResponse.MemberGeneration
+    ) = GenerationData(
         id = response.id,
+        name = name,
+        isRunning = response.number == currentGenerationNum,
         generationNumber = response.number,
         platform = response.platform,
         projectTeamName = response.projectTeamName.orEmpty(),
         role = response.role.orEmpty(),
-    )
-
-    private fun mapToActivityCard(
-        name: String,
-        currentGenerationNum: Int,
-        response: GenerationData
-    ) = ActivityCardData(
-        generationNum = response.generationNumber,
-        isRunning = response.generationNumber == currentGenerationNum,
-        name = name,
-        platform = Platform.getPlatform(response.platform),
-        projectTeamName = response.projectTeamName,
-        role = response.role,
     )
 
     private fun mapToActivityHistory(response: ScoreDetails) = ActivityHistory(

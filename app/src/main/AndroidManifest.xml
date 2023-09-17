@@ -97,6 +97,10 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
+            android:name=".ui.mypage.MyProfileEditActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.schedule.detail.ScheduleDetailActivity"
             android:exported="false" />
 

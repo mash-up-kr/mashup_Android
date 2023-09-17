@@ -14,7 +14,7 @@ import com.mashup.ui.mypage.AttendanceListAdapter
 class MyPageProfileViewHolder(
     private val binding: ItemMypageProfileBinding,
     val listener: AttendanceListAdapter.OnItemEventListener?,
-) : MyPageBaseViewHolder(binding) {
+) : MyPageBaseViewHolder(binding.root) {
 
     init {
         binding.btnEditSelfIntroduce.setOnClickListener {

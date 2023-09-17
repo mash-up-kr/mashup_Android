@@ -1,7 +1,7 @@
 package com.mashup.ui.model
 
 import android.annotation.SuppressLint
-import com.mashup.core.model.Platform
+import com.mashup.feature.mypage.profile.model.GenerationData
 import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
@@ -31,7 +31,7 @@ sealed class AttendanceModel(
 
     data class ActivityCard(
         override val id: Int,
-        val cardList: List<ActivityCardData>
+        val cardList: List<GenerationData>
     ) : AttendanceModel(id, MyPageAdapterType.ACTIVITY_CARD)
 
     data class HistoryLevel(
@@ -50,15 +50,6 @@ sealed class AttendanceModel(
         override val id: Int,
     ): AttendanceModel(id, MyPageAdapterType.LIST_NONE)
 }
-
-data class ActivityCardData(
-    val generationNum: Int,
-    val isRunning: Boolean,
-    val name: String,
-    val platform: Platform,
-    val projectTeamName: String,
-    val role: String,
-)
 
 data class ActivityHistory(
     val scoreName: String,

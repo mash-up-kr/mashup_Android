@@ -2,8 +2,11 @@ package com.mashup.ui.mypage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
 import com.mashup.databinding.ItemMypageAttendanceHistoryLevelBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
@@ -13,8 +16,11 @@ import com.mashup.databinding.ItemMypageProfileBinding
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.mypage.viewholder.*
 
-class AttendanceListAdapter :
-    ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {
+@OptIn(ExperimentalPagerApi::class)
+class AttendanceListAdapter
+    : ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {
+
+    private val pagerState = PagerState()
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).myPageType.type
@@ -40,6 +46,10 @@ class AttendanceListAdapter :
             MyPageAdapterType.MY_PROFILE.type -> MyPageProfileViewHolder(
                 ItemMypageProfileBinding.inflate(layoutInflater, parent, false),
                 mListener,
+            )
+            MyPageAdapterType.ACTIVITY_CARD.type -> MyPageActivityCardViewHolder(
+                ComposeView(parent.context),
+                pagerState,
             )
             else -> MyPageListNoneViewHolder(
                 ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(layoutInflater, parent, false)

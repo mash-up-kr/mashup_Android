@@ -5,7 +5,7 @@ import com.mashup.ui.model.AttendanceModel
 
 class MyPageListLevelViewHolder(
     private val binding: ItemMypageAttendanceHistoryLevelBinding,
-) : MyPageBaseViewHolder(binding) {
+) : MyPageBaseViewHolder(binding.root) {
 
     override fun bind(item: AttendanceModel) {
         binding.model = item as AttendanceModel.HistoryLevel

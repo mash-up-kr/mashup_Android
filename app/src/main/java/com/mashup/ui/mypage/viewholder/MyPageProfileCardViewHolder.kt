@@ -7,11 +7,13 @@ import com.google.accompanist.pager.PagerState
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.feature.mypage.profile.card.MyPageProfileCardScreen
 import com.mashup.ui.model.AttendanceModel
+import com.mashup.ui.mypage.AttendanceListAdapter
 
 @OptIn(ExperimentalPagerApi::class)
 class MyPageProfileCardViewHolder constructor(
     private val composeView: ComposeView,
     private val pagerState: PagerState,
+    private val listener: AttendanceListAdapter.OnItemEventListener?,
 ) : MyPageBaseViewHolder(composeView) {
 
     init {
@@ -25,7 +27,9 @@ class MyPageProfileCardViewHolder constructor(
 
         composeView.setContent {
             MashUpTheme {
-                MyPageProfileCardScreen(cards, pagerState)
+                MyPageProfileCardScreen(cards, pagerState) {
+                    listener?.onStartEditProfileCardActivity(it)
+                }
             }
         }
     }

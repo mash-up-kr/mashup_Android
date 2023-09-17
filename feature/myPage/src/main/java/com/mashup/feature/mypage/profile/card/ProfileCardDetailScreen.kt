@@ -59,7 +59,8 @@ fun ProfileCardDetailContent(
                     platform = platform,
                     isRunning = isRunning,
                     team = team,
-                    staff = staff
+                    staff = staff,
+                    onClick = {},
                 )
             }
             Row(

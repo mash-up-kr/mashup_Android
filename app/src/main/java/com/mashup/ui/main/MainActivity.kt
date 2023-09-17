@@ -71,6 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         initComposeView()
         initTabButtons()
+        initStatusBarColor()
         requestNotificationPermission()
     }
 
@@ -103,7 +104,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.mainTab.collectLatest { tab ->
                     navigationTab(tab)
                     setUIOfTab(tab)
-                    updateStatusBarColor(tab)
                 }
             }
 
@@ -188,17 +188,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun updateStatusBarColor(tab: MainTab) {
-        when (tab) {
-            MainTab.EVENT -> {
-                setStatusBarColorRes(com.mashup.core.common.R.color.gray50)
-                setStatusBarDarkTextColor(true)
-            }
-            MainTab.MY_PAGE -> {
-                setStatusBarColorRes(com.mashup.core.common.R.color.gray950)
-                setStatusBarDarkTextColor(false)
-            }
-        }
+    private fun initStatusBarColor() {
+        setStatusBarColorRes(com.mashup.core.common.R.color.gray50)
+        setStatusBarDarkTextColor(true)
     }
 
     private fun requestNotificationPermission() {

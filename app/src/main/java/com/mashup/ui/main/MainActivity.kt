@@ -16,8 +16,6 @@ import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.core.common.extensions.onThrottleFirstClick
-import com.mashup.core.common.extensions.setStatusBarColorRes
-import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
@@ -103,7 +101,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.mainTab.collectLatest { tab ->
                     navigationTab(tab)
                     setUIOfTab(tab)
-                    updateStatusBarColor(tab)
                 }
             }
 
@@ -184,19 +181,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 imgEvent.imageTintList = unSelectedColorList
                 tvMyPage.setTextColor(selectedColor)
                 imgMyPage.imageTintList = selectedColorList
-            }
-        }
-    }
-
-    private fun updateStatusBarColor(tab: MainTab) {
-        when (tab) {
-            MainTab.EVENT -> {
-                setStatusBarColorRes(com.mashup.core.common.R.color.gray50)
-                setStatusBarDarkTextColor(true)
-            }
-            MainTab.MY_PAGE -> {
-                setStatusBarColorRes(com.mashup.core.common.R.color.gray950)
-                setStatusBarDarkTextColor(false)
             }
         }
     }

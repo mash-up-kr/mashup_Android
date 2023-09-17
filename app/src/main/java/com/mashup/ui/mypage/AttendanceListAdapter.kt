@@ -9,6 +9,7 @@ import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
 import com.mashup.databinding.ItemMypageAttendanceScoreBinding
 import com.mashup.databinding.ItemMypageAttendanceTitleBinding
+import com.mashup.databinding.ItemMypageProfileBinding
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.mypage.viewholder.MyPageBaseViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListItemViewHolder
@@ -40,6 +41,9 @@ class AttendanceListAdapter :
             )
             MyPageAdapterType.SCORE.type -> MyPageScoreViewHolder(
                 ItemMypageAttendanceScoreBinding.inflate(layoutInflater, parent, false)
+            )
+            MyPageAdapterType.MY_PROFILE.type -> MyPageProfileViewHolder(
+                ItemMypageProfileBinding.inflate(layoutInflater, parent, false)
             )
             else -> MyPageListNoneViewHolder(
                 ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(

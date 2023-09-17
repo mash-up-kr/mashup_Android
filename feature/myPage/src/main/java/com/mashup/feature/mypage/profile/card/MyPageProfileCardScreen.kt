@@ -18,11 +18,11 @@ import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray800
 import com.mashup.core.ui.typography.SubTitle1
-import com.mashup.feature.mypage.profile.model.GenerationData
+import com.mashup.feature.mypage.profile.model.ProfileCardData
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MyPageProfileCardScreen(cards: List<GenerationData>, pagerState: PagerState) {
+fun MyPageProfileCardScreen(cards: List<ProfileCardData>, pagerState: PagerState) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         MyPageSubTitle("활동 카드")
 

@@ -22,7 +22,11 @@ import com.mashup.feature.mypage.profile.model.ProfileCardData
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MyPageProfileCardScreen(cards: List<ProfileCardData>, pagerState: PagerState) {
+fun MyPageProfileCardScreen(
+    cards: List<ProfileCardData>,
+    pagerState: PagerState,
+    onClick: (ProfileCardData) -> Unit,
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         MyPageSubTitle("활동 카드")
 
@@ -39,6 +43,7 @@ fun MyPageProfileCardScreen(cards: List<ProfileCardData>, pagerState: PagerState
                 isRunning = cards[card].isRunning,
                 team = cards[card].projectTeamName,
                 staff = cards[card].role,
+                onClick = { onClick(cards[card]) }
             )
         }
 

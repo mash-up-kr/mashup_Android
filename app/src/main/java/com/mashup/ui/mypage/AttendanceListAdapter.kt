@@ -13,6 +13,7 @@ import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBindin
 import com.mashup.databinding.ItemMypageAttendanceScoreBinding
 import com.mashup.databinding.ItemMypageAttendanceTitleBinding
 import com.mashup.databinding.ItemMypageProfileBinding
+import com.mashup.feature.mypage.profile.model.ProfileCardData
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.mypage.viewholder.MyPageBaseViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListItemViewHolder
@@ -56,6 +57,7 @@ class AttendanceListAdapter
             MyPageAdapterType.PROFILE_CARD.type -> MyPageProfileCardViewHolder(
                 ComposeView(parent.context),
                 pagerState,
+                mListener,
             )
             else -> MyPageListNoneViewHolder(
                 ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(layoutInflater, parent, false)
@@ -71,6 +73,7 @@ class AttendanceListAdapter
         fun onTotalAttendanceClick()
         fun onStartSettingActivity()
         fun onStartEditProfileActivity()
+        fun onStartEditProfileCardActivity(card: ProfileCardData)
     }
 
     private var mListener: OnItemEventListener? = null

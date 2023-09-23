@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mashup.ui.model.AttendanceModel
 
 abstract class MyPageBaseViewHolder(
-    private val binding: ViewDataBinding,
+    private val binding: ViewDataBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     abstract fun bind(item: AttendanceModel)

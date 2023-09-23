@@ -4,7 +4,7 @@ import com.mashup.databinding.ItemMypageAttendanceHistoryLevelBinding
 import com.mashup.ui.model.AttendanceModel
 
 class MyPageListLevelViewHolder(
-    private val binding: ItemMypageAttendanceHistoryLevelBinding,
+    private val binding: ItemMypageAttendanceHistoryLevelBinding
 ) : MyPageBaseViewHolder(binding) {
 
     override fun bind(item: AttendanceModel) {

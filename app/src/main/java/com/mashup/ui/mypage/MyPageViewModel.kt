@@ -12,19 +12,19 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
     private val myPageRepository: MyPageRepository,
-    private val profileRepository: MyProfileRepository,
+    private val profileRepository: MyProfileRepository
 ) : BaseViewModel() {
 
     private val userData = MutableStateFlow<UserPreference?>(null)
@@ -85,7 +85,7 @@ class MyPageViewModel @Inject constructor(
     private fun combineMyPageData(
         userData: UserPreference,
         profileData: ProfileData,
-        scoreHistoryData: Pair<Double, List<ActivityHistory>>,
+        scoreHistoryData: Pair<Double, List<ActivityHistory>>
     ): List<AttendanceModel> {
         return mutableListOf<AttendanceModel>().apply {
             add(AttendanceModel.Title(0, userData.name))
@@ -117,7 +117,7 @@ class MyPageViewModel @Inject constructor(
         github = response.githubLink.orEmpty(),
         behance = response.githubLink.orEmpty(),
         linkedIn = response.linkedInLink.orEmpty(),
-        tistory = response.blogLink.orEmpty(), // FIXME
+        tistory = response.blogLink.orEmpty() // FIXME
     )
 
     private fun mapToActivityHistory(response: ScoreDetails) = ActivityHistory(

@@ -10,21 +10,21 @@ import java.util.Date
 
 sealed class AttendanceModel(
     open val id: Int,
-    val myPageType: MyPageAdapterType,
+    val myPageType: MyPageAdapterType
 ) {
     data class Title(
         override val id: Int,
-        val name: String,
+        val name: String
     ) : AttendanceModel(id, MyPageAdapterType.TITLE)
 
     data class MyProfile(
         override val id: Int,
-        val data: ProfileData,
+        val data: ProfileData
     ) : AttendanceModel(id, MyPageAdapterType.MY_PROFILE)
 
     data class Score(
         override val id: Int,
-        val score: Double,
+        val score: Double
     ) : AttendanceModel(id, MyPageAdapterType.SCORE) {
         fun getAttendanceScore() = "${if (score % 1 == 0.0) score.toInt() else score}점"
     }
@@ -36,26 +36,26 @@ sealed class AttendanceModel(
 
     data class HistoryLevel(
         override val id: Int,
-        val generationNum: Int,
+        val generationNum: Int
     ) : AttendanceModel(id, MyPageAdapterType.LIST_LEVEL) {
         fun getGeneration() = "${generationNum}기"
     }
 
     data class HistoryItem(
         override val id: Int,
-        val activityHistory: ActivityHistory,
+        val activityHistory: ActivityHistory
     ) : AttendanceModel(id, MyPageAdapterType.LIST_ITEM)
 
     data class None(
-        override val id: Int,
-    ): AttendanceModel(id, MyPageAdapterType.LIST_NONE)
+        override val id: Int
+    ) : AttendanceModel(id, MyPageAdapterType.LIST_NONE)
 }
 
 data class ActivityCard(
     val generationNum: Int,
     val isRunning: Boolean,
     val name: String,
-    val platform: Platform,
+    val platform: Platform
 )
 
 data class ActivityHistory(

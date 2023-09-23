@@ -6,7 +6,7 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 sealed class AttendanceModel(
     open val id: Int,

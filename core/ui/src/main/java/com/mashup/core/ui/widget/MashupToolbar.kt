@@ -29,8 +29,8 @@ import com.mashup.core.ui.typography.SubTitle2
 
 @Composable
 fun MashUpToolbar(
-    modifier: Modifier = Modifier,
     title: String,
+    modifier: Modifier = Modifier,
     showBackButton: Boolean = false,
     showActionButton: Boolean = false,
     showBottomDivider: Boolean = false,

@@ -70,7 +70,7 @@ fun MashUpButton(
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                enabled = isEnabled,
+                enabled = isEnabled || showLoading,
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center

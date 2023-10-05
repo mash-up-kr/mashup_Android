@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.mashup.ui.model.AttendanceModel" />
+            type="com.mashup.ui.model.AttendanceModel.Score" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total_activity_count"
-                android:textAppearance="@style/TextAppearance.Mashup.Body3_14_M"
+                android:textAppearance="@style/TextAppearance.Mashup.Body3_14_B"
                 android:textColor="@color/gray700"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +42,8 @@
                 android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@{model.profile.getAttendanceScore()}"
-                android:textAppearance="@style/TextAppearance.Mashup.Header_32_B"
+                android:text="@{model.getAttendanceScore()}"
+                android:textAppearance="@style/TextAppearance.Mashup.Header2_20_B"
                 android:textColor="@color/brand500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

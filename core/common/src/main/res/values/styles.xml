@@ -113,6 +113,13 @@
         <item name="android:textColor">@color/gray900</item>
     </style>
 
+    <style name="TextAppearance.Mashup.Body3_14_B" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/gray900</item>
+    </style>
+
     <style name="TextAppearance.Mashup.Caption1_13_M" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="android:textSize">13dp</item>

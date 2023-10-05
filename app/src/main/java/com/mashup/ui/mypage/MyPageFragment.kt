@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
+    override val layoutId: Int = R.layout.fragment_my_page
 
     private val viewModel: MyPageViewModel by viewModels()
 
@@ -30,13 +31,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     override fun initViews() {
         super.initViews()
-        initRecyclerView()
         initSwipeRefresh()
+        initRecyclerView()
     }
 
     private fun initSwipeRefresh() {
         viewBinding.layoutSwipe.apply {
-            setOnRefreshListener { viewModel.getMember() }
+            setOnRefreshListener { viewModel.getMyPageData() }
             setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), com.mashup.core.common.R.color.brand500)
             )
@@ -48,9 +49,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     }
 
     override fun initObserves() {
-        viewModel.attendanceList.observe(viewLifecycleOwner) {
-            viewBinding.layoutSwipe.isRefreshing = false
-            attendanceAdapter.submitList(it)
+        flowViewLifecycleScope {
+            viewModel.myPageData.collectLatest {
+                viewBinding.layoutSwipe.isRefreshing = false
+                attendanceAdapter.submitList(it)
+            }
         }
 
         flowViewLifecycleScope {
@@ -68,6 +71,4 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     companion object {
         fun newInstance() = MyPageFragment()
     }
-
-    override val layoutId: Int = R.layout.fragment_my_page
 }

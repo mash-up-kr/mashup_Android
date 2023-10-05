@@ -30,6 +30,7 @@ import com.mashup.feature.mypage.profile.LoadState
 import com.mashup.feature.mypage.profile.MyPageEditCellDivider
 import com.mashup.feature.mypage.profile.MyPageEditWriteCell
 import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
+import com.mashup.feature.mypage.profile.model.ProfileData
 
 @Composable
 fun MyPageEditProfileScreen(
@@ -67,7 +68,7 @@ fun MyPageEditProfileScreen(
 
 @Composable
 fun MyPageEditProfileContent(
-    onSaveButtonClicked: (EditedProfile) -> Unit,
+    onSaveButtonClicked: (ProfileData) -> Unit,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
     isUploading: Boolean = false,
@@ -194,7 +195,7 @@ fun MyPageEditProfileContent(
                 showLoading = isUploading,
                 onClick = {
                     onSaveButtonClicked(
-                        EditedProfile(
+                        ProfileData(
                             birthDay = birthDayState,
                             work = workState,
                             company = companyState,
@@ -230,16 +231,3 @@ fun MyPageEditProfileContentPrev() {
         }
     }
 }
-
-data class EditedProfile(
-    val birthDay: String = "",
-    val work: String = "",
-    val company: String = "",
-    val introduceMySelf: String = "",
-    val location: String = "",
-    val instagram: String = "",
-    val github: String = "",
-    val behance: String = "",
-    val linkedIn: String = "",
-    val tistory: String = ""
-)

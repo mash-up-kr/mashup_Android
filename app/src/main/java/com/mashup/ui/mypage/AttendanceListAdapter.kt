@@ -15,6 +15,7 @@ import com.mashup.ui.mypage.viewholder.MyPageBaseViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListItemViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListLevelViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListNoneViewHolder
+import com.mashup.ui.mypage.viewholder.MyPageProfileViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageScoreViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageTitleViewHolder
 
@@ -44,14 +45,10 @@ class AttendanceListAdapter :
             )
             MyPageAdapterType.MY_PROFILE.type -> MyPageProfileViewHolder(
                 ItemMypageProfileBinding.inflate(layoutInflater, parent, false),
-                mListener,
+                mListener
             )
             else -> MyPageListNoneViewHolder(
-                ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(
-                    layoutInflater,
-                    parent,
-                    false
-                )
+                ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(layoutInflater, parent, false)
             )
         }
     }

@@ -13,7 +13,7 @@ import com.mashup.ui.mypage.AttendanceListAdapter
 
 class MyPageProfileViewHolder(
     private val binding: ItemMypageProfileBinding,
-    val listener: AttendanceListAdapter.OnItemEventListener?,
+    val listener: AttendanceListAdapter.OnItemEventListener?
 ) : MyPageBaseViewHolder(binding) {
 
     init {
@@ -48,48 +48,49 @@ class MyPageProfileViewHolder(
         ProfileChip.Link(profile.github),
         ProfileChip.Link(profile.linkedIn),
         ProfileChip.Link(profile.behance),
-        ProfileChip.Text(profile.instagram),
+        ProfileChip.Text(profile.instagram)
     ).filter { it.displayText.isNotEmpty() }
 
     private fun ChipGroup.addChip(chipData: ProfileChip) {
         val context = binding.root.context
-        addView(Chip(context).apply {
-            text = chipData.displayText
+        addView(
+            Chip(context).apply {
+                text = chipData.displayText
 
-            chipBackgroundColor = ContextCompat.getColorStateList(context, R.color.gray50)
-            chipStrokeColor = ContextCompat.getColorStateList(context, R.color.gray200)
-            chipStrokeWidth = 1.dp(context).toFloat()
+                chipBackgroundColor = ContextCompat.getColorStateList(context, R.color.gray50)
+                chipStrokeColor = ContextCompat.getColorStateList(context, R.color.gray200)
+                chipStrokeWidth = 1.dp(context).toFloat()
 
-            chipStartPadding = 10.dp(context).toFloat()
-            chipEndPadding = 10.dp(context).toFloat()
-            chipSpacingHorizontal = 6.dp(context)
-            chipSpacingVertical = (-8).dp(context)
+                chipStartPadding = 10.dp(context).toFloat()
+                chipEndPadding = 10.dp(context).toFloat()
+                chipSpacingHorizontal = 6.dp(context)
+                chipSpacingVertical = (-8).dp(context)
 
-            if (chipData is ProfileChip.Link) {
-                chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_link)
-                chipIconSize = 14.dp(context).toFloat()
-                iconEndPadding = -4.dp(context).toFloat()
+                if (chipData is ProfileChip.Link) {
+                    chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_link)
+                    chipIconSize = 14.dp(context).toFloat()
+                    iconEndPadding = -4.dp(context).toFloat()
+                }
+
+                setTextAppearanceResource(R.style.TextAppearance_Mashup_Caption1_13_M)
+                setOnClickListener {
+                }
             }
-
-            setTextAppearanceResource(R.style.TextAppearance_Mashup_Caption1_13_M)
-            setOnClickListener {
-
-            }
-        })
+        )
     }
 
     sealed class ProfileChip(
         open val text: String,
-        open val displayText: String,
+        open val displayText: String
     ) {
         data class Text(
             override val text: String,
-            override val displayText: String = text,
+            override val displayText: String = text
         ) : ProfileChip(text, displayText)
 
         data class Link(
             override val text: String,
-            override val displayText: String = text,
+            override val displayText: String = text
         ) : ProfileChip(text, displayText)
     }
 }

@@ -1,6 +1,8 @@
 package com.mashup.core.model
 
-enum class Platform(val detailName: String) {
+enum class Platform(
+    val detailName: String
+) {
     DESIGN("Product Design"),
     ANDROID("Android"),
     IOS("iOS"),

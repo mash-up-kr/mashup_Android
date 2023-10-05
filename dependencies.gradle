@@ -1,17 +1,17 @@
 ext {
     // Android
-    androidBuildToolsVersion = "7.2.1"
+    androidBuildToolsVersion = "7.4.1"
 
     minVersion = 24
-    targetVersion = 33
-    compileVersion = 33
+    targetVersion = 34
+    compileVersion = 34
 
     // kotlin
     kotlinVersion = "1.8.21"
     kotlinSerialization = "1.5.1"
 
     // compose
-    composeVersion = '1.1.1'
+    composeVersion = '1.5.0'
     composeCompiler = "1.4.7"
     composeWebView = "0.24.13-rc"
 

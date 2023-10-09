@@ -115,8 +115,12 @@ fun MyPageEditProfileContent(
                 MyPageEditWriteCell(
                     title = "생년월일",
                     value = birthDayState,
-                    hint = "생년월일 6자리를 추가해주세요",
-                    onValueChanged = { birthDayState = it.filter { char -> char.isDigit() } },
+                    hint = "생년월일 8자리를 추가해주세요",
+                    onValueChanged = {
+                        // 숫자 8자리 체크
+                        val input = it.filter { char -> char.isDigit() }
+                        if (input.length <= 8) birthDayState = input
+                    },
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number
                     )

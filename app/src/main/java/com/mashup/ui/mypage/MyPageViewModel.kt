@@ -150,7 +150,7 @@ class MyPageViewModel @Inject constructor(
         generationNumber = response.number,
         platform = response.platform,
         projectTeamName = response.projectTeamName.orEmpty(),
-        role = response.role.orEmpty(),
+        role = response.role.orEmpty()
     )
 
     private fun mapToActivityHistory(response: ScoreDetails) = ActivityHistory(

@@ -1,7 +1,13 @@
 package com.mashup.feature.mypage.profile.card
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -25,7 +31,7 @@ import com.mashup.feature.mypage.profile.model.ProfileCardData
 fun MyPageProfileCardScreen(
     cards: List<ProfileCardData>,
     pagerState: PagerState,
-    onClick: (ProfileCardData) -> Unit,
+    onClick: (ProfileCardData) -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         MyPageSubTitle("활동 카드")
@@ -50,7 +56,7 @@ fun MyPageProfileCardScreen(
         ProfileCardIndicator(
             modifier = Modifier.padding(top = 16.dp),
             size = cards.size,
-            currentPage = pagerState.currentPage,
+            currentPage = pagerState.currentPage
         )
 
         Divider(
@@ -70,7 +76,7 @@ fun MyPageSubTitle(text: String) {
         style = SubTitle1,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, bottom = 12.dp),
+            .padding(start = 20.dp, bottom = 12.dp)
     )
 }
 

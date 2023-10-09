@@ -13,7 +13,7 @@ import com.mashup.ui.mypage.AttendanceListAdapter
 class MyPageProfileCardViewHolder constructor(
     private val composeView: ComposeView,
     private val pagerState: PagerState,
-    private val listener: AttendanceListAdapter.OnItemEventListener?,
+    private val listener: AttendanceListAdapter.OnItemEventListener?
 ) : MyPageBaseViewHolder(composeView) {
 
     init {

@@ -3,7 +3,6 @@ package com.mashup.feature.mypage.profile.data
 import com.mashup.core.network.Response
 import com.mashup.feature.mypage.profile.data.dto.MemberGenerationRequest
 import com.mashup.feature.mypage.profile.data.dto.MemberGenerationsResponse
-import com.mashup.feature.mypage.profile.data.dto.ValidResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -17,5 +16,5 @@ interface MemberGenerationDao {
     suspend fun postMemberGeneration(
         @Path("id") id: Long,
         @Body body: MemberGenerationRequest
-    ): Response<ValidResponse>
+    ): Response<Boolean>
 }

@@ -3,7 +3,6 @@ package com.mashup.ui.mypage
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
-import androidx.compose.material.Snackbar
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.core.common.utils.ToastUtil
@@ -39,6 +38,7 @@ class MyProfileEditActivity : BaseActivity<ActivityMyProfileEditBinding>() {
             editViewModel.loadState.collectLatest {
                 if (it is LoadState.Loaded) {
                     ToastUtil.showToast(this@MyProfileEditActivity, "저장 완료!")
+                    setResult(RESULT_OK)
                 }
             }
         }

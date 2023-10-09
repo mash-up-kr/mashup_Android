@@ -1,8 +1,10 @@
 package com.mashup.ui.mypage
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.mashup.R
@@ -19,6 +21,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     private val viewModel: MyPageViewModel by viewModels()
 
+    private val myProfileEditLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) viewModel.getMyPageData()
+    }
+
     private val attendanceAdapter by lazy {
         AttendanceListAdapter().apply {
             setOnItemClickListener(object : AttendanceListAdapter.OnItemEventListener {
@@ -31,7 +39,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                 }
 
                 override fun onStartEditProfileActivity() {
-                    startActivity(MyProfileEditActivity.newIntent(requireContext()))
+                    myProfileEditLauncher.launch(MyProfileEditActivity.newIntent(requireContext()))
                 }
 
                 override fun onStartEditProfileCardActivity(card: ProfileCardData) {

@@ -2,6 +2,7 @@ package com.mashup.feature.mypage.profile.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -39,11 +41,14 @@ fun ProfileCard(
     isRunning: Boolean,
     modifier: Modifier = Modifier,
     team: String = "",
-    staff: String = ""
+    staff: String = "",
+    onClick: () -> Unit
 ) {
     Column(
         modifier = modifier
-            .size(320.dp, 220.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clickable { onClick() }
             .background(
                 color = colorResource(getPlatformBackgroundColor(platform)),
                 RoundedCornerShape(12.dp)
@@ -146,7 +151,8 @@ fun ProfileCardPrev() {
             name = "김매숑",
             platform = Platform.ANDROID,
             isRunning = true,
-            team = "Branding Team"
+            team = "Branding Team",
+            onClick = {}
         )
     }
 }

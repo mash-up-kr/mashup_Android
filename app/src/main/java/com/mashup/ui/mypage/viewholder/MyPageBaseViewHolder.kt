@@ -1,12 +1,12 @@
 package com.mashup.ui.mypage.viewholder
 
-import androidx.databinding.ViewDataBinding
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.ui.model.AttendanceModel
 
 abstract class MyPageBaseViewHolder(
-    private val binding: ViewDataBinding
-) : RecyclerView.ViewHolder(binding.root) {
+    view: View
+) : RecyclerView.ViewHolder(view) {
 
     abstract fun bind(item: AttendanceModel)
 }

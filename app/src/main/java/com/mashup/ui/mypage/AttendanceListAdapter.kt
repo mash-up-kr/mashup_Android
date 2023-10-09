@@ -9,11 +9,13 @@ import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
 import com.mashup.databinding.ItemMypageAttendanceScoreBinding
 import com.mashup.databinding.ItemMypageAttendanceTitleBinding
+import com.mashup.databinding.ItemMypageProfileBinding
 import com.mashup.ui.model.AttendanceModel
 import com.mashup.ui.mypage.viewholder.MyPageBaseViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListItemViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListLevelViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListNoneViewHolder
+import com.mashup.ui.mypage.viewholder.MyPageProfileViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageScoreViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageTitleViewHolder
 
@@ -41,12 +43,12 @@ class AttendanceListAdapter :
             MyPageAdapterType.SCORE.type -> MyPageScoreViewHolder(
                 ItemMypageAttendanceScoreBinding.inflate(layoutInflater, parent, false)
             )
+            MyPageAdapterType.MY_PROFILE.type -> MyPageProfileViewHolder(
+                ItemMypageProfileBinding.inflate(layoutInflater, parent, false),
+                mListener
+            )
             else -> MyPageListNoneViewHolder(
-                ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(
-                    layoutInflater,
-                    parent,
-                    false
-                )
+                ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(layoutInflater, parent, false)
             )
         }
     }
@@ -58,6 +60,7 @@ class AttendanceListAdapter :
     interface OnItemEventListener {
         fun onTotalAttendanceClick()
         fun onStartSettingActivity()
+        fun onStartEditProfileActivity()
     }
 
     private var mListener: OnItemEventListener? = null

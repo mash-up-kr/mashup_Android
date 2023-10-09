@@ -1,6 +1,7 @@
 package com.mashup.ui.mypage
 
 import android.app.Activity.RESULT_OK
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast

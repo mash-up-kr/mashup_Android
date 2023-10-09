@@ -2,20 +2,61 @@ package com.mashup.ui.model
 
 import android.annotation.SuppressLint
 import com.mashup.core.model.Platform
+import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.mypage.AttendanceType
 import com.mashup.ui.mypage.MyPageAdapterType
 import java.text.SimpleDateFormat
 import java.util.Date
 
-data class AttendanceModel(
-    val id: Int,
-    val myPageType: MyPageAdapterType,
-    val profile: Profile? = null,
-    val generationNum: Int? = null,
-    val activityHistory: ActivityHistory? = null
+sealed class AttendanceModel(
+    open val id: Int,
+    val myPageType: MyPageAdapterType
 ) {
-    fun getGeneration() = "${generationNum}기"
+    data class Title(
+        override val id: Int,
+        val name: String
+    ) : AttendanceModel(id, MyPageAdapterType.TITLE)
+
+    data class MyProfile(
+        override val id: Int,
+        val data: ProfileData
+    ) : AttendanceModel(id, MyPageAdapterType.MY_PROFILE)
+
+    data class Score(
+        override val id: Int,
+        val score: Double
+    ) : AttendanceModel(id, MyPageAdapterType.SCORE) {
+        fun getAttendanceScore() = "${if (score % 1 == 0.0) score.toInt() else score}점"
+    }
+
+    data class ActivityCard(
+        override val id: Int,
+        val cardList: List<ActivityCard>
+    ) : AttendanceModel(id, MyPageAdapterType.ACTIVITY_CARD)
+
+    data class HistoryLevel(
+        override val id: Int,
+        val generationNum: Int
+    ) : AttendanceModel(id, MyPageAdapterType.LIST_LEVEL) {
+        fun getGeneration() = "${generationNum}기"
+    }
+
+    data class HistoryItem(
+        override val id: Int,
+        val activityHistory: ActivityHistory
+    ) : AttendanceModel(id, MyPageAdapterType.LIST_ITEM)
+
+    data class None(
+        override val id: Int
+    ) : AttendanceModel(id, MyPageAdapterType.LIST_NONE)
 }
+
+data class ActivityCard(
+    val generationNum: Int,
+    val isRunning: Boolean,
+    val name: String,
+    val platform: Platform
+)
 
 data class ActivityHistory(
     val scoreName: String,
@@ -42,18 +83,5 @@ data class ActivityHistory(
         val score: Number =
             if (cumulativeScore % 1 == 0.0) cumulativeScore.toInt() else cumulativeScore
         return "${score}점"
-    }
-}
-
-data class Profile(
-    val platform: Platform,
-    val name: String,
-    val score: Double,
-    val generationNumber: Int
-) {
-    fun getAttendanceScore(): String {
-        val scoreNumber: Number =
-            if (score % 1 == 0.0) score.toInt() else score
-        return "${scoreNumber}점"
     }
 }

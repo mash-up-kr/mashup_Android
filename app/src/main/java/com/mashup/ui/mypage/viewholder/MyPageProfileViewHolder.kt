@@ -47,15 +47,15 @@ class MyPageProfileViewHolder(
         ProfileChip.Text(profile.company),
         ProfileChip.Text(profile.location),
         ProfileChip.Link(
-            displayText = "Github",
+            displayText = if (profile.behance.isNotEmpty()) "Github" else "",
             link = profile.github
         ),
         ProfileChip.Link(
-            displayText = "LinkedIn",
+            displayText = if (profile.behance.isNotEmpty()) "LinkedIn" else "",
             link = profile.linkedIn
         ),
         ProfileChip.Link(
-            displayText = "Behance",
+            displayText = if (profile.behance.isNotEmpty()) "Behance" else "",
             link = profile.behance
         ),
         ProfileChip.Instagram("@${profile.instagram}")

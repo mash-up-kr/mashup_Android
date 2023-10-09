@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -45,7 +46,8 @@ fun ProfileCard(
 ) {
     Column(
         modifier = modifier
-            .size(320.dp, 220.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()
             .clickable { onClick() }
             .background(
                 color = colorResource(getPlatformBackgroundColor(platform)),

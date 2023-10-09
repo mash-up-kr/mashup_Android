@@ -23,7 +23,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                 }
 
                 override fun onStartSettingActivity() {
-                    context?.let { startActivity(SettingActivity.newIntent(it)) }
+                    startActivity(SettingActivity.newIntent(requireContext()))
+                }
+
+                override fun onStartEditProfileActivity() {
+                    startActivity(MyProfileEditActivity.newIntent(requireContext()))
                 }
             })
         }

@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
 import com.mashup.databinding.FragmentMyPageBinding
+import com.mashup.feature.mypage.profile.model.ProfileCardData
 import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -28,6 +29,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
                 override fun onStartEditProfileActivity() {
                     startActivity(MyProfileEditActivity.newIntent(requireContext()))
+                }
+
+                override fun onStartEditProfileCardActivity(card: ProfileCardData) {
+                    startActivity(MyProfileCardEditActivity.newIntent(requireContext(), card))
                 }
             })
         }

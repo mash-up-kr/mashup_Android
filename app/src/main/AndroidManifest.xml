@@ -101,6 +101,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.mypage.MyProfileCardEditActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.schedule.detail.ScheduleDetailActivity"
             android:exported="false" />
 

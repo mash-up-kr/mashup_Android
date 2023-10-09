@@ -7,7 +7,7 @@ import com.mashup.ui.mypage.AttendanceListAdapter
 class MyPageTitleViewHolder(
     private val binding: ItemMypageAttendanceTitleBinding,
     val listener: AttendanceListAdapter.OnItemEventListener?
-) : MyPageBaseViewHolder(binding) {
+) : MyPageBaseViewHolder(binding.root) {
 
     init {
         binding.btnSetting.setOnClickListener {

@@ -102,16 +102,16 @@ class MyPageProfileViewHolder(
         val clickable: Boolean
     ) {
         data class Text(
-            override val displayText: String,
+            override val displayText: String
         ) : ProfileChip(displayText, "", false)
 
         data class Link(
             override val displayText: String,
-            override val link: String,
+            override val link: String
         ) : ProfileChip(displayText, link, true)
 
         data class Instagram(
-            override val displayText: String,
+            override val displayText: String
         ) : ProfileChip(displayText, "https://www.instagram.com/$displayText", true)
     }
 }

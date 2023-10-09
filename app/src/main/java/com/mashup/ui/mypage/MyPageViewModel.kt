@@ -14,12 +14,12 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,28 +29,22 @@ class MyPageViewModel @Inject constructor(
     private val profileRepository: MyProfileRepository
 ) : BaseViewModel() {
 
-    private val userData = MutableStateFlow<UserPreference?>(null)
-    private val profileData = MutableStateFlow<ProfileData?>(null)
-    private val profileCardData = MutableStateFlow<List<ProfileCardData>?>(null)
-    private val scoreHistoryData = MutableStateFlow<Pair<Double, List<ActivityHistory>>?>(null)
+    private var userData: UserPreference? = null
+    private val userDataFlow = MutableSharedFlow<UserPreference>(replay = 1)
+    private val profileDataFlow = MutableSharedFlow<ProfileData>(replay = 1)
+    private val profileCardDataFlow = MutableSharedFlow<List<ProfileCardData>>(replay = 1)
+    private val scoreHistoryDataFlow = MutableSharedFlow<Pair<Double, List<ActivityHistory>>>(replay = 1)
 
-    // 각각의 Repository에서 데이터를 조회해온 후 조합해서 한 번에 화면에 보여줌
-    private var _myPageData: List<AttendanceModel> = emptyList()
-    val myPageData: StateFlow<List<AttendanceModel>> = combine(
-        userData,
-        profileData,
-        profileCardData,
-        scoreHistoryData
+    val myPageData: SharedFlow<List<AttendanceModel>> = combine(
+        userDataFlow,
+        profileDataFlow,
+        profileCardDataFlow,
+        scoreHistoryDataFlow
     ) { userData, profileData, profileCardData, scoreHistoryData ->
-        if (userData != null && profileData != null && profileCardData != null && scoreHistoryData != null) {
-            _myPageData = combineMyPageData(userData, profileData, profileCardData, scoreHistoryData)
-        }
-
-        _myPageData
-    }.stateIn(
+        combineMyPageData(userData, profileData, profileCardData, scoreHistoryData)
+    }.shareIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        _myPageData
     )
 
     init {
@@ -65,25 +59,36 @@ class MyPageViewModel @Inject constructor(
 
     private fun getUserAndScoreData() = mashUpScope {
         userPreferenceRepository.getUserPreference().first().let { userPreference ->
-            userData.value = userPreference
+            userData = userPreference
+            userData?.let { userDataFlow.emit(it) }
+
             getScoreHistoryData(userPreference.generationNumbers.last())
         }
     }
 
     private fun getProfileData() = mashUpScope {
         val response: MemberProfileResponse = profileRepository.getMyProfile().data ?: return@mashUpScope
-        profileData.value = mapToProfileData(response)
+        profileDataFlow.emit(mapToProfileData(response))
     }
 
     private fun getProfileCardData() = mashUpScope {
         val response = profileRepository.getMemberGenerations().data ?: return@mashUpScope
-        userData.value?.let { user ->
-            profileCardData.value = response.memberGenerations.map { mapToProfileCardData(user.name, user.generationNumbers.last(), it) }
+        userData?.let { user ->
+            val profileCardData = response.memberGenerations.map {
+                mapToProfileCardData(
+                    user.name,
+                    user.generationNumbers.last(),
+                    it
+                )
+            }
+
+            profileCardDataFlow.emit(profileCardData)
         }
     }
 
     private fun getScoreHistoryData(currentGenerationNum: Int) = mashUpScope {
-        val response = myPageRepository.getScoreHistory().data?.scoreHistoryResponseList ?: return@mashUpScope
+        val response =
+            myPageRepository.getScoreHistory().data?.scoreHistoryResponseList ?: return@mashUpScope
         val historyList = mutableListOf<ActivityHistory>()
 
         // 현재 기수만 사용(필터링)
@@ -95,7 +100,8 @@ class MyPageViewModel @Inject constructor(
             }
         }
 
-        scoreHistoryData.value = Pair(totalScore, historyList.toList())
+        scoreHistoryDataFlow.emit(Pair(totalScore, historyList.toList()))
+
     }
 
     private fun combineMyPageData(
@@ -119,7 +125,12 @@ class MyPageViewModel @Inject constructor(
             attendanceModelList.add(AttendanceModel.None(5))
         } else {
             scoreHistoryData.second.forEach { activityHistory ->
-                attendanceModelList.add(AttendanceModel.HistoryItem(attendanceModelList.size, activityHistory))
+                attendanceModelList.add(
+                    AttendanceModel.HistoryItem(
+                        attendanceModelList.size,
+                        activityHistory
+                    )
+                )
             }
         }
 

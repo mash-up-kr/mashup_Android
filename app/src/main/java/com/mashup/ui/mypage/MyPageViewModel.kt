@@ -132,11 +132,11 @@ class MyPageViewModel @Inject constructor(
         company = response.company.orEmpty(),
         introduceMySelf = response.introduction.orEmpty(),
         location = response.residence.orEmpty(),
-        instagram = response.blogLink.orEmpty(), // FIXME
+        instagram = response.socialNetworkServiceLink.orEmpty(),
         github = response.githubLink.orEmpty(),
-        behance = response.githubLink.orEmpty(),
+        behance = response.portfolioLink.orEmpty(),
         linkedIn = response.linkedInLink.orEmpty(),
-        tistory = response.blogLink.orEmpty() // FIXME
+        tistory = response.blogLink.orEmpty()
     )
 
     private fun mapToProfileCardData(

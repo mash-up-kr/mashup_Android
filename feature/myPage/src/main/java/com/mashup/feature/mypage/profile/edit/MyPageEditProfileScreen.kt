@@ -100,7 +100,8 @@ fun MyPageEditProfileContent(
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
             title = "내 소개 편집",
-            showBackButton = true
+            showBackButton = true,
+            onClickBackButton = { onBackPressed() }
         )
         Column(
             modifier = Modifier

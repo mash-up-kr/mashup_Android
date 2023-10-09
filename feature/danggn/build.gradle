@@ -38,6 +38,7 @@ dependencies {
     implementation project(':core:datastore')
     implementation project(':core:network')
     implementation project(':core:data')
+    implementation project(":feature:myPage")
 
     // compose swipe refresh
     implementation "com.google.accompanist:accompanist-swiperefresh:0.25.1"

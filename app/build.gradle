@@ -94,7 +94,7 @@ android {
 }
 
 dependencies {
-    implementation project(':core:ui')
+    implementation project(":core:ui")
     implementation project(":core:model")
     implementation project(":core:testing")
     implementation project(":core:common")
@@ -104,6 +104,7 @@ dependencies {
     implementation project(":core:data")
     implementation project(":feature:setting")
     implementation project(":feature:danggn")
+    implementation project(":feature:myPage")
 
     // ml Kit
     implementation "com.google.mlkit:barcode-scanning:$barcodeSacnnerVersion"

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,17 +26,38 @@ import com.mashup.core.ui.widget.MashUpToolbar
 import com.mashup.feature.mypage.profile.MyPageEditCellDivider
 import com.mashup.feature.mypage.profile.MyPageEditReadOnlyCell
 import com.mashup.feature.mypage.profile.MyPageEditWriteCell
+import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 
 @Composable
-fun MyPageEditCardScreen() {
+fun MyPageEditCardScreen(
+    viewModel: MyPageProfileEditViewModel
+) {
+    val editCardState by viewModel.myProfileCard.collectAsState()
+
+    MyPageEditCardContent(
+        generationNumber = editCardState.generationNumber,
+        platform = editCardState.platform,
+        onSaveButtonClicked = { id, team, staff ->
+            // 여기 온 값 post 해주세요~
+            viewModel.patchMemberProfileCard(
+                id = id.toLong(),
+                projectTeamName = team,
+                staff = staff
+            )
+        },
+        id = editCardState.id,
+        team = editCardState.team,
+        staff = editCardState.staff
+    )
 }
 
 @Composable
 fun MyPageEditCardContent(
     generationNumber: Int,
     platform: Platform,
-    onSaveButtonClicked: (team: String, staff: String) -> Unit,
+    onSaveButtonClicked: (id: Int, team: String, staff: String) -> Unit,
     modifier: Modifier = Modifier,
+    id: Int = -1,
     team: String = "",
     staff: String = ""
 ) {
@@ -86,7 +108,7 @@ fun MyPageEditCardContent(
                 buttonStyle = ButtonStyle.PRIMARY,
                 isEnabled = teamState != team || staff != staffState,
                 onClick = {
-                    onSaveButtonClicked(team, staff)
+                    onSaveButtonClicked(id, teamState, staffState)
                 }
             )
         }
@@ -104,7 +126,7 @@ fun MyPageEditContentPrev() {
                 modifier = Modifier.fillMaxSize(),
                 generationNumber = 12,
                 platform = Platform.DESIGN,
-                onSaveButtonClicked = { _, _ ->
+                onSaveButtonClicked = { _, _, _ ->
                 }
             )
         }

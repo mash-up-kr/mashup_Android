@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,16 +26,49 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.core.ui.widget.MashUpToolbar
+import com.mashup.feature.mypage.profile.LoadState
 import com.mashup.feature.mypage.profile.MyPageEditCellDivider
 import com.mashup.feature.mypage.profile.MyPageEditWriteCell
+import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
+import com.mashup.feature.mypage.profile.model.ProfileData
 
 @Composable
-fun MyPageEditProfileScreen() {
+fun MyPageEditProfileScreen(
+    viewModel: MyPageProfileEditViewModel
+) {
+    val myProfile by viewModel.myPageCardEntity.collectAsState()
+    val isLoading by viewModel.loadState.collectAsState()
+    MyPageEditProfileContent(
+        onSaveButtonClicked = { editedProfile ->
+            viewModel.patchMyProfile(
+                editedProfile
+            )
+        },
+        onBackPressed = {
+            // 뒤로 가기 수행
+        },
+        modifier = Modifier,
+        isUploading = when (isLoading) {
+            LoadState.Initial,
+            LoadState.Loaded -> false
+            LoadState.Loading -> true
+        },
+        birthDay = myProfile.birthDay,
+        work = myProfile.work,
+        company = myProfile.company,
+        introduceMySelf = myProfile.introduceMySelf,
+        location = myProfile.location,
+        instagram = myProfile.instagram,
+        github = myProfile.github,
+        behance = myProfile.behance,
+        linkedIn = myProfile.linkedIn,
+        tistory = myProfile.tistory
+    )
 }
 
 @Composable
 fun MyPageEditProfileContent(
-    onSaveButtonClicked: (EditedProfile) -> Unit,
+    onSaveButtonClicked: (ProfileData) -> Unit,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
     isUploading: Boolean = false,
@@ -161,7 +195,7 @@ fun MyPageEditProfileContent(
                 showLoading = isUploading,
                 onClick = {
                     onSaveButtonClicked(
-                        EditedProfile(
+                        ProfileData(
                             birthDay = birthDayState,
                             work = workState,
                             company = companyState,
@@ -197,16 +231,3 @@ fun MyPageEditProfileContentPrev() {
         }
     }
 }
-
-data class EditedProfile(
-    val birthDay: String = "",
-    val work: String = "",
-    val company: String = "",
-    val introduceMySelf: String = "",
-    val location: String = "",
-    val instagram: String = "",
-    val github: String = "",
-    val behance: String = "",
-    val linkedIn: String = "",
-    val tistory: String = ""
-)

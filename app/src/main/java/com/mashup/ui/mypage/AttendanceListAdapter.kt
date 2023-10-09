@@ -19,13 +19,14 @@ import com.mashup.ui.mypage.viewholder.MyPageBaseViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListItemViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListLevelViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageListNoneViewHolder
+import com.mashup.ui.mypage.viewholder.MyPageProfileCardViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageProfileViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageScoreViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageTitleViewHolder
 
 @OptIn(ExperimentalPagerApi::class)
-class AttendanceListAdapter
-    : ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {
+class AttendanceListAdapter :
+    ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {
 
     private val pagerState = PagerState()
 
@@ -57,7 +58,7 @@ class AttendanceListAdapter
             MyPageAdapterType.PROFILE_CARD.type -> MyPageProfileCardViewHolder(
                 ComposeView(parent.context),
                 pagerState,
-                mListener,
+                mListener
             )
             else -> MyPageListNoneViewHolder(
                 ItemMypageAttendanceHistoryPlaceholderEmpthyBinding.inflate(layoutInflater, parent, false)

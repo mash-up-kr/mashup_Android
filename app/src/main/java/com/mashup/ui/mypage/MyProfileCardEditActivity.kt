@@ -37,7 +37,7 @@ class MyProfileCardEditActivity : BaseActivity<ActivityMyProfileCardEditBinding>
                         staff = cardData.getString(EXTRA_CARD_STAFF).orEmpty(),
                         onBackPressed = { finish() },
                         onDownLoadClicked = {},
-                        onEditClicked = {},
+                        onEditClicked = {}
                     )
                 }
             }

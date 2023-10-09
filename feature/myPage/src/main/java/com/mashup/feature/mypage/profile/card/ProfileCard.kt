@@ -41,7 +41,7 @@ fun ProfileCard(
     modifier: Modifier = Modifier,
     team: String = "",
     staff: String = "",
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = modifier

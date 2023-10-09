@@ -7,5 +7,5 @@ data class ProfileCardData(
     val generationNumber: Int = 0,
     val platform: String = "",
     val projectTeamName: String = "",
-    val role: String = "",
+    val role: String = ""
 )

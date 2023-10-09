@@ -1,6 +1,7 @@
 package com.mashup.ui.model
 
 import android.annotation.SuppressLint
+import com.mashup.core.model.Platform
 import com.mashup.feature.mypage.profile.model.ProfileCardData
 import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.mypage.AttendanceType
@@ -55,10 +56,9 @@ data class ActivityCardData(
     val generationNum: Int,
     val isRunning: Boolean,
     val name: String,
-    val platform: Platform
     val platform: Platform,
     val projectTeamName: String,
-    val role: String,
+    val role: String
 )
 
 data class ActivityHistory(

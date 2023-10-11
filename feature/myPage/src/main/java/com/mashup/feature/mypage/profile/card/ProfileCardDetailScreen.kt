@@ -1,12 +1,13 @@
 package com.mashup.feature.mypage.profile.card
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.core.ui.widget.MashUpToolbar
+import com.mashup.ui.mypage.CaptureBitmap
 
 @Composable
 fun ProfileCardDetailScreen() {
@@ -34,9 +36,22 @@ fun ProfileCardDetailContent(
     team: String = "",
     staff: String = "",
     onBackPressed: () -> Unit = {},
-    onDownLoadClicked: () -> Unit = {},
+    onDownLoadClicked: (Bitmap) -> Unit = {},
     onEditClicked: () -> Unit = {}
 ) {
+    val snapshot = CaptureBitmap {
+        ProfileCard(
+            modifier = Modifier.size(320.dp, 220.dp).padding(horizontal = 20.dp),
+            generationNumber = generationNumber,
+            name = name,
+            platform = platform,
+            isRunning = isRunning,
+            team = team,
+            staff = staff,
+            onClick = {}
+        )
+    }
+
     Column(
         modifier = modifier
     ) {
@@ -47,34 +62,24 @@ fun ProfileCardDetailContent(
             onClickBackButton = onBackPressed
         )
         Column(
-            modifier = Modifier
-                .weight(1f),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.weight(1f)
         ) {
-            Box(modifier = Modifier.fillMaxWidth().weight(1f)) {
-                ProfileCard(
-                    modifier = Modifier.align(Alignment.Center),
-                    generationNumber = generationNumber,
-                    name = name,
-                    platform = platform,
-                    isRunning = isRunning,
-                    team = team,
-                    staff = staff,
-                    onClick = {}
-                )
-            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
                     .padding(bottom = 28.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.Bottom
             ) {
                 MashUpButton(
                     modifier = Modifier.weight(1f),
                     text = "다운로드",
                     buttonStyle = ButtonStyle.DARK,
-                    onClick = onDownLoadClicked
+                    onClick = {
+                        val bitmap = snapshot.invoke()
+                        onDownLoadClicked(bitmap)
+                    }
                 )
 
                 MashUpButton(

@@ -44,7 +44,7 @@ class MyPageViewModel @Inject constructor(
         combineMyPageData(userData, profileData, profileCardData, scoreHistoryData)
     }.shareIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5_000),
+        SharingStarted.WhileSubscribed(5_000)
     )
 
     init {
@@ -101,7 +101,6 @@ class MyPageViewModel @Inject constructor(
         }
 
         scoreHistoryDataFlow.emit(Pair(totalScore, historyList.toList()))
-
     }
 
     private fun combineMyPageData(

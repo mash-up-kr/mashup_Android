@@ -47,7 +47,7 @@ class MyPageProfileViewHolder(
         ProfileChip.Text(profile.company),
         ProfileChip.Text(profile.location),
         ProfileChip.Link(
-            displayText = if (profile.behance.isNotEmpty()) "Github" else "",
+            displayText = if (profile.github.isNotEmpty()) "Github" else "",
             link = profile.github
         ),
         ProfileChip.Link(

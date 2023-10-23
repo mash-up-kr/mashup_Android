@@ -5,11 +5,14 @@ import android.content.Intent
 import androidx.activity.viewModels
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityMyProfileEditBinding
+import com.mashup.feature.mypage.profile.LoadState
 import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 import com.mashup.feature.mypage.profile.edit.MyPageEditProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MyProfileEditActivity : BaseActivity<ActivityMyProfileEditBinding>() {
@@ -24,6 +27,19 @@ class MyProfileEditActivity : BaseActivity<ActivityMyProfileEditBinding>() {
                     viewModel = editViewModel,
                     onBackPressed = ::finish
                 )
+            }
+        }
+
+        setObserver()
+    }
+
+    private fun setObserver() {
+        flowLifecycleScope {
+            editViewModel.loadState.collectLatest {
+                if (it is LoadState.Loaded) {
+                    ToastUtil.showToast(this@MyProfileEditActivity, "저장 완료!")
+                    setResult(RESULT_OK)
+                }
             }
         }
     }

@@ -20,7 +20,6 @@ import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.core.ui.widget.MashUpToolbar
-import com.mashup.ui.mypage.CaptureBitmap
 
 @Composable
 fun ProfileCardDetailScreen() {
@@ -39,7 +38,7 @@ fun ProfileCardDetailContent(
     onDownLoadClicked: (Bitmap) -> Unit = {},
     onEditClicked: () -> Unit = {}
 ) {
-    val snapshot = CaptureBitmap {
+    val snapshot = captureBitmap {
         ProfileCard(
             modifier = Modifier.size(320.dp, 220.dp).padding(horizontal = 20.dp),
             generationNumber = generationNumber,

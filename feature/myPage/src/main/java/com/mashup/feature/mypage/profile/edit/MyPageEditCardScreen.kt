@@ -30,7 +30,8 @@ import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 
 @Composable
 fun MyPageEditCardScreen(
-    viewModel: MyPageProfileEditViewModel
+    viewModel: MyPageProfileEditViewModel,
+    onBackPressed: () -> Unit
 ) {
     val editCardState by viewModel.myProfileCard.collectAsState()
 
@@ -38,13 +39,13 @@ fun MyPageEditCardScreen(
         generationNumber = editCardState.generationNumber,
         platform = editCardState.platform,
         onSaveButtonClicked = { id, team, staff ->
-            // 여기 온 값 post 해주세요~
             viewModel.patchMemberProfileCard(
                 id = id.toLong(),
                 projectTeamName = team,
                 staff = staff
             )
         },
+        onBackPressed = onBackPressed,
         id = editCardState.id,
         team = editCardState.team,
         staff = editCardState.staff
@@ -56,6 +57,7 @@ fun MyPageEditCardContent(
     generationNumber: Int,
     platform: Platform,
     onSaveButtonClicked: (id: Int, team: String, staff: String) -> Unit,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
     id: Int = -1,
     team: String = "",
@@ -70,7 +72,8 @@ fun MyPageEditCardContent(
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
             title = "활동 카드 편집",
-            showBackButton = true
+            showBackButton = true,
+            onClickBackButton = { onBackPressed() }
         )
         Column(
             modifier = Modifier
@@ -126,8 +129,8 @@ fun MyPageEditContentPrev() {
                 modifier = Modifier.fillMaxSize(),
                 generationNumber = 12,
                 platform = Platform.DESIGN,
-                onSaveButtonClicked = { _, _, _ ->
-                }
+                onSaveButtonClicked = { _, _, _ -> },
+                onBackPressed = {}
             )
         }
     }

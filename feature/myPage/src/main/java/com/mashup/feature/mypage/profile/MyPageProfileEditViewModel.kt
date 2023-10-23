@@ -43,7 +43,15 @@ class MyPageProfileEditViewModel @Inject constructor(
     }
 
     fun patchMemberProfileCard(id: Long, projectTeamName: String, staff: String) = mashUpScope {
-        myProfileRepository.postMemberGenerations(id, projectTeamName, staff)
+        _loadState.emit(LoadState.Loading)
+        val result = myProfileRepository.postMemberGenerations(id, projectTeamName, staff)
+        if (result.isSuccess()) {
+            _myProfileCard.value = myProfileCard.value.copy(
+                team = projectTeamName,
+                staff = staff
+            )
+        }
+        _loadState.emit(LoadState.Loaded)
     }
 
     private fun getMemberGenerationList() = mashUpScope {

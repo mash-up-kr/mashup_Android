@@ -2,6 +2,9 @@ package com.mashup.ui.mypage
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Environment
+import android.util.Base64
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
@@ -11,12 +14,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.core.common.extensions.format
+import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.model.Platform
 import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityMyProfileCardEditBinding
 import com.mashup.feature.mypage.profile.card.ProfileCardDetailContent
 import com.mashup.feature.mypage.profile.model.ProfileCardData
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Date
 
 class MyProfileCardEditActivity : BaseActivity<ActivityMyProfileCardEditBinding>() {
     override val layoutId = R.layout.activity_my_profile_card_edit
@@ -68,7 +77,33 @@ class MyProfileCardEditActivity : BaseActivity<ActivityMyProfileCardEditBinding>
         profileCardEditLauncher.launch(intent)
     }
 
-    private fun downloadProfileCardImage() {
+    private fun downloadProfileCardImage(bitmap: Bitmap) {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+
+        val base64 = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+        base64ToFile(base64)
+
+        ToastUtil.showToast(this, "저장 완료!")
+    }
+
+    private fun base64ToFile(base64: String?): File {
+        val imgBytesData = Base64.decode(
+            base64,
+            Base64.DEFAULT
+        )
+
+        val file = createTempFileInCache()
+        FileOutputStream(file).buffered().use { it.write(imgBytesData) }
+
+        return file
+    }
+
+    private fun createTempFileInCache(): File {
+        val timeStamp: String = Date().format("yyyyMMdd_HHmmss")
+        val destDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        destDir.mkdirs()
+        return File.createTempFile(timeStamp, ".jpg", destDir)
     }
 
     companion object {

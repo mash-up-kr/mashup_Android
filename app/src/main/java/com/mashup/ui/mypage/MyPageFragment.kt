@@ -1,6 +1,5 @@
 package com.mashup.ui.mypage
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -40,9 +39,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                 }
 
                 override fun onStartExternalLink(link: String) {
-                    try {
+                    kotlin.runCatching {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
-                    } catch (e: ActivityNotFoundException) {
+                    }.onFailure {
                         // FIXME: 링크 열리지 않을 때 메시지
                         Toast.makeText(requireContext(), "올바르지 않은 링크입니다.", Toast.LENGTH_SHORT).show()
                     }

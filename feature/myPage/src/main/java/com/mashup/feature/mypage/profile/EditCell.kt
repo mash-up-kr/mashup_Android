@@ -72,7 +72,10 @@ fun MyPageEditWriteCell(
         BasicTextField(
             modifier = Modifier.padding(start = 12.dp),
             value = value,
-            onValueChange = onValueChanged,
+            onValueChange = {
+                // FIXME: 우선 줄바꿈 허용 하지 않도록 설정. 기획 확인 필요
+                onValueChanged(it.replace("\n", ""))
+            },
             textStyle = Body4,
             keyboardOptions = keyboardOptions,
             decorationBox = { innerTextField ->

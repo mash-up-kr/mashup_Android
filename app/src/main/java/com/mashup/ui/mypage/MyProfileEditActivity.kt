@@ -20,7 +20,10 @@ class MyProfileEditActivity : BaseActivity<ActivityMyProfileEditBinding>() {
         super.initViews()
         viewBinding.viewCompose.setContent {
             MashUpTheme {
-                MyPageEditProfileScreen(editViewModel)
+                MyPageEditProfileScreen(
+                    viewModel = editViewModel,
+                    onBackPressed = ::finish
+                )
             }
         }
     }

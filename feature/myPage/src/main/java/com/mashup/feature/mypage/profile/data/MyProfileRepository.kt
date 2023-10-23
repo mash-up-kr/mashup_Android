@@ -1,5 +1,6 @@
 package com.mashup.feature.mypage.profile.data
 
+import com.mashup.core.common.extensions.toBirthdayFormat
 import com.mashup.feature.mypage.profile.data.dto.MemberGenerationRequest
 import com.mashup.feature.mypage.profile.data.dto.MemberProfileRequest
 import com.mashup.feature.mypage.profile.model.ProfileData
@@ -28,7 +29,7 @@ class MyProfileRepository @Inject constructor(
         editedProfile: ProfileData
     ) = myProfileDao.postMemberProfile(
         MemberProfileRequest(
-            birthDate = editedProfile.birthDay, // 생년월일
+            birthDate = editedProfile.birthDay.toBirthdayFormat(), // 생년월일
             blogLink = editedProfile.tistory, // 티스토리
             company = editedProfile.company, // 회사명
             githubLink = editedProfile.github, //  깃헙

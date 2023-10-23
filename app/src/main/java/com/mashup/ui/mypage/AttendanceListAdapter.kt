@@ -75,6 +75,7 @@ class AttendanceListAdapter :
         fun onStartSettingActivity()
         fun onStartEditProfileActivity()
         fun onStartEditProfileCardActivity(card: ProfileCardData)
+        fun onStartExternalLink(link: String)
     }
 
     private var mListener: OnItemEventListener? = null

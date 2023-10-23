@@ -34,7 +34,8 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 
 @Composable
 fun MyPageEditProfileScreen(
-    viewModel: MyPageProfileEditViewModel
+    viewModel: MyPageProfileEditViewModel,
+    onBackPressed: () -> Unit
 ) {
     val myProfile by viewModel.myPageCardEntity.collectAsState()
     val isLoading by viewModel.loadState.collectAsState()
@@ -44,9 +45,7 @@ fun MyPageEditProfileScreen(
                 editedProfile
             )
         },
-        onBackPressed = {
-            // 뒤로 가기 수행
-        },
+        onBackPressed = onBackPressed,
         modifier = Modifier,
         isUploading = when (isLoading) {
             LoadState.Initial,
@@ -100,7 +99,8 @@ fun MyPageEditProfileContent(
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
             title = "내 소개 편집",
-            showBackButton = true
+            showBackButton = true,
+            onClickBackButton = { onBackPressed() }
         )
         Column(
             modifier = Modifier
@@ -114,8 +114,12 @@ fun MyPageEditProfileContent(
                 MyPageEditWriteCell(
                     title = "생년월일",
                     value = birthDayState,
-                    hint = "생년월일 6자리를 추가해주세요",
-                    onValueChanged = { birthDayState = it.filter { char -> char.isDigit() } },
+                    hint = "생년월일 8자리를 추가해주세요",
+                    onValueChanged = {
+                        // 숫자 8자리 체크
+                        val input = it.filter { char -> char.isDigit() }
+                        if (input.length <= 8) birthDayState = input
+                    },
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number
                     )

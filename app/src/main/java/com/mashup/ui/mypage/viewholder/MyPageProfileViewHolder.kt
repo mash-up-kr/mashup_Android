@@ -13,7 +13,7 @@ import com.mashup.ui.mypage.AttendanceListAdapter
 
 class MyPageProfileViewHolder(
     private val binding: ItemMypageProfileBinding,
-    val listener: AttendanceListAdapter.OnItemEventListener?
+    private val listener: AttendanceListAdapter.OnItemEventListener?
 ) : MyPageBaseViewHolder(binding.root) {
 
     init {
@@ -45,10 +45,20 @@ class MyPageProfileViewHolder(
     private fun getChipList(profile: ProfileData) = listOf(
         ProfileChip.Text(profile.work),
         ProfileChip.Text(profile.company),
-        ProfileChip.Link(profile.github),
-        ProfileChip.Link(profile.linkedIn),
-        ProfileChip.Link(profile.behance),
-        ProfileChip.Text(profile.instagram)
+        ProfileChip.Text(profile.location),
+        ProfileChip.Link(
+            displayText = if (profile.behance.isNotEmpty()) "Github" else "",
+            link = profile.github
+        ),
+        ProfileChip.Link(
+            displayText = if (profile.behance.isNotEmpty()) "LinkedIn" else "",
+            link = profile.linkedIn
+        ),
+        ProfileChip.Link(
+            displayText = if (profile.behance.isNotEmpty()) "Behance" else "",
+            link = profile.behance
+        ),
+        ProfileChip.Instagram("@${profile.instagram}")
     ).filter { it.displayText.isNotEmpty() }
 
     private fun ChipGroup.addChip(chipData: ProfileChip) {
@@ -61,8 +71,9 @@ class MyPageProfileViewHolder(
                 chipStrokeColor = ContextCompat.getColorStateList(context, R.color.gray200)
                 chipStrokeWidth = 1.dp(context).toFloat()
 
-                chipStartPadding = 10.dp(context).toFloat()
-                chipEndPadding = 10.dp(context).toFloat()
+                chipStartPadding = 4.dp(context).toFloat()
+                chipEndPadding = 4.dp(context).toFloat()
+
                 chipSpacingHorizontal = 6.dp(context)
                 chipSpacingVertical = (-8).dp(context)
 
@@ -70,27 +81,37 @@ class MyPageProfileViewHolder(
                     chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_link)
                     chipIconSize = 14.dp(context).toFloat()
                     iconEndPadding = -4.dp(context).toFloat()
+
+                    chipStartPadding = 10.dp(context).toFloat()
+                    chipEndPadding = 10.dp(context).toFloat()
                 }
 
                 setTextAppearanceResource(R.style.TextAppearance_Mashup_Caption1_13_M)
                 setOnClickListener {
+                    if (chipData.clickable) {
+                        listener?.onStartExternalLink(chipData.link)
+                    }
                 }
             }
         )
     }
 
     sealed class ProfileChip(
-        open val text: String,
-        open val displayText: String
+        open val displayText: String,
+        open val link: String,
+        val clickable: Boolean
     ) {
         data class Text(
-            override val text: String,
-            override val displayText: String = text
-        ) : ProfileChip(text, displayText)
+            override val displayText: String
+        ) : ProfileChip(displayText, "", false)
 
         data class Link(
-            override val text: String,
-            override val displayText: String = text
-        ) : ProfileChip(text, displayText)
+            override val displayText: String,
+            override val link: String
+        ) : ProfileChip(displayText, link, true)
+
+        data class Instagram(
+            override val displayText: String
+        ) : ProfileChip(displayText, "https://www.instagram.com/$displayText", true)
     }
 }

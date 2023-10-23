@@ -1,5 +1,8 @@
 package com.mashup.ui.mypage
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.mashup.R
@@ -33,6 +36,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
                 override fun onStartEditProfileCardActivity(card: ProfileCardData) {
                     startActivity(MyProfileCardEditActivity.newIntent(requireContext(), card))
+                }
+
+                override fun onStartExternalLink(link: String) {
+                    kotlin.runCatching {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+                    }.onFailure {
+                        // FIXME: 링크 열리지 않을 때 메시지
+                        Toast.makeText(requireContext(), "올바르지 않은 링크입니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             })
         }

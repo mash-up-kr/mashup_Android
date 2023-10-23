@@ -1,4 +1,4 @@
-package com.mashup.ui.mypage
+package com.mashup.feature.mypage.profile.card
 
 import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
@@ -9,7 +9,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.drawToBitmap
 
 @Composable
-fun CaptureBitmap(
+fun captureBitmap(
     content: @Composable () -> Unit
 ): () -> Bitmap {
     val context = LocalContext.current

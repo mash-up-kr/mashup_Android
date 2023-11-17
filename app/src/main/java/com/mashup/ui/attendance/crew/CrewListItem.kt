@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -32,14 +33,17 @@ import com.mashup.data.model.MemberInfo
 import com.mashup.ui.attendance.platform.AttendanceSeminarItem
 import java.util.Date
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CrewListItem(
     modifier: Modifier = Modifier,
-    memberInfo: MemberInfo
+    memberInfo: MemberInfo,
+    showMemberInfoDialog: () -> Unit,
 ) {
     Card(
         modifier = modifier.border(width = 1.dp, color = Gray100, shape = CardListShape),
-        shape = CardListShape
+        shape = CardListShape,
+        onClick = showMemberInfoDialog,
     ) {
         Row(
             modifier = Modifier
@@ -173,7 +177,8 @@ fun CrewListItemPrev() {
                         attendanceAt = Date()
                     )
                 )
-            )
+            ),
+            showMemberInfoDialog = {}
         )
     }
 }

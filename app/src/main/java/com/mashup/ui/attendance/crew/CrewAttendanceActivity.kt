@@ -18,6 +18,7 @@ import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID
+import com.mashup.ui.attendance.member.MemberInfoDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -40,9 +41,8 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
                 CrewScreen(
                     modifier = Modifier.fillMaxSize(),
                     crewAttendanceState = crewState,
-                    onClickBackButton = {
-                        finish()
-                    }
+                    onClickBackButton = ::finish,
+                    showMemberInfoDialog = ::showMemberInfoDialog
                 )
             }
         }
@@ -79,6 +79,10 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
             }
         }
         codeMessage?.run { showToast(codeMessage) }
+    }
+
+    private fun showMemberInfoDialog() {
+        MemberInfoDialog.newInstance().show(supportFragmentManager, "MemberInfoDialog")
     }
 
     override val layoutId: Int

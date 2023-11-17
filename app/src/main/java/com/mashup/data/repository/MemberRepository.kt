@@ -5,15 +5,19 @@ import com.mashup.core.network.Response
 import com.mashup.data.dto.AccessResponse
 import com.mashup.data.dto.LoginRequest
 import com.mashup.data.dto.MemberInfoResponse
+import com.mashup.data.dto.ScoreHistoryResponse
 import com.mashup.data.dto.PushNotificationRequest
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
 import com.mashup.data.dto.ValidResponse
+import com.mashup.feature.mypage.profile.data.dto.MemberProfileResponse
 import com.mashup.network.dao.MemberDao
+import com.mashup.network.dao.MemberProfileDao
 import javax.inject.Inject
 
 class MemberRepository @Inject constructor(
-    private val memberDao: MemberDao
+    private val memberDao: MemberDao,
+    private val memberProfileDao: MemberProfileDao,
 ) {
     suspend fun login(
         identification: String,
@@ -91,5 +95,13 @@ class MemberRepository @Inject constructor(
         )
 
         return memberDao.patchPushNotification(requestBody)
+    }
+
+    suspend fun getMemberProfile(memberId: String): Response<MemberProfileResponse> {
+        return memberProfileDao.getMemberProfile(memberId)
+    }
+
+    suspend fun getMemberScore(memberId: String): Response<ScoreHistoryResponse> {
+        return memberProfileDao.getMemberScore(memberId)
     }
 }

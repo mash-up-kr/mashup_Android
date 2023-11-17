@@ -13,7 +13,7 @@ enum class Platform(
 
     companion object {
         fun getPlatform(platformName: String?): Platform {
-            return values().find { it.name == platformName?.uppercase() } ?: UNKNOWN
+            return values().find { it.name == platformName?.uppercase() } ?: if (platformName == "Product Design") DESIGN else UNKNOWN
         }
     }
 }

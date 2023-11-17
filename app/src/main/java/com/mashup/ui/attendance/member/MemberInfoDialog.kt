@@ -69,6 +69,10 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
         _binding = DialogMemberInfoBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+        val memberName = arguments?.getString(EXTRA_MEMBER_NAME).orEmpty()
+        val memberId = arguments?.getString(EXTRA_MEMBER_ID).orEmpty()
+        memberInfoViewModel.getMemberInfo(memberName, memberId)
+
         return binding.root
     }
 
@@ -235,6 +239,14 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance() = MemberInfoDialog()
+        private const val EXTRA_MEMBER_NAME = "EXTRA_MEMBER_NAME"
+        private const val EXTRA_MEMBER_ID = "EXTRA_MEMBER_ID"
+
+        fun newInstance(name: String, memberId: String) = MemberInfoDialog().apply {
+            arguments = Bundle().apply {
+                putString(EXTRA_MEMBER_NAME, name)
+                putString(EXTRA_MEMBER_ID, memberId)
+            }
+        }
     }
 }

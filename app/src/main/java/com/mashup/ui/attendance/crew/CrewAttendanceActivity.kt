@@ -81,8 +81,9 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
         codeMessage?.run { showToast(codeMessage) }
     }
 
-    private fun showMemberInfoDialog() {
-        MemberInfoDialog.newInstance().show(supportFragmentManager, "MemberInfoDialog")
+    private fun showMemberInfoDialog(name: String, memberId: String) {
+        MemberInfoDialog.newInstance(name, memberId)
+            .show(supportFragmentManager, "MemberInfoDialog")
     }
 
     override val layoutId: Int

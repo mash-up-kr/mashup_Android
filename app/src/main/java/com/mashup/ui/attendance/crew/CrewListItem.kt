@@ -38,12 +38,12 @@ import java.util.Date
 fun CrewListItem(
     modifier: Modifier = Modifier,
     memberInfo: MemberInfo,
-    showMemberInfoDialog: () -> Unit,
+    showMemberInfoDialog: (String, String) -> Unit,
 ) {
     Card(
         modifier = modifier.border(width = 1.dp, color = Gray100, shape = CardListShape),
         shape = CardListShape,
-        onClick = showMemberInfoDialog,
+        onClick = { showMemberInfoDialog(memberInfo.name, memberInfo.memberId.toString()) },
     ) {
         Row(
             modifier = Modifier
@@ -144,6 +144,7 @@ fun SeminarItemsPrev() {
         SeminarItems(
             memberInfo = MemberInfo(
                 name = "가길동",
+                memberId = 0,
                 attendanceInfos = listOf(
                     AttendanceInfo(
                         status = AttendanceStatus.ATTENDANCE,
@@ -167,6 +168,7 @@ fun CrewListItemPrev() {
             modifier = Modifier.fillMaxWidth(),
             memberInfo = MemberInfo(
                 name = "가길동",
+                memberId = 0,
                 attendanceInfos = listOf(
                     AttendanceInfo(
                         status = AttendanceStatus.ATTENDANCE,
@@ -178,7 +180,7 @@ fun CrewListItemPrev() {
                     )
                 )
             ),
-            showMemberInfoDialog = {}
+            showMemberInfoDialog = { _, _ -> }
         )
     }
 }

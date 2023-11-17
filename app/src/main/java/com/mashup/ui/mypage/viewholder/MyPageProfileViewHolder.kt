@@ -58,7 +58,9 @@ class MyPageProfileViewHolder(
             displayText = if (profile.behance.isNotEmpty()) "Behance" else "",
             link = profile.behance
         ),
-        ProfileChip.Instagram("@${profile.instagram}")
+        ProfileChip.Instagram(
+            displayText = if (profile.instagram.isNotEmpty()) "@${profile.instagram}" else ""
+        ),
     ).filter { it.displayText.isNotEmpty() }
 
     private fun ChipGroup.addChip(chipData: ProfileChip) {

@@ -53,7 +53,7 @@ fun ProfileCardDetailContent(
 
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),

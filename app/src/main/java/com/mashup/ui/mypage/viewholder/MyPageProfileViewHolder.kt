@@ -60,7 +60,7 @@ class MyPageProfileViewHolder(
         ),
         ProfileChip.Instagram(
             displayText = if (profile.instagram.isNotEmpty()) "@${profile.instagram}" else ""
-        ),
+        )
     ).filter { it.displayText.isNotEmpty() }
 
     private fun ChipGroup.addChip(chipData: ProfileChip) {

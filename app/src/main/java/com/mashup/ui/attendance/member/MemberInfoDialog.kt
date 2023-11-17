@@ -96,13 +96,13 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
 
     private fun addGlobalLayoutListener(view: View) {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (this@MemberInfoDialog.view?.height == 0) return
-                behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior?.peekHeight = this@MemberInfoDialog.view?.height ?: 0
-            }
-        })
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (this@MemberInfoDialog.view?.height == 0) return
+                    behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    behavior?.peekHeight = this@MemberInfoDialog.view?.height ?: 0
+                }
+            })
     }
 
     private fun initView() {
@@ -191,7 +191,7 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
         ),
         MyPageProfileViewHolder.ProfileChip.Instagram(
             displayText = if (profile.instagram.isNotEmpty()) "@${profile.instagram}" else ""
-        ),
+        )
     ).filter { it.displayText.isNotEmpty() }
 
     private fun ChipGroup.addChip(chipData: MyPageProfileViewHolder.ProfileChip) {

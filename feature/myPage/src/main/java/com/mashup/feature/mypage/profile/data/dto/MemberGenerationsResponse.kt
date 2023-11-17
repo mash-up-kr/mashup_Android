@@ -21,6 +21,6 @@ data class MemberGenerationsResponse(
         @Json(name = "role")
         val role: String?,
         @Json(name = "status")
-        val status: String,
+        val status: String
     )
 }

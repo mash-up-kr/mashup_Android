@@ -5,18 +5,18 @@ import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.repository.MemberRepository
 import com.mashup.feature.mypage.profile.model.ProfileCardData
 import com.mashup.feature.mypage.profile.model.ProfileData
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import com.mashup.ui.mypage.MyProfileMapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
 @HiltViewModel
 class MemberInfoViewModel @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val mapper: MyProfileMapper,
+    private val mapper: MyProfileMapper
 ) : BaseViewModel() {
     private val memberScoreInfo = MutableStateFlow<Double?>(null)
     private val memberGenerationInfo = MutableStateFlow<List<ProfileCardData>?>(null)

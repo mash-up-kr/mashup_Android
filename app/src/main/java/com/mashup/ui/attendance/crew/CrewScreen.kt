@@ -20,7 +20,7 @@ fun CrewScreen(
     modifier: Modifier = Modifier,
     crewAttendanceState: CrewAttendanceState,
     onClickBackButton: () -> Unit,
-    showMemberInfoDialog: (String, String) -> Unit,
+    showMemberInfoDialog: (String, String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -35,7 +35,7 @@ fun CrewScreen(
             CrewList(
                 modifier = Modifier.fillMaxWidth(),
                 crewAttendanceList = crewAttendanceState.crewAttendance.members,
-                showMemberInfoDialog = showMemberInfoDialog,
+                showMemberInfoDialog = showMemberInfoDialog
             )
         }
     }
@@ -45,7 +45,7 @@ fun CrewScreen(
 fun CrewList(
     modifier: Modifier = Modifier,
     crewAttendanceList: List<MemberInfo>,
-    showMemberInfoDialog: (String, String) -> Unit,
+    showMemberInfoDialog: (String, String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier

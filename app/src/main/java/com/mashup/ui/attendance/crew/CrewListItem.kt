@@ -38,12 +38,12 @@ import java.util.Date
 fun CrewListItem(
     modifier: Modifier = Modifier,
     memberInfo: MemberInfo,
-    showMemberInfoDialog: (String, String) -> Unit,
+    showMemberInfoDialog: (String, String) -> Unit
 ) {
     Card(
         modifier = modifier.border(width = 1.dp, color = Gray100, shape = CardListShape),
         shape = CardListShape,
-        onClick = { showMemberInfoDialog(memberInfo.name, memberInfo.memberId.toString()) },
+        onClick = { showMemberInfoDialog(memberInfo.name, memberInfo.memberId.toString()) }
     ) {
         Row(
             modifier = Modifier

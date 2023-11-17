@@ -28,5 +28,5 @@ data class MemberProfileResponse(
     @Json(name = "socialNetworkServiceLink")
     val socialNetworkServiceLink: String?,
     @Json(name = "memberGenerations")
-    val memberGenerations: List<MemberGenerationsResponse.MemberGeneration>,
+    val memberGenerations: List<MemberGenerationsResponse.MemberGeneration>
 )

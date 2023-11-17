@@ -25,7 +25,7 @@ class MyPageViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
     private val myPageRepository: MyPageRepository,
     private val profileRepository: MyProfileRepository,
-    private val mapper: MyProfileMapper,
+    private val mapper: MyProfileMapper
 ) : BaseViewModel() {
 
     private var userData: UserPreference? = null

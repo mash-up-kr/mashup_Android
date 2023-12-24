@@ -65,6 +65,7 @@ ext {
 
     // composeViewPager
     composeViewPagerVersion = "0.20.1"
+    composeUiViewBinding = "1.5.4"
 
     // flipper
     flipperVersion = "0.190.0"

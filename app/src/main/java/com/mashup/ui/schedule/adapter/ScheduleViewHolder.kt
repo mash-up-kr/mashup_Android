@@ -4,15 +4,37 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Divider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
+import com.mashup.core.common.databinding.ViewEventTimelineBinding
 import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.common.extensions.gone
 import com.mashup.core.model.AttendanceStatus
 import com.mashup.data.dto.AttendanceInfoResponse
+import com.mashup.data.dto.EventResponse
 import com.mashup.data.dto.ScheduleResponse
+import com.mashup.databinding.ItemCardTitleBinding
 import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
 import com.mashup.ui.schedule.model.ScheduleCard
@@ -23,7 +45,7 @@ import java.util.Locale
 sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class EndScheduleCard(
         private val binding: ItemEndScheduleBinding,
-        private val listener: OnItemClickListener
+        private val listener: OnItemClickListener,
     ) : ScheduleViewHolder(binding.root) {
 
         private var scheduleResponse: ScheduleResponse? = null
@@ -34,7 +56,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickScheduleInformation(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
                     )
                 }
             }
@@ -44,7 +66,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickAttendanceInfoButton(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
                     )
                 }
             }
@@ -57,64 +79,81 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvDDay.text = data.scheduleResponse.getDDay()
             binding.tvCalender.text = data.scheduleResponse.getDate()
             binding.tvTimeLine.text = data.scheduleResponse.getTimeLine()
-            binding.tvCardTitle.apply {
-                text = String.format(
-                    context.resources.getString(R.string.event_list_card_title),
-                    data.attendanceInfo.memberName
-                ).fromHtml()
+
+            binding.cvTimeLine.apply {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindow)
+                setContent {
+                    if (scheduleResponse?.eventList?.isEmpty() == true) {
+                    } else {
+                        var componentHeight by remember { mutableStateOf(0.dp) }
+                        val density = LocalDensity.current
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize().onGloballyPositioned {
+                                componentHeight = with(density) {
+                                    it.size.height.toDp()
+                                }
+                            },
+                            horizontalAlignment = Alignment.Start,
+                        ) {
+                            item {
+                                AndroidViewBinding(ItemCardTitleBinding::inflate) {
+                                    this.tvCardTitle.apply {
+                                        text = String.format(
+                                            context.resources.getString(R.string.event_list_card_title),
+                                            data.attendanceInfo.memberName,
+                                        ).fromHtml()
+                                    }
+                                }
+                            }
+                            itemsIndexed(scheduleResponse!!.eventList, key = { index: Int, item: EventResponse ->
+                                item.eventId
+                            }) { index: Int, item: EventResponse ->
+                                val isFinal = index == scheduleResponse!!.eventList.lastIndex
+                                AndroidViewBinding(ViewEventTimelineBinding::inflate) {
+                                    onBindAttendanceImage(
+                                        this.ivTimeline,
+                                        attendanceStatus = if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
+                                        isFinal = isFinal,
+                                    )
+                                    onBindAttendanceStatus(
+                                        this.tvTimelineAttendance,
+                                        attendanceStatus = if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
+                                        isFinal = isFinal,
+                                    )
+                                    onBindAttendanceTime(
+                                        this.tvTimelineTime,
+                                        data.attendanceInfo.getAttendanceAt(index),
+                                    )
+                                    this.tvTimelineCaption.text = if (isFinal) {
+                                        "최종"
+                                    } else {
+                                        "${index + 1}부"
+                                    }
+                                    if (isFinal)this.tvTimelineTime.gone()
+                                }
+                                if (!isFinal) {
+                                    Row {
+                                        Spacer(modifier = Modifier.width(16.dp))
+                                        Divider(
+                                            modifier = Modifier.width(1.dp).height(
+                                                componentHeight * 16 / 220,
+                                            ),
+                                            thickness = 1.dp,
+                                            color = com.mashup.core.ui.colors.Gray200,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
-            onBindAttendanceImage(
-                view = binding.timeline1.ivTimeline,
-                attendanceStatus = data.attendanceInfo.getAttendanceStatus(0),
-                isFinal = false
-            )
-            onBindAttendanceImage(
-                view = binding.timeline2.ivTimeline,
-                attendanceStatus = data.attendanceInfo.getAttendanceStatus(1),
-                isFinal = false
-            )
-            onBindAttendanceImage(
-                view = binding.timeline3.ivTimeline,
-                attendanceStatus = data.attendanceInfo.getFinalAttendance(),
-                isFinal = true
-            )
-
-            onBindAttendanceStatus(
-                view = binding.timeline1.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.getAttendanceStatus(0),
-                isFinal = false
-            )
-            onBindAttendanceStatus(
-                view = binding.timeline2.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.getAttendanceStatus(1),
-                isFinal = false
-            )
-            onBindAttendanceStatus(
-                view = binding.timeline3.tvTimelineAttendance,
-                attendanceStatus = data.attendanceInfo.getFinalAttendance(),
-                isFinal = true
-            )
-
-            binding.timeline1.tvTimelineCaption.text = "1부"
-            binding.timeline2.tvTimelineCaption.text = "2부"
-            binding.timeline3.tvTimelineCaption.text = "최종"
-
-            onBindAttendanceTime(
-                binding.timeline1.tvTimelineTime,
-                data.attendanceInfo.getAttendanceAt(0)
-            )
-            onBindAttendanceTime(
-                binding.timeline2.tvTimelineTime,
-                data.attendanceInfo.getAttendanceAt(1)
-            )
-            binding.timeline3.tvTimelineTime.gone()
         }
 
         private fun onBindAttendanceImage(
             view: ImageView,
             attendanceStatus: AttendanceStatus,
-            isFinal: Boolean
+            isFinal: Boolean,
         ) {
             val drawableRes = when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
@@ -148,7 +187,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private fun onBindAttendanceStatus(
             view: TextView,
             attendanceStatus: AttendanceStatus,
-            isFinal: Boolean
+            isFinal: Boolean,
         ) {
             val text = when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
@@ -182,7 +221,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @SuppressLint("SimpleDateFormat")
         fun onBindAttendanceTime(
             view: TextView,
-            time: Date?
+            time: Date?,
         ) {
             val timeString = if (time != null) {
                 try {
@@ -199,7 +238,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class InProgressScheduleCard(
         private val binding: ItemInprogressScheduleBinding,
-        private val listener: OnItemClickListener
+        private val listener: OnItemClickListener,
     ) : ScheduleViewHolder(binding.root) {
 
         private var scheduleResponse: ScheduleResponse? = null
@@ -210,7 +249,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickScheduleInformation(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
                     )
                 }
             }
@@ -220,7 +259,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickAttendanceInfoButton(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
                     )
                 }
             }
@@ -264,8 +303,8 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvTitle.setTextColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    com.mashup.core.common.R.color.gray400
-                )
+                    com.mashup.core.common.R.color.gray400,
+                ),
             )
             binding.tvDDay.text = itemView.context.getString(R.string.unknown_content_d_day)
             binding.tvCalender.text = "-"
@@ -277,8 +316,8 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvTitle.setTextColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    com.mashup.core.common.R.color.gray900
-                )
+                    com.mashup.core.common.R.color.gray900,
+                ),
             )
             binding.tvDDay.text = data.getDDay()
             binding.tvCalender.text = data.getDate()
@@ -296,7 +335,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvDescription.text =
                 itemView.context.getString(
                     R.string.description_standby_schedule,
-                    data?.memberName ?: "알 수 없음"
+                    data?.memberName ?: "알 수 없음",
                 ).fromHtml()
         }
 

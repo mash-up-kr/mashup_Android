@@ -108,71 +108,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_time_line">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_card_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/event_list_card_title"
-                android:textAppearance="@style/TextAppearance.Mashup.Body1_16_M"
-                android:textColor="@color/gray700"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:layout_width="1dp"
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/cv_time_line"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:background="@color/gray200"
-                app:layout_constraintBottom_toTopOf="@id/timeline_2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeline_1" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:background="@color/gray200"
-                app:layout_constraintBottom_toTopOf="@id/timeline_3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeline_2" />
-
-            <include
-                android:id="@+id/timeline_1"
-                layout="@layout/view_event_timeline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintBottom_toTopOf="@id/timeline_2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_card_title"
-                app:layout_constraintVertical_chainStyle="spread_inside" />
-
-            <include
-                android:id="@+id/timeline_2"
-                layout="@layout/view_event_timeline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/timeline_3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeline_1" />
-
-            <include
-                android:id="@+id/timeline_3"
-                layout="@layout/view_event_timeline"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layout_timeline"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeline_2"
-                app:layout_constraintVertical_chainStyle="spread_inside" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

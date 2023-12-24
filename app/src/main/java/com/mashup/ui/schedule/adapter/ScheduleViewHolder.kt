@@ -2,16 +2,12 @@ package com.mashup.ui.schedule.adapter
 
 import android.annotation.SuppressLint
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,13 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
-import com.mashup.core.common.databinding.ViewEventTimelineBinding
 import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.common.extensions.gone
 import com.mashup.core.model.AttendanceStatus
@@ -37,6 +33,7 @@ import com.mashup.data.dto.ScheduleResponse
 import com.mashup.databinding.ItemCardTitleBinding
 import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
+import com.mashup.ui.schedule.ViewEventTimeline
 import com.mashup.ui.schedule.model.ScheduleCard
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -105,44 +102,35 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                                     }
                                 }
                             }
-                            itemsIndexed(scheduleResponse!!.eventList, key = { index: Int, item: EventResponse ->
+                            if (scheduleResponse!!.eventList.isEmpty().not()) {
+                                item {
+                                    Spacer(
+                                        modifier = Modifier.height(16.dp),
+                                    )
+                                }
+                            }
+                            itemsIndexed(scheduleResponse!!.eventList, key = { _: Int, item: EventResponse ->
                                 item.eventId
-                            }) { index: Int, item: EventResponse ->
+                            }) { index: Int, _: EventResponse ->
                                 val isFinal = index == scheduleResponse!!.eventList.lastIndex
-                                AndroidViewBinding(ViewEventTimelineBinding::inflate) {
-                                    onBindAttendanceImage(
-                                        this.ivTimeline,
-                                        attendanceStatus = if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
-                                        isFinal = isFinal,
-                                    )
-                                    onBindAttendanceStatus(
-                                        this.tvTimelineAttendance,
-                                        attendanceStatus = if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
-                                        isFinal = isFinal,
-                                    )
-                                    onBindAttendanceTime(
-                                        this.tvTimelineTime,
-                                        data.attendanceInfo.getAttendanceAt(index),
-                                    )
-                                    this.tvTimelineCaption.text = if (isFinal) {
-                                        "최종"
+                                ViewEventTimeline(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    caption = if (isFinal) {
+                                        stringResource(id = R.string.attendance_final)
                                     } else {
-                                        "${index + 1}부"
-                                    }
-                                    if (isFinal)this.tvTimelineTime.gone()
-                                }
-                                if (!isFinal) {
-                                    Row {
-                                        Spacer(modifier = Modifier.width(16.dp))
-                                        Divider(
-                                            modifier = Modifier.width(1.dp).height(
-                                                componentHeight * 16 / 220,
-                                            ),
-                                            thickness = 1.dp,
-                                            color = com.mashup.core.ui.colors.Gray200,
-                                        )
-                                    }
-                                }
+                                        stringResource(id = R.string.attendance_caption, index + 1)
+                                    },
+                                    time = onBindAttendanceTime(data.attendanceInfo.getAttendanceAt(index)),
+                                    status = onBindAttendanceStatus(
+                                        if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
+                                        isFinal = isFinal,
+                                    ),
+                                    image = onBindAttendanceImage(
+                                        if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
+                                        isFinal = isFinal,
+                                    ),
+                                    isFinal = isFinal,
+                                )
                             }
                         }
                     }
@@ -151,11 +139,10 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         private fun onBindAttendanceImage(
-            view: ImageView,
             attendanceStatus: AttendanceStatus,
             isFinal: Boolean,
-        ) {
-            val drawableRes = when (attendanceStatus) {
+        ): Int {
+            return when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
                     if (isFinal) {
                         com.mashup.core.common.R.drawable.ic_absent_final
@@ -181,49 +168,31 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     com.mashup.core.common.R.drawable.ic_attendance_not_yet
                 }
             }
-            view.setImageResource(drawableRes)
         }
 
         private fun onBindAttendanceStatus(
-            view: TextView,
             attendanceStatus: AttendanceStatus,
             isFinal: Boolean,
-        ) {
-            val text = when (attendanceStatus) {
+        ): Int {
+            return when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
-                    if (isFinal) {
-                        "슬프지만 결석이에요..."
-                    } else {
-                        "결석"
-                    }
+                    if (isFinal) { R.string.attendance_status_absent_final } else { R.string.attendance_status_absent }
                 }
                 AttendanceStatus.ATTENDANCE -> {
-                    if (isFinal) {
-                        "출석을 완료했어요!"
-                    } else {
-                        "출석"
-                    }
+                    if (isFinal) { R.string.attendance_status_attendance_final } else { R.string.attendance_status_attendance }
                 }
                 AttendanceStatus.LATE -> {
-                    if (isFinal) {
-                        "아쉽지만 지각이에요..."
-                    } else {
-                        "지각"
-                    }
+                    if (isFinal) { R.string.attendance_status_late_final } else { R.string.attendance_status_late }
                 }
-                else -> {
-                    "-"
-                }
+                else -> { R.string.attendance_nothing }
             }
-            view.text = text
         }
 
         @SuppressLint("SimpleDateFormat")
         fun onBindAttendanceTime(
-            view: TextView,
             time: Date?,
-        ) {
-            val timeString = if (time != null) {
+        ): String {
+            return if (time != null) {
                 try {
                     SimpleDateFormat("a hh:mm", Locale.KOREA).format(time)
                 } catch (ignore: Exception) {
@@ -232,7 +201,6 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             } else {
                 "-"
             }
-            view.text = timeString
         }
     }
 

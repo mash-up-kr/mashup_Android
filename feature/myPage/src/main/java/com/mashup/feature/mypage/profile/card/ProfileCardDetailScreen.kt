@@ -52,7 +52,8 @@ fun ProfileCardDetailContent(
     }
 
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
@@ -60,34 +61,30 @@ fun ProfileCardDetailContent(
             showBackButton = true,
             onClickBackButton = onBackPressed
         )
-        Column(
-            modifier = Modifier.weight(1f)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 28.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.Bottom
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .padding(bottom = 28.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                MashUpButton(
-                    modifier = Modifier.weight(1f),
-                    text = "다운로드",
-                    buttonStyle = ButtonStyle.DARK,
-                    onClick = {
-                        val bitmap = snapshot.invoke()
-                        onDownLoadClicked(bitmap)
-                    }
-                )
+            MashUpButton(
+                modifier = Modifier.weight(1f),
+                text = "다운로드",
+                buttonStyle = ButtonStyle.DARK,
+                onClick = {
+                    val bitmap = snapshot.invoke()
+                    onDownLoadClicked(bitmap)
+                }
+            )
 
-                MashUpButton(
-                    modifier = Modifier.weight(1f),
-                    text = "편집",
-                    buttonStyle = ButtonStyle.PRIMARY,
-                    onClick = onEditClicked
-                )
-            }
+            MashUpButton(
+                modifier = Modifier.weight(1f),
+                text = "편집",
+                buttonStyle = ButtonStyle.PRIMARY,
+                onClick = onEditClicked
+            )
         }
     }
 }

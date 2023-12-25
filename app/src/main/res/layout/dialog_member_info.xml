@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_common_bottom_sheet"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="18dp">
+
+        <View
+            android:id="@+id/bottomSheetHandler"
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray100" />
+
+        <include
+            android:id="@+id/scoreLayout"
+            layout="@layout/item_mypage_attendance_score"
+            app:layout_constraintTop_toBottomOf="@id/bottomSheetHandler" />
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/composeView"
+            android:layout_width="match_parent"
+            android:layout_height="264dp" />
+
+        <include
+            android:id="@+id/introduceLayout"
+            layout="@layout/item_mypage_profile" />
+    </LinearLayout>
+</layout>

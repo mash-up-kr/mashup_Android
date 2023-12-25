@@ -8,12 +8,14 @@ import com.mashup.data.dto.MemberInfoResponse
 import com.mashup.data.dto.PushNotificationRequest
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
+import com.mashup.data.dto.UpdatePasswordRequest
 import com.mashup.data.dto.ValidResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -53,4 +55,10 @@ interface MemberDao {
     suspend fun patchPushNotification(
         @Body pushNotificationRequest: PushNotificationRequest
     ): Response<Boolean>
+
+    @PUT("api/v1/members/{id}/password")
+    suspend fun updatePassword(
+        @Path("id") id: String,
+        @Body request: UpdatePasswordRequest,
+    ): Response<Any>
 }

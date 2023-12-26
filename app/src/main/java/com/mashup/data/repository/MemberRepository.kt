@@ -96,7 +96,7 @@ class MemberRepository @Inject constructor(
 
     suspend fun updatePassword(
         id: String,
-        pwd: String,
+        pwd: String
     ): Response<Any> {
         val requestBody = UpdatePasswordRequest(newPassword = pwd)
         return memberDao.updatePassword(id = id, request = requestBody)

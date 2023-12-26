@@ -11,6 +11,7 @@ import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
+import com.mashup.network.dao.MemberProfileDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
 import com.mashup.network.interceptor.AuthInterceptor
@@ -134,6 +135,14 @@ class NetworkModule {
     fun providePopupDao(
         retrofit: Retrofit
     ): PopupDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMemberProfileDao(
+        retrofit: Retrofit
+    ): MemberProfileDao {
         return retrofit.create()
     }
 }

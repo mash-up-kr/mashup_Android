@@ -11,6 +11,8 @@ import com.squareup.moshi.JsonClass
 data class MemberInfo(
     @field:Json(name = "name")
     val name: String,
+    @field:Json(name = "memberId")
+    val memberId: Int,
     @field:Json(name = "attendanceInfos")
     val attendanceInfos: List<AttendanceInfo>
 ) {

@@ -19,7 +19,8 @@ import com.mashup.data.model.MemberInfo
 fun CrewScreen(
     modifier: Modifier = Modifier,
     crewAttendanceState: CrewAttendanceState,
-    onClickBackButton: () -> Unit
+    onClickBackButton: () -> Unit,
+    showMemberInfoDialog: (String, String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -33,7 +34,8 @@ fun CrewScreen(
         if (crewAttendanceState is CrewAttendanceState.Success) {
             CrewList(
                 modifier = Modifier.fillMaxWidth(),
-                crewAttendanceList = crewAttendanceState.crewAttendance.members
+                crewAttendanceList = crewAttendanceState.crewAttendance.members,
+                showMemberInfoDialog = showMemberInfoDialog
             )
         }
     }
@@ -42,7 +44,8 @@ fun CrewScreen(
 @Composable
 fun CrewList(
     modifier: Modifier = Modifier,
-    crewAttendanceList: List<MemberInfo>
+    crewAttendanceList: List<MemberInfo>,
+    showMemberInfoDialog: (String, String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -53,7 +56,8 @@ fun CrewList(
         items(crewAttendanceList) { memberInfo ->
             CrewListItem(
                 modifier = Modifier.fillMaxWidth(),
-                memberInfo = memberInfo
+                memberInfo = memberInfo,
+                showMemberInfoDialog = showMemberInfoDialog
             )
         }
     }

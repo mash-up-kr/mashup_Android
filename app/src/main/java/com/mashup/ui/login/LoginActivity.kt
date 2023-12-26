@@ -156,7 +156,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                         context = this,
                         showDanggnRewardNotice = pushType == PushLinkType.DANGGN_REWARD,
                         type = ActivityEnterType.ALARM
-                    ),
+                    )
                 )
             }
 

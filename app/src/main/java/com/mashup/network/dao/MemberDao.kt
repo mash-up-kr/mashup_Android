@@ -59,6 +59,6 @@ interface MemberDao {
     @PUT("api/v1/members/{id}/password")
     suspend fun updatePassword(
         @Path("id") id: String,
-        @Body request: UpdatePasswordRequest,
+        @Body request: UpdatePasswordRequest
     ): Response<Any>
 }

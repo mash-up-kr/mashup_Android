@@ -56,7 +56,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
                 if (hasFocus) {
                     viewBinding.scrollView.scrollToTarget(
                         viewBinding.layoutContent,
-                        this,
+                        this
                     )
                 }
             }
@@ -69,7 +69,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
                 if (hasFocus) {
                     viewBinding.scrollView.scrollToTarget(
                         viewBinding.layoutContent,
-                        this,
+                        this
                     )
                 }
             }
@@ -81,8 +81,8 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
             TranslateDeferringInsetsAnimationCallback(
                 view = viewBinding.layoutButton,
                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
-                deferredInsetTypes = WindowInsetsCompat.Type.ime(),
-            ),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
         )
         viewBinding.btnComplete.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             passwordViewModel.onClickNextButton(ScreenState.ChangePassword)

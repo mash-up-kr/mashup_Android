@@ -64,8 +64,8 @@ class EnterIdFragment : BaseFragment<FragmentEnterIdBinding>() {
             TranslateDeferringInsetsAnimationCallback(
                 view = viewBinding.layoutButton,
                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
-                deferredInsetTypes = WindowInsetsCompat.Type.ime(),
-            ),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
         )
         viewBinding.btnNext.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             passwordViewModel.onClickNextButton(screen = ScreenState.EnterId)

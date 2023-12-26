@@ -155,7 +155,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     ShakeDanggnActivity.newIntent(
                         context = this,
                         showDanggnRewardNotice = pushType == PushLinkType.DANGGN_REWARD,
-                        type = ActivityEnterType.ALARM,
+                        type = ActivityEnterType.ALARM
                     ),
                 )
             }
@@ -190,7 +190,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             isLogout: Boolean = false,
             isWithDrawl: Boolean = false,
             mainTab: MainTab = MainTab.EVENT,
-            deepLink: String = PushLinkType.UNKNOWN.name,
+            deepLink: String = PushLinkType.UNKNOWN.name
         ): Intent {
             return Intent(context, LoginActivity::class.java).apply {
                 putExtra(EXTRA_LOGOUT, isLogout)

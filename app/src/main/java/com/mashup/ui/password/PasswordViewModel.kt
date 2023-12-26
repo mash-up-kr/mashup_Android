@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-    private val memberRepository: MemberRepository,
+    private val memberRepository: MemberRepository
 ) : BaseViewModel() {
 
     private val _id = MutableStateFlow("")

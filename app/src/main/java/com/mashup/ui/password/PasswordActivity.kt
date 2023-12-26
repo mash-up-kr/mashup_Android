@@ -44,7 +44,7 @@ class PasswordActivity : BaseActivity<ActivityPasswordBinding>() {
         getPlaceGALog()?.run {
             AnalyticsManager.addEvent(
                 LOG_BACK,
-                bundleOf(KEY_PLACE to this),
+                bundleOf(KEY_PLACE to this)
             )
         }
         if (!navController.popBackStack()) {

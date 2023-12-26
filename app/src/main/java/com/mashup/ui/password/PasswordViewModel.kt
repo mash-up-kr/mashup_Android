@@ -121,7 +121,7 @@ class PasswordViewModel @Inject constructor(
                             buttonState.emit(ButtonState.Disable)
                             IdState.Error(code = INVALID_MEMBER_ID)
                         }
-                    },
+                    }
                 )
             }
         }

@@ -108,14 +108,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             AnalyticsManager.addEvent(eventName = LOG_LOGIN)
             viewModel.requestLogin(
                 id = textFieldId.inputtedText,
-                pwd = textFieldPwd.inputtedText,
+                pwd = textFieldPwd.inputtedText
             )
         }
 
         tvSignUp.onThrottleFirstClick(lifecycleScope) {
             AnalyticsManager.addEvent(eventName = LOG_SIGN_UP)
             startActivity(
-                SignUpActivity.newIntent(this@LoginActivity),
+                SignUpActivity.newIntent(this@LoginActivity)
             )
         }
 

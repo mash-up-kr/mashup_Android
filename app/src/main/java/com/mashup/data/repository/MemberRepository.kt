@@ -105,6 +105,7 @@ class MemberRepository @Inject constructor(
         val requestBody = UpdatePasswordRequest(newPassword = pwd)
         return memberDao.updatePassword(id = id, request = requestBody)
     }
+
     
     suspend fun getMemberProfile(memberId: String): Response<MemberProfileResponse> {
         return memberProfileDao.getMemberProfile(memberId)

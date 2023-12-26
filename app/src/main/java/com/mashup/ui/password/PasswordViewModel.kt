@@ -75,7 +75,7 @@ class PasswordViewModel @Inject constructor(
             idState,
             pwdState,
             pwdCheckState,
-            buttonState,
+            buttonState
         ) { idState, pwdState, pwdCheckState, buttonState ->
             val validId = (idState as? IdState.Success)?.validId == true
             val newButtonState = if (validId) {
@@ -94,12 +94,12 @@ class PasswordViewModel @Inject constructor(
                 idState,
                 pwdState,
                 pwdCheckState,
-                newButtonState,
+                newButtonState
             )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = PassWordState.Empty,
+            initialValue = PassWordState.Empty
         )
 
     init {
@@ -156,7 +156,7 @@ class PasswordViewModel @Inject constructor(
     }
 
     fun onClickNextButton(
-        screen: ScreenState,
+        screen: ScreenState
     ) = mashUpScope {
         when (screen) {
             is ScreenState.EnterId -> {
@@ -218,14 +218,14 @@ data class PassWordState(
     val idState: IdState,
     val pwdState: PwdState,
     val pwdCheckState: PwdCheckState,
-    val buttonState: ButtonState,
+    val buttonState: ButtonState
 ) {
     companion object {
         val Empty = PassWordState(
             idState = IdState.Empty,
             pwdState = PwdState.Empty,
             pwdCheckState = PwdCheckState.Empty,
-            buttonState = ButtonState.Empty,
+            buttonState = ButtonState.Empty
         )
     }
 }

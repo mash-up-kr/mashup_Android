@@ -146,7 +146,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         val baseIntent = MainActivity.newIntent(
             context = this,
             loginType = loginType,
-            mainTab = (intent.getSerializableExtra(EXTRA_MAIN_TAB) as? MainTab) ?: MainTab.EVENT,
+            mainTab = (intent.getSerializableExtra(EXTRA_MAIN_TAB) as? MainTab) ?: MainTab.EVENT
         )
         val taskStackBuilder = when (val pushType = PushLinkType.getPushLinkType(deepLink)) {
             PushLinkType.DANGGN, PushLinkType.DANGGN_REWARD -> {

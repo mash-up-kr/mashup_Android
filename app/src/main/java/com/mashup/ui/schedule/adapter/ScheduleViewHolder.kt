@@ -9,13 +9,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -42,18 +38,18 @@ import java.util.Locale
 sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class EndScheduleCard(
         private val binding: ItemEndScheduleBinding,
-        private val listener: OnItemClickListener,
+        private val listener: OnItemClickListener
     ) : ScheduleViewHolder(binding.root) {
 
         private var scheduleResponse: ScheduleResponse? = null
 
         init {
-            itemView.setOnClickListener {
+            binding.layoutCard.setOnClickListener {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickScheduleInformation(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
             }
@@ -63,7 +59,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickAttendanceInfoButton(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
             }
@@ -81,57 +77,68 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindow)
                 setContent {
                     if (scheduleResponse?.eventList?.isEmpty() == true) {
-                    } else {
-                        var componentHeight by remember { mutableStateOf(0.dp) }
-                        val density = LocalDensity.current
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize().onGloballyPositioned {
-                                componentHeight = with(density) {
-                                    it.size.height.toDp()
+                        return@setContent
+                    }
+
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        item {
+                            AndroidViewBinding(ItemCardTitleBinding::inflate) {
+                                this.tvCardTitle.apply {
+                                    text = String.format(
+                                        context.resources.getString(
+                                            R.string.event_list_card_title
+                                        ),
+                                        data.attendanceInfo.memberName
+                                    ).fromHtml()
                                 }
-                            },
-                            horizontalAlignment = Alignment.Start,
-                        ) {
+                            }
+                        }
+                        if (scheduleResponse!!.eventList.isEmpty().not()) {
                             item {
-                                AndroidViewBinding(ItemCardTitleBinding::inflate) {
-                                    this.tvCardTitle.apply {
-                                        text = String.format(
-                                            context.resources.getString(R.string.event_list_card_title),
-                                            data.attendanceInfo.memberName,
-                                        ).fromHtml()
-                                    }
-                                }
-                            }
-                            if (scheduleResponse!!.eventList.isEmpty().not()) {
-                                item {
-                                    Spacer(
-                                        modifier = Modifier.height(16.dp),
-                                    )
-                                }
-                            }
-                            itemsIndexed(scheduleResponse!!.eventList, key = { _: Int, item: EventResponse ->
-                                item.eventId
-                            }) { index: Int, _: EventResponse ->
-                                val isFinal = index == scheduleResponse!!.eventList.lastIndex
-                                ViewEventTimeline(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    caption = if (isFinal) {
-                                        stringResource(id = R.string.attendance_final)
-                                    } else {
-                                        stringResource(id = R.string.attendance_caption, index + 1)
-                                    },
-                                    time = onBindAttendanceTime(data.attendanceInfo.getAttendanceAt(index)),
-                                    status = onBindAttendanceStatus(
-                                        if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
-                                        isFinal = isFinal,
-                                    ),
-                                    image = onBindAttendanceImage(
-                                        if (isFinal) data.attendanceInfo.getFinalAttendance() else data.attendanceInfo.getAttendanceStatus(index),
-                                        isFinal = isFinal,
-                                    ),
-                                    isFinal = isFinal,
+                                Spacer(
+                                    modifier = Modifier.height(16.dp)
                                 )
                             }
+                        }
+                        itemsIndexed(scheduleResponse!!.eventList, key = { _: Int, item: EventResponse ->
+                            item.eventId
+                        }) { index: Int, _: EventResponse ->
+                            val isFinal = index == scheduleResponse!!.eventList.lastIndex
+                            ViewEventTimeline(
+                                modifier = Modifier.fillMaxWidth(),
+                                caption = if (isFinal) {
+                                    stringResource(id = R.string.attendance_final)
+                                } else {
+                                    stringResource(id = R.string.attendance_caption, index + 1)
+                                },
+                                time = onBindAttendanceTime(
+                                    data.attendanceInfo.getAttendanceAt(index)
+                                ),
+                                status = onBindAttendanceStatus(
+                                    if (isFinal) {
+                                        data.attendanceInfo.getFinalAttendance()
+                                    } else {
+                                        data.attendanceInfo.getAttendanceStatus(
+                                            index
+                                        )
+                                    },
+                                    isFinal = isFinal
+                                ),
+                                image = onBindAttendanceImage(
+                                    if (isFinal) {
+                                        data.attendanceInfo.getFinalAttendance()
+                                    } else {
+                                        data.attendanceInfo.getAttendanceStatus(
+                                            index
+                                        )
+                                    },
+                                    isFinal = isFinal
+                                ),
+                                isFinal = isFinal
+                            )
                         }
                     }
                 }
@@ -140,7 +147,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private fun onBindAttendanceImage(
             attendanceStatus: AttendanceStatus,
-            isFinal: Boolean,
+            isFinal: Boolean
         ): Int {
             return when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
@@ -172,7 +179,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private fun onBindAttendanceStatus(
             attendanceStatus: AttendanceStatus,
-            isFinal: Boolean,
+            isFinal: Boolean
         ): Int {
             return when (attendanceStatus) {
                 AttendanceStatus.ABSENT -> {
@@ -190,7 +197,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         @SuppressLint("SimpleDateFormat")
         fun onBindAttendanceTime(
-            time: Date?,
+            time: Date?
         ): String {
             return if (time != null) {
                 try {
@@ -206,18 +213,18 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class InProgressScheduleCard(
         private val binding: ItemInprogressScheduleBinding,
-        private val listener: OnItemClickListener,
+        private val listener: OnItemClickListener
     ) : ScheduleViewHolder(binding.root) {
 
         private var scheduleResponse: ScheduleResponse? = null
 
         init {
-            itemView.setOnClickListener {
+            binding.layoutCard.setOnClickListener {
                 if (scheduleResponse?.eventList.isNullOrEmpty()) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickScheduleInformation(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
             }
@@ -227,7 +234,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     listener.onClickEmptySchedule()
                 } else {
                     listener.onClickAttendanceInfoButton(
-                        scheduleResponse?.scheduleId ?: return@setOnClickListener,
+                        scheduleResponse?.scheduleId ?: return@setOnClickListener
                     )
                 }
             }
@@ -271,8 +278,8 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvTitle.setTextColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    com.mashup.core.common.R.color.gray400,
-                ),
+                    com.mashup.core.common.R.color.gray400
+                )
             )
             binding.tvDDay.text = itemView.context.getString(R.string.unknown_content_d_day)
             binding.tvCalender.text = "-"
@@ -284,8 +291,8 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvTitle.setTextColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    com.mashup.core.common.R.color.gray900,
-                ),
+                    com.mashup.core.common.R.color.gray900
+                )
             )
             binding.tvDDay.text = data.getDDay()
             binding.tvCalender.text = data.getDate()
@@ -293,7 +300,9 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         private fun onBindEmptyImage() {
-            binding.ivSchedule.setImageResource(com.mashup.core.common.R.drawable.img_placeholder_sleeping)
+            binding.ivSchedule.setImageResource(
+                com.mashup.core.common.R.drawable.img_placeholder_sleeping
+            )
             binding.tvDescription.text =
                 itemView.context.getString(R.string.description_empty_schedule)
         }
@@ -303,7 +312,7 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvDescription.text =
                 itemView.context.getString(
                     R.string.description_standby_schedule,
-                    data?.memberName ?: "알 수 없음",
+                    data?.memberName ?: "알 수 없음"
                 ).fromHtml()
         }
 

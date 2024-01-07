@@ -8,7 +8,10 @@ import com.mashup.databinding.ItemEndScheduleBinding
 import com.mashup.databinding.ItemInprogressScheduleBinding
 import com.mashup.ui.schedule.model.ScheduleCard
 
-class ScheduleViewPagerAdapter(private val listener: OnItemClickListener) :
+class ScheduleViewPagerAdapter(
+    private val listener: OnItemClickListener,
+    private val enabledSwipeRefreshLayout: (Boolean) -> Unit = {}
+) :
     ListAdapter<ScheduleCard, ScheduleViewHolder>(SCHEDULE_DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
@@ -20,7 +23,8 @@ class ScheduleViewPagerAdapter(private val listener: OnItemClickListener) :
                         parent,
                         false
                     ),
-                    listener
+                    listener,
+                    enabledSwipeRefreshLayout = enabledSwipeRefreshLayout
                 )
             }
             else -> {

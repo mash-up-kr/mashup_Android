@@ -66,6 +66,9 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
                         )
                     )
                 }
+            },
+            enabledSwipeRefreshLayout = { enabled ->
+                viewBinding.layoutSwipe.isEnabled = enabled
             }
         )
     }

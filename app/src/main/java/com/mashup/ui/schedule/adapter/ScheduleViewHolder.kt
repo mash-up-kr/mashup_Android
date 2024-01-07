@@ -8,8 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -38,7 +39,8 @@ import java.util.Locale
 sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class EndScheduleCard(
         private val binding: ItemEndScheduleBinding,
-        private val listener: OnItemClickListener
+        private val listener: OnItemClickListener,
+        private val enabledSwipeRefreshLayout: (Boolean) -> Unit = {}
     ) : ScheduleViewHolder(binding.root) {
 
         private var scheduleResponse: ScheduleResponse? = null
@@ -80,7 +82,16 @@ sealed class ScheduleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                         return@setContent
                     }
 
+                    val listState = rememberLazyListState()
+                    LaunchedEffect(listState) {
+                        snapshotFlow { listState.firstVisibleItemScrollOffset }
+                            .collect { offset ->
+                                enabledSwipeRefreshLayout(offset == 0)
+                            }
+                    }
+
                     LazyColumn(
+                        state = listState,
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.Start
                     ) {

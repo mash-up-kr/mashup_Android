@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -18,9 +19,10 @@ import com.mashup.R
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray600
-import com.mashup.core.ui.colors.Gray900
+import com.mashup.core.ui.colors.Gray800
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Caption2
+import com.mashup.core.ui.typography.SubTitle3
 
 @Composable
 fun ViewEventTimeline(
@@ -29,12 +31,13 @@ fun ViewEventTimeline(
     caption: String = "",
     @StringRes status: Int = R.string.attendance,
     @DrawableRes image: Int = com.mashup.core.common.R.drawable.ic_attendance_not_yet,
-    isFinal: Boolean = false,
+    isFinal: Boolean = false
 ) {
     ConstraintLayout(
-        modifier = modifier,
+        modifier = modifier
     ) {
         val (divider, attendanceImage, attendanceCaption, attendanceTime, attendanceStatus) = createRefs()
+
         Image(
             modifier = Modifier.size(20.dp).constrainAs(attendanceImage) {
                 start.linkTo(parent.start)
@@ -42,7 +45,7 @@ fun ViewEventTimeline(
                 bottom.linkTo(attendanceStatus.bottom)
             },
             painter = painterResource(id = image),
-            contentDescription = null,
+            contentDescription = null
         )
 
         Text(
@@ -52,7 +55,7 @@ fun ViewEventTimeline(
             },
             text = caption,
             style = Caption2,
-            color = Gray600,
+            color = Gray600
         )
 
         Text(
@@ -61,8 +64,10 @@ fun ViewEventTimeline(
                 start.linkTo(attendanceCaption.start)
             },
             text = stringResource(status),
-            style = Caption2,
-            color = Gray900,
+            style = SubTitle3.copy(
+                fontWeight = FontWeight.W700
+            ),
+            color = Gray800
         )
         Text(
             modifier = Modifier.constrainAs(attendanceTime) {
@@ -71,7 +76,7 @@ fun ViewEventTimeline(
             },
             text = time,
             style = Caption2,
-            color = Gray500,
+            color = Gray500
         )
         if (isFinal.not()) {
             Divider(
@@ -83,7 +88,7 @@ fun ViewEventTimeline(
                     width = Dimension.value(1.dp)
                 },
                 thickness = 1.dp,
-                color = Gray200,
+                color = Gray200
 
             )
         }

@@ -10,6 +10,7 @@ import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,29 +52,37 @@ import com.mashup.ui.schedule.model.ScheduleCard
 import com.mashup.ui.schedule.util.onBindAttendanceImage
 import com.mashup.ui.schedule.util.onBindAttendanceStatus
 import com.mashup.ui.schedule.util.onBindAttendanceTime
-import com.mashup.util.simpleVerticalScrollbar
 
 @Composable
 fun ScheduleViewPagerSuccessItem(
     data: ScheduleCard.EndSchedule,
     modifier: Modifier = Modifier,
-    onClickScheduleInformation: (Int) -> Unit = {}
+    onClickScheduleInformation: (Int) -> Unit = {},
+    onClickAttendance: (Int) -> Unit = {}
 ) {
     val context = LocalContext.current
-    val scrollState = rememberLazyListState()
+    val listState = rememberLazyListState()
+
     Column(
-        modifier = modifier.fillMaxWidth().wrapContentHeight().background(
-            color = Color.White,
-            shape = RoundedCornerShape(20.dp)
-        ).border(
-            width = 1.dp,
-            color = Gray100,
-            shape = RoundedCornerShape(20.dp)
-        ).padding(20.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .background(
+                color = Color.White,
+                shape = RoundedCornerShape(20.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = Gray100,
+                shape = RoundedCornerShape(20.dp)
+            )
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CardInfoItem(
-            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
             dDay = data.scheduleResponse.getDDay(),
             title = data.scheduleResponse.name,
             calendar = data.scheduleResponse.getDate(),
@@ -83,16 +92,18 @@ fun ScheduleViewPagerSuccessItem(
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(
-            modifier = Modifier.background(color = Gray50, shape = RoundedCornerShape(16.dp))
-                .height(220.dp).padding(top = 16.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
-                .simpleVerticalScrollbar(
-                    state = scrollState
-                )
+            state = listState,
+            modifier = Modifier
+                .background(color = Gray50, shape = RoundedCornerShape(16.dp))
+                .height(220.dp)
+                .padding(top = 16.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                .clickable {
+                    onClickScheduleInformation(data.scheduleResponse.scheduleId)
+                }
         ) {
             itemsIndexed(data.scheduleResponse.eventList, key = { _: Int, item: EventResponse ->
                 item.eventId
             }) { index: Int, _: EventResponse ->
-                val isFinal = index == data.scheduleResponse.eventList.lastIndex
                 Column {
                     if (index == 0) {
                         val spannableString = SpannableStringBuilder(
@@ -119,47 +130,40 @@ fun ScheduleViewPagerSuccessItem(
                     }
                     ViewEventTimeline(
                         modifier = Modifier.fillMaxWidth(),
-                        caption = if (isFinal) {
-                            stringResource(id = R.string.attendance_final)
-                        } else {
-                            stringResource(id = R.string.attendance_caption, index + 1)
-                        },
-                        time = onBindAttendanceTime(
-                            data.attendanceInfo.getAttendanceAt(index)
-                        ),
+                        caption = stringResource(id = R.string.attendance_caption, index + 1),
+                        time = onBindAttendanceTime(data.attendanceInfo.getAttendanceAt(index)),
                         status = onBindAttendanceStatus(
-                            if (isFinal) {
-                                data.attendanceInfo.getFinalAttendance()
-                            } else {
-                                data.attendanceInfo.getAttendanceStatus(
-                                    index
-                                )
-                            },
-                            isFinal = isFinal
+                            data.attendanceInfo.getAttendanceStatus(index)
                         ),
                         image = onBindAttendanceImage(
-                            if (isFinal) {
-                                data.attendanceInfo.getFinalAttendance()
-                            } else {
-                                data.attendanceInfo.getAttendanceStatus(
-                                    index
-                                )
-                            },
-                            isFinal = isFinal
-                        ),
-                        isFinal = isFinal
+                            data.attendanceInfo.getAttendanceStatus(index)
+                        )
                     )
                 }
             }
+            item {
+                val status = data.attendanceInfo.getFinalAttendance()
+                ViewEventTimeline(
+                    modifier = Modifier.fillMaxWidth(),
+                    caption = stringResource(id = R.string.attendance_final),
+                    status = onBindAttendanceStatus(status, isFinal = true),
+                    image = onBindAttendanceImage(status, isFinal = true),
+                    isFinal = true
+                )
+            }
         }
+
         Spacer(
             modifier = Modifier.height(12.dp)
         )
         AndroidView(
-            modifier = Modifier.fillMaxWidth().height(48.dp).background(
-                color = Brand100,
-                shape = RoundedCornerShape(16.dp)
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp)
+                .background(
+                    color = Brand100,
+                    shape = RoundedCornerShape(16.dp)
+                ),
             factory = { context ->
                 AppCompatTextView(context).apply {
                     text = context.getString(R.string.click_attendance_list)
@@ -176,14 +180,13 @@ fun ScheduleViewPagerSuccessItem(
                     )
                     setPadding(12, 0, 0, 0)
                     setOnClickListener {
-                        onClickScheduleInformation(data.scheduleResponse.scheduleId)
+                        onClickAttendance(data.scheduleResponse.scheduleId)
                     }
                 }
             }
         )
     }
 }
-
 fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
     val spanned = this@toAnnotatedString
     append(spanned.toString())
@@ -213,3 +216,16 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
         }
     }
 }
+
+// @Preview
+// @Composable
+// private fun PreviewScheduleViewPagerSuccessItem() {
+//    MashUpTheme {
+//        ScheduleViewPagerSuccessItem(
+//            data = ScheduleCard.EndSchedule(
+//                scheduleResponse = ScheduleResponse(),
+//                attendanceInfo = AttendanceInfoResponse()
+//            )
+//        )
+//    }
+// }

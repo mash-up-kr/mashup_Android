@@ -33,24 +33,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.R
 import com.mashup.constant.log.LOG_SCHEDULE_EVENT_DETAIL
+import com.mashup.constant.log.LOG_SCHEDULE_STATUS_CONFIRM
 import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.ui.colors.Brand500
+import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainViewModel
 import com.mashup.ui.main.model.MainPopupType
 import com.mashup.ui.schedule.detail.ScheduleDetailActivity
+import com.mashup.ui.schedule.item.ScheduleViewPagerEmptyItem
 import com.mashup.ui.schedule.item.ScheduleViewPagerInProgressItem
 import com.mashup.ui.schedule.item.ScheduleViewPagerSuccessItem
 import com.mashup.ui.schedule.model.ScheduleCard
 import com.mashup.util.AnalyticsManager
 import com.mashup.util.debounce
-import java.util.UUID
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 
@@ -62,6 +66,7 @@ fun ScheduleRoute(
     modifier: Modifier = Modifier
 ) {
     var isRefreshing by remember { mutableStateOf(false) }
+
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
         onRefresh = {
@@ -76,14 +81,32 @@ fun ScheduleRoute(
 
     var title by remember { mutableStateOf("") }
 
+    val lifecycle = LocalLifecycleOwner.current
+
+    LaunchedEffect(Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            mainViewModel.onAttendance.collect {
+                viewModel.getScheduleList()
+            }
+        }
+    }
+
     LaunchedEffect(state) {
-        val successState = state as? ScheduleState.Success
-        if (successState != null) {
-            title = context.setUiOfScheduleTitle(successState.scheduleTitleState)
+        when (state) {
+            is ScheduleState.Loading -> {}
+            is ScheduleState.Empty -> { isRefreshing = false }
+            is ScheduleState.Success -> {
+                isRefreshing = false
+                title = context.setUiOfScheduleTitle(
+                    (state as ScheduleState.Success).scheduleTitleState
+                )
+            }
+            is ScheduleState.Error -> { isRefreshing = false }
         }
     }
 
     val scrollState = rememberScrollState()
+
     Box(
         modifier = modifier.pullRefresh(pullRefreshState)
     ) {
@@ -116,7 +139,7 @@ fun ScheduleRoute(
                     val coroutineScope = rememberCoroutineScope()
                     Image(
                         modifier = Modifier.clickable {
-                            debounce<Unit>(300L, scope = coroutineScope, destinationFunction = {
+                            debounce<Unit>(500L, scope = coroutineScope, destinationFunction = {
                                 mainViewModel.disablePopup(MainPopupType.DANGGN)
                             })
                             context.startActivity(
@@ -131,14 +154,9 @@ fun ScheduleRoute(
                 }
             }
             when (state) {
-                is ScheduleState.Error -> {
-                    isRefreshing = false
-                }
-                is ScheduleState.Empty -> {
-                    isRefreshing = false
-                }
+                is ScheduleState.Error -> {}
+                is ScheduleState.Empty -> {}
                 else -> {
-                    isRefreshing = false
                     ScheduleScreen(
                         modifier = Modifier.fillMaxSize().verticalScroll(scrollState),
                         scheduleState = state,
@@ -147,7 +165,14 @@ fun ScheduleRoute(
                             context.startActivity(
                                 ScheduleDetailActivity.newIntent(context, scheduleId)
                             )
-                        }
+                        },
+                        onClickAttendance = { scheduleId: Int ->
+                            AnalyticsManager.addEvent(eventName = LOG_SCHEDULE_STATUS_CONFIRM)
+                            context.startActivity(
+                                PlatformAttendanceActivity.newIntent(context, scheduleId)
+                            )
+                        },
+                        refreshState = isRefreshing
 
                     )
                 }
@@ -168,7 +193,9 @@ fun ScheduleRoute(
 fun ScheduleScreen(
     scheduleState: ScheduleState,
     modifier: Modifier = Modifier,
-    onClickScheduleInformation: (Int) -> Unit = {}
+    onClickScheduleInformation: (Int) -> Unit = {},
+    onClickAttendance: (Int) -> Unit = {},
+    refreshState: Boolean = false
 ) {
     var cacheScheduleState by remember {
         mutableStateOf(scheduleState)
@@ -187,8 +214,10 @@ fun ScheduleScreen(
                 initialPage = if (castingState.scheduleList.size < 6) 1 else castingState.scheduleList.size - 4,
                 pageCount = { castingState.scheduleList.size }
             )
-            LaunchedEffect(UUID.randomUUID()) {
-                horizontalPagerState.animateScrollToPage(castingState.schedulePosition)
+            LaunchedEffect(refreshState) {
+                if (refreshState.not()) { // refresh 가 끝났을 경우
+                    horizontalPagerState.animateScrollToPage(castingState.schedulePosition)
+                }
             }
 
             HorizontalPager(
@@ -200,7 +229,23 @@ fun ScheduleScreen(
                 verticalAlignment = Alignment.Top
             ) { index ->
                 when (val data = castingState.scheduleList[index]) {
-                    is ScheduleCard.EmptySchedule -> {}
+                    is ScheduleCard.EmptySchedule -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            ScheduleViewPagerEmptyItem(
+                                modifier = Modifier
+                                    .graphicsLayer {
+                                        val pageOffset = (
+                                            (horizontalPagerState.currentPage - index) + horizontalPagerState
+                                                .currentPageOffsetFraction
+                                            ).absoluteValue
+                                        scaleY = 1 - 0.1f * abs(pageOffset)
+                                    },
+                                data = data
+                            )
+                        }
+                    }
                     is ScheduleCard.EndSchedule -> {
                         Box(
                             modifier = Modifier.fillMaxSize()
@@ -215,7 +260,8 @@ fun ScheduleScreen(
                                         scaleY = 1 - 0.1f * abs(pageOffset)
                                     },
                                 data = data,
-                                onClickScheduleInformation = onClickScheduleInformation
+                                onClickScheduleInformation = onClickScheduleInformation,
+                                onClickAttendance = onClickAttendance
                             )
                         }
                     }
@@ -233,7 +279,8 @@ fun ScheduleScreen(
                                         scaleY = 1 - 0.1f * abs(pageOffset)
                                     },
                                 data = data,
-                                onClickScheduleInformation = onClickScheduleInformation
+                                onClickScheduleInformation = onClickScheduleInformation,
+                                onClickAttendance = onClickAttendance
                             )
                         }
                     }

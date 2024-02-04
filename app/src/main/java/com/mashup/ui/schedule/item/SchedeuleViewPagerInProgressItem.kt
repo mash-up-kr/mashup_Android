@@ -7,7 +7,9 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,9 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.AndroidViewBinding
@@ -36,17 +38,20 @@ import com.mashup.core.ui.colors.Brand100
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.Gray700
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body1
+import com.mashup.data.dto.ScheduleResponse
 import com.mashup.databinding.LayoutAttendanceCoachMarkBindingImpl
 import com.mashup.ui.schedule.model.ScheduleCard
+import java.util.Date
 
 @Composable
 fun ScheduleViewPagerInProgressItem(
     data: ScheduleCard.InProgressSchedule,
     modifier: Modifier = Modifier,
-    onClickScheduleInformation: (Int) -> Unit = {}
+    onClickScheduleInformation: (Int) -> Unit = {},
+    onClickAttendance: (Int) -> Unit = {}
 ) {
-    val context = LocalContext.current
     Column(
         modifier = modifier.fillMaxWidth().wrapContentHeight().background(
             color = Color.White,
@@ -78,7 +83,10 @@ fun ScheduleViewPagerInProgressItem(
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
+                    }.clickable {
+                        onClickScheduleInformation(data.scheduleResponse.scheduleId)
                     },
+
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -143,10 +151,35 @@ fun ScheduleViewPagerInProgressItem(
                         )
                         setPadding(12, 0, 0, 0)
                         setOnClickListener {
-                            onClickScheduleInformation(data.scheduleResponse.scheduleId)
+                            onClickAttendance(data.scheduleResponse.scheduleId)
                         }
                     }
                 }
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewScheduleViewPagerEmptySchedule() {
+    MashUpTheme {
+        Box(
+            modifier = Modifier.width(294.dp).height(479.dp)
+        ){
+            ScheduleViewPagerInProgressItem(
+                data = ScheduleCard.InProgressSchedule(
+                    scheduleResponse = ScheduleResponse(
+                        scheduleId = 0,
+                        dateCount = 1,
+                        generationNumber = 13,
+                        name = "Preview",
+                        eventList = emptyList(),
+                        startedAt = Date(),
+                        endedAt = Date()
+                    ),
+                    attendanceInfo = null
+                )
             )
         }
     }

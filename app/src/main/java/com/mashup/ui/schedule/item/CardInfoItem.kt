@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray300
+import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.Gray700
 import com.mashup.core.ui.colors.Gray900
@@ -56,8 +57,8 @@ fun CardInfoItem(
         )
         Text(
             style = Header1,
-            text = title,
-            color = Gray900
+            text = title.ifEmpty { "등록된 일정이 없어요" },
+            color = if (title.isEmpty()) Gray400 else Gray900
         )
         Spacer(
             modifier = Modifier.height(12.dp)

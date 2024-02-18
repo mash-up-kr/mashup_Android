@@ -166,7 +166,7 @@ private fun PreviewScheduleViewPagerEmptySchedule() {
     MashUpTheme {
         Box(
             modifier = Modifier.width(294.dp).height(479.dp)
-        ){
+        ) {
             ScheduleViewPagerInProgressItem(
                 data = ScheduleCard.InProgressSchedule(
                     scheduleResponse = ScheduleResponse(
@@ -176,7 +176,13 @@ private fun PreviewScheduleViewPagerEmptySchedule() {
                         name = "Preview",
                         eventList = emptyList(),
                         startedAt = Date(),
-                        endedAt = Date()
+                        endedAt = Date(),
+                        location = ScheduleResponse.Location(
+                            latitude = 0.0,
+                            longitude = 0.0,
+                            address = null,
+                            placeName = null
+                        )
                     ),
                     attendanceInfo = null
                 )

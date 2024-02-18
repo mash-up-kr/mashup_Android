@@ -216,16 +216,3 @@ fun Spanned.toAnnotatedString(): AnnotatedString = buildAnnotatedString {
         }
     }
 }
-
-// @Preview
-// @Composable
-// private fun PreviewScheduleViewPagerSuccessItem() {
-//    MashUpTheme {
-//        ScheduleViewPagerSuccessItem(
-//            data = ScheduleCard.EndSchedule(
-//                scheduleResponse = ScheduleResponse(),
-//                attendanceInfo = AttendanceInfoResponse()
-//            )
-//        )
-//    }
-// }

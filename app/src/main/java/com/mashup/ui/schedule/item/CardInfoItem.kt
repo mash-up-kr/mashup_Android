@@ -15,9 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Gray100
@@ -26,6 +28,7 @@ import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.Gray700
 import com.mashup.core.ui.colors.Gray900
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body3
 import com.mashup.core.ui.typography.Header1
 
@@ -123,5 +126,20 @@ fun CardInfoItem(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewCardInfoItem() {
+    MashUpTheme {
+        CardInfoItem(
+            modifier = Modifier.background(color = Color.White),
+            dDay = "D+13",
+            title = "스케쥴 테스트",
+            calendar = "02월 05일",
+            timeLine = "오후 01:00 - 오후 01:10",
+            location = "종로구 무악동"
+        )
     }
 }

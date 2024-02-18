@@ -87,7 +87,7 @@ fun ScheduleViewPagerSuccessItem(
             title = data.scheduleResponse.name,
             calendar = data.scheduleResponse.getDate(),
             timeLine = data.scheduleResponse.getTimeLine(),
-            location = ""
+            location = data.scheduleResponse.location.placeName ?: ""
         )
         Spacer(modifier = Modifier.height(16.dp))
 

@@ -83,7 +83,8 @@ private fun PreviewCrewList() {
                 null,
                 status = AttendanceStatus.ATTENDANCE
             )
-        )
+        ),
+        memberId = 0
     )
     MashUpTheme {
         CrewList(
@@ -94,6 +95,6 @@ private fun PreviewCrewList() {
                 memberInfo,
                 memberInfo
             )
-        )
+        ) { _, _ -> }
     }
 }

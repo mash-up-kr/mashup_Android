@@ -22,8 +22,17 @@ data class ScheduleResponse(
     @field:Json(name = "startedAt")
     val startedAt: Date,
     @field:Json(name = "endedAt")
-    val endedAt: Date
+    val endedAt: Date,
+    @field:Json(name = "location")
+    val location: Location
 ) {
+
+    data class Location(
+        val latitude: Double,
+        val longitude: Double,
+        val address: String?,
+        val placeName: String?
+    )
 
     @SuppressLint("SimpleDateFormat")
     fun getDate(): String {

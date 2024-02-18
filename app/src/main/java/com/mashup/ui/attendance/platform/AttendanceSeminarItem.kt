@@ -41,6 +41,7 @@ import java.util.Locale
 fun AttendanceSeminarItem(
     modifier: Modifier = Modifier,
     index: Int,
+    isFinal: Boolean = false,
     timeStamp: Date?,
     attendanceStatus: AttendanceStatus,
     iconSize: Int
@@ -57,13 +58,13 @@ fun AttendanceSeminarItem(
                 Yellow500 to "지각"
             }
             else -> {
-                Gray200 to if (index == 2) "최종" else "${index + 1}부"
+                Gray200 to if (isFinal) "최종" else "${index + 1}부"
             }
         }
     }
     val attendanceIconRes = remember(attendanceStatus, index) {
         when {
-            index < 2 -> R.drawable.ic_circle
+            isFinal.not() -> R.drawable.ic_circle
             attendanceStatus == AttendanceStatus.ATTENDANCE -> R.drawable.ic_check
             attendanceStatus == AttendanceStatus.ABSENT -> R.drawable.ic_xmark
             attendanceStatus == AttendanceStatus.LATE -> R.drawable.ic_triangle
@@ -76,10 +77,10 @@ fun AttendanceSeminarItem(
             try {
                 SimpleDateFormat("hh:mm", Locale.KOREA).format(timeStamp)
             } catch (ignore: Exception) {
-                if (index < 2) "-" else ""
+                if (isFinal.not()) "-" else ""
             }
         } else {
-            if (index < 2) "-" else ""
+            if (isFinal.not()) "-" else ""
         }
     }
 

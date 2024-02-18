@@ -33,13 +33,15 @@ data class AttendanceInfoResponse(
             } -> {
                 AttendanceStatus.LATE
             }
-            this.attendanceInfos.any { info ->
-                info.status == AttendanceStatus.ATTENDANCE
-            } -> {
-                AttendanceStatus.ATTENDANCE
-            }
             else -> {
-                AttendanceStatus.NOT_YET
+                if (this.attendanceInfos.any { info ->
+                        info.status == AttendanceStatus.NOT_YET
+                    }
+                ) {
+                    AttendanceStatus.NOT_YET
+                } else {
+                    AttendanceStatus.ATTENDANCE
+                }
             }
         }
     }

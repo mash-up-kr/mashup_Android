@@ -19,6 +19,8 @@ data class MemberGenerationsResponse(
         @Json(name = "projectTeamName")
         val projectTeamName: String?,
         @Json(name = "role")
-        val role: String?
+        val role: String?,
+        @Json(name = "status")
+        val status: String
     )
 }

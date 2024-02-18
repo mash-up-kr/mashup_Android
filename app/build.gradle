@@ -28,8 +28,8 @@ android {
         applicationId "com.mashup"
         minSdkVersion minVersion
         targetSdkVersion targetVersion
-        versionCode 26
-        versionName "1.4.0"
+        versionCode 28
+        versionName "1.5.0"
 
         testInstrumentationRunner "com.mashup.core.testing.MashUpTestRunner"
         vectorDrawables {

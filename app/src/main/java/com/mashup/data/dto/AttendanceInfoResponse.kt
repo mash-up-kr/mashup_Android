@@ -35,8 +35,8 @@ data class AttendanceInfoResponse(
             }
             else -> {
                 if (this.attendanceInfos.any { info ->
-                        info.status == AttendanceStatus.NOT_YET
-                    }
+                    info.status == AttendanceStatus.NOT_YET
+                }
                 ) {
                     AttendanceStatus.NOT_YET
                 } else {

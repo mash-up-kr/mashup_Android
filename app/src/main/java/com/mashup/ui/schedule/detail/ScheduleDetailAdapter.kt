@@ -3,10 +3,14 @@ package com.mashup.ui.schedule.detail
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material3.Text
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ItemEventTimelineContentBinding
 import com.mashup.databinding.ItemEventTimelineHeaderBinding
 import com.mashup.ui.schedule.model.EventDetail
@@ -24,8 +28,11 @@ class EventDetailAdapter :
             EventDetailType.HEADER.num -> {
                 TitleViewHolder(parent)
             }
-            else -> {
+            EventDetailType.CONTENT.num -> {
                 ContentViewHolder(parent)
+            }
+            else -> {
+                LocationViewHolder(ComposeView(parent.context))
             }
         }
     }
@@ -36,6 +43,9 @@ class EventDetailAdapter :
                 holder.bind(getItem(position))
             }
             is ContentViewHolder -> {
+                holder.bind(getItem(position))
+            }
+            is LocationViewHolder -> {
                 holder.bind(getItem(position))
             }
         }
@@ -70,6 +80,23 @@ class EventDetailAdapter :
 
         fun bind(item: EventDetail) {
             binding?.model = item
+        }
+    }
+
+    class LocationViewHolder(private val composeView: ComposeView) :
+        RecyclerView.ViewHolder(composeView) {
+        init {
+            composeView.setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnDetachedFromWindowOrReleasedFromPool // (Default)
+            )
+        }
+
+        fun bind(item: EventDetail) {
+            composeView.setContent {
+                MashUpTheme {
+                    Text(text = "위치 정보")
+                }
+            }
         }
     }
 

@@ -8,7 +8,8 @@ data class EventDetail(
     val id: Int,
     val type: EventDetailType,
     val header: Header?,
-    val body: Body?
+    val body: Body?,
+    val location: Location?
 )
 
 data class Header(
@@ -42,3 +43,10 @@ data class Body(
         }
     }
 }
+
+data class Location(
+    val placeName: String,
+    val address: String,
+    val latitude: Double,
+    val longitude: Double,
+)

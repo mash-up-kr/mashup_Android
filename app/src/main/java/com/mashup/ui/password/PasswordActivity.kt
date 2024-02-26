@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class PasswordActivity : BaseActivity<ActivityPasswordBinding>() {
 
     private val passwordViewModel: PasswordViewModel by viewModels()
-    private var navigationAnimationType = NavigationAnimationType.SLIDE
 
     private val navController by lazy {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_password_fragment) as NavHostFragment
@@ -35,7 +34,6 @@ class PasswordActivity : BaseActivity<ActivityPasswordBinding>() {
 
     private fun initToolbar() {
         viewBinding.toolbar.setOnBackButtonClickListener {
-            navigationAnimationType = NavigationAnimationType.SLIDE
             onBackPressed()
         }
     }

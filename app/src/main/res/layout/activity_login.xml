@@ -51,21 +51,52 @@
                 app:layout_constraintTop_toBottomOf="@id/text_field_pwd"
                 app:text_button='@{"로그인"}' />
 
-            <TextView
-                android:id="@+id/tv_sign_up"
+            <LinearLayout
+                android:id="@+id/layout_sign_password"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="회원가입 하러가기"
-                android:textAppearance="@style/TextAppearance.Mashup"
-                android:textColor="#686F7E"
-                android:textSize="16sp"
-                app:drawableEndCompat="@drawable/ic_next"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_login"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_login">
 
+                <TextView
+                    android:id="@+id/tv_sign_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="회원가입"
+                    android:textAppearance="@style/TextAppearance.Mashup"
+                    android:textColor="#686F7E"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray200"
+                    android:layout_marginVertical="3.5dp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_change_password"
+                    app:layout_constraintTop_toTopOf="@id/tv_sign_up"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_sign_up" />
+
+                <TextView
+                    android:id="@+id/tv_change_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="비밀번호 변경"
+                    android:textAppearance="@style/TextAppearance.Mashup"
+                    android:textColor="#686F7E"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_login"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

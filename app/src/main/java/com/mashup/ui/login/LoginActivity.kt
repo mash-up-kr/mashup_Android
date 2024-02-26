@@ -23,6 +23,7 @@ import com.mashup.service.PushLinkType
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainActivity
 import com.mashup.ui.main.model.MainTab
+import com.mashup.ui.password.PasswordActivity
 import com.mashup.ui.qrscan.QRScanActivity
 import com.mashup.ui.signup.SignUpActivity
 import com.mashup.util.AnalyticsManager
@@ -102,20 +103,24 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-    private fun initButtons() {
-        viewBinding.btnLogin.setOnButtonThrottleFirstClickListener(this) {
+    private fun initButtons() = with(viewBinding) {
+        btnLogin.setOnButtonThrottleFirstClickListener(this@LoginActivity) {
             AnalyticsManager.addEvent(eventName = LOG_LOGIN)
             viewModel.requestLogin(
-                id = viewBinding.textFieldId.inputtedText,
-                pwd = viewBinding.textFieldPwd.inputtedText
+                id = textFieldId.inputtedText,
+                pwd = textFieldPwd.inputtedText
             )
         }
 
-        viewBinding.tvSignUp.onThrottleFirstClick(lifecycleScope) {
+        tvSignUp.onThrottleFirstClick(lifecycleScope) {
             AnalyticsManager.addEvent(eventName = LOG_SIGN_UP)
             startActivity(
-                SignUpActivity.newIntent(this)
+                SignUpActivity.newIntent(this@LoginActivity)
             )
+        }
+
+        tvChangePassword.onThrottleFirstClick(lifecycleScope) {
+            startActivity(PasswordActivity.newIntent(this@LoginActivity))
         }
     }
 

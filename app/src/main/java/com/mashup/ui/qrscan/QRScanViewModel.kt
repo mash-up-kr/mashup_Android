@@ -23,6 +23,8 @@ class QRScanViewModel @Inject constructor(
 
     private val isCheckingCode = AtomicBoolean(false)
 
+    private var location = Pair<Double?, Double?>(null, null)
+
     init {
         recognitionQRCode
             .onEach {
@@ -45,7 +47,9 @@ class QRScanViewModel @Inject constructor(
         _qrcodeState.emit(QRCodeState.Loading)
         val recognizedCode = qrcode.recognizedCode
         val response = attendanceRepository.attendanceCheck(
-            code = recognizedCode
+            code = recognizedCode,
+            latitude = location.first ?: return@mashUpScope,
+            longitude = location.second ?: return@mashUpScope,
         )
 
         if (!response.isSuccess()) {
@@ -60,6 +64,10 @@ class QRScanViewModel @Inject constructor(
         mashUpScope {
             _qrcodeState.emit(QRCodeState.Error(code))
         }
+    }
+
+    fun setLocation(latitude: Double?, longitude: Double?) {
+        location = Pair(latitude, longitude)
     }
 }
 

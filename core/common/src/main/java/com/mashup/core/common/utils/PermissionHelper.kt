@@ -20,7 +20,7 @@ class PermissionHelper(private val activity: Activity) {
 
     fun requestPermissions(
         permissions: Array<String>,
-        requestCode: Int = 0,
+        requestCode: Int = 0
     ) {
         ActivityCompat.requestPermissions(
             activity,

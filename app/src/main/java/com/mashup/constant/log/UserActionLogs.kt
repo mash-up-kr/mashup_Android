@@ -20,6 +20,9 @@ const val LOG_PLACE_SIGN_PLATFORM = "signup_platform"
 const val LOG_POPUP_SIGNUP_CONFIRM = "popup_signup_confirm"
 const val LOG_POPUP_SIGNUP_CANCEL = "popup_signup_cancel"
 
+const val LOG_PLACE_CHANGE_PASSWORD = "change_password"
+const val LOG_PLACE_ENTER_ID = "enter_id"
+
 const val LOG_SCHEDULE_LIST_REFRESH = "refresh"
 const val LOG_SCHEDULE_STATUS_CONFIRM = "status_confirm"
 const val LOG_SCHEDULE_EVENT_DETAIL = "event_detail"

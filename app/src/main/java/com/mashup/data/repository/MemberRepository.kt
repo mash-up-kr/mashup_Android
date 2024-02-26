@@ -9,6 +9,7 @@ import com.mashup.data.dto.PushNotificationRequest
 import com.mashup.data.dto.ScoreHistoryResponse
 import com.mashup.data.dto.SignUpRequest
 import com.mashup.data.dto.TokenResponse
+import com.mashup.data.dto.UpdatePasswordRequest
 import com.mashup.data.dto.ValidResponse
 import com.mashup.feature.mypage.profile.data.dto.MemberProfileResponse
 import com.mashup.network.dao.MemberDao
@@ -95,6 +96,14 @@ class MemberRepository @Inject constructor(
         )
 
         return memberDao.patchPushNotification(requestBody)
+    }
+
+    suspend fun updatePassword(
+        id: String,
+        pwd: String
+    ): Response<Any> {
+        val requestBody = UpdatePasswordRequest(newPassword = pwd)
+        return memberDao.updatePassword(id = id, request = requestBody)
     }
 
     suspend fun getMemberProfile(memberId: String): Response<MemberProfileResponse> {

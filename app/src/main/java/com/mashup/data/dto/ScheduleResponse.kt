@@ -24,7 +24,7 @@ data class ScheduleResponse(
     @field:Json(name = "endedAt")
     val endedAt: Date,
     @field:Json(name = "location")
-    val location: Location
+    val location: Location?
 ) {
 
     data class Location(

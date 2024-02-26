@@ -1,9 +1,11 @@
 package com.mashup.ui.qrscan
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.net.Uri
 import android.provider.Settings
 import android.view.ViewGroup
@@ -122,6 +124,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         if (permissionList.any { !permissionHelper.isPermissionGranted(it) }) {
             requestQrAttendancePermissions()
         } else {
+            setLocationInfo()
             cameraManager.startCamera()
         }
     }
@@ -251,6 +254,24 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setLocationInfo() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        (getSystemService(Context.LOCATION_SERVICE) as? LocationManager)?.let { locationManager ->
+            val currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            viewModel.setLocation(currentLocation?.latitude, currentLocation?.longitude)
         }
     }
 

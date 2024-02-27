@@ -14,6 +14,7 @@ ext {
     composeVersion = '1.5.0'
     composeCompiler = "1.4.7"
     composeWebView = "0.24.13-rc"
+    constraintlayoutCompose = "1.0.1"
 
     // androidx
     appcompatVersion = "1.6.1"
@@ -65,6 +66,7 @@ ext {
 
     // composeViewPager
     composeViewPagerVersion = "0.20.1"
+    composeUiViewBinding = "1.5.4"
 
     // flipper
     flipperVersion = "0.190.0"

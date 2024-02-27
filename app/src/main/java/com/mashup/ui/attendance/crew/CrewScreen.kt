@@ -9,10 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.core.model.AttendanceStatus
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.widget.MashUpToolbar
+import com.mashup.data.model.AttendanceInfo
 import com.mashup.data.model.MemberInfo
 
 @Composable
@@ -60,5 +66,35 @@ fun CrewList(
                 showMemberInfoDialog = showMemberInfoDialog
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewCrewList() {
+    val memberInfo = MemberInfo(
+        name = "test",
+        attendanceInfos = listOf(
+            AttendanceInfo(
+                null,
+                status = AttendanceStatus.ATTENDANCE
+            ),
+            AttendanceInfo(
+                null,
+                status = AttendanceStatus.ATTENDANCE
+            )
+        ),
+        memberId = 0
+    )
+    MashUpTheme {
+        CrewList(
+            modifier = Modifier.fillMaxWidth(),
+            crewAttendanceList = listOf(
+                memberInfo,
+                memberInfo,
+                memberInfo,
+                memberInfo
+            )
+        ) { _, _ -> }
     }
 }

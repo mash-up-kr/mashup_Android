@@ -63,4 +63,16 @@
 	<string name="title_introduce_my_self">내 소개</string>
 	<string name="empty_introduce_my_self">아직 소개글이 없어요</string>
 	<string name="txt_edit">편집</string>
+
+	<!-- attendance -->
+	<string name="attendance_status_absent">결석</string>
+	<string name="attendance_status_absent_final">슬프지만 결석이에요...</string>
+	<string name="attendance_status_attendance">출석</string>
+	<string name="attendance_status_attendance_final">출석을 완료했어요!</string>
+	<string name="attendance_status_late">지각</string>
+	<string name="attendance_status_late_final">아쉽지만 지각이에요...</string>
+	<string name="attendance_caption">%d부</string>
+	<string name="attendance_final">최종</string>
+	<string name="attendance_nothing">-</string>
+
 </resources>

@@ -141,6 +141,9 @@ dependencies {
 
     // compose webview
     implementation "com.google.accompanist:accompanist-webview:$composeWebView"
+    implementation "androidx.compose.ui:ui-viewbinding:$composeUiViewBinding"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constraintlayoutCompose"
+
 
     // lifecycle viewmodel compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"

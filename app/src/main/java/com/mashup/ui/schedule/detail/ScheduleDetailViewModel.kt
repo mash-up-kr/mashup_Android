@@ -64,7 +64,7 @@ class ScheduleDetailViewModel @Inject constructor(
         var itemId = 0
         val eventDetailList = mutableListOf<EventDetail>()
 
-        if (location != null) {
+        if (location?.placeName != null) { // 위치 정보가 있는 경우(온라인이면 placeName이 Zoom으로 내려옴)
             eventDetailList.add(mapToLocationModel(itemId++, location))
         }
 

@@ -54,8 +54,8 @@ fun ScheduleDetailLocationContent(
 ) {
     val location = LatLng(latitude ?: 0.0, longitude ?: 0.0)
 
-    // ZoomLevel 전부 10으로 통일
-    val zoomLevel = 10.0
+    // ZoomLevel 전부 15으로 통일
+    val zoomLevel = 15.0
 
     // 카메라 초기 위치를 설정 (위도, 경도)
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {

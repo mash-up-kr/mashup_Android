@@ -45,8 +45,8 @@ data class Body(
 }
 
 data class Location(
-    val placeName: String,
-    val address: String,
-    val latitude: Double,
-    val longitude: Double
+    val placeName: String?,
+    val address: String?,
+    val latitude: Double?,
+    val longitude: Double?
 )

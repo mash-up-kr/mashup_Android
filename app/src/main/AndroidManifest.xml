@@ -32,7 +32,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="DataExtractionRules">
 
-        <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="false" />
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="${naver_client_id}" />
 
         <activity
             android:name=".ui.password.PasswordActivity"

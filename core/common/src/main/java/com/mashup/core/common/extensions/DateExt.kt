@@ -10,3 +10,12 @@ fun Date.format(pattern: String, locale: Locale = Locale.getDefault()): String {
     dateFormat.timeZone = TimeZone.getTimeZone("Asia/Seoul")
     return dateFormat.format(this)
 }
+
+fun Date.getTimeFormat(): String {
+    return try {
+        val timeLineFormat = SimpleDateFormat("a hh:mm", Locale.ENGLISH)
+        timeLineFormat.format(this)
+    } catch (ignore: Exception) {
+        "??:??"
+    }
+}

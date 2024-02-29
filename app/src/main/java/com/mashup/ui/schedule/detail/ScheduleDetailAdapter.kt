@@ -3,7 +3,6 @@ package com.mashup.ui.schedule.detail
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.databinding.DataBindingUtil
@@ -13,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ItemEventTimelineContentBinding
 import com.mashup.databinding.ItemEventTimelineHeaderBinding
+import com.mashup.ui.schedule.detail.composable.ScheduleDetailLocationContent
 import com.mashup.ui.schedule.model.EventDetail
 import com.mashup.ui.schedule.model.EventDetailType
 
-class EventDetailAdapter :
+class EventDetailAdapter(
+    private val copyToClipboard: (String) -> Unit
+) :
     ListAdapter<EventDetail, RecyclerView.ViewHolder>(EventComparator) {
 
     override fun getItemViewType(position: Int): Int {
@@ -46,7 +48,7 @@ class EventDetailAdapter :
                 holder.bind(getItem(position))
             }
             is LocationViewHolder -> {
-                holder.bind(getItem(position))
+                holder.bind(getItem(position), copyToClipboard)
             }
         }
     }
@@ -91,10 +93,18 @@ class EventDetailAdapter :
             )
         }
 
-        fun bind(item: EventDetail) {
-            composeView.setContent {
-                MashUpTheme {
-                    Text(text = "위치 정보")
+        fun bind(item: EventDetail, copyToClipboard: (String) -> Unit) {
+            item.location?.let { location ->
+                composeView.setContent {
+                    MashUpTheme {
+                        ScheduleDetailLocationContent(
+                            placeName = location.placeName.orEmpty(),
+                            address = location.address.orEmpty(),
+                            latitude = location.latitude,
+                            longitude = location.longitude,
+                            copyToClipboard = copyToClipboard
+                        )
+                    }
                 }
             }
         }

@@ -7,9 +7,10 @@ import java.util.Locale
 data class EventDetail(
     val id: Int,
     val type: EventDetailType,
-    val header: Header?,
-    val body: Body?,
-    val location: Location?
+    val header: Header? = null,
+    val body: Body? = null,
+    val location: Location? = null,
+    val info: Info? = null,
 )
 
 data class Header(
@@ -49,4 +50,10 @@ data class Location(
     val address: String?,
     val latitude: Double?,
     val longitude: Double?
+)
+
+data class Info(
+    val title: String,
+    val date: String,
+    val time: String
 )

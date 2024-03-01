@@ -35,9 +35,9 @@ import com.mashup.network.errorcode.ATTENDANCE_ALREADY_CHECKED
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
 import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
 import com.mashup.network.errorcode.ATTENDANCE_CODE_NOT_FOUND
+import com.mashup.network.errorcode.ATTENDANCE_DISTANCE_OUT_OF_RANGE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
-import com.mashup.network.errorcode.ATTENDANCE_DISTANCE_OUT_OF_RANGE
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +57,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
     private val permissionList = listOf(
         PERMISSION_CAMERA,
         PERMISSION_COARSE_LOCATION,
-        PERMISSION_FINE_LOCATION,
+        PERMISSION_FINE_LOCATION
     )
 
     private val locationManager: LocationManager? by lazy { (getSystemService(Context.LOCATION_SERVICE) as? LocationManager) }
@@ -243,7 +243,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
                 Intent(
                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                     Uri.fromParts("package", packageName, null)
-                ).also {  intent ->
+                ).also { intent ->
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
@@ -282,9 +282,9 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
         ) {
             return
         }

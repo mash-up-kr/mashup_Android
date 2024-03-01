@@ -1,11 +1,11 @@
 package com.mashup.fake
 
 import com.mashup.core.network.Response
-import com.mashup.data.dto.PlatformAttendanceResponse
-import com.mashup.data.dto.TotalAttendanceResponse
+import com.mashup.data.dto.AttendanceCheckRequest
 import com.mashup.data.dto.AttendanceCheckResponse
 import com.mashup.data.dto.AttendanceInfoResponse
-import com.mashup.data.dto.AttendanceCheckRequest
+import com.mashup.data.dto.PlatformAttendanceResponse
+import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.network.dao.AttendanceDao
 
 class FakeAttendanceDao : AttendanceDao {

@@ -49,7 +49,7 @@ class QRScanViewModel @Inject constructor(
         val response = attendanceRepository.attendanceCheck(
             code = recognizedCode,
             latitude = location.first ?: return@mashUpScope,
-            longitude = location.second ?: return@mashUpScope,
+            longitude = location.second ?: return@mashUpScope
         )
 
         if (!response.isSuccess()) {

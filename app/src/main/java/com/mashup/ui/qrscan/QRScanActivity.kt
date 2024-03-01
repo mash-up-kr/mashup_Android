@@ -37,6 +37,7 @@ import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
 import com.mashup.network.errorcode.ATTENDANCE_CODE_NOT_FOUND
 import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
+import com.mashup.network.errorcode.ATTENDANCE_DISTANCE_OUT_OF_RANGE
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -197,6 +198,9 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
             }
             MEMBER_NOT_FOUND -> {
                 "회원 정보를 찾을 수 없습니다."
+            }
+            ATTENDANCE_DISTANCE_OUT_OF_RANGE -> {
+                "유효한 출석체크 거리를 벗어났습니다."
             }
             else -> {
                 null

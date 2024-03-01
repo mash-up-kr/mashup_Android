@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
 import android.provider.Settings
@@ -41,7 +43,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
+class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
 
     private val viewModel: QRScanViewModel by viewModels()
 
@@ -56,6 +58,8 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         PERMISSION_COARSE_LOCATION,
         PERMISSION_FINE_LOCATION,
     )
+
+    private val locationManager: LocationManager? by lazy { (getSystemService(Context.LOCATION_SERVICE) as? LocationManager) }
 
     override fun initWindowInset() {
         // do nothing
@@ -108,6 +112,13 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         }
     }
 
+    override fun onLocationChanged(location: Location) {
+        val latitude = location.latitude
+        val longitude = location.longitude
+
+        viewModel.setLocation(latitude, longitude)
+    }
+
     private fun initButtons() {
         viewBinding.btnClose.setOnClickListener {
             finish()
@@ -157,6 +168,11 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         if (permissionHelper.isPermissionGranted(PERMISSION_CAMERA)) {
             cameraManager.startCamera()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        locationManager?.removeUpdates(this)
     }
 
     private fun handleAttendanceErrorCode(error: QRCodeState.Error) {
@@ -269,10 +285,11 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
             return
         }
 
-        (getSystemService(Context.LOCATION_SERVICE) as? LocationManager)?.let { locationManager ->
-            val currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            viewModel.setLocation(currentLocation?.latitude, currentLocation?.longitude)
-        }
+        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1f, this)
+        locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, this)
+
+        val currentLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        viewModel.setLocation(currentLocation?.latitude, currentLocation?.longitude)
     }
 
     override val layoutId: Int = R.layout.activity_qr_scan

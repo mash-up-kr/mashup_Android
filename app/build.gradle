@@ -37,6 +37,7 @@ android {
             useSupportLibrary true
         }
         buildConfigField "String", "API_KEY", "\"${properties["api.key"]}\""
+        buildConfigField "String", "NAVER_CLIENT_ID",  "\"${properties["naver.client.id"]}\""
     }
 
     sourceSets {

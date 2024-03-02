@@ -12,9 +12,9 @@ import javax.inject.Inject
 class AttendanceRepository @Inject constructor(
     private val attendanceDao: AttendanceDao
 ) {
-    suspend fun attendanceCheck(code: String): Response<AttendanceCheckResponse> {
+    suspend fun attendanceCheck(code: String, latitude: Double, longitude: Double): Response<AttendanceCheckResponse> {
         return attendanceDao.postAttendanceCheck(
-            AttendanceCheckRequest(code)
+            AttendanceCheckRequest(code, latitude, longitude)
         )
     }
 

@@ -1,11 +1,18 @@
 package com.mashup.ui.qrscan
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.net.Uri
+import android.provider.Settings
 import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -28,6 +35,7 @@ import com.mashup.network.errorcode.ATTENDANCE_ALREADY_CHECKED
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
 import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
 import com.mashup.network.errorcode.ATTENDANCE_CODE_NOT_FOUND
+import com.mashup.network.errorcode.ATTENDANCE_DISTANCE_OUT_OF_RANGE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_BEFORE
 import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
 import com.mashup.ui.qrscan.camera.CameraManager
@@ -36,7 +44,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
+class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
 
     private val viewModel: QRScanViewModel by viewModels()
 
@@ -45,6 +53,14 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     private val permissionHelper by lazy {
         PermissionHelper(this)
     }
+
+    private val permissionList = listOf(
+        PERMISSION_CAMERA,
+        PERMISSION_COARSE_LOCATION,
+        PERMISSION_FINE_LOCATION
+    )
+
+    private val locationManager: LocationManager? by lazy { (getSystemService(Context.LOCATION_SERVICE) as? LocationManager) }
 
     override fun initWindowInset() {
         // do nothing
@@ -97,6 +113,13 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         }
     }
 
+    override fun onLocationChanged(location: Location) {
+        val latitude = location.latitude
+        val longitude = location.longitude
+
+        viewModel.setLocation(latitude, longitude)
+    }
+
     private fun initButtons() {
         viewBinding.btnClose.setOnClickListener {
             finish()
@@ -110,10 +133,11 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
     }
 
     private fun startCameraWithPermissionCheck() {
-        if (permissionHelper.isPermissionGranted(PERMISSION_CAMERA)) {
-            cameraManager.startCamera()
+        if (permissionList.any { !permissionHelper.isPermissionGranted(it) }) {
+            requestQrAttendancePermissions()
         } else {
-            requestCameraPermission()
+            setLocationInfo()
+            cameraManager.startCamera()
         }
     }
 
@@ -147,6 +171,11 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        locationManager?.removeUpdates(this)
+    }
+
     private fun handleAttendanceErrorCode(error: QRCodeState.Error) {
         val codeMessage = when (error.code) {
             ATTENDANCE_ALREADY_CHECKED -> {
@@ -170,6 +199,9 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
             MEMBER_NOT_FOUND -> {
                 "회원 정보를 찾을 수 없습니다."
             }
+            ATTENDANCE_DISTANCE_OUT_OF_RANGE -> {
+                "유효한 출석체크 거리를 벗어났습니다."
+            }
             else -> {
                 null
             }
@@ -182,32 +214,39 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         cameraManager.stopCamera()
     }
 
-    private fun requestCameraPermission() =
-        permissionHelper.checkGrantedPermission(
-            permission = PERMISSION_CAMERA,
-            onRequestPermission = {
-                permissionHelper.requestPermission(
-                    requestCode = REQUEST_CODE_CAMERA,
-                    permission = PERMISSION_CAMERA
-                )
-            },
-            onShowRationaleUi = {
-                showRequestCameraPermissionDialog()
+    private fun requestQrAttendancePermissions() {
+        val deniedPermissions = mutableListOf<String>()
+        permissionList.forEach { permission ->
+            if (!permissionHelper.isPermissionGranted(permission)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                    showRequestPermissionRationale()
+                    return
+                } else {
+                    deniedPermissions.add(permission)
+                }
             }
-        )
+        }
 
-    private fun showRequestCameraPermissionDialog() {
+        if (deniedPermissions.isNotEmpty()) {
+            permissionHelper.requestPermissions(deniedPermissions.toTypedArray(), REQUEST_PERMISSION_CODE)
+        }
+    }
+
+    private fun showRequestPermissionRationale() {
         CommonDialog(this).apply {
-            setTitle(text = "카메라 권한 재설정")
-            setMessage(text = "QR 출석체크를 하기 위해서는\n카메라의 접근 권한이 필요해요.")
+            setTitle(text = "필요 권한 재설정")
+            setMessage(text = "QR 출석체크를 하기 위해서는\n[카메라, 위치정보]의 접근 권한이 필요해요.")
             setNegativeButton(text = "닫기") {
                 finish()
             }
             setPositiveButton("재설정") {
-                permissionHelper.requestPermission(
-                    requestCode = REQUEST_CODE_CAMERA,
-                    permission = PERMISSION_CAMERA
-                )
+                Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", packageName, null)
+                ).also { intent ->
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
             }
             show()
         }
@@ -221,7 +260,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            REQUEST_CODE_CAMERA -> {
+            REQUEST_PERMISSION_CODE -> {
                 if (grantResults.find { it == PackageManager.PERMISSION_GRANTED } != null) {
                     cameraManager.startCamera()
                 } else {
@@ -238,11 +277,32 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>() {
         }
     }
 
+    private fun setLocationInfo() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1f, this)
+        locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, this)
+
+        val currentLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        viewModel.setLocation(currentLocation?.latitude, currentLocation?.longitude)
+    }
+
     override val layoutId: Int = R.layout.activity_qr_scan
 
     companion object {
         private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
-        private const val REQUEST_CODE_CAMERA = 200
+        private const val PERMISSION_COARSE_LOCATION = android.Manifest.permission.ACCESS_COARSE_LOCATION
+        private const val PERMISSION_FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION
+        private const val REQUEST_PERMISSION_CODE = 200
         const val RESULT_CONFIRM_QR = 201
         const val RESULT_CONFIRM_SUCCESS_QR = 202
 

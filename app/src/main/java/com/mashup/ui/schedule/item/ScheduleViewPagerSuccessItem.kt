@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -75,7 +76,10 @@ fun ScheduleViewPagerSuccessItem(
                 width = 1.dp,
                 color = Gray100,
                 shape = RoundedCornerShape(20.dp)
-            )
+            ).clip(RoundedCornerShape(20.dp))
+            .clickable {
+                onClickScheduleInformation(data.scheduleResponse.scheduleId)
+            }
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -97,9 +101,6 @@ fun ScheduleViewPagerSuccessItem(
                 .background(color = Gray50, shape = RoundedCornerShape(16.dp))
                 .height(220.dp)
                 .padding(top = 16.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
-                .clickable {
-                    onClickScheduleInformation(data.scheduleResponse.scheduleId)
-                }
         ) {
             itemsIndexed(data.scheduleResponse.eventList, key = { _: Int, item: EventResponse ->
                 item.eventId

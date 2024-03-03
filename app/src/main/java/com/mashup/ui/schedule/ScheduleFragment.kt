@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.FragmentScheduleBinding
 import com.mashup.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,11 +28,13 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
     override fun initViews() {
         super.initViews()
         viewBinding.cvSchedule.setContent {
-            ScheduleRoute(
-                modifier = Modifier.fillMaxSize(),
-                mainViewModel = mainViewModel,
-                viewModel = viewModel
-            )
+            MashUpTheme {
+                ScheduleRoute(
+                    modifier = Modifier.fillMaxSize(),
+                    mainViewModel = mainViewModel,
+                    viewModel = viewModel
+                )
+            }
         }
     }
 

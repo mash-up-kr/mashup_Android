@@ -107,23 +107,25 @@ fun CardInfoItem(
                 )
             }
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier.size(20.dp),
-                    painter = painterResource(id = R.drawable.ic_location),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    colorFilter = ColorFilter.tint(color = Gray300)
-                )
+            if (location.isNotEmpty()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        modifier = Modifier.size(20.dp),
+                        painter = painterResource(id = R.drawable.ic_location),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                        colorFilter = ColorFilter.tint(color = Gray300)
+                    )
 
-                Text(
-                    style = Body3,
-                    text = location,
-                    color = Gray700
-                )
+                    Text(
+                        style = Body3,
+                        text = location,
+                        color = Gray700
+                    )
+                }
             }
         }
     }

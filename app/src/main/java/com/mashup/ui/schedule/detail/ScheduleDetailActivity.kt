@@ -1,5 +1,7 @@
 package com.mashup.ui.schedule.detail
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
@@ -18,7 +20,7 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
     private val viewModel: ScheduleDetailViewModel by viewModels()
 
     private val eventDetailAdapter by lazy {
-        EventDetailAdapter()
+        EventDetailAdapter(copyToClipboard = ::copyToClipboard)
     }
 
     override fun initViews() {
@@ -68,6 +70,13 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
     private fun initButton() {
         viewBinding.btnReturn.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun copyToClipboard(text: String) {
+        (getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager)?.let { clipboardManager ->
+            val clip = ClipData.newPlainText("location", text)
+            clipboardManager.setPrimaryClip(clip)
         }
     }
 

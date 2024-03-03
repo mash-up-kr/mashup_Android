@@ -8,6 +8,7 @@ plugins {
 }
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def naver_client_id = properties.getProperty('naver.client.id')
 
 android {
     lintOptions {
@@ -36,6 +37,7 @@ android {
             useSupportLibrary true
         }
         buildConfigField "String", "API_KEY", "\"${properties["api.key"]}\""
+        buildConfigField "String", "NAVER_CLIENT_ID",  "\"${properties["naver.client.id"]}\""
     }
 
     sourceSets {
@@ -56,14 +58,14 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            manifestPlaceholders = ["appName":"@string/app_name_debug"]
+            manifestPlaceholders = ["appName":"@string/app_name_debug", "naver_client_id": naver_client_id]
             minifyEnabled false
             buildConfigField "Boolean", "DEBUG_MODE", "true"
             signingConfig signingConfigs.debug
         }
         release {
             debuggable false
-            manifestPlaceholders = ["appName":"@string/app_name"]
+            manifestPlaceholders = ["appName":"@string/app_name", "naver_client_id": naver_client_id]
             minifyEnabled true
             shrinkResources true
             buildConfigField "Boolean", "DEBUG_MODE", "false"
@@ -155,4 +157,7 @@ dependencies {
     implementation "com.facebook.flipper:flipper:$flipperVersion"
     implementation "com.facebook.soloader:soloader:$soLoaderVersion"
     implementation "com.facebook.flipper:flipper-network-plugin:$flipperVersion"
+
+    // Naver Map
+    implementation "io.github.fornewid:naver-map-compose:1.4.0"
 }

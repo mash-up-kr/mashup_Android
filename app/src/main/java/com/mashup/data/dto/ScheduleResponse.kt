@@ -27,10 +27,15 @@ data class ScheduleResponse(
     val location: Location?
 ) {
 
+    @JsonClass(generateAdapter = true)
     data class Location(
-        val latitude: Double,
-        val longitude: Double,
+        @field:Json(name = "latitude")
+        val latitude: Double?,
+        @field:Json(name = "longitude")
+        val longitude: Double?,
+        @field:Json(name = "address")
         val address: String?,
+        @field:Json(name = "placeName")
         val placeName: String?
     )
 

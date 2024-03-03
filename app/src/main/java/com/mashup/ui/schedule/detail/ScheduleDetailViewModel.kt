@@ -68,7 +68,7 @@ class ScheduleDetailViewModel @Inject constructor(
         title: String,
         date: String,
         eventList: List<EventResponse>,
-        location: ScheduleResponse.Location?,
+        location: ScheduleResponse.Location?
     ): List<EventDetail> {
         var itemId = 0
         val eventDetailList = mutableListOf<EventDetail>()
@@ -100,7 +100,7 @@ class ScheduleDetailViewModel @Inject constructor(
                 eventId = eventIndex + 1,
                 startedAt = event.startedAt,
                 endedAt = event.endedAt
-            ),
+            )
         )
     }
 
@@ -117,7 +117,7 @@ class ScheduleDetailViewModel @Inject constructor(
                 title = content.title,
                 content = content.content.orEmpty(),
                 startedAt = content.startedAt
-            ),
+            )
         )
     }
 
@@ -146,8 +146,8 @@ class ScheduleDetailViewModel @Inject constructor(
             info = Info(
                 title = title,
                 date = date,
-                time = time,
-            ),
+                time = time
+            )
         )
     }
 }

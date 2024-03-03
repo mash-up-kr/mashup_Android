@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ItemEventTimelineContentBinding
 import com.mashup.databinding.ItemEventTimelineHeaderBinding
-import com.mashup.ui.schedule.detail.composable.ScheduleDetailLocationContent
 import com.mashup.ui.schedule.detail.composable.ScheduleDetailInfoContent
+import com.mashup.ui.schedule.detail.composable.ScheduleDetailLocationContent
 import com.mashup.ui.schedule.model.EventDetail
 import com.mashup.ui.schedule.model.EventDetailType
 
 class EventDetailAdapter(
-    private val copyToClipboard: (String) -> Unit,
+    private val copyToClipboard: (String) -> Unit
 ) :
     ListAdapter<EventDetail, RecyclerView.ViewHolder>(EventComparator) {
 

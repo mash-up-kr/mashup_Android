@@ -10,7 +10,7 @@ data class EventDetail(
     val header: Header? = null,
     val body: Body? = null,
     val location: Location? = null,
-    val info: Info? = null,
+    val info: Info? = null
 )
 
 data class Header(

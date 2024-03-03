@@ -17,7 +17,7 @@ fun ScheduleDetailInfoContent(
     title: String,
     date: String,
     time: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
         Text(text = title, style = Header1)
@@ -38,7 +38,7 @@ fun PreviewScheduleDetailInfoContent() {
         ScheduleDetailInfoContent(
             title = "1차 정기 세미나",
             date = "3월 27일",
-            time = "오후 3:00 - 오전 7:00",
+            time = "오후 3:00 - 오전 7:00"
         )
     }
 }

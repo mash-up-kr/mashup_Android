@@ -41,7 +41,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.mashup.R
-import com.mashup.core.common.extensions.fromHtml
 import com.mashup.core.ui.colors.Brand100
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray50
@@ -53,6 +52,7 @@ import com.mashup.ui.schedule.model.ScheduleCard
 import com.mashup.ui.schedule.util.onBindAttendanceImage
 import com.mashup.ui.schedule.util.onBindAttendanceStatus
 import com.mashup.ui.schedule.util.onBindAttendanceTime
+import java.util.*
 
 @Composable
 fun ScheduleViewPagerSuccessItem(
@@ -100,7 +100,7 @@ fun ScheduleViewPagerSuccessItem(
             modifier = Modifier
                 .background(color = Gray50, shape = RoundedCornerShape(16.dp))
                 .height(220.dp)
-                .padding(top = 16.dp, bottom = 20.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 16.dp, start = 20.dp, end = 20.dp)
         ) {
             itemsIndexed(data.scheduleResponse.eventList, key = { _: Int, item: EventResponse ->
                 item.eventId
@@ -151,6 +151,10 @@ fun ScheduleViewPagerSuccessItem(
                     image = onBindAttendanceImage(status, isFinal = true),
                     isFinal = true
                 )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
 

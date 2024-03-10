@@ -62,6 +62,6 @@ class UserPreferenceRepository @Inject constructor(
     }
 
     suspend fun getCurrentGenerationNumber(): Int {
-        return getUserPreference().first().generationNumbers.first()
+        return getUserPreference().first().generationNumbers.last()
     }
 }

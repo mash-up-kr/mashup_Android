@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -60,7 +61,10 @@ fun ScheduleViewPagerInProgressItem(
             width = 1.dp,
             color = Gray100,
             shape = RoundedCornerShape(20.dp)
-        ).padding(20.dp),
+        ).clip(RoundedCornerShape(20.dp))
+            .clickable {
+                onClickScheduleInformation(data.scheduleResponse.scheduleId)
+            }.padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CardInfoItem(
@@ -83,10 +87,7 @@ fun ScheduleViewPagerInProgressItem(
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
-                    }.clickable {
-                        onClickScheduleInformation(data.scheduleResponse.scheduleId)
                     },
-
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {

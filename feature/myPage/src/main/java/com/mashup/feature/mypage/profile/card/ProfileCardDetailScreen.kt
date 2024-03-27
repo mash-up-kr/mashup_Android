@@ -38,21 +38,10 @@ fun ProfileCardDetailContent(
     onDownLoadClicked: (Bitmap) -> Unit = {},
     onEditClicked: () -> Unit = {}
 ) {
-    val snapshot = captureBitmap {
-        ProfileCard(
-            modifier = Modifier.size(320.dp, 220.dp).padding(horizontal = 20.dp),
-            generationNumber = generationNumber,
-            name = name,
-            platform = platform,
-            isRunning = isRunning,
-            team = team,
-            staff = staff,
-            onClick = {}
-        )
-    }
-
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         MashUpToolbar(
             modifier = Modifier.fillMaxWidth(),
@@ -60,9 +49,21 @@ fun ProfileCardDetailContent(
             showBackButton = true,
             onClickBackButton = onBackPressed
         )
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
+
+        val snapshot = captureBitmap {
+            ProfileCard(
+                modifier = Modifier.size(320.dp, 220.dp).padding(horizontal = 20.dp),
+                generationNumber = generationNumber,
+                name = name,
+                platform = platform,
+                isRunning = isRunning,
+                team = team,
+                staff = staff,
+                onClick = {}
+            )
+        }
+
+        Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

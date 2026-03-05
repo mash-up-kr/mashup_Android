@@ -5,6 +5,8 @@ plugins {
 }
 
 android {
+    namespace "com.mashup.core.common"
+
     compileSdk compileVersion
 
     defaultConfig {

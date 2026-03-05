@@ -11,6 +11,8 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 def naver_client_id = properties.getProperty('naver.client.id')
 
 android {
+    namespace "com.mashup"
+
     lintOptions {
         disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation",
                 "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"

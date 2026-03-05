@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace "com.mashup.core.testing"
     compileSdk compileVersion
 
     defaultConfig {

@@ -33,15 +33,21 @@ android {
 }
 
 dependencies {
+    def composeBom = platform('androidx.compose:compose-bom:2026.01.01')
+
+    implementation composeBom
+    androidTestImplementation composeBom
+
     implementation project(":core:common")
 
-    api "androidx.compose.ui:ui:$composeVersion"
-    api "androidx.compose.material:material:$composeVersion"
-    api 'androidx.compose.material3:material3:1.0.0-alpha14'
-    api "androidx.compose.ui:ui-tooling-preview:$composeVersion"
+    api "androidx.compose.ui:ui"
+    api "androidx.compose.foundation:foundation"
+    api "androidx.compose.material:material"
+    api "androidx.compose.material3:material3"
+    api "androidx.compose.ui:ui-tooling-preview"
     api 'androidx.activity:activity-compose:1.4.0'
     api 'androidx.compose.ui:ui-util:1.2.0'
-    debugApi "androidx.compose.ui:ui-tooling:$composeVersion"
+    debugApi "androidx.compose.ui:ui-tooling"
     api "com.google.accompanist:accompanist-pager:$composeViewPagerVersion"
     api "com.google.accompanist:accompanist-pager-indicators:$composeViewPagerVersion"
 }

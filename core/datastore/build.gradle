@@ -30,6 +30,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore-preferences:1.2.0"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerialization")
 }

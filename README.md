@@ -4,9 +4,12 @@ MashUp Official App
 
 > 🏆 명예 멤버
 >
+> [~13기]
 > [김유정](https://github.com/YuChocopie)
 > [양민욱](https://github.com/jaeryo2357)
 > [안석주](https://github.com/Ahn-seokjoo)
+>
+> [14기]
 > [정민지](https://github.com/JungMinji08)
 > [김현국](https://github.com/014967)
 

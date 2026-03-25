@@ -21,6 +21,7 @@ import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.ProgressDialogContainer
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.common.widget.CommonDialog
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.ui.error.NetworkDisconnectActivity
@@ -51,7 +52,9 @@ open class BaseComposeActivity : ComponentActivity() {
 
         initAnimationType()
         setContent {
-            MainContainer()
+            MashUpTheme {
+                MainContainer()
+            }
         }
     }
 

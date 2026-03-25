@@ -51,14 +51,14 @@ open class BaseComposeFragment : Fragment() {
             )
             setContent {
                 MashUpTheme {
-                    initViews()
+                    MainContainer()
                 }
             }
         }
     }
 
     @Composable
-    open fun initViews() {
+    open fun MainContainer() {
         /* explicitly empty */
     }
 

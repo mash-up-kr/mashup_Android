@@ -2,6 +2,7 @@ package com.mashup.base
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.core.content.IntentCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
@@ -64,15 +65,7 @@ open class BaseComposeActivity : ComponentActivity() {
     }
 
     private fun initAnimationType() {
-        when (intent.getSerializableExtra(EXTRA_ANIMATION)) {
-            NavigationAnimationType.SLIDE -> {
-                animationType = NavigationAnimationType.SLIDE
-            }
-
-            NavigationAnimationType.PULL -> {
-                animationType = NavigationAnimationType.PULL
-            }
-        }
+        animationType = IntentCompat.getSerializableExtra(intent, EXTRA_ANIMATION, NavigationAnimationType::class.java)
         animationType?.run {
             overridePendingTransition(
                 enterIn,

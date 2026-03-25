@@ -67,13 +67,13 @@ open class BaseComposeActivity : ComponentActivity() {
                 overrideActivityTransition(
                     OVERRIDE_TRANSITION_CLOSE,
                     0,
-                    exitOut,
+                    exitOut
                 )
             } else {
                 @Suppress("DEPRECATION")
                 overridePendingTransition(
                     0,
-                    exitOut,
+                    exitOut
                 )
             }
         }
@@ -95,13 +95,13 @@ open class BaseComposeActivity : ComponentActivity() {
                 overrideActivityTransition(
                     OVERRIDE_TRANSITION_OPEN,
                     enterIn,
-                    enterOut,
+                    enterOut
                 )
             } else {
                 @Suppress("DEPRECATION")
                 overridePendingTransition(
                     enterIn,
-                    enterOut,
+                    enterOut
                 )
             }
         }

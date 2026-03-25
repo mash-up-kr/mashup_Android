@@ -1,6 +1,5 @@
 package com.mashup.base
 
-import android.app.Dialog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.core.os.bundleOf
@@ -15,7 +14,7 @@ import com.mashup.core.common.constant.DISCONNECT_NETWORK
 import com.mashup.core.common.constant.INTERNAL_SERVER_ERROR
 import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.core.common.model.NavigationAnimationType
-import com.mashup.core.common.utils.ProgressbarUtil
+import com.mashup.core.common.utils.ProgressDialogContainer
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.network.NetworkStatusState
@@ -40,7 +39,7 @@ open class BaseComposeActivity : ComponentActivity() {
 
     private var animationType: NavigationAnimationType? = null
 
-    private var loadingDialog: Dialog? = null
+    private val loadingDialogContainer = ProgressDialogContainer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +58,17 @@ open class BaseComposeActivity : ComponentActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        loadingDialogContainer.clear()
+    }
+
     private fun initAnimationType() {
         when (intent.getSerializableExtra(EXTRA_ANIMATION)) {
             NavigationAnimationType.SLIDE -> {
                 animationType = NavigationAnimationType.SLIDE
             }
+
             NavigationAnimationType.PULL -> {
                 animationType = NavigationAnimationType.PULL
             }
@@ -83,6 +88,7 @@ open class BaseComposeActivity : ComponentActivity() {
                     is NetworkStatusState.NetworkConnected -> {
                         onNetworkConnected()
                     }
+
                     is NetworkStatusState.NetworkDisconnected -> {
                         onNetworkDisConnected()
                     }
@@ -93,7 +99,7 @@ open class BaseComposeActivity : ComponentActivity() {
 
     protected fun flowLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
-        block: suspend CoroutineScope.() -> Unit
+        block: suspend CoroutineScope.() -> Unit,
     ) {
         lifecycleScope.launch {
             repeatOnLifecycle(state) {
@@ -113,6 +119,7 @@ open class BaseComposeActivity : ComponentActivity() {
             BAD_REQUEST, INTERNAL_SERVER_ERROR -> {
                 showToast("잠시 후 다시 시도해주세요.")
             }
+
             UNAUTHORIZED -> {
                 CommonDialog(this).apply {
                     setTitle(text = "주의")
@@ -126,6 +133,7 @@ open class BaseComposeActivity : ComponentActivity() {
                     show()
                 }
             }
+
             DISCONNECT_NETWORK -> {
                 startActivity(
                     NetworkDisconnectActivity.newIntent(this)
@@ -138,15 +146,9 @@ open class BaseComposeActivity : ComponentActivity() {
         ToastUtil.showToast(this, text)
     }
 
-    fun showLoading() {
-        if (loadingDialog == null) {
-            loadingDialog = ProgressbarUtil.show(this)
-        }
-    }
+    fun showLoading() = loadingDialogContainer.showLoading(this)
 
-    fun hideLoading() {
-        loadingDialog?.dismiss()
-    }
+    fun hideLoading() = loadingDialogContainer.hideLoading()
 
     protected fun sendActivityEnterType(screenName: String) {
         val type = intent.getStringExtra(EXTRA_ACTIVITY_ENTER_TYPE) ?: return

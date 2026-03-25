@@ -1,6 +1,5 @@
 package com.mashup.base
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -11,7 +10,7 @@ import com.mashup.core.common.constant.BAD_REQUEST
 import com.mashup.core.common.constant.DISCONNECT_NETWORK
 import com.mashup.core.common.constant.INTERNAL_SERVER_ERROR
 import com.mashup.core.common.constant.UNAUTHORIZED
-import com.mashup.core.common.utils.ProgressbarUtil
+import com.mashup.core.common.utils.ProgressDialogContainer
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.network.NetworkStatusState
@@ -33,11 +32,16 @@ open class BaseComposeFragment : Fragment() {
     val isConnectedNetwork: Boolean
         get() = networkStateDetector.hasNetworkConnection()
 
-    private var loadingDialog: Dialog? = null
+    private val loadingDialogContainer = ProgressDialogContainer()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserves()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        loadingDialogContainer.clear()
     }
 
     open fun initObserves() {
@@ -47,6 +51,7 @@ open class BaseComposeFragment : Fragment() {
                     is NetworkStatusState.NetworkConnected -> {
                         onNetworkConnected()
                     }
+
                     is NetworkStatusState.NetworkDisconnected -> {
                         onNetworkDisConnected()
                     }
@@ -57,7 +62,7 @@ open class BaseComposeFragment : Fragment() {
 
     protected fun flowViewLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
-        block: suspend CoroutineScope.() -> Unit
+        block: suspend CoroutineScope.() -> Unit,
     ) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(state) {
@@ -77,6 +82,7 @@ open class BaseComposeFragment : Fragment() {
             BAD_REQUEST, INTERNAL_SERVER_ERROR -> {
                 showToast("잠시 후 다시 시도해주세요.")
             }
+
             UNAUTHORIZED -> {
                 CommonDialog(requireContext()).apply {
                     setTitle(text = "주의")
@@ -92,6 +98,7 @@ open class BaseComposeFragment : Fragment() {
                     show()
                 }
             }
+
             DISCONNECT_NETWORK -> {
                 requireActivity().startActivity(
                     NetworkDisconnectActivity.newIntent(requireContext())
@@ -104,13 +111,7 @@ open class BaseComposeFragment : Fragment() {
         ToastUtil.showToast(requireContext(), text)
     }
 
-    fun showLoading() {
-        if (loadingDialog == null) {
-            loadingDialog = ProgressbarUtil.show(requireContext())
-        }
-    }
+    fun showLoading() = loadingDialogContainer.showLoading(requireContext())
 
-    fun hideLoading() {
-        loadingDialog?.dismiss()
-    }
+    fun hideLoading() = loadingDialogContainer.hideLoading()
 }

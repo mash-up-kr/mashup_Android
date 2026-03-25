@@ -1,7 +1,12 @@
 package com.mashup.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +18,7 @@ import com.mashup.core.common.constant.UNAUTHORIZED
 import com.mashup.core.common.utils.ProgressDialogContainer
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.common.widget.CommonDialog
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.network.NetworkStatusState
 import com.mashup.network.data.NetworkStatusDetector
 import com.mashup.ui.error.NetworkDisconnectActivity
@@ -33,6 +39,28 @@ open class BaseComposeFragment : Fragment() {
         get() = networkStateDetector.hasNetworkConnection()
 
     private val loadingDialogContainer = ProgressDialogContainer()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            setContent {
+                MashUpTheme {
+                    initViews()
+                }
+            }
+        }
+    }
+
+    @Composable
+    open fun initViews() {
+        /* explicitly empty */
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

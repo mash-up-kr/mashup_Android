@@ -1,5 +1,6 @@
 package com.mashup.base
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.core.content.IntentCompat
@@ -52,10 +53,19 @@ open class BaseComposeActivity : ComponentActivity() {
     override fun finish() {
         super.finish()
         animationType?.run {
-            overridePendingTransition(
-                0,
-                exitOut
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                overrideActivityTransition(
+                    OVERRIDE_TRANSITION_CLOSE,
+                    0,
+                    exitOut,
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                overridePendingTransition(
+                    0,
+                    exitOut,
+                )
+            }
         }
     }
 
@@ -65,12 +75,25 @@ open class BaseComposeActivity : ComponentActivity() {
     }
 
     private fun initAnimationType() {
-        animationType = IntentCompat.getSerializableExtra(intent, EXTRA_ANIMATION, NavigationAnimationType::class.java)
+        animationType = IntentCompat.getSerializableExtra(
+            intent,
+            EXTRA_ANIMATION,
+            NavigationAnimationType::class.java
+        )
         animationType?.run {
-            overridePendingTransition(
-                enterIn,
-                enterOut
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                overrideActivityTransition(
+                    OVERRIDE_TRANSITION_OPEN,
+                    enterIn,
+                    enterOut,
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                overridePendingTransition(
+                    enterIn,
+                    enterOut,
+                )
+            }
         }
     }
 

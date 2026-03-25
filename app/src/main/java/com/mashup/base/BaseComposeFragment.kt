@@ -90,7 +90,7 @@ open class BaseComposeFragment : Fragment() {
 
     protected fun flowViewLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
-        block: suspend CoroutineScope.() -> Unit,
+        block: suspend CoroutineScope.() -> Unit
     ) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(state) {

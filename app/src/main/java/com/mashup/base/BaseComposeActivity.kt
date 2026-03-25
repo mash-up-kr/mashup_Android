@@ -3,6 +3,8 @@ package com.mashup.base
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
 import androidx.core.content.IntentCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
@@ -48,6 +50,14 @@ open class BaseComposeActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         initAnimationType()
+        setContent {
+            initViews()
+        }
+    }
+
+    @Composable
+    open fun initViews() {
+        /* explicitly empty */
     }
 
     override fun finish() {

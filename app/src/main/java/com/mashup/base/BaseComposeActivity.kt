@@ -51,12 +51,12 @@ open class BaseComposeActivity : ComponentActivity() {
 
         initAnimationType()
         setContent {
-            initViews()
+            MainContainer()
         }
     }
 
     @Composable
-    open fun initViews() {
+    open fun MainContainer() {
         /* explicitly empty */
     }
 

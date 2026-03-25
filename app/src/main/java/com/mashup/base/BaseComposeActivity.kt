@@ -128,7 +128,7 @@ open class BaseComposeActivity : ComponentActivity() {
 
     protected fun flowLifecycleScope(
         state: Lifecycle.State = Lifecycle.State.STARTED,
-        block: suspend CoroutineScope.() -> Unit,
+        block: suspend CoroutineScope.() -> Unit
     ) {
         lifecycleScope.launch {
             repeatOnLifecycle(state) {

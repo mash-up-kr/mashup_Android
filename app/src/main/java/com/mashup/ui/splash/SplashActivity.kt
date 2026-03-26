@@ -40,14 +40,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setUi()
         observeViewModel()
         initAnalyticsManager()
-    }
-
-    private fun setUi() {
-        setStatusBarColorRes(com.mashup.core.common.R.color.brand500)
-        setStatusBarDarkTextColor(false)
     }
 
     private fun observeViewModel() {

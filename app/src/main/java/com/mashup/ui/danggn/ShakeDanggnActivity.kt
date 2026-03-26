@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -41,7 +43,9 @@ class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
         viewBinding.shakeDanggnScreen.setContent {
             MashUpTheme {
                 ShakeDanggnScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     viewModel = viewModel,
                     rankingViewModel = rankingViewModel,
                     onClickBackButton = this::onBackPressed,

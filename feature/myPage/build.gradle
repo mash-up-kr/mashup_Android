@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.plugin.compose'
     id 'com.google.devtools.ksp'
@@ -27,9 +26,6 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
@@ -42,7 +38,7 @@ dependencies {
     debugImplementation project(':core:testing')
 
     implementation "com.google.dagger:hilt-android:$hiltVersion"
-    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+    ksp "com.google.dagger:hilt-compiler:$hiltVersion"
 
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"

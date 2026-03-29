@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -65,11 +66,13 @@ fun DanggnRoundContent(
                 RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
             )
             .background(color = White)
+            .navigationBarsPadding()
     ) {
         BottomSheetHandler()
         BottomSheetTitle(title = "랭킹 회차")
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
+                .weight(1f)
         ) {
             itemsIndexed(rounds, key = { _, round -> round.id }) { index, round ->
                 DnaggnRoundItem(

@@ -1,5 +1,6 @@
 package com.mashup.ui.attendance.member
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -31,6 +35,7 @@ import com.google.android.material.chip.ChipGroup
 import com.mashup.core.common.R
 import com.mashup.core.common.extensions.dp
 import com.mashup.core.common.extensions.gone
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.databinding.DialogMemberInfoBinding
 import com.mashup.feature.mypage.profile.card.ProfileCard
 import com.mashup.feature.mypage.profile.model.ProfileCardData
@@ -57,6 +62,23 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
                 dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             return bottomSheet?.let {
                 BottomSheetBehavior.from(bottomSheet)
+            }
+        }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        object : BottomSheetDialog(requireContext(), theme) {
+            override fun onAttachedToWindow() {
+                super.onAttachedToWindow()
+
+                window?.let {
+                    WindowCompat.setDecorFitsSystemWindows(it, false)
+                }
+
+                findViewById<View>(com.google.android.material.R.id.container)?.apply {
+                    fitsSystemWindows = false
+                }
+
+                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
             }
         }
 
@@ -88,9 +110,21 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
                 )
             }
 
+        initWindowInset()
+
         addGlobalLayoutListener(view)
         initView()
         setObserver()
+    }
+
+    private fun initWindowInset() {
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
     }
 
     private fun addGlobalLayoutListener(view: View) {

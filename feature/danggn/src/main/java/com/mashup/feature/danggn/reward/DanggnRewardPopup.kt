@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.reward
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,11 @@ import android.view.ViewTreeObserver
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,10 +34,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray400
@@ -51,6 +58,9 @@ import com.mashup.core.common.R as CR
 
 @AndroidEntryPoint
 class DanggnRewardPopup : BottomSheetDialogFragment() {
+    private var _composeView: ComposeView? = null
+    private val composeView: ComposeView
+        get() = _composeView!!
     private val rankingViewModel: DanggnRankingViewModel by activityViewModels()
 
     private val behavior: BottomSheetBehavior<View>?
@@ -62,12 +72,31 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             }
         }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        object : BottomSheetDialog(requireContext(), theme) {
+            override fun onAttachedToWindow() {
+                super.onAttachedToWindow()
+
+                window?.let {
+                    WindowCompat.setDecorFitsSystemWindows(it, false)
+                }
+
+                findViewById<View>(com.google.android.material.R.id.container)?.apply {
+                    fitsSystemWindows = false
+                }
+
+                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
+        _composeView = ComposeView(requireContext())
+
+        return composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
@@ -95,7 +124,19 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
                 isCancelable = false
             }
 
+        initWindowInset()
+
         addGlobalLayoutListener(view)
+    }
+
+    private fun initWindowInset() {
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+        ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
     }
 
     private fun addGlobalLayoutListener(view: View) {
@@ -153,71 +194,77 @@ fun DanggnRewardPopupScreen(
 ) {
     var text by remember { mutableStateOf("") }
 
-    Column(
+    Box(
         modifier = modifier
             .background(
                 color = White,
                 shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
             )
-            .padding(20.dp)
+            .navigationBarsPadding()
     ) {
-        Row {
-            Text(text = "랭킹 1위의 리워드", style = SubTitle2, modifier = Modifier.weight(1f))
-
-            Image(
-                painter = painterResource(id = CR.drawable.ic_xmark),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable { onClickDismissButton() }
-            )
-        }
-
-        Text(
-            text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
-            style = Body5,
-            color = Gray600,
-            modifier = Modifier.padding(top = 8.dp, bottom = 26.dp)
-        )
-
-        Row(
-            modifier = Modifier.padding(vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            BasicTextField(
-                value = text,
-                onValueChange = { if (it.length <= DanggnRewardPopup.MAX_LENGTH) text = it },
-                modifier = Modifier.weight(1f)
-            )
-            Image(
-                painter = painterResource(id = CR.drawable.ic_xmark),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(16.dp)
-                    .clickable { text = "" }
-            )
-        }
-
-        Divider(thickness = 2.dp, color = Gray200)
-
-        Text(
-            text = "${text.length}/${DanggnRewardPopup.MAX_LENGTH}",
-            style = Body4,
-            color = Gray400,
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(4.dp)
-        )
-
-        MashUpButton(
-            text = "공지 등록하기",
-            onClick = { onClickSubmitButton(text) },
-            isEnabled = text.isNotEmpty(),
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp)
-        )
+                .padding(20.dp)
+        ) {
+            Row {
+                Text(text = "랭킹 1위의 리워드", style = SubTitle2, modifier = Modifier.weight(1f))
+
+                Image(
+                    painter = painterResource(id = CR.drawable.ic_xmark),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable { onClickDismissButton() }
+                )
+            }
+
+            Text(
+                text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
+                style = Body5,
+                color = Gray600,
+                modifier = Modifier.padding(top = 8.dp, bottom = 26.dp)
+            )
+
+            Row(
+                modifier = Modifier.padding(vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BasicTextField(
+                    value = text,
+                    onValueChange = { if (it.length <= DanggnRewardPopup.MAX_LENGTH) text = it },
+                    modifier = Modifier.weight(1f)
+                )
+                Image(
+                    painter = painterResource(id = CR.drawable.ic_xmark),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .size(16.dp)
+                        .clickable { text = "" }
+                )
+            }
+
+            Divider(thickness = 2.dp, color = Gray200)
+
+            Text(
+                text = "${text.length}/${DanggnRewardPopup.MAX_LENGTH}",
+                style = Body4,
+                color = Gray400,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(4.dp)
+            )
+
+            MashUpButton(
+                text = "공지 등록하기",
+                onClick = { onClickSubmitButton(text) },
+                isEnabled = text.isNotEmpty(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp)
+            )
+        }
     }
 }
 

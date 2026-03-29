@@ -1,10 +1,14 @@
 package com.mashup.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -12,7 +16,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.databinding.DialogBaseBottomSheetBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -34,6 +40,23 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
                 dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             return bottomSheet?.let {
                 BottomSheetBehavior.from(bottomSheet)
+            }
+        }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        object : BottomSheetDialog(requireContext(), theme) {
+            override fun onAttachedToWindow() {
+                super.onAttachedToWindow()
+
+                window?.let {
+                    WindowCompat.setDecorFitsSystemWindows(it, false)
+                }
+
+                findViewById<View>(com.google.android.material.R.id.container)?.apply {
+                    fitsSystemWindows = false
+                }
+
+                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
             }
         }
 
@@ -60,6 +83,7 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initWindowInset()
         initViews()
         initObserves()
 
@@ -88,6 +112,23 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
                     behavior?.peekHeight = viewBinding.root.height
                 }
             })
+    }
+
+    open fun initWindowInset() {
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        _rootViewBinding?.let { binding ->
+            ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
+        }
+
+        _childViewBinding?.let { binding ->
+            ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
+        }
     }
 
     open fun initViews() {

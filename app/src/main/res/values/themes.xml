@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.MashUp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -7,6 +7,8 @@
         <!-- Status bar color - edge-to-edge 대응-->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:enforceNavigationBarContrast"
+            tools:targetApi="29">false</item>
 
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->

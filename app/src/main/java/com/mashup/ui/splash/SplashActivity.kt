@@ -11,8 +11,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_LINK
-import com.mashup.core.common.extensions.setStatusBarColorRes
-import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository

@@ -209,6 +209,11 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        allPermission = permissionList.all { permissionHelper.isPermissionGranted(it)}
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

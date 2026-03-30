@@ -75,9 +75,9 @@ fun QRScanScreen(
                     cameraManager.startCamera(view)
                 }
 
-                if(allPermission){
+                if (allPermission) {
                     onLocationInfo()
-                } else{
+                } else {
                     onRequestQrAttendancePermissions()
                 }
             }

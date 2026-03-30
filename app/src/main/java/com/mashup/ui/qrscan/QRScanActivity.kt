@@ -9,9 +9,15 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.Settings
 import android.view.ViewGroup
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.camera.view.PreviewView
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +26,7 @@ import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseComposeActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_QR
 import com.mashup.constant.log.LOG_QR_DONE
@@ -44,7 +51,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
+class QRScanActivity : BaseComposeActivity(), LocationListener {
 
     private val viewModel: QRScanViewModel by viewModels()
 
@@ -62,55 +69,38 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
 
     private val locationManager: LocationManager? by lazy { (getSystemService(Context.LOCATION_SERVICE) as? LocationManager) }
 
-    override fun initWindowInset() {
-        // do nothing
+    private var allPermission by mutableStateOf(false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
+        initViews()
+
+        setContent {
+            QRScanScreen(
+                viewModel = viewModel,
+                cameraManager = cameraManager,
+                onShowLoading = { showLoading() },
+                onHideLoading = { hideLoading() },
+                onFinish = { finish() },
+                onHandleCommonError = { handleCommonError(it) },
+                onHandleAttendanceErrorCode = { handleAttendanceErrorCode(it) },
+                onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
+                hasPermission = allPermission,
+                onLocationInfo = { setLocationInfo() }
+            )
+        }
     }
 
-    override fun initViews() {
+    fun initViews() {
         window.statusBarColor = Color.TRANSPARENT
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
         AnalyticsManager.addEvent(LOG_QR)
-        initStatusBarMargin()
-        initButtons()
-        initCamera()
-    }
 
-    private fun initStatusBarMargin() {
-        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { _, insets ->
-            val systemInset = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-
-            val marginTop = viewBinding.btnClose.marginTop
-            (viewBinding.btnClose.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
-                marginTop + (systemInset.top / 2)
-
-            WindowInsetsCompat.CONSUMED
-        }
-    }
-
-    override fun initObserves() {
-        flowLifecycleScope {
-            viewModel.qrcodeState.collectLatest { qrcodeState ->
-                when (qrcodeState) {
-                    QRCodeState.Loading -> {
-                        showLoading()
-                    }
-                    QRCodeState.Success -> {
-                        hideLoading()
-                        setResult(RESULT_CONFIRM_SUCCESS_QR)
-                        finish()
-                    }
-                    is QRCodeState.Error -> {
-                        hideLoading()
-                        handleCommonError(qrcodeState.code)
-                        handleAttendanceErrorCode(qrcodeState)
-
-                        setResult(RESULT_CONFIRM_QR)
-                        finish()
-                    }
-                }
-            }
-        }
+        createCardAnalyzer()
+        createCameraManager()
     }
 
     override fun onLocationChanged(location: Location) {
@@ -118,27 +108,6 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
         val longitude = location.longitude
 
         viewModel.setLocation(latitude, longitude)
-    }
-
-    private fun initButtons() {
-        viewBinding.btnClose.setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun initCamera() {
-        createCardAnalyzer()
-        createCameraManager()
-        startCameraWithPermissionCheck()
-    }
-
-    private fun startCameraWithPermissionCheck() {
-        if (permissionList.any { !permissionHelper.isPermissionGranted(it) }) {
-            requestQrAttendancePermissions()
-        } else {
-            setLocationInfo()
-            cameraManager.startCamera()
-        }
     }
 
     private fun createCardAnalyzer() {
@@ -158,17 +127,9 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
     private fun createCameraManager() {
         cameraManager = CameraManager(
             context = this,
-            finderView = viewBinding.viewFinder,
             lifecycleOwner = this,
             baseImageAnalyzer = qrCodeAnalyzer
         )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (permissionHelper.isPermissionGranted(PERMISSION_CAMERA)) {
-            cameraManager.startCamera()
-        }
     }
 
     override fun onDestroy() {
@@ -209,12 +170,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
         codeMessage?.run { showToast(this) }
     }
 
-    override fun onPause() {
-        super.onPause()
-        cameraManager.stopCamera()
-    }
-
-    private fun requestQrAttendancePermissions() {
+    fun requestQrAttendancePermissions() {
         val deniedPermissions = mutableListOf<String>()
         permissionList.forEach { permission ->
             if (!permissionHelper.isPermissionGranted(permission)) {
@@ -261,9 +217,9 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
 
         when (requestCode) {
             REQUEST_PERMISSION_CODE -> {
-                if (grantResults.find { it == PackageManager.PERMISSION_GRANTED } != null) {
-                    cameraManager.startCamera()
-                } else {
+                allPermission = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+
+                if(!allPermission){
                     CommonDialog(this).apply {
                         setTitle(text = "카메라 권한 없음")
                         setMessage(text = "QR 출석체크를 하기 위한 카메라의 권한이 허용되지 않아 종료됩니다.")
@@ -277,7 +233,7 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
         }
     }
 
-    private fun setLocationInfo() {
+    fun setLocationInfo() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -295,8 +251,6 @@ class QRScanActivity : BaseActivity<ActivityQrScanBinding>(), LocationListener {
         val currentLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         viewModel.setLocation(currentLocation?.latitude, currentLocation?.longitude)
     }
-
-    override val layoutId: Int = R.layout.activity_qr_scan
 
     companion object {
         private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA

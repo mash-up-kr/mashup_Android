@@ -3,7 +3,6 @@ package com.mashup.ui.password
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
-import androidx.compose.runtime.getValue
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
@@ -36,6 +35,9 @@ class PasswordActivity : BaseActivity<ActivityPasswordBinding>() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             onBackPressed()
         }
+        viewBinding.toolbar.setTitle(getString(R.string.change_password))
+        viewBinding.toolbar.setVisibleBackButton(true)
+        viewBinding.toolbar.setVisibleCloseButton(false)
     }
 
     override fun onBackPressed() {

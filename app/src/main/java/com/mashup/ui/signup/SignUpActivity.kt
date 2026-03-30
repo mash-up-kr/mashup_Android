@@ -61,6 +61,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 finish()
             }
         }
+        viewBinding.toolbar.setTitle(getString(R.string.sign_up))
+        viewBinding.toolbar.setVisibleBackButton(true)
+        viewBinding.toolbar.setVisibleCloseButton(true)
     }
 
     override fun initObserves() {

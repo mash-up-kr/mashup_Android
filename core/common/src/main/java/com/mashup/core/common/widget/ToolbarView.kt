@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.databinding.BindingAdapter
 import com.mashup.core.common.databinding.ViewToolbarBinding
 import com.mashup.core.common.extensions.gone
 import com.mashup.core.common.extensions.visible
@@ -49,29 +48,5 @@ class ToolbarView @JvmOverloads constructor(
 
     fun hideDivider() = with(viewBinding.divider) {
         gone()
-    }
-
-    companion object {
-
-        @JvmStatic
-        @BindingAdapter(
-            value = ["toolbar_back_button_visible", "toolbar_close_button_visible"],
-            requireAll = false
-        )
-        fun ToolbarView.setVisibleButtons(
-            backButtonVisible: Boolean,
-            closeButtonVisible: Boolean
-        ) {
-            setVisibleBackButton(backButtonVisible)
-            setVisibleCloseButton(closeButtonVisible)
-        }
-
-        @JvmStatic
-        @BindingAdapter("toolbar_title")
-        fun ToolbarView.setTitleText(title: String?) {
-            title?.run {
-                setTitle(this)
-            }
-        }
     }
 }

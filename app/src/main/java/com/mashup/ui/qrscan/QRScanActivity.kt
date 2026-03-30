@@ -77,6 +77,14 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
             cameraManager = cameraManager,
             onShowLoading = { showLoading() },
             onHideLoading = { hideLoading() },
+            onSuccess = {
+                setResult(RESULT_CONFIRM_SUCCESS_QR)
+                finish()
+            },
+            onError = {
+                setResult(RESULT_CONFIRM_QR)
+                finish()
+            },
             onFinish = { finish() },
             onHandleCommonError = { handleCommonError(it) },
             onHandleAttendanceErrorCode = { handleAttendanceErrorCode(it) },

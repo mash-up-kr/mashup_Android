@@ -54,8 +54,6 @@
 
             <com.mashup.core.common.widget.TextFieldView
                 android:id="@+id/text_field_id"
-                text_field_description='@{"영문 대소문자만 사용하여 15자 이내로 입력해주세요."}'
-                text_field_hint='@{"아이디"}'
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"

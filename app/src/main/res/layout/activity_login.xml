@@ -25,8 +25,7 @@
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:text_field_hint='@{"아이디"}' />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.mashup.core.common.widget.TextFieldView
                 android:id="@+id/text_field_pwd"
@@ -36,9 +35,7 @@
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_field_id"
-                app:text_field_hint='@{"비밀번호"}'
-                app:text_field_input_type="@{TextFieldInputType.PASSWORD}" />
+                app:layout_constraintTop_toBottomOf="@id/text_field_id" />
 
             <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_login"

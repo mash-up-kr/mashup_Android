@@ -56,6 +56,8 @@ class EnterIdFragment : BaseFragment<FragmentEnterIdBinding>() {
                 passwordViewModel.updateId(id = id)
             }
         }
+        viewBinding.textFieldId.setDescriptionText(getString(R.string.id_description))
+        viewBinding.textFieldId.setHintText(getString(R.string.id))
     }
 
     private fun initButton() {

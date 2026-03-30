@@ -18,6 +18,7 @@ import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.Validation
+import com.mashup.core.common.widget.TextFieldView
 import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.service.PushLinkType
 import com.mashup.ui.danggn.ShakeDanggnActivity
@@ -97,12 +98,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 viewModel.setId(text)
             }
         }
+        viewBinding.textFieldId.setHintText(getString(R.string.id))
 
         viewBinding.textFieldPwd.run {
             addOnTextChangedListener { text ->
                 viewModel.setPwd(text)
             }
         }
+        viewBinding.textFieldPwd.setHintText(getString(R.string.password))
+        viewBinding.textFieldPwd.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
     }
 
     private fun initButtons() = with(viewBinding) {

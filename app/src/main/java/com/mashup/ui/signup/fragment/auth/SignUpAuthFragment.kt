@@ -14,6 +14,7 @@ import com.mashup.core.common.extensions.setEmptyUIOfTextField
 import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
+import com.mashup.core.common.widget.TextFieldView
 import com.mashup.databinding.FragmentSignUpAuthBinding
 import com.mashup.ui.signup.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,6 +87,8 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                 }
             }
         }
+        viewBinding.textFieldId.setDescriptionText(getString(R.string.id_description))
+        viewBinding.textFieldId.setHintText(getString(R.string.id))
 
         viewBinding.textFieldPwd.run {
             addOnTextChangedListener { text ->
@@ -101,6 +104,10 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                 }
             }
         }
+        viewBinding.textFieldPwd.setDescriptionText(getString(R.string.password_description))
+        viewBinding.textFieldPwd.setHintText(getString(R.string.password))
+        viewBinding.textFieldPwd.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
+
         viewBinding.textFieldPwdCheck.run {
             addOnTextChangedListener { text ->
                 authViewModel.setPwdCheck(text)
@@ -115,6 +122,8 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
                 }
             }
         }
+        viewBinding.textFieldPwdCheck.setHintText(getString(R.string.password_check))
+        viewBinding.textFieldPwdCheck.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
     }
 
     private fun initButton() {

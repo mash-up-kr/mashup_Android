@@ -70,6 +70,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
             textFieldPlatform.setText(memberState.platform)
         }
         btnSignUp.setButtonEnabled(memberState.isValidationState)
+        btnSignUp.setButtonText(getString(R.string.next))
     }
 
     private fun setUiOfNameState(memberState: MemberState) = with(viewBinding) {

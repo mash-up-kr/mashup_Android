@@ -94,6 +94,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
         viewBinding.btnComplete.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             passwordViewModel.onClickNextButton(ScreenState.ChangePassword)
         }
+        viewBinding.btnComplete.setButtonText(getString(R.string.complete))
     }
 
     private fun setUiOfPwdState(pwdState: PwdState) = with(viewBinding) {

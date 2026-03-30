@@ -117,6 +117,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
         viewBinding.btnSignUp.setOnButtonThrottleFirstClickListener(this) {
             viewModel.requestInvalidSignUpCode()
         }
+        viewBinding.btnSignUp.setButtonText(getString(R.string.next))
     }
 
     private fun handleSignUpErrorCode(error: SignUpState.Error) {

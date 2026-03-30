@@ -45,8 +45,7 @@
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_field_pwd"
-                app:text_button='@{"로그인"}' />
+                app:layout_constraintTop_toBottomOf="@id/text_field_pwd" />
 
             <LinearLayout
                 android:id="@+id/layout_sign_password"

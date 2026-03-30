@@ -21,7 +21,7 @@ ext {
     activityKtxVersion = "1.7.2"  // 기존 1.7.2 -> 1.13.0 현재 stable로 변경했습니다. *윤지(3/30)
     fragmentKtxVersion = "1.6.0" // 기존 1.6.0 → 1.8.9 현재 stable로 변경했습니다. *윤지(3/30)
     lifecycleVersion = "2.10.0" // 기존 2.6.1 -> 2.10.0 현재 stable로 변경했습니다. *윤지(3/30)
-    constraintLayoutVersion = "2.1.4"
+    constraintLayoutVersion = "2.2.1" // 기존 2.1.4 -> 2.2.1 현재 stable로 변경했습니다. *윤지(3/30)
     recyclerViewVersion = "1.2.1"
     viewPagerVersion = "1.0.0"
 

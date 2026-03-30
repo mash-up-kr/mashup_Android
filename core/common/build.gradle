@@ -31,7 +31,7 @@ android {
         api "androidx.fragment:fragment-ktx:$fragmentKtxVersion" //리펙 완료
         api "androidx.appcompat:appcompat:$appcompatVersion" //리펙 완료
         api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion" //리펙 완료
-        api "androidx.viewpager2:viewpager2:$viewPagerVersion"
+        api "androidx.viewpager2:viewpager2:$viewPagerVersion" //리펙 완료
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
         // lifecycle
@@ -40,6 +40,6 @@ android {
         api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
         // material
-        api "com.google.android.material:material:$materialVersion"
+        api "com.google.android.material:material:$materialVersion" //stable 찾아보는 중...
     }
 }

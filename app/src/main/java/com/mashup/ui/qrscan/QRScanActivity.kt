@@ -62,9 +62,12 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
     private val locationManager: LocationManager? by lazy { (getSystemService(Context.LOCATION_SERVICE) as? LocationManager) }
 
     private var allPermission by mutableStateOf(false)
+    private var cameraPermission by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
+        cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
+
         initViews()
 
         super.onCreate(savedInstanceState)
@@ -89,7 +92,8 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
             onHandleCommonError = { handleCommonError(it) },
             onHandleAttendanceErrorCode = { handleAttendanceErrorCode(it) },
             onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
-            hasPermission = allPermission,
+            cameraPermission = cameraPermission,
+            allPermission = allPermission,
             onLocationInfo = { setLocationInfo() }
         )
     }
@@ -212,6 +216,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
     override fun onResume() {
         super.onResume()
         allPermission = permissionList.all { permissionHelper.isPermissionGranted(it)}
+        cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
     }
 
     override fun onRequestPermissionsResult(
@@ -224,8 +229,9 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
         when (requestCode) {
             REQUEST_PERMISSION_CODE -> {
                 allPermission = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+                cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
 
-                if (!allPermission) {
+                if (!cameraPermission) {
                     CommonDialog(this).apply {
                         setTitle(text = "카메라 권한 없음")
                         setMessage(text = "QR 출석체크를 하기 위한 카메라의 권한이 허용되지 않아 종료됩니다.")

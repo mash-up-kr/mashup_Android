@@ -28,7 +28,7 @@ android {
     dependencies {
         api "androidx.core:core-ktx:$coreKtxVersion" //리펙 완료
         api "androidx.activity:activity-ktx:$activityKtxVersion" //리펙 완료
-        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion" //리펙 완료
         api "androidx.appcompat:appcompat:$appcompatVersion" //리펙 완료
         api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
         api "androidx.viewpager2:viewpager2:$viewPagerVersion"

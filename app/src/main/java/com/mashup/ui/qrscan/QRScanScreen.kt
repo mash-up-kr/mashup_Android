@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,7 +95,7 @@ fun QRScanScreen(
             )
         }
         Text(
-            text = "QR 코드를  스캔하세요",
+            text = stringResource(com.mashup.R.string.qr_code_msg),
             color = Color.White,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,

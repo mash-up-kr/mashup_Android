@@ -29,7 +29,8 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun QRScanScreen(
     cameraManager: CameraManager<List<Barcode>>,
-    hasPermission: Boolean,
+    cameraPermission: Boolean,
+    allPermission: Boolean,
     viewModel: QRScanViewModel = viewModel(),
     onShowLoading: () -> Unit,
     onHideLoading: () -> Unit,
@@ -68,15 +69,15 @@ fun QRScanScreen(
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
-            factory = { context ->
-                PreviewView(context).apply {
-                }
-            },
+            factory = { context -> PreviewView(context) },
             update = { view ->
-                if (hasPermission) {
-                    onLocationInfo()
+                if (cameraPermission) {
                     cameraManager.startCamera(view)
-                } else {
+                }
+
+                if(allPermission){
+                    onLocationInfo()
+                } else{
                     onRequestQrAttendancePermissions()
                 }
             }

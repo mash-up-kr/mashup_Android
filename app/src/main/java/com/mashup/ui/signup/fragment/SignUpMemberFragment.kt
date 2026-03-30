@@ -55,6 +55,8 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
             viewModel.setUserName(it)
         }
         viewBinding.textFieldName.setFocus()
+        viewBinding.textFieldName.setHintText(getString(R.string.name))
+        viewBinding.textFieldName.setDescriptionText(getString(R.string.name_description))
 
         viewBinding.textFieldPlatform.setSelectionThrottleFirstClickListener(viewLifecycleOwner) {
             viewBinding.textFieldName.clearTextFieldFocus()

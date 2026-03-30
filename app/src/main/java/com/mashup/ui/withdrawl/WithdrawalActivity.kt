@@ -63,6 +63,8 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                 viewModel.setCode(text)
             }
         }
+        viewBinding.textFieldCode.setDescriptionText(getString(R.string.withdrawal_description))
+        viewBinding.textFieldCode.setHintText(getString(R.string.withdrawal_hint))
     }
 
     private fun initDescription() {

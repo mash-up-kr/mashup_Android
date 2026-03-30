@@ -210,7 +210,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
             REQUEST_PERMISSION_CODE -> {
                 allPermission = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
 
-                if(!allPermission){
+                if (!allPermission) {
                     CommonDialog(this).apply {
                         setTitle(text = "카메라 권한 없음")
                         setMessage(text = "QR 출석체크를 하기 위한 카메라의 권한이 허용되지 않아 종료됩니다.")

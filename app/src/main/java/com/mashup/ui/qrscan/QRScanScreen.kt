@@ -37,10 +37,10 @@ fun QRScanScreen(
     onRequestQrAttendancePermissions: () -> Unit,
     hasPermission: Boolean,
     onLocationInfo: () -> Unit
-){
+) {
     LaunchedEffect(Unit) {
         viewModel.qrcodeState.collectLatest { state ->
-            when(state){
+            when (state) {
                 is QRCodeState.Success -> {
                     onHideLoading()
                     onFinish()
@@ -62,7 +62,7 @@ fun QRScanScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-    ){
+    ) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
@@ -70,13 +70,12 @@ fun QRScanScreen(
                 }
             },
             update = { view ->
-                if(hasPermission){
+                if (hasPermission) {
                     onLocationInfo()
                     cameraManager.startCamera(view)
-                }else{
+                } else {
                     onRequestQrAttendancePermissions()
                 }
-
             }
         )
         IconButton(

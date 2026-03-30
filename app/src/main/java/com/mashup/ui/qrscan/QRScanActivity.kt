@@ -11,7 +11,6 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -215,7 +214,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
 
     override fun onResume() {
         super.onResume()
-        allPermission = permissionList.all { permissionHelper.isPermissionGranted(it)}
+        allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
         cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
     }
 

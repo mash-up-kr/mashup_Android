@@ -27,8 +27,7 @@
             <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_next"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:text_button='@{"다음"}' />
+                android:layout_height="wrap_content" />
 
         </FrameLayout>
 

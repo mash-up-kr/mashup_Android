@@ -138,6 +138,7 @@ class SignUpAuthFragment : BaseFragment<FragmentSignUpAuthBinding>() {
         viewBinding.btnSignUp.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             authViewModel.onClickNextButton()
         }
+        viewBinding.btnSignUp.setButtonText(getString(R.string.next))
     }
 
     private fun setUiOfIdState(idState: SignUpIdState) = with(viewBinding) {

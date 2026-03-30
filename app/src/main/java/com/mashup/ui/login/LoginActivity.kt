@@ -117,6 +117,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 pwd = textFieldPwd.inputtedText
             )
         }
+        btnLogin.setButtonText(getString(R.string.login))
 
         tvSignUp.onThrottleFirstClick(lifecycleScope) {
             AnalyticsManager.addEvent(eventName = LOG_SIGN_UP)

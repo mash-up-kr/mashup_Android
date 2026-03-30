@@ -38,7 +38,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             finish()
         }
-        viewBinding.toolbar.setTitle(getString(R.string.withdrawal))
+        viewBinding.toolbar.setTitle(getString(R.string.withdrawal_member))
         viewBinding.toolbar.setVisibleBackButton(true)
     }
 
@@ -55,6 +55,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         viewBinding.btnWithdrawal.setOnButtonThrottleFirstClickListener(this) {
             viewModel.deleteMember()
         }
+        viewBinding.btnWithdrawal.setButtonText(getString(R.string.withdrawal))
     }
 
     private fun initTextField() {

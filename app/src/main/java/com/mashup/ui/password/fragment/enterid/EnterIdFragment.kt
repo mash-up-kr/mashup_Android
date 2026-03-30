@@ -72,6 +72,7 @@ class EnterIdFragment : BaseFragment<FragmentEnterIdBinding>() {
         viewBinding.btnNext.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             passwordViewModel.onClickNextButton(screen = ScreenState.EnterId)
         }
+        viewBinding.btnNext.setButtonText(getString(R.string.next))
     }
 
     private fun setUiOfIdState(idState: IdState) = with(viewBinding) {

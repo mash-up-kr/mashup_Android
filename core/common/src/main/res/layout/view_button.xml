@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="52dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-    </data>
-
-    <merge
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="52dp"
-        tools:background="@drawable/bg_button"
-        tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress_circular"
@@ -45,5 +38,4 @@
             app:layout_constraintStart_toEndOf="@id/progress_circular"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </merge>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

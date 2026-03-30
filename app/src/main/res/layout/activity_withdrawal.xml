@@ -36,8 +36,7 @@
             <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_withdrawal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:text_button='@{"탈퇴하기"}' />
+                android:layout_height="wrap_content" />
 
         </FrameLayout>
 

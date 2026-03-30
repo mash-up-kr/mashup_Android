@@ -8,7 +8,6 @@ import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.mashup.core.common.R
@@ -98,21 +97,5 @@ class ButtonView @JvmOverloads constructor(
     companion object {
         private const val PADDING_VERTICAL = 14
         private const val HEIGHT_BUTTON = 52
-
-        @JvmStatic
-        @BindingAdapter(value = ["text_button"], requireAll = false)
-        fun ButtonView.bindText(text: String?) {
-            text?.run {
-                setButtonText(this)
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter(value = ["style_button"], requireAll = false)
-        fun ButtonView.bindStyle(buttonStyle: ButtonStyle?) {
-            buttonStyle?.run {
-                setButtonStyle(this)
-            }
-        }
     }
 }

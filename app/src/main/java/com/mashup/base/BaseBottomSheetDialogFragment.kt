@@ -112,11 +112,6 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
             ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
             ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
         }
-
-        _childViewBinding?.let { binding ->
-            ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
-            ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
-        }
     }
 
     open fun initViews() {

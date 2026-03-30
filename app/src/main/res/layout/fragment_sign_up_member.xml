@@ -66,7 +66,6 @@
 
                 <com.mashup.core.common.widget.TextSelectionView
                     android:id="@+id/text_field_platform"
-                    text_section_hint='@{"플랫폼"}'
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

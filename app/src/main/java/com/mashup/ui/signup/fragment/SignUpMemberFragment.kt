@@ -33,6 +33,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     }
 
     override fun initViews() {
+        initTextSelectionView()
         initTextField()
         initButton()
     }
@@ -43,6 +44,10 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
                 setUiOfMemberState(memberState)
             }
         }
+    }
+
+    private fun initTextSelectionView() {
+        viewBinding.textFieldPlatform.setHintText(getString(R.string.platform))
     }
 
     private fun initTextField() {

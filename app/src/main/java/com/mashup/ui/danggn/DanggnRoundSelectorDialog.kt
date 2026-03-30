@@ -27,8 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
     private var _composeView: ComposeView? = null
-    private val composeView: ComposeView
-        get() = _composeView!!
 
     private val danggnRankingViewModel: DanggnRankingViewModel by activityViewModels()
 
@@ -57,7 +55,7 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _composeView = ComposeView(requireContext())
-        return composeView.apply {
+        return _composeView!!.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
@@ -70,6 +68,11 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _composeView = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,13 +94,15 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
     }
 
     private fun initWindowInset() {
-        val deferringInsetsListener = RootViewDeferringInsetsCallback(
-            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
-            deferredInsetTypes = WindowInsetsCompat.Type.ime()
-        )
+        _composeView?.let { composeView: ComposeView ->
+            val deferringInsetsListener = RootViewDeferringInsetsCallback(
+                persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
 
-        ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
-        ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+            ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+        }
     }
 
     private fun addGlobalLayoutListener(view: View) {

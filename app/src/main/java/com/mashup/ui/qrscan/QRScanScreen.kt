@@ -27,16 +27,16 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun QRScanScreen(
-    viewModel: QRScanViewModel = viewModel(),
     cameraManager: CameraManager<List<Barcode>>,
+    hasPermission: Boolean,
+    viewModel: QRScanViewModel = viewModel(),
     onShowLoading: () -> Unit,
     onHideLoading: () -> Unit,
     onFinish: () -> Unit,
-    onHandleCommonError: (String) -> Unit,
-    onHandleAttendanceErrorCode: (QRCodeState.Error) -> Unit,
     onRequestQrAttendancePermissions: () -> Unit,
-    hasPermission: Boolean,
-    onLocationInfo: () -> Unit
+    onLocationInfo: () -> Unit,
+    onHandleCommonError: (String) -> Unit,
+    onHandleAttendanceErrorCode: (QRCodeState.Error) -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.qrcodeState.collectLatest { state ->

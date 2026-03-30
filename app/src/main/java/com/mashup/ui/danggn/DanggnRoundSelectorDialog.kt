@@ -12,13 +12,13 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.round.DanggnRoundScreen
@@ -46,21 +46,10 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
         }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        object : BottomSheetDialog(requireContext(), theme) {
-            override fun onAttachedToWindow() {
-                super.onAttachedToWindow()
-
-                window?.let {
-                    WindowCompat.setDecorFitsSystemWindows(it, false)
-                }
-
-                findViewById<View>(com.google.android.material.R.id.container)?.apply {
-                    fitsSystemWindows = false
-                }
-
-                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
-            }
-        }
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,

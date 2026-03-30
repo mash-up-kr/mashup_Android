@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -36,6 +35,7 @@ import com.mashup.core.common.R
 import com.mashup.core.common.extensions.dp
 import com.mashup.core.common.extensions.gone
 import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.databinding.DialogMemberInfoBinding
 import com.mashup.feature.mypage.profile.card.ProfileCard
 import com.mashup.feature.mypage.profile.model.ProfileCardData
@@ -66,21 +66,10 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
         }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        object : BottomSheetDialog(requireContext(), theme) {
-            override fun onAttachedToWindow() {
-                super.onAttachedToWindow()
-
-                window?.let {
-                    WindowCompat.setDecorFitsSystemWindows(it, false)
-                }
-
-                findViewById<View>(com.google.android.material.R.id.container)?.apply {
-                    fitsSystemWindows = false
-                }
-
-                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
-            }
-        }
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,

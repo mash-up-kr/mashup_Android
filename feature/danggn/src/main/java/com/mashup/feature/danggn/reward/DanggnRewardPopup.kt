@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -43,6 +42,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.widget.CommonDialog
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.Gray600
@@ -73,21 +73,10 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
         }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        object : BottomSheetDialog(requireContext(), theme) {
-            override fun onAttachedToWindow() {
-                super.onAttachedToWindow()
-
-                window?.let {
-                    WindowCompat.setDecorFitsSystemWindows(it, false)
-                }
-
-                findViewById<View>(com.google.android.material.R.id.container)?.apply {
-                    fitsSystemWindows = false
-                }
-
-                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
-            }
-        }
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,

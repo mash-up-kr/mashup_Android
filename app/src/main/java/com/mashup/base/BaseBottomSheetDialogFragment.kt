@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -16,9 +15,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.databinding.DialogBaseBottomSheetBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -44,21 +43,10 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
         }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        object : BottomSheetDialog(requireContext(), theme) {
-            override fun onAttachedToWindow() {
-                super.onAttachedToWindow()
-
-                window?.let {
-                    WindowCompat.setDecorFitsSystemWindows(it, false)
-                }
-
-                findViewById<View>(com.google.android.material.R.id.container)?.apply {
-                    fitsSystemWindows = false
-                }
-
-                findViewById<View>(com.google.android.material.R.id.coordinator)?.fitsSystemWindows = false
-            }
-        }
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,

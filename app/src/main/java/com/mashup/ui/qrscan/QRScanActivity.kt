@@ -234,7 +234,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
         }
     }
 
-    fun setLocationInfo() {
+    private fun setLocationInfo() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION

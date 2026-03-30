@@ -63,8 +63,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
     private var _composeView: ComposeView? = null
-    private val composeView: ComposeView
-        get() = _composeView!!
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
@@ -104,7 +102,7 @@ class MainBottomPopup : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _composeView = ComposeView(requireContext())
-        return composeView.apply {
+        return _composeView!!.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
@@ -144,14 +142,21 @@ class MainBottomPopup : BottomSheetDialogFragment() {
         addGlobalLayoutListener(view)
     }
 
-    private fun initWindowInset() {
-        val deferringInsetsListener = RootViewDeferringInsetsCallback(
-            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
-            deferredInsetTypes = WindowInsetsCompat.Type.ime()
-        )
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _composeView = null
+    }
 
-        ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
-        ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+    private fun initWindowInset() {
+        _composeView?.let { composeView: ComposeView ->
+            val deferringInsetsListener = RootViewDeferringInsetsCallback(
+                persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+
+            ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+        }
     }
 
     private fun addGlobalLayoutListener(view: View) {

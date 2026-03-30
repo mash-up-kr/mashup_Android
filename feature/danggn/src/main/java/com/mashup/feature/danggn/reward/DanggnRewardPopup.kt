@@ -59,8 +59,7 @@ import com.mashup.core.common.R as CR
 @AndroidEntryPoint
 class DanggnRewardPopup : BottomSheetDialogFragment() {
     private var _composeView: ComposeView? = null
-    private val composeView: ComposeView
-        get() = _composeView!!
+
     private val rankingViewModel: DanggnRankingViewModel by activityViewModels()
 
     private val behavior: BottomSheetBehavior<View>?
@@ -85,7 +84,7 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
     ): View {
         _composeView = ComposeView(requireContext())
 
-        return composeView.apply {
+        return _composeView!!.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
@@ -119,13 +118,15 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
     }
 
     private fun initWindowInset() {
-        val deferringInsetsListener = RootViewDeferringInsetsCallback(
-            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
-            deferredInsetTypes = WindowInsetsCompat.Type.ime()
-        )
+        _composeView?.let { composeView: ComposeView ->
+            val deferringInsetsListener = RootViewDeferringInsetsCallback(
+                persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
 
-        ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
-        ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+            ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+        }
     }
 
     private fun addGlobalLayoutListener(view: View) {

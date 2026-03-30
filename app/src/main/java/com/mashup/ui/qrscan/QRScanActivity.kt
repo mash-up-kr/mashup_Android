@@ -11,21 +11,14 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.ViewGroup
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.camera.view.PreviewView
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.marginTop
 import com.google.mlkit.vision.barcode.common.Barcode
-import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseComposeActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_QR
@@ -37,7 +30,6 @@ import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
 import com.mashup.core.common.widget.CommonDialog
-import com.mashup.databinding.ActivityQrScanBinding
 import com.mashup.network.errorcode.ATTENDANCE_ALREADY_CHECKED
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
 import com.mashup.network.errorcode.ATTENDANCE_CODE_INVALID
@@ -48,7 +40,6 @@ import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class QRScanActivity : BaseComposeActivity(), LocationListener {

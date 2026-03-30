@@ -23,7 +23,7 @@ ext {
     lifecycleVersion = "2.10.0" // 기존 2.6.1 -> 2.10.0 현재 stable로 변경했습니다. *윤지(3/30)
     constraintLayoutVersion = "2.2.1" // 기존 2.1.4 -> 2.2.1 현재 stable로 변경했습니다. *윤지(3/30)
     recyclerViewVersion = "1.2.1"
-    viewPagerVersion = "1.0.0"
+    viewPagerVersion = "1.1.0" // 26.03.30. 기존 1.0.0 -> 1.1.0 현재 stable로 변경했습니다. *윤지(3/30)
 
     // MLKit
     barcodeSacnnerVersion = "17.0.2"

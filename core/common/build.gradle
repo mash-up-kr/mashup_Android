@@ -30,7 +30,7 @@ android {
         api "androidx.activity:activity-ktx:$activityKtxVersion" //리펙 완료
         api "androidx.fragment:fragment-ktx:$fragmentKtxVersion" //리펙 완료
         api "androidx.appcompat:appcompat:$appcompatVersion" //리펙 완료
-        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion" //리펙 완료
         api "androidx.viewpager2:viewpager2:$viewPagerVersion"
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 

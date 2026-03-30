@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -63,28 +64,29 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
     private var allPermission by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
         initViews()
 
-        setContent {
-            QRScanScreen(
-                viewModel = viewModel,
-                cameraManager = cameraManager,
-                onShowLoading = { showLoading() },
-                onHideLoading = { hideLoading() },
-                onFinish = { finish() },
-                onHandleCommonError = { handleCommonError(it) },
-                onHandleAttendanceErrorCode = { handleAttendanceErrorCode(it) },
-                onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
-                hasPermission = allPermission,
-                onLocationInfo = { setLocationInfo() }
-            )
-        }
+        super.onCreate(savedInstanceState)
     }
 
-    fun initViews() {
+    @Composable
+    override fun MainContainer() {
+        QRScanScreen(
+            viewModel = viewModel,
+            cameraManager = cameraManager,
+            onShowLoading = { showLoading() },
+            onHideLoading = { hideLoading() },
+            onFinish = { finish() },
+            onHandleCommonError = { handleCommonError(it) },
+            onHandleAttendanceErrorCode = { handleAttendanceErrorCode(it) },
+            onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
+            hasPermission = allPermission,
+            onLocationInfo = { setLocationInfo() }
+        )
+    }
+
+    private fun initViews() {
         window.statusBarColor = Color.TRANSPARENT
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 

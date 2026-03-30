@@ -32,6 +32,8 @@ fun QRScanScreen(
     viewModel: QRScanViewModel = viewModel(),
     onShowLoading: () -> Unit,
     onHideLoading: () -> Unit,
+    onSuccess: () -> Unit,
+    onError: () -> Unit,
     onFinish: () -> Unit,
     onRequestQrAttendancePermissions: () -> Unit,
     onLocationInfo: () -> Unit,
@@ -43,13 +45,13 @@ fun QRScanScreen(
             when (state) {
                 is QRCodeState.Success -> {
                     onHideLoading()
-                    onFinish()
+                    onSuccess()
                 }
                 is QRCodeState.Error -> {
                     onHideLoading()
                     onHandleCommonError(state.code)
                     onHandleAttendanceErrorCode(state)
-                    onFinish()
+                    onError()
                 }
                 is QRCodeState.Loading -> {
                     onShowLoading()

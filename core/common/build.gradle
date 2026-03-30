@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -14,7 +13,7 @@ android {
         targetSdkVersion libs.versions.targetSdk.get().toInteger()
     }
     buildFeatures {
-        dataBinding true
+        viewBinding true
     }
 
     compileOptions {

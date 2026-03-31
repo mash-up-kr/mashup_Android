@@ -3,10 +3,11 @@ package com.mashup.ui.moremenu
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ class MoreMenuActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -52,16 +54,15 @@ class MoreMenuActivity : ComponentActivity() {
         setContent {
             MashUpTheme {
                 val moreMenuState by moreMenuViewModel.moreMenuState.collectAsState()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MoreMenuRoute(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding),
-                        moreMenuState = moreMenuState,
-                        onBackPressed = moreMenuViewModel::onClickBackButton,
-                        onClickMenu = moreMenuViewModel::onClickMenuButton
-                    )
-                }
+                MoreMenuRoute(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
+                    moreMenuState = moreMenuState,
+                    onBackPressed = moreMenuViewModel::onClickBackButton,
+                    onClickMenu = moreMenuViewModel::onClickMenuButton
+                )
             }
         }
     }

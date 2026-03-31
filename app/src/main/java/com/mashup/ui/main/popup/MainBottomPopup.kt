@@ -1,5 +1,6 @@
 package com.mashup.ui.main.popup
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -30,6 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -39,6 +43,8 @@ import com.mashup.constant.EXTRA_POPUP_KEY
 import com.mashup.constant.log.LOG_COMMON_POPUP_CANCEL
 import com.mashup.constant.log.LOG_COMMON_POPUP_CONFIRM
 import com.mashup.core.common.utils.getDrawableResIdByName
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray950
 import com.mashup.core.ui.colors.White
@@ -56,6 +62,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainBottomPopup : BottomSheetDialogFragment() {
+    private var _composeView: ComposeView? = null
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
@@ -78,6 +85,12 @@ class MainBottomPopup : BottomSheetDialogFragment() {
             }
         }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.patchPopupViewed()
@@ -88,7 +101,8 @@ class MainBottomPopup : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
+        _composeView = ComposeView(requireContext())
+        return _composeView!!.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
@@ -123,7 +137,26 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                 )
             }
 
+        initWindowInset()
+
         addGlobalLayoutListener(view)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _composeView = null
+    }
+
+    private fun initWindowInset() {
+        _composeView?.let { composeView: ComposeView ->
+            val deferringInsetsListener = RootViewDeferringInsetsCallback(
+                persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+
+            ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+        }
     }
 
     private fun addGlobalLayoutListener(view: View) {
@@ -173,6 +206,7 @@ fun MainBottomPopupContent(
                 color = White,
                 shape = RoundedCornerShape(20.dp)
             )
+            .navigationBarsPadding()
     ) {
         BottomSheetHandler()
 

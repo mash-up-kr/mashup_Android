@@ -10,7 +10,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,50 +19,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.mashup.core.common.R
 import com.mashup.ui.qrscan.camera.CameraManager
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun QRScanScreen(
     cameraManager: CameraManager<List<Barcode>>,
     cameraPermission: Boolean,
     allPermission: Boolean,
-    viewModel: QRScanViewModel = viewModel(),
-    onShowLoading: () -> Unit,
-    onHideLoading: () -> Unit,
-    onSuccess: () -> Unit,
-    onError: () -> Unit,
     onFinish: () -> Unit,
     onRequestQrAttendancePermissions: () -> Unit,
-    onLocationInfo: () -> Unit,
-    onHandleCommonError: (String) -> Unit,
-    onHandleAttendanceErrorCode: (QRCodeState.Error) -> Unit
+    onLocationInfo: () -> Unit
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.qrcodeState.collectLatest { state ->
-            when (state) {
-                is QRCodeState.Success -> {
-                    onHideLoading()
-                    onSuccess()
-                }
-                is QRCodeState.Error -> {
-                    onHideLoading()
-                    onHandleCommonError(state.code)
-                    onHandleAttendanceErrorCode(state)
-                    onError()
-                }
-                is QRCodeState.Loading -> {
-                    onShowLoading()
-                }
-            }
-        }
-    }
-
     Box(
         modifier = Modifier
+            .statusBarsPadding()
             .fillMaxSize()
             .background(Color.Black)
     ) {
@@ -86,7 +57,6 @@ fun QRScanScreen(
             onClick = onFinish,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .statusBarsPadding()
                 .padding(top = 20.dp, end = 20.dp)
         ) {
             Icon(

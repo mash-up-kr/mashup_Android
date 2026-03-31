@@ -16,14 +16,14 @@ ext {
     constraintlayoutCompose = "1.0.1"
 
     // androidx
-    appcompatVersion = "1.6.1"
-    coreKtxVersion = "1.10.1"
+    appcompatVersion = "1.7.1"
+    coreKtxVersion = "1.18.0"
     activityKtxVersion = "1.7.2"
-    fragmentKtxVersion = "1.6.0"
-    lifecycleVersion = "2.6.1"
-    constraintLayoutVersion = "2.1.4"
+    fragmentKtxVersion = "1.8.9"
+    lifecycleVersion = "2.10.0"
+    constraintLayoutVersion = "2.2.1"
     recyclerViewVersion = "1.2.1"
-    viewPagerVersion = "1.0.0"
+    viewPagerVersion = "1.1.0"
 
     // MLKit
     barcodeSacnnerVersion = "17.0.2"
@@ -43,7 +43,7 @@ ext {
     coroutineVersion = "1.5.2"
 
     // material
-    materialVersion = "1.9.0"
+    materialVersion = "1.9.0" //TODO : stable 찾아 보는 중
 
     // network
     retrofitVersion = "2.9.0"

@@ -135,7 +135,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     // DataStore
-    implementation "androidx.datastore:datastore-preferences:$dataSourceVersion"
+    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
 
     // serialization
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"

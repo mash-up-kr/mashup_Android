@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -39,7 +41,9 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
                     CrewAttendanceState.Empty
                 )
                 CrewScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     crewAttendanceState = crewState,
                     onClickBackButton = ::finish,
                     showMemberInfoDialog = ::showMemberInfoDialog

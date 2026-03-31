@@ -3,6 +3,8 @@ package com.mashup.ui.danggn
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
@@ -23,7 +25,9 @@ class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
         viewBinding.shakeDanggnScreen.setContent {
             MashUpTheme {
                 DanggnInfoScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     onClickBackButton = { onBackPressed() }
                 )
             }

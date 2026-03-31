@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -32,7 +34,9 @@ class PushActivity : BaseActivity<ActivitySettingBinding>() {
                 )
 
                 PushScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     onToggleMashUpPush = this::onToggleMashUpPush,
                     onToggleDanggnPush = this::onToggleDanggnPush,
                     userPreference = userPreference,

@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
@@ -19,6 +21,7 @@ import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.utils.safeShow
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivityMainBinding
@@ -70,6 +73,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         initComposeView()
         initTabButtons()
         requestNotificationPermission()
+    }
+
+    override fun initWindowInset() {
+        super.initWindowInset()
+
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.statusBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { view, insets ->
+            // 바텀 탭에 navigation bar padding 적용
+            val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            viewBinding.layoutMainTab.root.setPadding(0, 0, 0, navBarInsets.bottom)
+
+            deferringInsetsListener.onApplyWindowInsets(view, insets)
+        }
     }
 
     private fun initComposeView() {

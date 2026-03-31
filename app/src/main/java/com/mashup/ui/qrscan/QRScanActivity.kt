@@ -40,6 +40,7 @@ import com.mashup.network.errorcode.ATTENDANCE_TIME_OVER
 import com.mashup.ui.qrscan.camera.CameraManager
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class QRScanActivity : BaseComposeActivity(), LocationListener {
@@ -70,26 +71,38 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
         initViews()
 
         super.onCreate(savedInstanceState)
+
+        checkQRCodeState()
+    }
+    private fun checkQRCodeState() {
+        flowLifecycleScope {
+            viewModel.qrcodeState.collectLatest { state ->
+                when (state) {
+                    is QRCodeState.Success -> {
+                        hideLoading()
+                        setResult(RESULT_CONFIRM_SUCCESS_QR)
+                        finish()
+                    }
+                    is QRCodeState.Error -> {
+                        hideLoading()
+                        handleCommonError(state.code)
+                        handleAttendanceErrorCode(state)
+                        setResult(RESULT_CONFIRM_QR)
+                        finish()
+                    }
+                    is QRCodeState.Loading -> {
+                        showLoading()
+                    }
+                }
+            }
+        }
     }
 
     @Composable
     override fun MainContainer() {
         QRScanScreen(
-            viewModel = viewModel,
             cameraManager = cameraManager,
-            onShowLoading = { showLoading() },
-            onHideLoading = { hideLoading() },
-            onSuccess = {
-                setResult(RESULT_CONFIRM_SUCCESS_QR)
-                finish()
-            },
-            onError = {
-                setResult(RESULT_CONFIRM_QR)
-                finish()
-            },
             onFinish = { finish() },
-            onHandleCommonError = { handleCommonError(it) },
-            onHandleAttendanceErrorCode = { handleAttendanceErrorCode(it) },
             onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
             cameraPermission = cameraPermission,
             allPermission = allPermission,

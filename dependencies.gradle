@@ -43,7 +43,7 @@ ext {
     coroutineVersion = "1.5.2"
 
     // material
-    materialVersion = "1.9.0" //TODO : stable 찾아 보는 중
+    materialVersion = "1.13.0"
 
     // network
     retrofitVersion = "2.9.0"

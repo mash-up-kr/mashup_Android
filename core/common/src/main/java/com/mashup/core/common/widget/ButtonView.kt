@@ -65,7 +65,6 @@ class ButtonView @JvmOverloads constructor(
 
     private fun initButtonViewLayout() {
         viewBinding.root.updateLayoutParams {
-            height = HEIGHT_BUTTON.dp(context)
             setPadding(
                 paddingStart,
                 PADDING_VERTICAL.dp(context),
@@ -96,6 +95,5 @@ class ButtonView @JvmOverloads constructor(
 
     companion object {
         private const val PADDING_VERTICAL = 14
-        private const val HEIGHT_BUTTON = 52
     }
 }

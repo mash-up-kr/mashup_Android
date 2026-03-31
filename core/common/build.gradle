@@ -26,20 +26,20 @@ android {
     }
 
     dependencies {
-        api "androidx.core:core-ktx:$coreKtxVersion"
-        api "androidx.activity:activity-ktx:$activityKtxVersion"
-        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
-        api "androidx.appcompat:appcompat:$appcompatVersion"
-        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-        api "androidx.viewpager2:viewpager2:$viewPagerVersion"
+        api "androidx.core:core-ktx:$coreKtxVersion" //리펙 완료
+        api "androidx.activity:activity-ktx:$activityKtxVersion" //리펙 완료
+        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion" //리펙 완료
+        api "androidx.appcompat:appcompat:$appcompatVersion" //리펙 완료
+        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion" //리펙 완료
+        api "androidx.viewpager2:viewpager2:$viewPagerVersion" //리펙 완료
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
         // lifecycle
-        api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+        api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion" //리펙 완료
         api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
         api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
         // material
-        api "com.google.android.material:material:$materialVersion"
+        api "com.google.android.material:material:$materialVersion" //stable 찾아보는 중...
     }
 }

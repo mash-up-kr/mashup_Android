@@ -1,0 +1,36 @@
+name: Refactoring Proposal
+description: Suggest an idea for this project
+title: "[Refactoring]: "
+labels: "리팩토링"
+body:
+  - type: markdown
+    attributes:
+      value: |
+          리팩토링 제안을 위한 이슈입니다.
+
+  - type: textarea
+    id: whats-problem
+    attributes:
+      label: 무슨 문제점이 있나요?
+      description: 어떤 문제점이 있는지 작성해주세요.
+      placeholder: 문제점에 대해서 설명해주세요!
+    validations:
+      required: true
+
+  - type: textarea
+    id: how-to-refactor
+    attributes:
+      label: 어떻게 변경할 것인가요?
+      description: 어떤 방법으로 문제점을 해결할지 작성해주세요.
+      placeholder: 해결방안에 대해서 설명해주세요!
+    validations:
+      required: true
+
+  - type: textarea
+    id: whats-the-goal
+    attributes:
+      label: 얻을 수 있는 이점은 무엇인가요?
+      description: 리팩토링을 통해 얻을 수 있는 이점을 작성해주세요.
+      placeholder: 이점에 대해 작성해주세요!
+    validations:
+      required: true

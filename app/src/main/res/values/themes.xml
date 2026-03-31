@@ -3,18 +3,18 @@
     <style name="Theme.MashUp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="android:windowBackground">@color/gray50</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/gray50</item>
+
+        <!-- Status bar color - edge-to-edge 대응-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-        <!-- Translucent Activity -->
-        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.MashUp">
         <item name="android:windowBackground">@color/brand500</item>
-        <item name="android:statusBarColor">@color/brand500</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
@@ -22,6 +22,9 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize|stateAlwaysVisible</item>
+
+        <!-- edge-to-edge 대응-->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">

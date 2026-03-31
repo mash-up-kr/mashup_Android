@@ -1,5 +1,6 @@
 package com.mashup.feature.danggn.reward
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
@@ -31,11 +34,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.widget.CommonDialog
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray400
 import com.mashup.core.ui.colors.Gray600
@@ -51,6 +58,8 @@ import com.mashup.core.common.R as CR
 
 @AndroidEntryPoint
 class DanggnRewardPopup : BottomSheetDialogFragment() {
+    private var _composeView: ComposeView? = null
+
     private val rankingViewModel: DanggnRankingViewModel by activityViewModels()
 
     private val behavior: BottomSheetBehavior<View>?
@@ -62,17 +71,28 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             }
         }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
+        _composeView = ComposeView(requireContext())
+
+        return _composeView!!.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
                 MashUpTheme {
                     DanggnRewardPopupScreen(
+                        modifier = Modifier.fillMaxWidth()
+                            .background(color = White)
+                            .navigationBarsPadding(),
                         onClickDismissButton = ::showCancelRewardDialog,
                         onClickSubmitButton = ::showSubmitRewardDialog
                     )
@@ -95,7 +115,21 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
                 isCancelable = false
             }
 
+        initWindowInset()
+
         addGlobalLayoutListener(view)
+    }
+
+    private fun initWindowInset() {
+        _composeView?.let { composeView: ComposeView ->
+            val deferringInsetsListener = RootViewDeferringInsetsCallback(
+                persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+
+            ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+        }
     }
 
     private fun addGlobalLayoutListener(view: View) {
@@ -154,11 +188,14 @@ fun DanggnRewardPopupScreen(
     var text by remember { mutableStateOf("") }
 
     Column(
-        modifier = modifier
-            .background(
-                color = White,
-                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+        modifier = Modifier
+            .clip(
+                shape = RoundedCornerShape(
+                    topStart = 20.dp,
+                    topEnd = 20.dp
+                )
             )
+            .then(modifier)
             .padding(20.dp)
     ) {
         Row {
@@ -225,6 +262,12 @@ fun DanggnRewardPopupScreen(
 @Preview
 fun PreviewDanggnRewardPopupContent() {
     MashUpTheme {
-        DanggnRewardPopupScreen(onClickDismissButton = {}, onClickSubmitButton = { })
+        DanggnRewardPopupScreen(
+            Modifier.fillMaxWidth()
+                .background(color = White)
+                .navigationBarsPadding(),
+            onClickDismissButton = {},
+            onClickSubmitButton = {}
+        )
     }
 }

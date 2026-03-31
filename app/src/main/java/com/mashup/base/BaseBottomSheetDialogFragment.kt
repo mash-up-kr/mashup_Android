@@ -1,10 +1,13 @@
 package com.mashup.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -13,6 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
 import com.mashup.databinding.DialogBaseBottomSheetBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -37,6 +42,12 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
             }
         }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,6 +71,7 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initWindowInset()
         initViews()
         initObserves()
 
@@ -88,6 +100,18 @@ abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetD
                     behavior?.peekHeight = viewBinding.root.height
                 }
             })
+    }
+
+    open fun initWindowInset() {
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        _rootViewBinding?.let { binding ->
+            ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
+        }
     }
 
     open fun initViews() {

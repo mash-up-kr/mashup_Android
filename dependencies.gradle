@@ -1,30 +1,29 @@
 ext {
     // Android
-    androidBuildToolsVersion = "7.4.1"
+    androidBuildToolsVersion = "8.13.2"
 
     minVersion = 24
-    targetVersion = 34
-    compileVersion = 34
+    targetVersion = 36
+    compileVersion = 36
 
     // kotlin
-    kotlinVersion = "1.8.21"
-    kotlinSerialization = "1.5.1"
+    kotlinVersion = "2.1.0"
+    kotlinSerialization = "1.6.0"
 
     // compose
     composeVersion = '1.5.0'
-    composeCompiler = "1.4.7"
     composeWebView = "0.24.13-rc"
     constraintlayoutCompose = "1.0.1"
 
     // androidx
-    appcompatVersion = "1.6.1"
-    coreKtxVersion = "1.10.1"
+    appcompatVersion = "1.7.1"
+    coreKtxVersion = "1.18.0"
     activityKtxVersion = "1.7.2"
-    fragmentKtxVersion = "1.6.0"
-    lifecycleVersion = "2.6.1"
-    constraintLayoutVersion = "2.1.4"
+    fragmentKtxVersion = "1.8.9"
+    lifecycleVersion = "2.10.0"
+    constraintLayoutVersion = "2.2.1"
     recyclerViewVersion = "1.2.1"
-    viewPagerVersion = "1.0.0"
+    viewPagerVersion = "1.1.0"
 
     // MLKit
     barcodeSacnnerVersion = "17.0.2"
@@ -33,18 +32,18 @@ ext {
     cameraVersion = "1.1.0-beta02"
 
     //google firebase
-    gmsVersion = "4.3.10"
-    firebaseVersion = "29.1.0"
-    crashlyticsVersion= "2.8.1"
+    gmsVersion = "4.4.2"
+    firebaseVersion = "33.6.0"
+    crashlyticsVersion = "3.0.2"
 
     // di
-    hiltVersion = "2.44"
+    hiltVersion = "2.55"
 
     // kotlin & coroutine
     coroutineVersion = "1.5.2"
 
     // material
-    materialVersion = "1.9.0"
+    materialVersion = "1.9.0" //TODO : stable 찾아 보는 중
 
     // network
     retrofitVersion = "2.9.0"
@@ -53,7 +52,7 @@ ext {
     okhttpInterceptorVerison = "4.9.3"
 
     // serialization
-    moshiVersion = "1.14.0"
+    moshiVersion = "1.15.1"
 
     // image
     glideVersion = "4.12.0"

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.URL
@@ -40,7 +42,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         viewBinding.settingScreen.setContent {
             MashUpTheme {
                 SettingScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     onLogout = this::onClickLogoutButton,
                     onDeleteUser = this::moveToDeleteAccount,
                     onClickSNS = this::onClickSNS,

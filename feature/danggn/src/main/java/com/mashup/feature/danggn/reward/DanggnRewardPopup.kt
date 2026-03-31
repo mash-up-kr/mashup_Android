@@ -9,7 +9,6 @@ import android.view.ViewTreeObserver
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
@@ -90,6 +90,9 @@ class DanggnRewardPopup : BottomSheetDialogFragment() {
             setContent {
                 MashUpTheme {
                     DanggnRewardPopupScreen(
+                        modifier = Modifier.fillMaxWidth()
+                            .background(color = White)
+                            .navigationBarsPadding(),
                         onClickDismissButton = ::showCancelRewardDialog,
                         onClickSubmitButton = ::showSubmitRewardDialog
                     )
@@ -184,77 +187,74 @@ fun DanggnRewardPopupScreen(
 ) {
     var text by remember { mutableStateOf("") }
 
-    Box(
-        modifier = modifier
-            .background(
-                color = White,
-                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+    Column(
+        modifier = Modifier
+            .clip(
+                shape = RoundedCornerShape(
+                    topStart = 20.dp,
+                    topEnd = 20.dp
+                )
             )
-            .navigationBarsPadding()
+            .then(modifier)
+            .padding(20.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            Row {
-                Text(text = "랭킹 1위의 리워드", style = SubTitle2, modifier = Modifier.weight(1f))
+        Row {
+            Text(text = "랭킹 1위의 리워드", style = SubTitle2, modifier = Modifier.weight(1f))
 
-                Image(
-                    painter = painterResource(id = CR.drawable.ic_xmark),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { onClickDismissButton() }
-                )
-            }
-
-            Text(
-                text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
-                style = Body5,
-                color = Gray600,
-                modifier = Modifier.padding(top = 8.dp, bottom = 26.dp)
-            )
-
-            Row(
-                modifier = Modifier.padding(vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                BasicTextField(
-                    value = text,
-                    onValueChange = { if (it.length <= DanggnRewardPopup.MAX_LENGTH) text = it },
-                    modifier = Modifier.weight(1f)
-                )
-                Image(
-                    painter = painterResource(id = CR.drawable.ic_xmark),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .size(16.dp)
-                        .clickable { text = "" }
-                )
-            }
-
-            Divider(thickness = 2.dp, color = Gray200)
-
-            Text(
-                text = "${text.length}/${DanggnRewardPopup.MAX_LENGTH}",
-                style = Body4,
-                color = Gray400,
+            Image(
+                painter = painterResource(id = CR.drawable.ic_xmark),
+                contentDescription = null,
                 modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(4.dp)
-            )
-
-            MashUpButton(
-                text = "공지 등록하기",
-                onClick = { onClickSubmitButton(text) },
-                isEnabled = text.isNotEmpty(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp)
+                    .size(24.dp)
+                    .clickable { onClickDismissButton() }
             )
         }
+
+        Text(
+            text = "단 한 번만 작성할 수 있으며 완료 후 내용을 수정할 수 없습니다. 욕설 및 상대방을 비방하는 내용은 삼가주세요.",
+            style = Body5,
+            color = Gray600,
+            modifier = Modifier.padding(top = 8.dp, bottom = 26.dp)
+        )
+
+        Row(
+            modifier = Modifier.padding(vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BasicTextField(
+                value = text,
+                onValueChange = { if (it.length <= DanggnRewardPopup.MAX_LENGTH) text = it },
+                modifier = Modifier.weight(1f)
+            )
+            Image(
+                painter = painterResource(id = CR.drawable.ic_xmark),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(16.dp)
+                    .clickable { text = "" }
+            )
+        }
+
+        Divider(thickness = 2.dp, color = Gray200)
+
+        Text(
+            text = "${text.length}/${DanggnRewardPopup.MAX_LENGTH}",
+            style = Body4,
+            color = Gray400,
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(4.dp)
+        )
+
+        MashUpButton(
+            text = "공지 등록하기",
+            onClick = { onClickSubmitButton(text) },
+            isEnabled = text.isNotEmpty(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp)
+        )
     }
 }
 
@@ -262,6 +262,12 @@ fun DanggnRewardPopupScreen(
 @Preview
 fun PreviewDanggnRewardPopupContent() {
     MashUpTheme {
-        DanggnRewardPopupScreen(onClickDismissButton = {}, onClickSubmitButton = { })
+        DanggnRewardPopupScreen(
+            Modifier.fillMaxWidth()
+                .background(color = White)
+                .navigationBarsPadding(),
+            onClickDismissButton = {},
+            onClickSubmitButton = {}
+        )
     }
 }

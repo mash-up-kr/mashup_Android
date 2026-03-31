@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -19,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
+import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.round.DanggnRoundScreen
@@ -61,7 +64,9 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
             setContent {
                 MashUpTheme {
                     DanggnRoundScreen(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .background(color = White)
+                            .navigationBarsPadding(),
                         viewModel = danggnRankingViewModel,
                         onDismiss = this@DanggnRoundSelectorDialog::dismissAllowingStateLoss
                     )

@@ -49,7 +49,7 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
                     modifier = Modifier
                         .fillMaxSize()
                         .statusBarsPadding()
-                        .navigationBarsPadding(),
+                        .navigationBarsPadding()
                 )
             }
         }

@@ -5,8 +5,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
@@ -41,7 +45,11 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
                     isPlatformSeminar = viewModel.scheduleType != "ALL",
                     copyToClipboard = ::copyToClipboard,
                     moveToPlatformAttendance = ::moveToPlatformAttendance,
-                    onBackPressed = { finish() }
+                    onBackPressed = { finish() },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                 )
             }
         }

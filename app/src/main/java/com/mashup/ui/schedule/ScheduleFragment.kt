@@ -3,8 +3,6 @@ package com.mashup.ui.schedule
 import android.content.Intent
 import android.os.Bundle
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -38,9 +36,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>() {
         viewBinding.cvSchedule.setContent {
             MashUpTheme {
                 ScheduleRoute(
-                    modifier = Modifier.fillMaxSize()
-                        .statusBarsPadding()
-                        .navigationBarsPadding(),
+                    modifier = Modifier.fillMaxSize(),
                     mainViewModel = mainViewModel,
                     viewModel = viewModel,
                     onClickMoreMenuIcon = {

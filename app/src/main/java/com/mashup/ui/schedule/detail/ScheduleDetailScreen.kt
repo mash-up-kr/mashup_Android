@@ -35,9 +35,10 @@ fun ScheduleDetailScreen(
     isPlatformSeminar: Boolean,
     copyToClipboard: (String) -> Unit,
     moveToPlatformAttendance: () -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier) {
         Column {
             MashUpToolbar(
                 title = "상세 스케쥴",

@@ -17,8 +17,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.R
 import com.mashup.core.common.model.TextFieldInputType
 import com.mashup.core.common.model.Validation
 import com.mashup.core.ui.colors.Gray200
@@ -48,7 +50,7 @@ fun LoginScreen(
         MashUpTextField(
             text = id,
             onTextChanged = setId,
-            labelText = "아이디",
+            labelText = stringResource(R.string.id),
             requestFocus = false,
             validation = Validation.NONE,
             textFieldInputType = TextFieldInputType.TEXT,
@@ -59,7 +61,7 @@ fun LoginScreen(
         MashUpTextField(
             text = password,
             onTextChanged = setPassword,
-            labelText = "비밀번호",
+            labelText = stringResource(R.string.password),
             requestFocus = false,
             validation = Validation.NONE,
             textFieldInputType = TextFieldInputType.PASSWORD,
@@ -69,7 +71,7 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(12.dp))
         MashUpButton(
-            text = "로그인",
+            text = stringResource(R.string.login),
             buttonStyle = ButtonStyle.PRIMARY,
             isEnabled = validation == Validation.SUCCESS,
             showLoading = loginState == LoginState.Loading,
@@ -87,7 +89,7 @@ fun LoginScreen(
                 .height(IntrinsicSize.Min)
         ) {
             Text(
-                text = "회원가입",
+                text = stringResource(R.string.sign_up),
                 color = Gray600,
                 style = Body2,
                 modifier = Modifier.noRippleClickable(onClickSignUp)
@@ -101,7 +103,7 @@ fun LoginScreen(
                     .padding(vertical = 3.5.dp)
             )
             Text(
-                text = "비밀번호 변경",
+                text = stringResource(R.string.change_password),
                 color = Gray600,
                 style = Body2,
                 modifier = Modifier.noRippleClickable(onClickChangePassword)

@@ -47,6 +47,7 @@ fun LoginScreen(
 ) {
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(40.dp))
+
         MashUpTextField(
             text = id,
             onTextChanged = setId,
@@ -58,6 +59,9 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         MashUpTextField(
             text = password,
             onTextChanged = setPassword,
@@ -69,7 +73,9 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         )
+
         Spacer(modifier = Modifier.height(12.dp))
+
         MashUpButton(
             text = stringResource(R.string.login),
             buttonStyle = ButtonStyle.PRIMARY,
@@ -80,7 +86,9 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         )
+
         Spacer(modifier = Modifier.height(20.dp))
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,

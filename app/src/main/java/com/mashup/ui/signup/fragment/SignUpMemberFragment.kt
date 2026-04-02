@@ -77,6 +77,9 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
             Validation.FAILED -> {
                 textFieldName.setFailedUiOfTextField()
             }
+            Validation.NONE -> {
+                textFieldName.setFailedUiOfTextField()
+            }
         }
     }
 

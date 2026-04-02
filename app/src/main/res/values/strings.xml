@@ -75,4 +75,5 @@
     <string name="attendance_final">최종</string>
     <string name="attendance_nothing">-</string>
 
+    <string name="qr_code_msg">QR 코드를  스캔하세요"</string>
 </resources>

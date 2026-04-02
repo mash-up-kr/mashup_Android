@@ -24,13 +24,11 @@ import com.mashup.core.common.R
 import com.mashup.ui.qrscan.camera.CameraManager
 
 @Composable
-fun QRScanScreen(
+internal fun QRScanScreen(
     cameraManager: CameraManager<List<Barcode>>,
     cameraPermission: Boolean,
-    allPermission: Boolean,
     onFinish: () -> Unit,
-    onRequestQrAttendancePermissions: () -> Unit,
-    onLocationInfo: () -> Unit
+    onRequestQrAttendancePermissions: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -44,11 +42,6 @@ fun QRScanScreen(
             update = { view ->
                 if (cameraPermission) {
                     cameraManager.startCamera(view)
-                }
-
-                if (allPermission) {
-                    onLocationInfo()
-                } else {
                     onRequestQrAttendancePermissions()
                 }
             }

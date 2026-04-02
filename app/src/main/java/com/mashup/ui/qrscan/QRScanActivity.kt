@@ -61,17 +61,15 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
 
     private val locationManager: LocationManager? by lazy { (getSystemService(Context.LOCATION_SERVICE) as? LocationManager) }
 
-    private var allPermission by mutableStateOf(false)
-    private var cameraPermission by mutableStateOf(false)
+    private var allPermissionGranted by mutableStateOf(false)
+    private var cameraPermissionGranted by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
-        cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
-
-        initViews()
+        allPermissionGranted = permissionList.all { permissionHelper.isPermissionGranted(it) }
+        cameraPermissionGranted = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
 
         super.onCreate(savedInstanceState)
-
+        initViews()
         checkQRCodeState()
     }
     private fun checkQRCodeState() {
@@ -104,9 +102,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
             cameraManager = cameraManager,
             onFinish = { finish() },
             onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
-            cameraPermission = cameraPermission,
-            allPermission = allPermission,
-            onLocationInfo = { setLocationInfo() }
+            cameraPermission = cameraPermissionGranted
         )
     }
 
@@ -187,7 +183,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
         codeMessage?.run { showToast(this) }
     }
 
-    fun requestQrAttendancePermissions() {
+    private fun requestQrAttendancePermissions() {
         val deniedPermissions = mutableListOf<String>()
         permissionList.forEach { permission ->
             if (!permissionHelper.isPermissionGranted(permission)) {
@@ -227,8 +223,27 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
 
     override fun onResume() {
         super.onResume()
-        allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
-        cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
+        val allPermission = permissionList.all { permissionHelper.isPermissionGranted(it) }
+        val cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
+        viewModel.updatePermission(cameraPermission, allPermission)
+    }
+
+    private fun collectPermissionState() {
+        flowLifecycleScope {
+            viewModel.isCameraPermissionGranted.collectLatest { cameraGranted ->
+                cameraPermissionGranted = cameraGranted
+            }
+        }
+        flowLifecycleScope {
+            viewModel.isAllPermissionGranted.collectLatest { allGratend ->
+                allPermissionGranted = allGratend
+                if (allGratend) {
+                    setLocationInfo()
+                } else {
+                    requestQrAttendancePermissions()
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -240,10 +255,10 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
 
         when (requestCode) {
             REQUEST_PERMISSION_CODE -> {
-                allPermission = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
-                cameraPermission = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
+                allPermissionGranted = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+                cameraPermissionGranted = permissionHelper.isPermissionGranted(PERMISSION_CAMERA)
 
-                if (!cameraPermission) {
+                if (!cameraPermissionGranted) {
                     CommonDialog(this).apply {
                         setTitle(text = "카메라 권한 없음")
                         setMessage(text = "QR 출석체크를 하기 위한 카메라의 권한이 허용되지 않아 종료됩니다.")

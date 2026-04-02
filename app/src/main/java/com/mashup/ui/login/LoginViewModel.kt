@@ -29,6 +29,10 @@ class LoginViewModel @Inject constructor(
         checkAutoLogin()
     }
 
+    val inputFieldState = id.combine(pwd) { id, pwd ->
+        Pair(id, pwd)
+    }
+
     val loginValidation = id.combine(pwd) { id, pwd ->
         if (id.isNotBlank() && pwd.isNotBlank()) {
             Validation.SUCCESS

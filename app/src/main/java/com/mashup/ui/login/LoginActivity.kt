@@ -2,11 +2,20 @@ package com.mashup.ui.login
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.core.app.TaskStackBuilder
-import androidx.lifecycle.lifecycleScope
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mashup.base.BaseComposeActivity
 import com.mashup.constant.EXTRA_LINK
 import com.mashup.constant.EXTRA_LOGOUT
 import com.mashup.constant.EXTRA_MAIN_TAB
@@ -15,10 +24,8 @@ import com.mashup.constant.log.LOG_LOGIN
 import com.mashup.constant.log.LOG_SIGN_UP
 import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
-import com.mashup.core.common.extensions.onThrottleFirstClick
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.Validation
-import com.mashup.databinding.ActivityLoginBinding
 import com.mashup.service.PushLinkType
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainActivity
@@ -30,16 +37,72 @@ import com.mashup.ui.webview.birthday.BirthdayActivity
 import com.mashup.ui.webview.mashong.MashongActivity
 import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+class LoginActivity : BaseComposeActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         initLoginState()
-        initTextField()
-        initButtons()
+    }
+
+    @Composable
+    override fun MainContainer() {
+        val inputFieldState by viewModel.inputFieldState.collectAsStateWithLifecycle(Pair("", ""))
+        val loginUiState by viewModel.loginUiState.collectAsStateWithLifecycle(LoginState.Empty)
+        val loginValidationState by viewModel.loginValidation.collectAsStateWithLifecycle(Validation.NONE)
+
+        LaunchedEffect(loginUiState) {
+            when (val state = loginUiState) {
+                is LoginState.Success -> {
+                    moveNextScreen(state.loginType)
+                }
+
+                is LoginState.Error -> {
+                    handleCommonError(state.code)
+                    handleSignUpErrorCode(state)
+                }
+
+                else -> Unit
+            }
+        }
+
+        LoginScreen(
+            id = inputFieldState.first,
+            password = inputFieldState.second,
+            loginState = loginUiState,
+            validation = loginValidationState,
+            setId = { text ->
+                viewModel.setId(text)
+            },
+            setPassword = { text ->
+                viewModel.setPwd(text)
+            },
+            onClickLogin = { id, pwd ->
+                AnalyticsManager.addEvent(eventName = LOG_LOGIN)
+                viewModel.requestLogin(
+                    id = id,
+                    pwd = pwd
+                )
+            },
+            onClickSignUp = {
+                AnalyticsManager.addEvent(eventName = LOG_SIGN_UP)
+                startActivity(
+                    SignUpActivity.newIntent(this@LoginActivity)
+                )
+            },
+            onClickChangePassword = {
+                startActivity(
+                    PasswordActivity.newIntent(this@LoginActivity)
+                )
+            },
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.onBackground)
+                .statusBarsPadding()
+                .navigationBarsPadding()
+        )
     }
 
     private fun initLoginState() {
@@ -54,75 +117,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             isRequestLogOut -> {
                 showToast("로그아웃 되었어요")
             }
-        }
-    }
-
-    override fun initObserves() {
-        viewModel.run {
-            flowLifecycleScope {
-                loginUiState.collect { state ->
-                    when (state) {
-                        is LoginState.Loading -> {
-                            viewBinding.btnLogin.showLoading()
-                        }
-
-                        is LoginState.Success -> {
-                            viewBinding.btnLogin.hideLoading()
-                            moveNextScreen(state.loginType)
-                        }
-
-                        is LoginState.Error -> {
-                            viewBinding.btnLogin.hideLoading()
-                            handleCommonError(state.code)
-                            handleSignUpErrorCode(state)
-                        }
-
-                        else -> {
-                        }
-                    }
-                }
-            }
-
-            flowLifecycleScope {
-                loginValidation.collectLatest {
-                    viewBinding.btnLogin.setButtonEnabled(it == Validation.SUCCESS)
-                }
-            }
-        }
-    }
-
-    private fun initTextField() {
-        viewBinding.textFieldId.run {
-            addOnTextChangedListener { text ->
-                viewModel.setId(text)
-            }
-        }
-
-        viewBinding.textFieldPwd.run {
-            addOnTextChangedListener { text ->
-                viewModel.setPwd(text)
-            }
-        }
-    }
-
-    private fun initButtons() = with(viewBinding) {
-        btnLogin.setOnButtonThrottleFirstClickListener(this@LoginActivity) {
-            AnalyticsManager.addEvent(eventName = LOG_LOGIN)
-            viewModel.requestLogin(
-                id = textFieldId.inputtedText,
-                pwd = textFieldPwd.inputtedText
-            )
-        }
-
-        tvSignUp.onThrottleFirstClick(lifecycleScope) {
-            AnalyticsManager.addEvent(eventName = LOG_SIGN_UP)
-            startActivity(
-                SignUpActivity.newIntent(this@LoginActivity)
-            )
-        }
-
-        tvChangePassword.onThrottleFirstClick(lifecycleScope) {
-            startActivity(PasswordActivity.newIntent(this@LoginActivity))
         }
     }
 
@@ -190,8 +184,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     addNextIntent(intent)
                 }
             }
-
-    override val layoutId: Int = R.layout.activity_login
 
     companion object {
 

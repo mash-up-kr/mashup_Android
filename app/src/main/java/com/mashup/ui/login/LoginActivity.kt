@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mashup.R
 import com.mashup.base.BaseComposeActivity
 import com.mashup.constant.EXTRA_LINK
 import com.mashup.constant.EXTRA_LOGOUT
@@ -111,11 +112,11 @@ class LoginActivity : BaseComposeActivity() {
 
         when {
             isRequestWithDrawl -> {
-                showToast("회원탈퇴 완료되었어요")
+                showToast(getString(R.string.withdrawal_complete))
             }
 
             isRequestLogOut -> {
-                showToast("로그아웃 되었어요")
+                showToast(getString(R.string.logout_complete))
             }
         }
     }
@@ -123,11 +124,11 @@ class LoginActivity : BaseComposeActivity() {
     private fun handleSignUpErrorCode(error: LoginState.Error) {
         val codeMessage = when (error.code) {
             MEMBER_NOT_FOUND -> {
-                "회원을 찾을 수 없습니다."
+                getString(R.string.member_not_found)
             }
 
             MEMBER_NOT_MATCH_PASSWORD -> {
-                "비밀번호가 일치하지 않습니다."
+                getString(R.string.member_not_match_password)
             }
 
             else -> {

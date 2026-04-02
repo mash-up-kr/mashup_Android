@@ -64,6 +64,16 @@
     <string name="empty_introduce_my_self">아직 소개글이 없어요</string>
     <string name="txt_edit">편집</string>
 
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="login">로그인</string>
+    <string name="sign_up">회원가입</string>
+    <string name="change_password">비밀번호 변경</string>
+    <string name="withdrawal_complete">회원탈퇴 완료되었어요</string>
+    <string name="logout_complete">로그아웃 되었어요</string>
+    <string name="member_not_found">회원을 찾을 수 없습니다.</string>
+    <string name="member_not_match_password">비밀번호가 일치하지 않습니다.</string>
+
     <!-- attendance -->
     <string name="attendance_status_absent">결석</string>
     <string name="attendance_status_absent_final">슬프지만 결석이에요...</string>

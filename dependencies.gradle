@@ -16,14 +16,7 @@ ext {
     constraintlayoutCompose = "1.0.1"
 
     // androidx
-    appcompatVersion = "1.7.1"
-    coreKtxVersion = "1.18.0"
-    activityKtxVersion = "1.7.2"
-    fragmentKtxVersion = "1.8.9"
-    lifecycleVersion = "2.10.0"
-    constraintLayoutVersion = "2.2.1"
     recyclerViewVersion = "1.2.1"
-    viewPagerVersion = "1.1.0"
 
     // MLKit
     barcodeSacnnerVersion = "17.0.2"

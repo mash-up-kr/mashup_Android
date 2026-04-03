@@ -62,7 +62,7 @@ fun MashUpTextField(
     labelText: String,
     requestFocus: Boolean,
     validation: Validation,
-    textFieldInputType: TextFieldInputType,
+    textFieldInputType: TextFieldInputType
 ) {
     var focus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -103,7 +103,7 @@ fun MashUpTextField(
             },
             keyboardOptions = when (textFieldInputType) {
                 TextFieldInputType.PASSWORD -> KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
+                    keyboardType = KeyboardType.Password
                 )
                 TextFieldInputType.TEXT -> KeyboardOptions(
                     keyboardType = KeyboardType.Text
@@ -203,7 +203,7 @@ private fun setDescriptionText(codeState: Validation): String {
 @Composable
 fun MashUpTextFieldPrev(
     labelText: String = "탈퇴할게요",
-    requestFocus: Boolean = false,
+    requestFocus: Boolean = false
 ) {
     var text by remember { mutableStateOf("") }
     var textValidation by remember {
@@ -230,7 +230,7 @@ fun MashUpTextFieldPrev(
 private fun checkValidation(
     text: String,
     labelText: String,
-    onTextValidation: (Validation) -> Unit,
+    onTextValidation: (Validation) -> Unit
 ) {
     if (text.isEmpty()) {
         onTextValidation(Validation.EMPTY)

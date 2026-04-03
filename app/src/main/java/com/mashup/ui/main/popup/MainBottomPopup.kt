@@ -110,12 +110,18 @@ class MainBottomPopup : BottomSheetDialogFragment() {
                     MainBottomPopupScreen(
                         viewModel = viewModel,
                         onClickLeftButton = {
-                            AnalyticsManager.addEvent(LOG_COMMON_POPUP_CANCEL, bundleOf("key" to viewModel.popupKey))
+                            AnalyticsManager.addEvent(
+                                LOG_COMMON_POPUP_CANCEL,
+                                bundleOf("key" to viewModel.popupKey)
+                            )
                             dismiss()
                         },
                         onClickRightButton = {
                             mainViewModel.onClickPopup(viewModel.popupKey.orEmpty())
-                            AnalyticsManager.addEvent(LOG_COMMON_POPUP_CONFIRM, bundleOf("key" to viewModel.popupKey))
+                            AnalyticsManager.addEvent(
+                                LOG_COMMON_POPUP_CONFIRM,
+                                bundleOf("key" to viewModel.popupKey)
+                            )
                             dismiss()
                         }
                     )
@@ -249,19 +255,23 @@ fun MainBottomPopupContent(
                 .padding(horizontal = 20.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            MashUpButton(
-                modifier = Modifier.wrapContentWidth(),
-                text = mainPopupEntity.leftButtonText,
-                buttonStyle = ButtonStyle.INVERSE,
-                onClick = onClickLeftButton
-            )
+            if (mainPopupEntity.leftButtonText.isNotEmpty()) {
+                MashUpButton(
+                    modifier = Modifier.wrapContentWidth(),
+                    text = mainPopupEntity.leftButtonText,
+                    buttonStyle = ButtonStyle.INVERSE,
+                    onClick = onClickLeftButton
+                )
+            }
 
-            MashUpButton(
-                modifier = Modifier.weight(1f),
-                text = mainPopupEntity.rightButtonText,
-                buttonStyle = ButtonStyle.PRIMARY,
-                onClick = onClickRightButton
-            )
+            if (mainPopupEntity.rightButtonText.isNotEmpty()) {
+                MashUpButton(
+                    modifier = Modifier.weight(1f),
+                    text = mainPopupEntity.rightButtonText,
+                    buttonStyle = ButtonStyle.PRIMARY,
+                    onClick = onClickRightButton
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))

@@ -155,7 +155,7 @@ dependencies {
 
 
     // lifecycle viewmodel compose
-    api libs.bundles.lifecycle
+    implementation libs.bundles.lifecycle
     // coroutine test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
 

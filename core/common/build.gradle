@@ -32,7 +32,6 @@ android {
         api libs.androidx.appcompat
         api libs.androidx.constraintlayout
         api libs.androidx.viewpager2
-        api libs.androidx.swiperefreshlayout
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
         // lifecycle

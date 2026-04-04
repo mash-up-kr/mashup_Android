@@ -101,6 +101,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
     override fun MainContainer(modifier: Modifier) {
         QRScanScreen(
             cameraManager = cameraManager,
+            modifier = modifier,
             onFinish = { finish() },
             onRequestQrAttendancePermissions = { requestQrAttendancePermissions() },
             cameraPermission = cameraPermissionGranted

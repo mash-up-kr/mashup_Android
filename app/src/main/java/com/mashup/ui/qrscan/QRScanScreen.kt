@@ -1,11 +1,9 @@
 package com.mashup.ui.qrscan
 
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -27,27 +25,39 @@ import com.mashup.ui.qrscan.camera.CameraManager
 internal fun QRScanScreen(
     cameraManager: CameraManager<List<Barcode>>,
     cameraPermission: Boolean,
+    modifier: Modifier = Modifier,
     onFinish: () -> Unit,
     onRequestQrAttendancePermissions: () -> Unit
 ) {
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = { context -> PreviewView(context) },
+        update = { view ->
+            if (cameraPermission) {
+                cameraManager.startCamera(view)
+                onRequestQrAttendancePermissions()
+            }
+        }
+    )
+
+    QRScanButtonComponent(
+        modifier = modifier,
+        onClick = onFinish
+    )
+}
+
+@Composable
+private fun QRScanButtonComponent(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
-            .statusBarsPadding()
             .fillMaxSize()
-            .background(Color.Black)
+            .then(modifier)
     ) {
-        AndroidView(
-            modifier = Modifier.fillMaxSize(),
-            factory = { context -> PreviewView(context) },
-            update = { view ->
-                if (cameraPermission) {
-                    cameraManager.startCamera(view)
-                    onRequestQrAttendancePermissions()
-                }
-            }
-        )
         IconButton(
-            onClick = onFinish,
+            onClick = onClick,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(top = 20.dp, end = 20.dp)
@@ -58,6 +68,7 @@ internal fun QRScanScreen(
                 tint = Color.White
             )
         }
+
         Text(
             text = stringResource(com.mashup.R.string.qr_code_msg),
             color = Color.White,

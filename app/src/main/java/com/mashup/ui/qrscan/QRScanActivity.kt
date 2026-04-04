@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -97,7 +98,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
     }
 
     @Composable
-    override fun MainContainer() {
+    override fun MainContainer(modifier: Modifier) {
         QRScanScreen(
             cameraManager = cameraManager,
             onFinish = { finish() },

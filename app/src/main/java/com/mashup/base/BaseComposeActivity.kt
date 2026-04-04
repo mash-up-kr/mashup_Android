@@ -54,7 +54,10 @@ open class BaseComposeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        initView()
         initAnimationType()
+        initObserves()
+
         setContent {
             MashUpTheme {
                 MainContainer(
@@ -93,6 +96,10 @@ open class BaseComposeActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         loadingDialogContainer.clear()
+    }
+
+    open fun initView() {
+        /* explicitly empty */
     }
 
     private fun initAnimationType() {

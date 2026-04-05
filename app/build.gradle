@@ -26,12 +26,12 @@ android {
             keyAlias 'key'
         }
     }
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
         applicationId "com.mashup"
-        minSdkVersion minVersion
-        targetSdkVersion targetVersion
+        minSdkVersion libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
         versionCode 34
         versionName "1.7.2"
 
@@ -155,8 +155,7 @@ dependencies {
 
 
     // lifecycle viewmodel compose
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
-
+    implementation libs.bundles.lifecycle
     // coroutine test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
 

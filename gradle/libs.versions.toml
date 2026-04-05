@@ -1,4 +1,8 @@
 [versions]
+minSdk = "24"
+targetSdk = "36"
+compileSdk = "36"
+
 appcompat = "1.7.1"
 core-ktx = "1.18.0"
 activity-ktx = "1.7.2"

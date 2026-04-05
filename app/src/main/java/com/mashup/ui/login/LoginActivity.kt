@@ -50,9 +50,9 @@ class LoginActivity : BaseComposeActivity() {
 
     @Composable
     override fun MainContainer() {
-        val inputFieldState by viewModel.inputFieldState.collectAsStateWithLifecycle(Pair("", ""))
-        val loginUiState by viewModel.loginUiState.collectAsStateWithLifecycle(LoginState.Empty)
-        val loginValidationState by viewModel.loginValidation.collectAsStateWithLifecycle(Validation.NONE)
+        val inputFieldState by viewModel.inputFieldState.collectAsStateWithLifecycle()
+        val loginUiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+        val loginValidationState by viewModel.loginValidation.collectAsStateWithLifecycle()
 
         LaunchedEffect(loginUiState) {
             when (val state = loginUiState) {

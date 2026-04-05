@@ -7,11 +7,11 @@ plugins {
 android {
     namespace "com.mashup.core.common"
 
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk minVersion
-        targetSdk targetVersion
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
     }
     buildFeatures {
         dataBinding true
@@ -32,12 +32,12 @@ android {
         api libs.androidx.appcompat
         api libs.androidx.constraintlayout
         api libs.androidx.viewpager2
-        api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
         // lifecycle
         api libs.bundles.lifecycle
 
         // material
+        // TODO gradle 버전 업데이트 이후 version catalog 마이그레이션 필요
         api "com.google.android.material:material:$materialVersion" //stable 찾아보는 중...
     }
 }

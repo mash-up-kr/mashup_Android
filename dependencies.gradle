@@ -2,10 +2,6 @@ ext {
     // Android
     androidBuildToolsVersion = "8.13.2"
 
-    minVersion = 24
-    targetVersion = 36
-    compileVersion = 36
-
     // kotlin
     kotlinVersion = "2.1.0"
     kotlinSerialization = "1.6.0"

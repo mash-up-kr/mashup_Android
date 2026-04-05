@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.mashup.core.data'
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

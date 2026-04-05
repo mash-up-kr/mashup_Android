@@ -7,11 +7,11 @@ plugins {
 android {
     namespace "com.mashup.core.common"
 
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk minVersion
-        targetSdk targetVersion
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
     }
     buildFeatures {
         dataBinding true
@@ -26,20 +26,18 @@ android {
     }
 
     dependencies {
-        api "androidx.core:core-ktx:$coreKtxVersion" //리펙 완료
-        api "androidx.activity:activity-ktx:$activityKtxVersion" //리펙 완료
-        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion" //리펙 완료
-        api "androidx.appcompat:appcompat:$appcompatVersion" //리펙 완료
-        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion" //리펙 완료
-        api "androidx.viewpager2:viewpager2:$viewPagerVersion" //리펙 완료
-        api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+        api libs.androidx.core.ktx
+        api libs.androidx.activity.ktx
+        api libs.androidx.fragment.ktx
+        api libs.androidx.appcompat
+        api libs.androidx.constraintlayout
+        api libs.androidx.viewpager2
 
         // lifecycle
-        api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion" //리펙 완료
-        api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-        api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+        api libs.bundles.lifecycle
 
         // material
+        // TODO gradle 버전 업데이트 이후 version catalog 마이그레이션 필요
         api "com.google.android.material:material:$materialVersion" //stable 찾아보는 중...
     }
 }

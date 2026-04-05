@@ -26,7 +26,6 @@ import com.mashup.constant.log.LOG_SIGN_UP
 import com.mashup.core.common.constant.MEMBER_NOT_FOUND
 import com.mashup.core.common.constant.MEMBER_NOT_MATCH_PASSWORD
 import com.mashup.core.common.model.ActivityEnterType
-import com.mashup.core.common.model.Validation
 import com.mashup.service.PushLinkType
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.main.MainActivity

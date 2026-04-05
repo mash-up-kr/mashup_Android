@@ -75,7 +75,6 @@ fun MashUpTextField(
         BasicTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp)
                 .height(84.dp)
                 .animateContentSize()
                 .clip(cornerShape)
@@ -121,7 +120,7 @@ fun MashUpTextField(
                         .fillMaxWidth()
                 ) {
                     val textFieldState = text.isEmpty() && focus || text.isNotEmpty()
-                    val paddingState by animateDpAsState(targetValue = if (textFieldState) 18.dp else 30.dp)
+                    val paddingState by animateDpAsState(targetValue = if (textFieldState) 16.dp else 26.dp)
                     val textSizeState by animateFloatAsState(targetValue = if (textFieldState) 13f else 20f)
                     // 탈퇴할게요 힌트, 라벨
                     Text(
@@ -133,7 +132,7 @@ fun MashUpTextField(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 36.dp, end = 14.dp),
+                            .padding(top = 40.dp, end = 14.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {

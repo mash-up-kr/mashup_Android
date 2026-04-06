@@ -72,12 +72,17 @@ open class BaseComposeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initObserves()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         loadingDialogContainer.clear()
+    }
+
+    open fun initView() {
+        /* explicitly empty */
     }
 
     open fun initObserves() {

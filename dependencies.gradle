@@ -22,14 +22,14 @@ ext {
 
     //google firebase
     gmsVersion = "4.4.2"
-    firebaseVersion = "33.6.0"
+    firebaseVersion = "34.11.0"
     crashlyticsVersion = "3.0.2"
 
     // di
     hiltVersion = "2.55"
 
     // kotlin & coroutine
-    coroutineVersion = "1.5.2"
+    coroutineVersion = "1.10.2"
 
     // material
     materialVersion = "1.9.0" //TODO : stable 찾아 보는 중

@@ -44,7 +44,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     ksp "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    implementation 'nl.dionsegijn:konfetti-compose:2.0.2'
+    // 안정화 버전 링크 : https://github.com/DanielMartinus/Konfetti/releases
+    implementation 'nl.dionsegijn:konfetti-compose:2.0.5'
 
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"

@@ -61,6 +61,9 @@ ext {
     flipperNoOpVersion = "0.10.0"
     soLoaderVersion = "0.10.5"
 
+    // activity
+    activityComposeVersion = "1.13.0"
+
     // Test
     junit4Version = "4.13.2"
     turbine = "app.cash.turbine:turbine:0.12.0"

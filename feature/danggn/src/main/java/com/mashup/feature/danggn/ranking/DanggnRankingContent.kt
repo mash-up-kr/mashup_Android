@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -33,8 +35,6 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import com.mashup.core.common.utils.thousandFormat
 import com.mashup.core.ui.colors.Black
 import com.mashup.core.ui.colors.Brand200
@@ -56,7 +56,6 @@ import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.feature.danggn.R
 import kotlinx.coroutines.launch
-
 
 @Composable
 fun DanggnRankingContent(

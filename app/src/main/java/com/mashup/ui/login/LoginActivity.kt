@@ -48,7 +48,7 @@ class LoginActivity : BaseComposeActivity() {
     }
 
     @Composable
-    override fun MainContainer() {
+    override fun MainContainer(modifier: Modifier) {
         val inputFieldState by viewModel.inputFieldState.collectAsStateWithLifecycle()
         val loginUiState by viewModel.loginUiState.collectAsStateWithLifecycle()
         val loginValidationState by viewModel.loginValidation.collectAsStateWithLifecycle()
@@ -97,11 +97,7 @@ class LoginActivity : BaseComposeActivity() {
                     PasswordActivity.newIntent(this@LoginActivity)
                 )
             },
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.onBackground)
-                .statusBarsPadding()
-                .navigationBarsPadding()
+            modifier = modifier,
         )
     }
 

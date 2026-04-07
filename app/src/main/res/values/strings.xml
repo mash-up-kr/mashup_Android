@@ -86,4 +86,9 @@
     <string name="attendance_nothing">-</string>
 
     <string name="qr_code_msg">QR 코드를  스캔하세요"</string>
+
+<!--  NetworkDisconnectScreen  -->
+    <string name="network_disconnect_screen_content">인터넷\n연결이…</string>
+    <string name="network_disconnect_screen_button_content">다시시도</string>
+
 </resources>

@@ -26,6 +26,7 @@ android {
     }
 
     dependencies {
+
         api libs.androidx.core.ktx
         api libs.androidx.activity.ktx
         api libs.androidx.fragment.ktx
@@ -37,7 +38,7 @@ android {
         api libs.bundles.lifecycle
 
         // material
-        // TODO gradle 버전 업데이트 이후 version catalog 마이그레이션 필요
-        api "com.google.android.material:material:$materialVersion" //stable 찾아보는 중...
+        api "com.google.android.material:material:$materialVersion"
+
     }
 }

@@ -4,7 +4,7 @@ ext {
 
     // kotlin
     kotlinVersion = "2.1.0"
-    kotlinSerialization = "1.6.0"
+    kotlinSerialization = "1.8.1"
 
     // compose
     composeVersion = '1.5.0'
@@ -26,13 +26,13 @@ ext {
     crashlyticsVersion = "3.0.2"
 
     // di
-    hiltVersion = "2.55"
+    hiltVersion = "2.57.1"
 
     // kotlin & coroutine
     coroutineVersion = "1.10.2"
 
     // material
-    materialVersion = "1.9.0" //TODO : stable 찾아 보는 중
+    materialVersion = "1.13.0"
 
     // network
     retrofitVersion = "2.9.0"
@@ -47,7 +47,7 @@ ext {
     glideVersion = "4.12.0"
 
     // DataSource
-    dataSourceVersion = "1.0.0"
+    dataStoreVersion = "1.2.1"
 
     // Navigation
     navVersion = "2.4.2"

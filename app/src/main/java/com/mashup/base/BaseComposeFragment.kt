@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
@@ -51,25 +55,34 @@ open class BaseComposeFragment : Fragment() {
             )
             setContent {
                 MashUpTheme {
-                    MainContainer()
+                    MainContainer(
+                        modifier = Modifier.fillMaxSize()
+                            .statusBarsPadding()
+                            .navigationBarsPadding()
+                    )
                 }
             }
         }
     }
 
     @Composable
-    open fun MainContainer() {
+    open fun MainContainer(modifier: Modifier) {
         /* explicitly empty */
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initObserves()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         loadingDialogContainer.clear()
+    }
+
+    open fun initView() {
+        /* explicitly empty */
     }
 
     open fun initObserves() {

@@ -39,6 +39,7 @@ dependencies {
     implementation project(":feature:myPage")
 
     // compose swipe refresh
+    // TODO: accompanist-swiperefresh deprecated → material3 PullToRefresh 마이그레이션 필요
     implementation "com.google.accompanist:accompanist-swiperefresh:0.25.1"
 
     implementation "com.google.dagger:hilt-android:$hiltVersion"

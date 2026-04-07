@@ -1,9 +1,8 @@
 package com.mashup.ui.mypage.viewholder
 
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.feature.mypage.profile.card.MyPageProfileCardScreen
 import com.mashup.ui.model.AttendanceModel

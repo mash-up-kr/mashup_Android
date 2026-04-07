@@ -25,7 +25,6 @@ import com.mashup.ui.mypage.viewholder.MyPageTitleViewHolder
 class AttendanceListAdapter :
     ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {
 
-
     override fun getItemViewType(position: Int): Int {
         return getItem(position).myPageType.type
     }

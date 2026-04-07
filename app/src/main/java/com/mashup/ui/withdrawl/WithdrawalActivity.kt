@@ -120,6 +120,10 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                     setDescriptionText("위 문구를 입력해주세요.")
                     setEmptyUIOfTextField()
                 }
+                Validation.NONE -> {
+                    setDescriptionText("")
+                    setEmptyUIOfTextField()
+                }
             }
         }
         viewBinding.btnWithdrawal.setButtonEnabled(codeState.isValidationState)

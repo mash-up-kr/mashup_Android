@@ -4,11 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -97,7 +92,7 @@ class LoginActivity : BaseComposeActivity() {
                     PasswordActivity.newIntent(this@LoginActivity)
                 )
             },
-            modifier = modifier,
+            modifier = modifier
         )
     }
 

@@ -6,6 +6,7 @@ import com.mashup.data.repository.AttendanceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,6 +26,12 @@ class QRScanViewModel @Inject constructor(
 
     private var location = Pair<Double?, Double?>(null, null)
 
+    private val _isCameraPermissionGranted = MutableStateFlow(false)
+    val isCameraPermissionGranted: SharedFlow<Boolean> = _isCameraPermissionGranted
+
+    private val _isAllPermissionGranted = MutableStateFlow(false)
+    val isAllPermissionGranted: SharedFlow<Boolean> = _isAllPermissionGranted
+
     init {
         recognitionQRCode
             .onEach {
@@ -33,6 +40,11 @@ class QRScanViewModel @Inject constructor(
                 delay(5000)
                 isCheckingCode.set(false)
             }.launchIn(viewModelScope)
+    }
+
+    fun updatePermission(cameraPermission: Boolean, allPermission: Boolean) {
+        _isAllPermissionGranted.value = allPermission
+        _isCameraPermissionGranted.value = cameraPermission
     }
 
     fun requestAttendance(code: QRCode) {

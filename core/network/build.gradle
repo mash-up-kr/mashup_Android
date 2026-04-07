@@ -7,11 +7,10 @@ plugins {
 
 android {
     namespace 'com.mashup.network'
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk minVersion
-        targetSdk targetVersion
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

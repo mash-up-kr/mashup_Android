@@ -7,11 +7,11 @@ plugins {
 android {
     namespace "com.mashup.core.common"
 
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk minVersion
-        targetSdk targetVersion
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
     }
     buildFeatures {
         dataBinding true
@@ -26,20 +26,19 @@ android {
     }
 
     dependencies {
-        api "androidx.core:core-ktx:$coreKtxVersion"
-        api "androidx.activity:activity-ktx:$activityKtxVersion"
-        api "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
-        api "androidx.appcompat:appcompat:$appcompatVersion"
-        api "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-        api "androidx.viewpager2:viewpager2:$viewPagerVersion"
-        api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+        api libs.androidx.core.ktx
+        api libs.androidx.activity.ktx
+        api libs.androidx.fragment.ktx
+        api libs.androidx.appcompat
+        api libs.androidx.constraintlayout
+        api libs.androidx.viewpager2
 
         // lifecycle
-        api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
-        api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-        api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+        api libs.bundles.lifecycle
 
         // material
         api "com.google.android.material:material:$materialVersion"
+
     }
 }

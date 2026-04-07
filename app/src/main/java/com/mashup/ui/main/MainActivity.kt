@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -12,6 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.mashup.R
 import com.mashup.base.BaseActivity
 import com.mashup.constant.EXTRA_ANIMATION
@@ -33,6 +36,7 @@ import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.main.popup.MainBottomPopup
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
+import com.mashup.ui.webview.birthday.BirthdayActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -61,10 +65,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.confirmAttendance()
                 viewModel.successAttendance()
             }
+
             QRScanActivity.RESULT_CONFIRM_QR -> {
                 viewModel.confirmAttendance()
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this)
     }
 
     override fun initViews() {
@@ -151,6 +161,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 )
                             )
                         }
+
+                        MainPopupType.BIRTHDAY_CELEBRATION -> {
+                            viewModel.disablePopup(popupType)
+                            startActivity(
+                                BirthdayActivity.newIntent(
+                                    context = this@MainActivity,
+                                    urlKey = "birthday/event"
+                                )
+                            )
+                        }
+
                         else -> {
                         }
                     }
@@ -160,18 +181,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun navigationTab(toDestination: MainTab) {
-        val currentNavigationId = navController.currentDestination?.id
         val newNavigationId = when (toDestination) {
             MainTab.EVENT -> {
                 R.id.eventFragment
             }
+
             MainTab.MY_PAGE -> {
                 R.id.myPageFragment
             }
         }
-        if (currentNavigationId != newNavigationId) {
-            navController.navigate(newNavigationId)
+        val navOptions = navOptions {
+            popUpTo(newNavigationId) {
+                saveState = true
+            }
+            launchSingleTop = true
         }
+        navController.navigate(newNavigationId, null, navOptions)
     }
 
     private fun setUIOfTab(tab: MainTab) = with(viewBinding.layoutMainTab) {
@@ -196,6 +221,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 tvMyPage.setTextColor(unSelectedColor)
                 imgMyPage.imageTintList = unSelectedColorList
             }
+
             MainTab.MY_PAGE -> {
                 tvEvent.setTextColor(unSelectedColor)
                 imgEvent.imageTintList = unSelectedColorList

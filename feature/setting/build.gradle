@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace 'com.mashup.feature.setting'
-    compileSdk compileVersion
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk minVersion
-        targetSdk targetVersion
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
         testInstrumentationRunner "com.mashup.core.testing.MashUpTestRunner"
     }
     compileOptions {

@@ -143,6 +143,13 @@ val Caption3 = TextStyle(
     letterSpacing = (-0.01).em
 )
 
+val Special = TextStyle(
+    fontFamily = mashupFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 60.sp,
+    letterSpacing = (-0.05).em
+)
+
 @Composable
 fun MashTextView(
     text: String,

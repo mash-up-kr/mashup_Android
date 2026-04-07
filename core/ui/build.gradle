@@ -50,6 +50,4 @@ dependencies {
 
     api "androidx.activity:activity-compose:$activityComposeVersion"
     api 'androidx.compose.ui:ui-util:1.2.0'
-    api "com.google.accompanist:accompanist-pager:$composeViewPagerVersion"
-    api "com.google.accompanist:accompanist-pager-indicators:$composeViewPagerVersion"
 }

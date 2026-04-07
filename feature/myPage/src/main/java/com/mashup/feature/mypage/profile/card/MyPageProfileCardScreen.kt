@@ -15,15 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.colors.Gray800
 import com.mashup.core.ui.typography.SubTitle1
 import com.mashup.feature.mypage.profile.model.ProfileCardData
 
-@OptIn(ExperimentalPagerApi::class)
+
 @Composable
 fun MyPageProfileCardScreen(
     cards: List<ProfileCardData>,
@@ -34,7 +33,6 @@ fun MyPageProfileCardScreen(
         MyPageSubTitle("활동 카드")
 
         HorizontalPager(
-            count = cards.size,
             state = pagerState,
             contentPadding = PaddingValues(horizontal = 15.dp)
         ) { card ->

@@ -21,6 +21,7 @@ ext {
     cameraVersion = "1.1.0-beta02"
 
     //google firebase
+    //버전 참고 주석 : https://firebase.google.com/support/release-notes/android
     gmsVersion = "4.4.2"
     firebaseVersion = "34.11.0"
     crashlyticsVersion = "3.0.2"

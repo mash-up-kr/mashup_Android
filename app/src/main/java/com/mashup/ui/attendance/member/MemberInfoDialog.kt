@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -23,9 +25,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -46,7 +45,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @AndroidEntryPoint
 class MemberInfoDialog : BottomSheetDialogFragment() {
     private var _binding: DialogMemberInfoBinding? = null
@@ -54,7 +52,6 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
         get() = _binding!!
 
     private val memberInfoViewModel: MemberInfoViewModel by viewModels()
-    private val pagerState = PagerState()
 
     private val behavior: BottomSheetBehavior<View>?
         get() {
@@ -155,9 +152,9 @@ class MemberInfoDialog : BottomSheetDialogFragment() {
 
     private fun setGenerationComposeView(cards: List<ProfileCardData>) {
         binding.composeView.setContent {
+            val pagerState = rememberPagerState(pageCount = { cards.size })
             Box {
                 HorizontalPager(
-                    count = cards.size,
                     state = pagerState,
                     contentPadding = PaddingValues(horizontal = 15.dp)
                 ) { card ->

@@ -35,13 +35,16 @@ ext {
     materialVersion = "1.13.0"
 
     // network
-    retrofitVersion = "2.9.0"
+    // 안정화 버전 : https://github.com/square/retrofit/releases/tag/2.12.0
+    retrofitVersion = "2.12.0"
 
     // OkHttp
-    okhttpInterceptorVerison = "4.9.3"
+    // 안정화 버전 : https://square.github.io/okhttp/changelogs/changelog_4x/
+    okhttpInterceptorVerison = "4.12.0"
 
     // serialization
-    moshiVersion = "1.15.1"
+    // 안정화 버전 : https://github.com/square/moshi/blob/master/CHANGELOG.md
+    moshiVersion = "1.15.2"
 
     // image
     glideVersion = "4.12.0"

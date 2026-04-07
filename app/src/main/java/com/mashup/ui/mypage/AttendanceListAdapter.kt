@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.compose.foundation.pager.PagerState
 import com.mashup.databinding.ItemMypageAttendanceHistoryLevelBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryListBinding
 import com.mashup.databinding.ItemMypageAttendanceHistoryPlaceholderEmpthyBinding
@@ -22,7 +21,6 @@ import com.mashup.ui.mypage.viewholder.MyPageProfileCardViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageProfileViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageScoreViewHolder
 import com.mashup.ui.mypage.viewholder.MyPageTitleViewHolder
-
 
 class AttendanceListAdapter :
     ListAdapter<AttendanceModel, MyPageBaseViewHolder>(AttendanceComparator) {

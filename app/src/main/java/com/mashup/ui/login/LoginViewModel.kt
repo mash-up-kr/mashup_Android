@@ -1,5 +1,6 @@
 package com.mashup.ui.login
 
+import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.core.common.model.Validation
 import com.mashup.core.firebase.FirebaseRepository
@@ -8,9 +9,11 @@ import com.mashup.data.repository.MemberRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +23,7 @@ class LoginViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
     private val _loginUiState = MutableStateFlow<LoginState>(LoginState.Empty)
-    val loginUiState: SharedFlow<LoginState> = _loginUiState
+    val loginUiState: StateFlow<LoginState> = _loginUiState
 
     private val id = MutableStateFlow("")
     private val pwd = MutableStateFlow("")
@@ -29,13 +32,25 @@ class LoginViewModel @Inject constructor(
         checkAutoLogin()
     }
 
+    val inputFieldState = id.combine(pwd) { id, pwd ->
+        Pair(id, pwd)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = Pair("", "")
+    )
+
     val loginValidation = id.combine(pwd) { id, pwd ->
         if (id.isNotBlank() && pwd.isNotBlank()) {
             Validation.SUCCESS
         } else {
             Validation.EMPTY
         }
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = Validation.NONE
+    )
 
     private fun checkAutoLogin() = mashUpScope {
         if (userPreferenceRepository.getUserPreference().first().token.isNotBlank()) {

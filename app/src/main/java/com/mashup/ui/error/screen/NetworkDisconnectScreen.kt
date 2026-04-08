@@ -1,6 +1,5 @@
 package com.mashup.ui.error.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,7 +31,7 @@ import com.mashup.core.ui.widget.MashUpButton
 internal fun NetworkDisconnectScreen(
     showLoading: Boolean,
     modifier: Modifier = Modifier,
-    onClickRetry: () -> Unit,
+    onClickRetry: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -58,7 +57,7 @@ internal fun NetworkDisconnectScreen(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_close),
-                    contentDescription = "close",
+                    contentDescription = "close"
                 )
             }
         }
@@ -77,7 +76,7 @@ internal fun NetworkDisconnectScreen(
             Text(
                 text = stringResource(com.mashup.R.string.network_disconnect_screen_content),
                 color = Gray200,
-                style = Special,
+                style = Special
             )
 
             Spacer(

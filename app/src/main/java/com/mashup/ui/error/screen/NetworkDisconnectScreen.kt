@@ -19,12 +19,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.Gray200
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.core.ui.typography.Special
+import com.mashup.core.ui.typography.mashupFontFamily
 import com.mashup.core.ui.widget.MashUpButton
 
 @Composable
@@ -76,7 +80,12 @@ internal fun NetworkDisconnectScreen(
             Text(
                 text = stringResource(com.mashup.R.string.content_disconnect_network),
                 color = Gray200,
-                style = Special
+                style = TextStyle(
+                    fontFamily = mashupFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 60.sp,
+                    letterSpacing = (-0.05).em
+                )
             )
 
             Spacer(

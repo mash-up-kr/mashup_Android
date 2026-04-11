@@ -74,7 +74,7 @@ internal fun NetworkDisconnectScreen(
             )
 
             Text(
-                text = stringResource(com.mashup.R.string.network_disconnect_screen_content),
+                text = stringResource(com.mashup.R.string.content_disconnect_network),
                 color = Gray200,
                 style = Special
             )
@@ -85,7 +85,7 @@ internal fun NetworkDisconnectScreen(
             )
 
             MashUpButton(
-                text = stringResource(com.mashup.R.string.network_disconnect_screen_button_content),
+                text = stringResource(com.mashup.R.string.text_button_retry),
                 onClick = onClickRetry,
                 showLoading = showLoading
             )

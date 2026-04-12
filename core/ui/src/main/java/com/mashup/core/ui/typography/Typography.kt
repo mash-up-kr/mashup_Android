@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.White
 
-private val mashupFontFamily = FontFamily(
+val mashupFontFamily = FontFamily(
     Font(R.font.pretendard_regular),
     Font(R.font.pretendard_medium, FontWeight.Medium),
     Font(R.font.pretendard_semibold, FontWeight.SemiBold),

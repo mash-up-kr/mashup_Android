@@ -3,6 +3,7 @@ minSdk = "24"
 targetSdk = "36"
 compileSdk = "36"
 
+androidx-compose-bom = "2026.01.01"
 agp = "8.13.2"
 appcompat = "1.7.1"
 core-ktx = "1.18.0"
@@ -47,12 +48,21 @@ mockito = "4.1.0"
 mockitoInline = "5.2.0"
 
 [libraries]
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
+
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
+
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-ktx" }
 
 facebook-flipper = {group = "com.facebook.flipper", name = "flipper", version.ref = "flipper"}
 facebook-soloader = {group = "com.facebook.soloader", name = "soloader", version.ref = "soLoader" }
 face-book-flipper-network = {group="com.facebook.flipper", name="flipper-network-plugin", version.ref = "flipper"}
-
-androidx-compose-ui = {group = "androidx.compose.ui", name = "ui", version.ref = "composeUiViewBinding"}
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity-ktx" }

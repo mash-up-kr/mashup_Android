@@ -75,7 +75,6 @@
     <string name="password">비밀번호</string>
     <string name="password_check">비밀번호 확인</string>
     <string name="password_description">영문, 숫자, 특수문자를 조합하여 8자 이상으로 입력해주세요.</string>
-    <string name="password_hint">영문, 숫자, 특수문자를 조합하여 8자 이상으로 입력해주세요.</string>
     <string name="id_description">영문 대소문자만 사용하여 15자 이내로 입력해주세요.</string>
     <string name="id">아이디</string>
     <string name="name_description">한글 이름(실명)을 입력해주세요.</string>

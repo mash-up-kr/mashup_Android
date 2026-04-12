@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlinx-serialization'
-    id 'com.google.devtools.ksp'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -10,6 +10,7 @@ android {
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
+        minSdk libs.versions.minSdk.get().toInteger()
         targetSdkVersion libs.versions.targetSdk.get().toInteger()
     }
     compileOptions {
@@ -25,11 +26,9 @@ dependencies {
     implementation project(":core:model")
 
     // network
-    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    api "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    api "com.squareup.okhttp3:logging-interceptor:$okhttpInterceptorVerison"
+    api libs.bundles.retrofit
+    api libs.squareup.okhttp3
 
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation libs.bundles.moshi
+    ksp libs.squareup.moshi.kotlin.codegen
 }

@@ -1,7 +1,7 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id "org.jetbrains.kotlin.plugin.compose"
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -48,6 +48,5 @@ dependencies {
     api 'androidx.activity:activity-compose:1.4.0'
     api 'androidx.compose.ui:ui-util:1.2.0'
     debugApi "androidx.compose.ui:ui-tooling"
-    api "com.google.accompanist:accompanist-pager:$composeViewPagerVersion"
-    api "com.google.accompanist:accompanist-pager-indicators:$composeViewPagerVersion"
+    api libs.bundles.composeViewPager
 }

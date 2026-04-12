@@ -70,7 +70,6 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
             textFieldPlatform.setText(memberState.platform)
         }
         btnSignUp.setButtonEnabled(memberState.isValidationState)
-        btnSignUp.setButtonText(getString(R.string.next))
     }
 
     private fun setUiOfNameState(memberState: MemberState) = with(viewBinding) {
@@ -100,6 +99,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
+        viewBinding.btnSignUp.setButtonText(getString(R.string.next))
         viewBinding.btnSignUp.setOnButtonClickListener {
             findNavController().navigate(R.id.action_signUpMemberFragment_to_termsAgreementDialog)
         }

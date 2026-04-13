@@ -4,7 +4,6 @@ targetSdk = "36"
 compileSdk = "36"
 
 androidx-compose-bom = "2026.01.01"
-agp = "8.13.2"
 appcompat = "1.7.1"
 core-ktx = "1.18.0"
 activity-ktx = "1.7.2"
@@ -51,6 +50,7 @@ mockitoInline = "5.2.0"
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
 
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-viewBinding = { group = "androidx.compose.ui", name = "ui-viewbinding" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
@@ -112,6 +112,7 @@ google-accompanist-webview = {group = "com.google.accompanist", name = "accompan
 androidx-constraintlayout-compose = {group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutCompose"}
 
 kotlinx-coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 
 github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }

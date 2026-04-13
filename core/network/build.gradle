@@ -27,7 +27,7 @@ dependencies {
 
     // network
     api libs.bundles.retrofit
-    api libs.squareup.okhttp3
+    api libs.squareup.okhttp3.logging.interceptor
 
     implementation libs.bundles.moshi
     ksp libs.squareup.moshi.kotlin.codegen

@@ -1,8 +1,7 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android'
-    id 'com.google.devtools.ksp'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -22,6 +21,6 @@ dependencies {
     implementation project(":core:network")
 
     // hilt
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
-    ksp "com.google.dagger:hilt-compiler:$hiltVersion"
+    implementation libs.google.dagger.hilt.android
+    ksp libs.google.dagger.hilt.compiler
 }

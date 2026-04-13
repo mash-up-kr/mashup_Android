@@ -1,11 +1,11 @@
-plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id "org.jetbrains.kotlin.plugin.compose"
+plugins{
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.compose)
 }
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -112,61 +112,55 @@ dependencies {
     implementation project(':feature:moreMenu:notice')
 
     // ml Kit
-    implementation "com.google.mlkit:barcode-scanning:$barcodeSacnnerVersion"
+    implementation libs.google.mlkit
 
     // camera
-    implementation "androidx.camera:camera-camera2:$cameraVersion"
-    implementation "androidx.camera:camera-lifecycle:$cameraVersion"
-    implementation "androidx.camera:camera-view:$cameraVersion"
+    implementation libs.bundles.camera
 
     // hilt
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.activity:activity:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+    implementation libs.google.dagger.hilt.android
+    implementation libs.androidx.appcompat
+    implementation libs.google.android.material
+    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.constraintlayout
+    kapt libs.google.dagger.hilt.compiler
 
     // network
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpInterceptorVerison"
-
+    implementation libs.bundles.retrofit
+    implementation libs.squareup.okhttp3
+    implementation libs.squareup.okhttp3.logging.interceptor
     // image
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation libs.github.bumptech.glide
+    kapt libs.github.bumptech.glide.compiler
 
     // DataStore
-    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
+    implementation libs.androidx.datastore
 
     // serialization
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation libs.bundles.moshi
+    kapt libs.squareup.moshi.kotlin.codegen
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation libs.bundles.navigation
 
     // compose webview
-    implementation "com.google.accompanist:accompanist-webview:$composeWebView"
-    implementation "androidx.compose.ui:ui-viewbinding:$composeUiViewBinding"
-    implementation "androidx.constraintlayout:constraintlayout-compose:$constraintlayoutCompose"
+    implementation libs.google.accompanist.webview
+    implementation libs.androidx.compose.ui.viewBinding
+    implementation libs.androidx.constraintlayout.compose
 
 
     // lifecycle viewmodel compose
     implementation libs.bundles.lifecycle
     // coroutine test
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
+    testImplementation libs.kotlinx.coroutine.test
 
     // flipper
-    implementation "com.facebook.flipper:flipper:$flipperVersion"
-    implementation "com.facebook.soloader:soloader:$soLoaderVersion"
-    implementation "com.facebook.flipper:flipper-network-plugin:$flipperVersion"
+    implementation libs.bundles.flipper
+    implementation libs.facebook.soloader
 
     // Naver Map
-    implementation "io.github.fornewid:naver-map-compose:1.4.0"
+    implementation libs.github.fornewid
 
     // Date Time
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.3.1'
+    implementation libs.jakewharton.threetenabp
 }

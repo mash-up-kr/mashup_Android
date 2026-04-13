@@ -40,6 +40,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         }
         viewBinding.toolbar.setTitle(getString(R.string.withdrawal_member))
         viewBinding.toolbar.setVisibleBackButton(true)
+        viewBinding.toolbar.setVisibleCloseButton(false)
     }
 
     private fun initButton() {

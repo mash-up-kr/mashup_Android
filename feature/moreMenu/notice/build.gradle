@@ -1,9 +1,9 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'com.google.devtools.ksp'
-    id 'org.jetbrains.kotlin.plugin.compose'
-    id 'com.google.dagger.hilt.android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -40,10 +40,9 @@ dependencies {
     implementation project(':core:data')
     debugImplementation project(':core:testing')
 
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
-    ksp "com.google.dagger:hilt-compiler:$hiltVersion"
+    implementation libs.google.dagger.hilt.android
+    ksp libs.google.dagger.hilt.compiler
 
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation libs.bundles.moshi
+    ksp libs.squareup.moshi.kotlin.codegen
 }

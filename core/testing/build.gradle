@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -24,13 +24,13 @@ android {
 }
 
 dependencies {
-    api "junit:junit:$junit4Version"
-    api(turbine)
-    api(espresso)
-    api(composeJunitTest)
-    api(hiltTest)
-    api(mockito)
-    api(mockitoInline)
+    api libs.junit4
+    api libs.turbine
+    api libs.espresso
+    api libs.composeJunitTest
+    api libs.hiltTest
+    api libs.mockito
+    api libs.mockitoInline
 
-    debugApi(composeManifestTest)
+    debugApi libs.composeManifestTest
 }

@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android' // 다른 모듈과 통일성을 유지함.
-    id 'com.google.devtools.ksp'
-    id 'com.google.dagger.hilt.android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -24,17 +24,14 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+    implementation libs.kotlinx.coroutine.android
 
     // google firebase
-    api platform("com.google.firebase:firebase-bom:$firebaseVersion")
-    api "com.google.firebase:firebase-analytics"
-    api "com.google.firebase:firebase-crashlytics"
-    api "com.google.firebase:firebase-messaging"
-    api 'com.google.firebase:firebase-firestore'
+    api platform(libs.google.firebase.bom)
+    api libs.bundles.firebase
 
     // hilt
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
-    ksp "com.google.dagger:hilt-compiler:$hiltVersion"
+    implementation libs.google.dagger.hilt.android
+    ksp libs.google.dagger.hilt.compiler
 
 }

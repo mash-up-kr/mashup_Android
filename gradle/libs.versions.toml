@@ -131,13 +131,17 @@ mockitoInline = {group = "org.mockito", name = "mockito-inline", version.ref = "
 
 [bundles]
 lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"]
-firebase = ["google-firebase-bom", "google-firebase-analytics", "google-firebase-crashlytics", "google-firebase-messaging", "google-firebase-firestore"]
+firebase = ["google-firebase-analytics", "google-firebase-crashlytics", "google-firebase-messaging", "google-firebase-firestore"]
 camera = ["androidx-camera-camera2", "androidx-camera-lifecycle", "androidx-camera-view"]
 retrofit = ["squareup-retrofit2", "squareup-retrofit2-converter-moshi", "retrofit-converter-gson"]
 moshi = ["squareup-moshi-kotlin", "squareup-moshi-adapters"]
 navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
 flipper = ["facebook-flipper", "face-book-flipper-network"]
 composeViewPager = ["google-accompanist-pager", "google-accompanist-pager-indicators"]
+androidx-compose = ["androidx-compose-ui", "androidx-compose-ui-viewBinding", "androidx-compose-foundation",
+    "androidx-compose-material", "androidx-compose-material3", "androidx-compose-ui-tooling-preview",
+"androidx-compose-ui-tooling", "androidx-compose-ui-util"]
+
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidBuildTool" }

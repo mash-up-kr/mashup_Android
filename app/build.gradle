@@ -145,14 +145,14 @@ dependencies {
 
     // compose webview
     implementation libs.google.accompanist.webview
-    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.viewBinding
     implementation libs.androidx.constraintlayout.compose
 
 
     // lifecycle viewmodel compose
     implementation libs.bundles.lifecycle
     // coroutine test
-    testImplementation libs.kotlinx.coroutine.android
+    testImplementation libs.kotlinx.coroutine.test
 
     // flipper
     implementation libs.bundles.flipper

@@ -82,7 +82,7 @@ internal fun ChangePasswordScreen(
             MashUpTextField(
                 text = inputPasswordConfirm,
                 onTextChanged = onInputPasswordConfirmChanged,
-                labelText = stringResource(R.string.password_confirm),
+                labelText = stringResource(R.string.password_check),
                 requestFocus = false,
                 validation = when (passwordState.pwdCheckState) {
                     PwdCheckState.Empty -> Validation.EMPTY
@@ -109,7 +109,7 @@ internal fun ChangePasswordScreen(
         )
 
         MashUpButton(
-            text = stringResource(R.string.done),
+            text = stringResource(R.string.complete),
             buttonStyle = ButtonStyle.PRIMARY,
             isEnabled = when (passwordState.buttonState) {
                 ButtonState.Enable -> true

@@ -13,6 +13,7 @@ import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
 import com.mashup.core.common.model.Validation
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
+import com.mashup.core.common.widget.TextFieldView
 import com.mashup.databinding.FragmentSignUpCodeBinding
 import com.mashup.network.errorcode.ATTENDANCE_CODE_DUPLICATED
 import com.mashup.ui.login.LoginType
@@ -99,6 +100,9 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
             }
         }
         viewBinding.textFieldCode.setFocus()
+        viewBinding.textFieldCode.setHintText(getString(R.string.sign_up_code))
+        viewBinding.textFieldCode.setInputType(TextFieldView.TextFieldInputType.TEXT_CAP_CHARACTERS)
+        viewBinding.textFieldCode.setMaxLength(TEXT_FIELD_MAX_LENGTH)
     }
 
     private fun initButton() {
@@ -113,6 +117,7 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
         viewBinding.btnSignUp.setOnButtonThrottleFirstClickListener(this) {
             viewModel.requestInvalidSignUpCode()
         }
+        viewBinding.btnSignUp.setButtonText(getString(R.string.next))
     }
 
     private fun handleSignUpErrorCode(error: SignUpState.Error) {
@@ -147,5 +152,9 @@ class SignUpCodeFragment : BaseFragment<FragmentSignUpCodeBinding>() {
             }
         }
         viewBinding.btnSignUp.setButtonEnabled(codeState.isValidationState)
+    }
+
+    companion object {
+        private const val TEXT_FIELD_MAX_LENGTH = 8
     }
 }

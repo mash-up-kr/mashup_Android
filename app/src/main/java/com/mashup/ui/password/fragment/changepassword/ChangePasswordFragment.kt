@@ -10,6 +10,7 @@ import com.mashup.core.common.extensions.setEmptyUIOfTextField
 import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
 import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
+import com.mashup.core.common.widget.TextFieldView
 import com.mashup.databinding.FragmentChangePasswordBinding
 import com.mashup.ui.password.ButtonState
 import com.mashup.ui.password.PasswordViewModel
@@ -61,6 +62,10 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
                 }
             }
         }
+        viewBinding.textFieldPwd.setDescriptionText(getString(R.string.password_description))
+        viewBinding.textFieldPwd.setHintText(getString(R.string.password))
+        viewBinding.textFieldPwd.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
+
         viewBinding.textFieldPwdCheck.apply {
             addOnTextChangedListener { text ->
                 passwordViewModel.updatePasswordCheck(text)
@@ -74,6 +79,8 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
                 }
             }
         }
+        viewBinding.textFieldPwdCheck.setHintText(getString(R.string.password_check))
+        viewBinding.textFieldPwdCheck.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
     }
     private fun initButton() {
         ViewCompat.setWindowInsetsAnimationCallback(
@@ -87,6 +94,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
         viewBinding.btnComplete.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             passwordViewModel.onClickNextButton(ScreenState.ChangePassword)
         }
+        viewBinding.btnComplete.setButtonText(getString(R.string.complete))
     }
 
     private fun setUiOfPwdState(pwdState: PwdState) = with(viewBinding) {

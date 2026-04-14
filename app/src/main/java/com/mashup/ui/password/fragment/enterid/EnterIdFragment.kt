@@ -56,6 +56,8 @@ class EnterIdFragment : BaseFragment<FragmentEnterIdBinding>() {
                 passwordViewModel.updateId(id = id)
             }
         }
+        viewBinding.textFieldId.setDescriptionText(getString(R.string.id_description))
+        viewBinding.textFieldId.setHintText(getString(R.string.id))
     }
 
     private fun initButton() {
@@ -70,6 +72,7 @@ class EnterIdFragment : BaseFragment<FragmentEnterIdBinding>() {
         viewBinding.btnNext.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
             passwordViewModel.onClickNextButton(screen = ScreenState.EnterId)
         }
+        viewBinding.btnNext.setButtonText(getString(R.string.next))
     }
 
     private fun setUiOfIdState(idState: IdState) = with(viewBinding) {

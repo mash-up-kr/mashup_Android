@@ -25,6 +25,9 @@ class CommonDialog(context: Context) : Dialog(context) {
         )
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        viewBinding.btnNegative.setButtonStyle(ButtonView.ButtonStyle.DEFAULT)
+        viewBinding.btnPositive.setButtonStyle(ButtonView.ButtonStyle.PRIMARY)
+
         setCancelable(false)
         setCanceledOnTouchOutside(false)
     }

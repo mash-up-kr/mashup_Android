@@ -46,6 +46,7 @@ import com.mashup.core.common.model.Validation
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray300
 import com.mashup.core.ui.colors.Gray400
+import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.Green500
 import com.mashup.core.ui.colors.Red500
@@ -62,7 +63,8 @@ fun MashUpTextField(
     labelText: String,
     requestFocus: Boolean,
     validation: Validation,
-    textFieldInputType: TextFieldInputType
+    textFieldInputType: TextFieldInputType,
+    enabled: Boolean = true
 ) {
     var focus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -81,20 +83,30 @@ fun MashUpTextField(
                 .border(
                     shape = cornerShape,
                     width = 1.dp,
-                    color = when (validation) {
-                        Validation.SUCCESS -> Brand500
-                        Validation.EMPTY -> if (focus) Brand500 else Gray300
-                        Validation.FAILED -> Red500
-                        Validation.NONE -> if (focus) Brand500 else Gray300
+                    color = when (enabled) {
+                        true -> when (validation) {
+                            Validation.SUCCESS -> Brand500
+                            Validation.EMPTY -> if (focus) Brand500 else Gray300
+                            Validation.FAILED -> Red500
+                            Validation.NONE -> if (focus) Brand500 else Gray300
+                        }
+
+                        false -> Gray300
                     }
                 )
-                .background(Color.White)
+                .background(
+                    color = when (enabled) {
+                        true -> Color.White
+                        false -> Gray50
+                    }
+                )
                 .onFocusChanged {
                     focus = it.hasFocus
                 }
                 .focusRequester(focusRequester),
             value = text,
             textStyle = Title2,
+            enabled = enabled,
             singleLine = true,
             visualTransformation = when (textFieldInputType) {
                 TextFieldInputType.PASSWORD -> PasswordVisualTransformation()

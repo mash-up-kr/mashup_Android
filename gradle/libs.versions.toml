@@ -45,6 +45,8 @@ turbine = "0.12.0"
 espresso = "3.1.0"
 mockito = "4.1.0"
 mockitoInline = "5.2.0"
+konfetti = "2.0.5"
+accompanistSwipeRefresh = "0.25.1"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
@@ -128,6 +130,8 @@ composeManifestTest = {group = "androidx.compose.ui", name = "ui-test-manifest",
 hiltTest = {group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt"}
 mockito = {group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito"}
 mockitoInline = {group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInline"}
+konfetti-compose = { group = "nl.dionsegijn", name = "konfetti-compose", version.ref = "konfetti" }
+google-accompanist-swipe-refresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanistSwipeRefresh" }
 
 [bundles]
 lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"]

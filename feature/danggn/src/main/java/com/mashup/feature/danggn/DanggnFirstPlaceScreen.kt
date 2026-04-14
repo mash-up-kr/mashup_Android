@@ -16,12 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Title1
 import com.mashup.core.ui.widget.MashUpButton
@@ -30,6 +28,7 @@ import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.Rotation
 import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.core.models.ReferenceImage
 import nl.dionsegijn.konfetti.core.models.Shape
 import nl.dionsegijn.konfetti.core.models.Size
 import java.util.concurrent.TimeUnit
@@ -102,10 +101,6 @@ private fun DanggnFirstPlaceContent(
 fun DanggnKonfettiView(
     modifier: Modifier = Modifier
 ) {
-    val drawable = ContextCompat.getDrawable(
-        LocalContext.current,
-        CR.drawable.img_carrot
-    )
     val defaultParty = Party(
         speed = 0f,
         maxSpeed = 20f,
@@ -113,7 +108,14 @@ fun DanggnKonfettiView(
         spread = 360,
         size = listOf(Size.MEDIUM.copy(sizeInDp = 36), Size.LARGE.copy(sizeInDp = 64)),
         shapes = listOf(
-            drawable?.let { Shape.DrawableShape(it, tint = false) } ?: Shape.Square
+            Shape.DrawableShape(
+                image = ReferenceImage(
+                    reference = CR.drawable.img_carrot,
+                    width = -1,
+                    height = -1
+                ),
+                tint = false
+            )
         ),
         rotation = Rotation(enabled = false),
         emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(30),

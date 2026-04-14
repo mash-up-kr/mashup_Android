@@ -39,12 +39,12 @@ dependencies {
     implementation project(":feature:myPage")
 
     // compose swipe refresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:0.25.1"
+    implementation libs.google.accompanist.swipe.refresh
 
     implementation libs.google.dagger.hilt.android
     ksp libs.google.dagger.hilt.compiler
 
-    implementation 'nl.dionsegijn:konfetti-compose:2.0.2'
+    implementation libs.konfetti.compose
 
     implementation libs.bundles.moshi
     ksp libs.squareup.moshi.kotlin.codegen

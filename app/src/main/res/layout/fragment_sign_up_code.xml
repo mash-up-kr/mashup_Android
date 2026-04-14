@@ -27,8 +27,7 @@
             <com.mashup.core.common.widget.ButtonView
                 android:id="@+id/btn_sign_up"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:text_button='@{"다음"}' />
+                android:layout_height="wrap_content" />
 
         </FrameLayout>
 
@@ -59,9 +58,6 @@
 
                 <com.mashup.core.common.widget.TextFieldView
                     android:id="@+id/text_field_code"
-                    text_field_hint='@{"가입코드"}'
-                    text_field_input_type="@{TextFieldInputType.TEXT_CAP_CHARACTERS}"
-                    text_field_length="@{8}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"

@@ -5,15 +5,13 @@ import android.content.res.Resources
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import com.mashup.core.common.R
 import com.mashup.core.common.databinding.LayoutToastBinding
 
 object ToastUtil {
     fun showToast(context: Context, message: String) {
         val inflater = LayoutInflater.from(context)
         val binding: LayoutToastBinding =
-            DataBindingUtil.inflate(inflater, R.layout.layout_toast, null, false)
+            LayoutToastBinding.inflate(inflater, null, false)
 
         binding.tvSample.text = message
         Toast(context).apply {

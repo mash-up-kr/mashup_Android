@@ -4,14 +4,11 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -103,11 +100,6 @@ class TextSelectionView @JvmOverloads constructor(
         viewBinding.tvHintLabel.setTextColor(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setDescriptionText(description: String) {
-        viewBinding.tvDescription.visibility = View.VISIBLE
-        viewBinding.tvDescription.text = description
-    }
-
     fun setSelectionThrottleFirstClickListener(
         lifecycleOwner: LifecycleOwner,
         clickListener: () -> Unit
@@ -117,17 +109,9 @@ class TextSelectionView @JvmOverloads constructor(
         }
     }
 
-    fun setDescriptionTextColor(@ColorRes colorRes: Int) {
-        viewBinding.tvDescription.setTextColor(ContextCompat.getColor(context, colorRes))
-    }
-
     fun setText(text: String) = with(viewBinding.etText) {
         if (this.text.toString() == text) return
         setText(text)
-    }
-
-    fun setStrokeBackground(@DrawableRes drawableRes: Int) {
-        viewBinding.layoutTextField.setBackgroundResource(drawableRes)
     }
 
     private fun startCollapseAnimationHintLabel() {
@@ -151,19 +135,5 @@ class TextSelectionView @JvmOverloads constructor(
     companion object {
         private const val SIZE_TEXT_COLLAPSE = 20
         private const val SIZE_TEXT_EXPEND = 13
-
-        @JvmStatic
-        @BindingAdapter(
-            value = ["text_section_hint", "text_section_description"],
-            requireAll = false
-        )
-        fun TextSelectionView.setTitleText(hint: String?, description: String?) {
-            hint?.run {
-                setHintText(this)
-            }
-            description?.run {
-                setDescriptionText(this)
-            }
-        }
     }
 }

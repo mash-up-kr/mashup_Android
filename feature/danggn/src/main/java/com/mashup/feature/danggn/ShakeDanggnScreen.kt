@@ -32,6 +32,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+// TODO: SwipeRefresh가 deprecated되었습니다.
+// androidx.compose.material.pullrefresh로 마이그레이션 필요
+// 참고: https://developer.android.com/reference/kotlin/androidx/compose/material/pullrefresh/package-summary
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState

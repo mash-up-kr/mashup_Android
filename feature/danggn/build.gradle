@@ -38,8 +38,10 @@ dependencies {
     implementation project(':core:data')
     implementation project(":feature:myPage")
 
-    // compose swipe refresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:0.25.1"
+    // TODO: accompanist-swiperefresh가 deprecated되었습니다.
+    // androidx.compose.material.pullrefresh로 마이그레이션 필요
+    // 참고: https://developer.android.com/reference/kotlin/androidx/compose/material/pullrefresh/package-summary
+    implementation libs.google.accompanist.swipe.refresh
 
     implementation libs.google.dagger.hilt.android
     ksp libs.google.dagger.hilt.compiler

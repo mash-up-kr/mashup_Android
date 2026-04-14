@@ -25,11 +25,16 @@ import com.mashup.core.ui.typography.Header1
 import com.mashup.core.ui.widget.ButtonStyle
 import com.mashup.core.ui.widget.MashUpButton
 import com.mashup.core.ui.widget.MashUpTextField
+import com.mashup.ui.password.ButtonState
+import com.mashup.ui.password.PassWordState
+import com.mashup.ui.password.PwdCheckState
+import com.mashup.ui.password.PwdState
 
 @Composable
 internal fun ChangePasswordScreen(
     inputPassword: String,
     inputPasswordConfirm: String,
+    passwordState: PassWordState,
     modifier: Modifier = Modifier,
     onInputPasswordChanged: (String) -> Unit,
     onInputPasswordConfirmChanged: (String) -> Unit,
@@ -61,9 +66,17 @@ internal fun ChangePasswordScreen(
                 onTextChanged = onInputPasswordChanged,
                 labelText = stringResource(R.string.password),
                 requestFocus = false,
-                validation = Validation.NONE,
+                validation = when (passwordState.pwdState) {
+                    PwdState.Empty -> Validation.EMPTY
+                    PwdState.Success -> Validation.SUCCESS
+                    PwdState.Error -> Validation.FAILED
+                },
                 textFieldInputType = TextFieldInputType.PASSWORD,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                validationText = when (passwordState.pwdState) {
+                    PwdState.Error -> stringResource(R.string.change_password_screen_password_validation_error_content)
+                    else -> stringResource(R.string.change_password_screen_password_validation_default_content)
+                }
             )
 
             MashUpTextField(
@@ -71,10 +84,21 @@ internal fun ChangePasswordScreen(
                 onTextChanged = onInputPasswordConfirmChanged,
                 labelText = stringResource(R.string.password_confirm),
                 requestFocus = false,
-                validation = Validation.NONE,
+                validation = when (passwordState.pwdCheckState) {
+                    PwdCheckState.Empty -> Validation.EMPTY
+                    PwdCheckState.Success -> Validation.SUCCESS
+                    PwdCheckState.Error -> Validation.FAILED
+                },
                 textFieldInputType = TextFieldInputType.PASSWORD,
                 modifier = Modifier.fillMaxWidth(),
-                enabled = false
+                validationText = when (passwordState.pwdCheckState) {
+                    PwdCheckState.Error -> stringResource(R.string.change_password_screen_password_check_validation_error_content)
+                    else -> ""
+                },
+                enabled = when (passwordState.pwdState) {
+                    PwdState.Success -> true
+                    else -> false
+                }
             )
         }
 
@@ -87,8 +111,14 @@ internal fun ChangePasswordScreen(
         MashUpButton(
             text = stringResource(R.string.done),
             buttonStyle = ButtonStyle.PRIMARY,
-            isEnabled = false,
-            showLoading = false,
+            isEnabled = when (passwordState.buttonState) {
+                ButtonState.Enable -> true
+                else -> false
+            },
+            showLoading = when (passwordState.buttonState) {
+                ButtonState.Loading -> true
+                else -> false
+            },
             onClick = onClickDone,
             modifier = Modifier
                 .fillMaxWidth()
@@ -109,6 +139,7 @@ private fun PreviewChangePasswordScreen() {
             ChangePasswordScreen(
                 inputPassword = "",
                 inputPasswordConfirm = "",
+                passwordState = PassWordState.Empty,
                 onInputPasswordChanged = {},
                 onInputPasswordConfirmChanged = {},
                 onClickDone = {}

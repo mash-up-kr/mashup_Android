@@ -64,7 +64,8 @@ fun MashUpTextField(
     requestFocus: Boolean,
     validation: Validation,
     textFieldInputType: TextFieldInputType,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    validationText: String = ""
 ) {
     var focus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -177,7 +178,7 @@ fun MashUpTextField(
         if (validation != Validation.NONE) {
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 4.dp),
-                text = setDescriptionText(validation),
+                text = validationText,
                 style = Caption3,
                 color = if (validation == Validation.FAILED) Red500 else Gray600
             )
@@ -189,23 +190,6 @@ fun MashUpTextField(
                 delay(100L)
                 keyboardController?.show()
             }
-        }
-    }
-}
-
-private fun setDescriptionText(codeState: Validation): String {
-    return when (codeState) {
-        Validation.SUCCESS -> {
-            "위 문구를 입력해주세요."
-        }
-        Validation.FAILED -> {
-            "문구가 동일하지 않아요"
-        }
-        Validation.EMPTY -> {
-            "위 문구를 입력해주세요."
-        }
-        Validation.NONE -> {
-            ""
         }
     }
 }

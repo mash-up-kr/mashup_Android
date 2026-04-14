@@ -44,7 +44,7 @@ dependencies {
     implementation libs.google.dagger.hilt.android
     ksp libs.google.dagger.hilt.compiler
 
-    implementation 'nl.dionsegijn:konfetti-compose:2.0.2'
+    implementation libs.konfetti.compose
 
     implementation libs.bundles.moshi
     ksp libs.squareup.moshi.kotlin.codegen

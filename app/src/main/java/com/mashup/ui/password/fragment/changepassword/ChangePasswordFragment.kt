@@ -1,148 +1,42 @@
 package com.mashup.ui.password.fragment.changepassword
 
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.fragment.app.activityViewModels
 import com.mashup.R
-import com.mashup.base.BaseFragment
-import com.mashup.core.common.extensions.scrollToTarget
-import com.mashup.core.common.extensions.setEmptyUIOfTextField
-import com.mashup.core.common.extensions.setFailedUiOfTextField
-import com.mashup.core.common.extensions.setSuccessUiOfTextField
-import com.mashup.core.common.utils.keyboard.TranslateDeferringInsetsAnimationCallback
-import com.mashup.core.common.widget.TextFieldView
-import com.mashup.databinding.FragmentChangePasswordBinding
-import com.mashup.ui.password.ButtonState
+import com.mashup.base.BaseComposeFragment
+import com.mashup.core.common.utils.ToastUtil
 import com.mashup.ui.password.PasswordViewModel
-import com.mashup.ui.password.PwdCheckState
-import com.mashup.ui.password.PwdState
-import com.mashup.ui.password.ScreenState
+import com.mashup.ui.password.fragment.changepassword.route.ChangePasswordRoute
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
+class ChangePasswordFragment : BaseComposeFragment() {
 
     private val passwordViewModel: PasswordViewModel by activityViewModels()
-    override val layoutId: Int
-        get() = R.layout.fragment_change_password
-
-    override fun initViews() {
-        initTextField()
-        initButton()
-    }
 
     override fun initObserves() {
-        flowViewLifecycleScope {
-            passwordViewModel.passwordScreenState.collectLatest { state ->
-                setUiOfButtonState(state.buttonState)
-                setUiOfPwdState(state.pwdState)
-                setUiOfPwdCheckState(state.pwdState, state.pwdCheckState)
-            }
-        }
+        super.initObserves()
 
         flowViewLifecycleScope {
             passwordViewModel.moveToNextScreen.collectLatest {
-                requireActivity().finish()
+                val activity = this@ChangePasswordFragment.requireActivity()
+
+                ToastUtil.showToast(
+                    context = activity,
+                    message = getString(R.string.change_password_screen_success_toast_message)
+                )
+
+                activity.finish()
             }
         }
     }
 
-    private fun initTextField() {
-        viewBinding.textFieldPwd.apply {
-            addOnTextChangedListener { text ->
-                passwordViewModel.updatePassword(text)
-            }
-            setOnFocusChangedListener { hasFocus ->
-                if (hasFocus) {
-                    viewBinding.scrollView.scrollToTarget(
-                        viewBinding.layoutContent,
-                        this
-                    )
-                }
-            }
-        }
-        viewBinding.textFieldPwd.setDescriptionText(getString(R.string.password_description))
-        viewBinding.textFieldPwd.setHintText(getString(R.string.password))
-        viewBinding.textFieldPwd.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
-
-        viewBinding.textFieldPwdCheck.apply {
-            addOnTextChangedListener { text ->
-                passwordViewModel.updatePasswordCheck(text)
-            }
-            setOnFocusChangedListener { hasFocus ->
-                if (hasFocus) {
-                    viewBinding.scrollView.scrollToTarget(
-                        viewBinding.layoutContent,
-                        this
-                    )
-                }
-            }
-        }
-        viewBinding.textFieldPwdCheck.setHintText(getString(R.string.password_check))
-        viewBinding.textFieldPwdCheck.setInputType(TextFieldView.TextFieldInputType.PASSWORD)
-    }
-    private fun initButton() {
-        ViewCompat.setWindowInsetsAnimationCallback(
-            viewBinding.layoutButton,
-            TranslateDeferringInsetsAnimationCallback(
-                view = viewBinding.layoutButton,
-                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
-                deferredInsetTypes = WindowInsetsCompat.Type.ime()
-            )
+    @Composable
+    override fun MainContainer(modifier: Modifier) {
+        ChangePasswordRoute(
+            viewModel = passwordViewModel
         )
-        viewBinding.btnComplete.setOnButtonThrottleFirstClickListener(viewLifecycleOwner) {
-            passwordViewModel.onClickNextButton(ScreenState.ChangePassword)
-        }
-        viewBinding.btnComplete.setButtonText(getString(R.string.complete))
-    }
-
-    private fun setUiOfPwdState(pwdState: PwdState) = with(viewBinding) {
-        when (pwdState) {
-            is PwdState.Success -> {
-                textFieldPwd.setSuccessUiOfTextField()
-            }
-            is PwdState.Error -> {
-                textFieldPwd.setFailedUiOfTextField()
-            }
-            is PwdState.Empty -> {
-                textFieldPwd.setEmptyUIOfTextField()
-            }
-        }
-    }
-
-    private fun setUiOfPwdCheckState(pwdState: PwdState, pwdCheckState: PwdCheckState) =
-        with(viewBinding) {
-            textFieldPwdCheck.setEnabledTextField(pwdState is PwdState.Success)
-            when (pwdCheckState) {
-                is PwdCheckState.Success -> {
-                    textFieldPwdCheck.setDescriptionText("")
-                    textFieldPwdCheck.setSuccessUiOfTextField()
-                }
-                is PwdCheckState.Error -> {
-                    textFieldPwdCheck.setDescriptionText("비밀번호가 일치하지 않아요.")
-                    textFieldPwdCheck.setFailedUiOfTextField()
-                }
-                is PwdCheckState.Empty -> {
-                    textFieldPwdCheck.setDescriptionText("")
-                    textFieldPwdCheck.setEmptyUIOfTextField()
-                }
-            }
-        }
-
-    private fun setUiOfButtonState(buttonState: ButtonState) = with(viewBinding) {
-        when (buttonState) {
-            is ButtonState.Loading -> {
-                btnComplete.showLoading()
-            }
-            is ButtonState.Disable -> {
-                btnComplete.hideLoading()
-                btnComplete.setButtonEnabled(false)
-            }
-            else -> {
-                btnComplete.hideLoading()
-                btnComplete.setButtonEnabled(true)
-            }
-        }
     }
 }

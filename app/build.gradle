@@ -20,10 +20,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('mashupKey')
-            storePassword 'mashup1234!'
-            keyPassword 'mashup1234!'
-            keyAlias 'key'
+            storeFile file(properties.getProperty("STORE_FILE") ?: "")
+            storePassword properties.getProperty("STORE_PASSWORD") ?: ""
+            keyPassword properties.getProperty("KEY_PASSWORD") ?: ""
+            keyAlias properties.getProperty("KEY_ALIAS") ?: ""
         }
     }
     compileSdk libs.versions.compileSdk.get().toInteger()

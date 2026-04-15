@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -30,7 +31,12 @@ class PasswordViewModel @Inject constructor(
 
     private val _id = MutableStateFlow("")
     private val _pwd = MutableStateFlow("")
+    val pwd: StateFlow<String>
+        get() = _pwd.asStateFlow()
+
     private val _pwdCheck = MutableStateFlow("")
+    val pwdCheck: StateFlow<String>
+        get() = _pwdCheck.asStateFlow()
 
     private val idState = MutableStateFlow<IdState>(IdState.Empty)
     private val pwdState = _pwd.map {

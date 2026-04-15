@@ -29,6 +29,10 @@ jobs:
           mkdir -p /home/runner/work/mashup_Android/mashup_Android/app
           echo "$GOOGLE_SERVICES_JSON" > /home/runner/work/mashup_Android/mashup_Android/app/google-services.json
 
+      - name: Putting keystore
+        run: |
+          echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > /home/runner/work/mashup_Android/mashup_Android/app/mashupKey
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 

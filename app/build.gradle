@@ -18,14 +18,6 @@ android {
         disable "JvmStaticProvidesInObjectDetector", "FieldSiteTargetOnQualifierAnnotation",
                 "ModuleCompanionObjects", "ModuleCompanionObjectsNotInModuleParent"
     }
-    signingConfigs {
-        release {
-            storeFile file('mashupKey')
-            storePassword 'REMOVED'
-            keyPassword 'REMOVED'
-            keyAlias 'key'
-        }
-    }
     compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {

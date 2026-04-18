@@ -86,7 +86,7 @@ fun MashUpTextField(
                     width = 1.dp,
                     color = when (enabled) {
                         true -> when (validation) {
-                            Validation.SUCCESS -> Brand500
+                            Validation.SUCCESS -> if (focus) Brand500 else Gray300
                             Validation.EMPTY -> if (focus) Brand500 else Gray300
                             Validation.FAILED -> Red500
                             Validation.NONE -> if (focus) Brand500 else Gray300
@@ -158,24 +158,26 @@ fun MashUpTextField(
                             else -> null
                         }
                         validationPainter?.let {
-                            Image(
-                                modifier = Modifier
-                                    .padding(start = 12.dp)
-                                    .align(alignment = Alignment.CenterVertically),
-                                painter = painterResource(id = validationPainter),
-                                contentDescription = null,
-                                colorFilter = if (validation == Validation.FAILED) {
-                                    ColorFilter.tint(color = Red500)
-                                } else {
-                                    ColorFilter.tint(color = Green500)
-                                }
-                            )
+                            if (enabled) {
+                                Image(
+                                    modifier = Modifier
+                                        .padding(start = 12.dp)
+                                        .align(alignment = Alignment.CenterVertically),
+                                    painter = painterResource(id = validationPainter),
+                                    contentDescription = null,
+                                    colorFilter = if (validation == Validation.FAILED) {
+                                        ColorFilter.tint(color = Red500)
+                                    } else {
+                                        ColorFilter.tint(color = Green500)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
             }
         )
-        if (validation != Validation.NONE) {
+        if (enabled && validation != Validation.NONE) {
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 4.dp),
                 text = validationText,

@@ -95,10 +95,7 @@ internal fun ChangePasswordScreen(
                     PwdCheckState.Error -> stringResource(R.string.change_password_screen_password_check_validation_error_content)
                     else -> ""
                 },
-                enabled = when (passwordState.pwdState) {
-                    PwdState.Success -> true
-                    else -> false
-                }
+                enabled = passwordState.pwdState == PwdState.Success
             )
         }
 
@@ -111,14 +108,8 @@ internal fun ChangePasswordScreen(
         MashUpButton(
             text = stringResource(R.string.complete),
             buttonStyle = ButtonStyle.PRIMARY,
-            isEnabled = when (passwordState.buttonState) {
-                ButtonState.Enable -> true
-                else -> false
-            },
-            showLoading = when (passwordState.buttonState) {
-                ButtonState.Loading -> true
-                else -> false
-            },
+            isEnabled = passwordState.buttonState == ButtonState.Enable,
+            showLoading = passwordState.buttonState == ButtonState.Loading,
             onClick = onClickDone,
             modifier = Modifier
                 .fillMaxWidth()

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.URL
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_SETTING_DELETE_USER
 import com.mashup.constant.log.LOG_SETTING_LOGOUT
@@ -23,6 +24,7 @@ import com.mashup.constant.log.LOG_SETTING_SNS_YOUTUBE
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.feature.setting.SettingScreen
 import com.mashup.ui.login.LoginActivity
@@ -32,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SettingActivity : BaseActivity<ActivitySettingBinding>() {
+class SettingActivity : BaseViewBindingActivity<ActivitySettingBinding>() {
 
     private val viewModel: SettingViewModel by viewModels()
 
@@ -125,5 +127,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         }
     }
 
-    override val layoutId = R.layout.activity_setting
+    override val viewBinding by lazy { ActivitySettingBinding.inflate(layoutInflater) }
+
 }

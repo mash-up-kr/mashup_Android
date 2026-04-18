@@ -8,6 +8,9 @@ import com.mashup.core.common.base.BaseViewModel
 import com.mashup.data.dto.TotalAttendanceResponse
 import com.mashup.data.repository.AttendanceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,14 +22,13 @@ class PlatformAttendanceViewModel @Inject constructor(
     val scheduleId
         get() = savedStateHandle.get<Int>(EXTRA_SCHEDULE_ID)
 
-    private val _platformAttendanceState = mutableStateOf<PlatformAttendanceState>(
+    private val _platformAttendanceState: MutableStateFlow<PlatformAttendanceState> = MutableStateFlow(
         PlatformAttendanceState.Empty
     )
-    val platformAttendanceState: State<PlatformAttendanceState> =
-        _platformAttendanceState
+    val platformAttendanceState: StateFlow<PlatformAttendanceState> get() = _platformAttendanceState
 
     fun getPlatformAttendanceList() = mashUpScope {
-        _platformAttendanceState.value = PlatformAttendanceState.Loading
+        _platformAttendanceState.update { PlatformAttendanceState.Loading }
         val scheduleId = scheduleId ?: return@mashUpScope
         attendanceRepository.getPlatformAttendanceList(scheduleId)
             .onSuccess { response ->
@@ -48,11 +50,12 @@ class PlatformAttendanceViewModel @Inject constructor(
                     }
                 }
 
-                _platformAttendanceState.value =
+                _platformAttendanceState.update {
                     PlatformAttendanceState.Success(
                         notice = notice,
                         totalAttendance = response
                     )
+                }
             }
             .onFailure { code ->
                 handleErrorCode(code)
@@ -61,7 +64,9 @@ class PlatformAttendanceViewModel @Inject constructor(
 
     override fun handleErrorCode(code: String) {
         mashUpScope {
-            _platformAttendanceState.value = PlatformAttendanceState.Error(code)
+            _platformAttendanceState.update {
+                PlatformAttendanceState.Error(code)
+            }
         }
     }
 }

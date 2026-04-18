@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +33,8 @@ import com.mashup.feature.mypage.profile.model.MyProfileCardEntity
 fun MyPageEditCardScreen(
     profileCard: MyProfileCardEntity,
     onBackPressed: () -> Unit,
-    patchMemberProfileCard: (id: Long, team: String, staff: String) -> Unit
+    patchMemberProfileCard: (id: Long, team: String, staff: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     MyPageEditCardContent(
         generationNumber = profileCard.generationNumber,
@@ -40,6 +43,7 @@ fun MyPageEditCardScreen(
             patchMemberProfileCard(id.toLong(), team, staff)
         },
         onBackPressed = onBackPressed,
+        modifier = modifier,
         id = profileCard.id,
         team = profileCard.team,
         staff = profileCard.staff

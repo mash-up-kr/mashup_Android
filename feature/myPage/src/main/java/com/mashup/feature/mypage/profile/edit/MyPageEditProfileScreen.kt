@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -35,7 +37,8 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 @Composable
 fun MyPageEditProfileScreen(
     viewModel: MyPageProfileEditViewModel,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val myProfile by viewModel.myProfileState.collectAsState()
     val isLoading by viewModel.profileCardState.collectAsState()
@@ -46,7 +49,7 @@ fun MyPageEditProfileScreen(
             )
         },
         onBackPressed = onBackPressed,
-        modifier = Modifier,
+        modifier = modifier,
         isUploading = when (isLoading) {
             LoadState.Initial,
             LoadState.Loaded -> false

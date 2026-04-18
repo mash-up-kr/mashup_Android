@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ACTIVITY_ENTER_TYPE
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_DANGGN
@@ -18,6 +19,7 @@ import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.safeShow
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.databinding.ActivityShakeDanggnBinding
 import com.mashup.feature.danggn.DanggnUiState
 import com.mashup.feature.danggn.DanggnViewModel
@@ -30,8 +32,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ShakeDanggnActivity : BaseActivity<ActivityShakeDanggnBinding>() {
-    override val layoutId: Int = R.layout.activity_shake_danggn
+class ShakeDanggnActivity : BaseViewBindingActivity<ActivityShakeDanggnBinding>() {
+    override val viewBinding by lazy { ActivityShakeDanggnBinding.inflate(layoutInflater) }
 
     private val viewModel: DanggnViewModel by viewModels()
     private val rankingViewModel: DanggnRankingViewModel by viewModels()

@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.KEY_PLACE
 import com.mashup.constant.log.LOG_COMMON_BACK
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
+class SignUpActivity : BaseViewBindingActivity<ActivitySignUpBinding>() {
 
     private val viewModel: SignUpViewModel by viewModels()
 
@@ -85,6 +86,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         }
     }
 
+    // Todo : 오류확인 필요
     override fun onBackPressed() {
         getPlaceGALog()?.run {
             AnalyticsManager.addEvent(
@@ -133,6 +135,5 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         else -> null
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_sign_up
+    override val viewBinding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
 }

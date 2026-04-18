@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_LINK
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySplashBinding
@@ -28,7 +29,7 @@ import javax.inject.Inject
  */
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseViewBindingActivity<ActivitySplashBinding>() {
 
     @Inject
     lateinit var userPreferenceRepository: UserPreferenceRepository
@@ -103,5 +104,5 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         }
     }
 
-    override val layoutId: Int = R.layout.activity_splash
+    override val viewBinding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
 }

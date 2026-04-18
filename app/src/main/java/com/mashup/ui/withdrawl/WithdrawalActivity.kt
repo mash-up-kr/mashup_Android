@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_DELETE_USER_SUCCESS
 import com.mashup.core.common.extensions.setEmptyUIOfTextField
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
+class WithdrawalActivity : BaseViewBindingActivity<ActivityWithdrawalBinding>() {
 
     private val viewModel: WithdrawalViewModel by viewModels()
 
@@ -137,5 +138,5 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
             }
     }
 
-    override val layoutId: Int = R.layout.activity_withdrawal
+    override val viewBinding by lazy { ActivityWithdrawalBinding.inflate(layoutInflater) }
 }

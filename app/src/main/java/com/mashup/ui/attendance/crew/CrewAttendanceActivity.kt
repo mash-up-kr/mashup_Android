@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
 import com.mashup.core.common.extensions.setStatusBarColorRes
@@ -25,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
+class CrewAttendanceActivity : BaseViewBindingActivity<ActivityCrewAttendanceBinding>() {
     private val viewModel: CrewAttendanceViewModel by viewModels()
 
     override fun initViews() {
@@ -90,8 +91,7 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
             .show(supportFragmentManager, "MemberInfoDialog")
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_crew_attendance
+    override val viewBinding by lazy { ActivityCrewAttendanceBinding.inflate(layoutInflater) }
 
     companion object {
         fun newIntent(

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import androidx.navigation.navOptions
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.mashup.R
 import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.constant.EXTRA_MAIN_TAB
@@ -42,8 +44,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-    override val layoutId = R.layout.activity_main
+class MainActivity : BaseViewBindingActivity<ActivityMainBinding>() {
+    override val viewBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private val viewModel: MainViewModel by viewModels()
 

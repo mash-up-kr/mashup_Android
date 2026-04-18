@@ -85,7 +85,6 @@ class SignUpActivity : BaseViewBindingActivity<ActivitySignUpBinding>() {
         }
     }
 
-    // Todo : 오류확인 필요
     override fun onBackPressed() {
         getPlaceGALog()?.run {
             AnalyticsManager.addEvent(

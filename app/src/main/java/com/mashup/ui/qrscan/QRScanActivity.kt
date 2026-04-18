@@ -43,7 +43,6 @@ import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
-// Todo : 지워도 될듯?
 @AndroidEntryPoint
 class QRScanActivity : BaseComposeActivity(), LocationListener {
 

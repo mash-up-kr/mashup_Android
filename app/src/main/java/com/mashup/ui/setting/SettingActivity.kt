@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
-import com.mashup.R
 import com.mashup.URL
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_SETTING_DELETE_USER
@@ -24,7 +22,6 @@ import com.mashup.constant.log.LOG_SETTING_SNS_YOUTUBE
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.databinding.ActivitySettingBinding
 import com.mashup.feature.setting.SettingScreen
 import com.mashup.ui.login.LoginActivity
@@ -128,5 +125,4 @@ class SettingActivity : BaseViewBindingActivity<ActivitySettingBinding>() {
     }
 
     override val viewBinding by lazy { ActivitySettingBinding.inflate(layoutInflater) }
-
 }

@@ -6,13 +6,10 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.model.Platform
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.databinding.ActivityMyProfileCardEditBinding
 import com.mashup.feature.mypage.profile.MyPageProfileEditViewModel
 import com.mashup.feature.mypage.profile.edit.MyPageEditCardScreen

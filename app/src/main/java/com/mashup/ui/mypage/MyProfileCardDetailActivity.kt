@@ -14,15 +14,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.core.common.extensions.format
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.model.Platform
 import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.databinding.ActivityMyProfileCardDetailBinding
 import com.mashup.feature.mypage.profile.card.ProfileCardDetailContent
 import com.mashup.feature.mypage.profile.model.ProfileCardData

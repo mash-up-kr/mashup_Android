@@ -1,7 +1,5 @@
 package com.mashup.ui.attendance.platform
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.core.common.base.BaseViewModel

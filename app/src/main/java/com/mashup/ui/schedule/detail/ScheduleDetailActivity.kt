@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.constant.EXTRA_SCHEDULE_TYPE
@@ -20,7 +18,6 @@ import com.mashup.constant.log.LOG_EVENT_LIST_DETAIL_COPY
 import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.databinding.ActivityScheduleDetailBinding
 import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
 import com.mashup.util.AnalyticsManager

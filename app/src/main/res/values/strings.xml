@@ -101,4 +101,12 @@
     <string name="attendance_nothing">-</string>
 
     <string name="qr_code_msg">QR 코드를  스캔하세요"</string>
+
+<!--  ChangePasswordScreen  -->
+    <string name="change_password_screen_password_validation_default_content">영문, 숫자, 특수문자를 조합하여 8자 이상으로 입력해주세요.</string>
+    <string name="change_password_screen_password_validation_error_content">영문, 숫자를 조합하여 8자 이상으로 입력해주세요</string>
+    <string name="change_password_screen_password_check_validation_error_content">비밀번호가 일치하지 않아요.</string>
+    <string name="change_password_screen_success_toast_message">비밀번호 변경 완료</string>
+
+
 </resources>

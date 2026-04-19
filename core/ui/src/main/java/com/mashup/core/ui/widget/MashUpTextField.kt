@@ -46,6 +46,7 @@ import com.mashup.core.common.model.Validation
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray300
 import com.mashup.core.ui.colors.Gray400
+import com.mashup.core.ui.colors.Gray50
 import com.mashup.core.ui.colors.Gray600
 import com.mashup.core.ui.colors.Green500
 import com.mashup.core.ui.colors.Red500
@@ -62,7 +63,9 @@ fun MashUpTextField(
     labelText: String,
     requestFocus: Boolean,
     validation: Validation,
-    textFieldInputType: TextFieldInputType
+    textFieldInputType: TextFieldInputType,
+    enabled: Boolean = true,
+    validationText: String = ""
 ) {
     var focus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -81,20 +84,30 @@ fun MashUpTextField(
                 .border(
                     shape = cornerShape,
                     width = 1.dp,
-                    color = when (validation) {
-                        Validation.SUCCESS -> Brand500
-                        Validation.EMPTY -> if (focus) Brand500 else Gray300
-                        Validation.FAILED -> Red500
-                        Validation.NONE -> if (focus) Brand500 else Gray300
+                    color = when (enabled) {
+                        true -> when (validation) {
+                            Validation.SUCCESS -> if (focus) Brand500 else Gray300
+                            Validation.EMPTY -> if (focus) Brand500 else Gray300
+                            Validation.FAILED -> Red500
+                            Validation.NONE -> if (focus) Brand500 else Gray300
+                        }
+
+                        false -> Gray300
                     }
                 )
-                .background(Color.White)
+                .background(
+                    color = when (enabled) {
+                        true -> Color.White
+                        false -> Gray50
+                    }
+                )
                 .onFocusChanged {
                     focus = it.hasFocus
                 }
                 .focusRequester(focusRequester),
             value = text,
             textStyle = Title2,
+            enabled = enabled,
             singleLine = true,
             visualTransformation = when (textFieldInputType) {
                 TextFieldInputType.PASSWORD -> PasswordVisualTransformation()
@@ -145,27 +158,29 @@ fun MashUpTextField(
                             else -> null
                         }
                         validationPainter?.let {
-                            Image(
-                                modifier = Modifier
-                                    .padding(start = 12.dp)
-                                    .align(alignment = Alignment.CenterVertically),
-                                painter = painterResource(id = validationPainter),
-                                contentDescription = null,
-                                colorFilter = if (validation == Validation.FAILED) {
-                                    ColorFilter.tint(color = Red500)
-                                } else {
-                                    ColorFilter.tint(color = Green500)
-                                }
-                            )
+                            if (enabled) {
+                                Image(
+                                    modifier = Modifier
+                                        .padding(start = 12.dp)
+                                        .align(alignment = Alignment.CenterVertically),
+                                    painter = painterResource(id = validationPainter),
+                                    contentDescription = null,
+                                    colorFilter = if (validation == Validation.FAILED) {
+                                        ColorFilter.tint(color = Red500)
+                                    } else {
+                                        ColorFilter.tint(color = Green500)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
             }
         )
-        if (validation != Validation.NONE) {
+        if (enabled && validation != Validation.NONE) {
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 4.dp),
-                text = setDescriptionText(validation),
+                text = validationText,
                 style = Caption3,
                 color = if (validation == Validation.FAILED) Red500 else Gray600
             )
@@ -177,23 +192,6 @@ fun MashUpTextField(
                 delay(100L)
                 keyboardController?.show()
             }
-        }
-    }
-}
-
-private fun setDescriptionText(codeState: Validation): String {
-    return when (codeState) {
-        Validation.SUCCESS -> {
-            "위 문구를 입력해주세요."
-        }
-        Validation.FAILED -> {
-            "문구가 동일하지 않아요"
-        }
-        Validation.EMPTY -> {
-            "위 문구를 입력해주세요."
-        }
-        Validation.NONE -> {
-            ""
         }
     }
 }

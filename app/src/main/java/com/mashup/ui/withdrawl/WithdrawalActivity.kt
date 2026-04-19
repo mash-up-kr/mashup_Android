@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_DELETE_USER_SUCCESS

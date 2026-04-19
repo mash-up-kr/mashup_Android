@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.KEY_PLACE

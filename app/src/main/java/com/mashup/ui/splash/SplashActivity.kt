@@ -8,8 +8,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mashup.R
-import com.mashup.base.BaseActivity
 import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_LINK
 import com.mashup.core.common.widget.CommonDialog

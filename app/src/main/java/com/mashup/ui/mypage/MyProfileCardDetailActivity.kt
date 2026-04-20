@@ -7,13 +7,14 @@ import android.os.Environment
 import android.util.Base64
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.core.common.extensions.format
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.model.Platform
@@ -27,8 +28,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
 
-class MyProfileCardDetailActivity : BaseActivity<ActivityMyProfileCardDetailBinding>() {
-    override val layoutId = R.layout.activity_my_profile_card_detail
+class MyProfileCardDetailActivity : BaseViewBindingActivity<ActivityMyProfileCardDetailBinding>() {
+    override val viewBinding by lazy { ActivityMyProfileCardDetailBinding.inflate(layoutInflater) }
 
     private var team by mutableStateOf("")
     private var staff by mutableStateOf("")
@@ -71,7 +72,9 @@ class MyProfileCardDetailActivity : BaseActivity<ActivityMyProfileCardDetailBind
                         cardData = profileCardData,
                         team = team,
                         staff = staff,
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize()
+                            .statusBarsPadding()
+                            .navigationBarsPadding(),
                         onBackPressed = { finish() },
                         onDownLoadClicked = ::downloadProfileCardImage,
                         onEditClicked = ::startMyProfileCardActivity

@@ -3,8 +3,10 @@ package com.mashup.ui.mypage
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.ui.Modifier
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.core.common.utils.ToastUtil
 import com.mashup.core.model.Platform
 import com.mashup.core.ui.theme.MashUpTheme
@@ -18,8 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class MyProfileCardEditActivity : BaseActivity<ActivityMyProfileCardEditBinding>() {
-    override val layoutId = R.layout.activity_my_profile_card_edit
+class MyProfileCardEditActivity : BaseViewBindingActivity<ActivityMyProfileCardEditBinding>() {
+    override val viewBinding by lazy { ActivityMyProfileCardEditBinding.inflate(layoutInflater) }
 
     private val editViewModel: MyPageProfileEditViewModel by viewModels()
     private var team = ""
@@ -46,7 +48,10 @@ class MyProfileCardEditActivity : BaseActivity<ActivityMyProfileCardEditBinding>
                 MyPageEditCardScreen(
                     profileCard = profileCard,
                     onBackPressed = ::finish,
-                    patchMemberProfileCard = ::patchMemberProfileCard
+                    patchMemberProfileCard = ::patchMemberProfileCard,
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .navigationBarsPadding()
                 )
             }
         }

@@ -35,7 +35,8 @@ import com.mashup.feature.mypage.profile.model.ProfileData
 @Composable
 fun MyPageEditProfileScreen(
     viewModel: MyPageProfileEditViewModel,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val myProfile by viewModel.myProfileState.collectAsState()
     val isLoading by viewModel.profileCardState.collectAsState()
@@ -46,7 +47,7 @@ fun MyPageEditProfileScreen(
             )
         },
         onBackPressed = onBackPressed,
-        modifier = Modifier,
+        modifier = modifier,
         isUploading = when (isLoading) {
             LoadState.Initial,
             LoadState.Loaded -> false

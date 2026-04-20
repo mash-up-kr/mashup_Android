@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.ui.theme.MashUpTheme
@@ -16,8 +15,8 @@ import com.mashup.feature.danggn.DanggnInfoScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
-    override val layoutId: Int = R.layout.activity_danggn_info
+class DanggnInfoActivity : BaseViewBindingActivity<ActivityDanggnInfoBinding>() {
+    override val viewBinding by lazy { ActivityDanggnInfoBinding.inflate(layoutInflater) }
 
     override fun initViews() {
         super.initViews()

@@ -8,9 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
-import com.mashup.R
 import com.mashup.URL
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.LOG_SETTING_DELETE_USER
 import com.mashup.constant.log.LOG_SETTING_LOGOUT
@@ -32,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SettingActivity : BaseActivity<ActivitySettingBinding>() {
+class SettingActivity : BaseViewBindingActivity<ActivitySettingBinding>() {
 
     private val viewModel: SettingViewModel by viewModels()
 
@@ -125,5 +124,5 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         }
     }
 
-    override val layoutId = R.layout.activity_setting
+    override val viewBinding by lazy { ActivitySettingBinding.inflate(layoutInflater) }
 }

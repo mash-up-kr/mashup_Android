@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.NavHostFragment
 import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.log.KEY_PLACE
 import com.mashup.constant.log.LOG_COMMON_BACK
@@ -18,7 +18,7 @@ import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PasswordActivity : BaseActivity<ActivityPasswordBinding>() {
+class PasswordActivity : BaseViewBindingActivity<ActivityPasswordBinding>() {
 
     private val passwordViewModel: PasswordViewModel by viewModels()
 
@@ -61,8 +61,7 @@ class PasswordActivity : BaseActivity<ActivityPasswordBinding>() {
         else -> null
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_password
+    override val viewBinding by lazy { ActivityPasswordBinding.inflate(layoutInflater) }
 
     companion object {
         fun newIntent(context: Context) = Intent(context, PasswordActivity::class.java).apply {

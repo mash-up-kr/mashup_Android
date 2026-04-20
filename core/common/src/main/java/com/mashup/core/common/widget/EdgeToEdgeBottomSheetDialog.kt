@@ -19,11 +19,6 @@ class EdgeToEdgeBottomSheetDialog(
 
         findViewById<View>(com.google.android.material.R.id.container)?.apply {
             fitsSystemWindows = false
-        }
-
-        findViewById<View>(com.google.android.material.R.id.coordinator)?.apply {
-            fitsSystemWindows = false
-
             ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
                 val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                 val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom

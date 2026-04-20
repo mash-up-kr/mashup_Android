@@ -11,8 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.constant.EXTRA_SCHEDULE_TYPE
 import com.mashup.constant.log.LOG_EVENT_LIST_DETAIL_COPY
@@ -27,8 +26,8 @@ import kotlinx.coroutines.flow.collectLatest
 import com.mashup.core.common.R as CR
 
 @AndroidEntryPoint
-class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
-    override val layoutId = R.layout.activity_schedule_detail
+class ScheduleDetailActivity : BaseViewBindingActivity<ActivityScheduleDetailBinding>() {
+    override val viewBinding by lazy { ActivityScheduleDetailBinding.inflate(layoutInflater) }
 
     private val viewModel: ScheduleDetailViewModel by viewModels()
 

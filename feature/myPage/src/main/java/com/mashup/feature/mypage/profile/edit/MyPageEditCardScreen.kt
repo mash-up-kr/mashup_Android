@@ -31,7 +31,8 @@ import com.mashup.feature.mypage.profile.model.MyProfileCardEntity
 fun MyPageEditCardScreen(
     profileCard: MyProfileCardEntity,
     onBackPressed: () -> Unit,
-    patchMemberProfileCard: (id: Long, team: String, staff: String) -> Unit
+    patchMemberProfileCard: (id: Long, team: String, staff: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     MyPageEditCardContent(
         generationNumber = profileCard.generationNumber,
@@ -40,6 +41,7 @@ fun MyPageEditCardScreen(
             patchMemberProfileCard(id.toLong(), team, staff)
         },
         onBackPressed = onBackPressed,
+        modifier = modifier,
         id = profileCard.id,
         team = profileCard.team,
         staff = profileCard.staff

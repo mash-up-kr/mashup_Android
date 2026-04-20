@@ -4,9 +4,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_SCHEDULE_ID
 import com.mashup.core.common.constant.EVENT_NOT_FOUND
@@ -19,7 +23,7 @@ import com.mashup.ui.attendance.crew.CrewAttendanceActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBinding>() {
+class PlatformAttendanceActivity : BaseViewBindingActivity<ActivityPlatformAttendanceBinding>() {
     private val viewModel: PlatformAttendanceViewModel by viewModels()
 
     override fun initViews() {
@@ -30,25 +34,30 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
     private fun initCompose() {
         viewBinding.viewCompose.setContent {
             MashUpTheme {
-                val state = viewModel.platformAttendanceState.value
-                when (state) {
-                    PlatformAttendanceState.Loading -> {
-                        showLoading()
-                    }
-                    is PlatformAttendanceState.Success -> {
-                        hideLoading()
-                    }
-                    is PlatformAttendanceState.Error -> {
-                        hideLoading()
-                        handleCommonError(state.code)
-                        handlePlatformAttendanceErrorCode(state)
-                    }
-                    else -> {
-                        hideLoading()
+                val state by viewModel.platformAttendanceState.collectAsStateWithLifecycle()
+
+                LaunchedEffect(state) {
+                    when (val currentState = state) {
+                        PlatformAttendanceState.Loading -> {
+                            showLoading()
+                        }
+                        is PlatformAttendanceState.Success -> {
+                            hideLoading()
+                        }
+                        is PlatformAttendanceState.Error -> {
+                            hideLoading()
+                            handleCommonError(currentState.code)
+                            handlePlatformAttendanceErrorCode(currentState)
+                        }
+                        else -> {
+                            hideLoading()
+                        }
                     }
                 }
                 PlatformAttendanceScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     platformAttendanceState = state,
                     onClickPlatform = ::moveToCrewAttendance,
                     onClickBackButton = {
@@ -91,8 +100,7 @@ class PlatformAttendanceActivity : BaseActivity<ActivityPlatformAttendanceBindin
         viewModel.getPlatformAttendanceList()
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_platform_attendance
+    override val viewBinding by lazy { ActivityPlatformAttendanceBinding.inflate(layoutInflater) }
 
     companion object {
         fun newIntent(context: Context, scheduleId: Int) =

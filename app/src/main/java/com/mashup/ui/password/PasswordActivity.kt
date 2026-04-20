@@ -40,7 +40,6 @@ class PasswordActivity : BaseViewBindingActivity<ActivityPasswordBinding>() {
         viewBinding.toolbar.setVisibleCloseButton(false)
     }
 
-    // Todo : 오류확인 필요
     override fun onBackPressed() {
         getPlaceGALog()?.run {
             AnalyticsManager.addEvent(

@@ -28,7 +28,11 @@ class WebViewViewModel @Inject constructor(
         showDividerFlow,
         userPreferenceRepository.getUserPreference()
     ) { title, webViewUrl, showDivider, prefs ->
-        var convertWebViewUrl = WEB_HOST + webViewUrl
+        var convertWebViewUrl = if (webViewUrl.startsWith("http")) {
+            webViewUrl
+        } else {
+            WEB_HOST + webViewUrl
+        }
         if (title == "mashong") {
             convertWebViewUrl += prefs.platform
         }

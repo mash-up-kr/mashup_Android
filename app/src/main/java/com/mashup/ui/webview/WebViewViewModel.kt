@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.data.network.WEB_HOST
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,17 +27,9 @@ class WebViewViewModel @Inject constructor(
         showDividerFlow,
         userPreferenceRepository.getUserPreference()
     ) { title, webViewUrl, showDivider, prefs ->
-        var convertWebViewUrl = if (webViewUrl.startsWith("http")) {
-            webViewUrl
-        } else {
-            WEB_HOST + webViewUrl
-        }
-        if (title == "mashong") {
-            convertWebViewUrl += prefs.platform
-        }
         WebViewUiState.Success(
             title = title,
-            webViewUrl = convertWebViewUrl,
+            webViewUrl = webViewUrl,
             showToolbarDivider = showDivider,
             additionalHttpHeaders = mapOf(Pair("authorization", prefs.token))
         )

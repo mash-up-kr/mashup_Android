@@ -17,6 +17,7 @@ import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.bridge.MashupBridge
 import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.data.network.WEB_HOST
 import com.mashup.ui.webview.WebViewScreen
 import com.mashup.ui.webview.WebViewUiState
 import com.mashup.ui.webview.WebViewViewModel
@@ -60,7 +61,7 @@ class BirthdayActivity : ComponentActivity() {
         fun newIntent(context: Context, urlKey: String = "birthday/crew-list"): Intent =
             Intent(context, BirthdayActivity::class.java).apply {
                 putExtra(EXTRA_TITLE_KEY, "birthday")
-                putExtra(EXTRA_URL_KEY, urlKey)
+                putExtra(EXTRA_URL_KEY, WEB_HOST + urlKey)
             }
     }
 }

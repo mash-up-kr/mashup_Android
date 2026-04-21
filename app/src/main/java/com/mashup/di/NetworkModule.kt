@@ -1,7 +1,5 @@
 package com.mashup.di
 
-import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
-import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.core.model.Platform
 import com.mashup.core.network.adapter.PlatformJsonAdapter
@@ -36,9 +34,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
-    companion object {
-        val flipperNetwork = NetworkFlipperPlugin()
-    }
 
     @Provides
     @Singleton
@@ -50,15 +45,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideFlipperOkhttpInterceptor() =
-        FlipperOkhttpInterceptor(flipperNetwork)
-
-    @Provides
-    @Singleton
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-        baseInterceptor: BaseInterceptor,
-        flipperInterceptor: FlipperOkhttpInterceptor
+        baseInterceptor: BaseInterceptor
     ): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
@@ -66,7 +55,6 @@ class NetworkModule {
 
         if (DEBUG_MODE) {
             okHttpClient
-                .addNetworkInterceptor(flipperInterceptor)
                 .addInterceptor(
                     HttpLoggingInterceptor().apply {
                         setLevel(HttpLoggingInterceptor.Level.BODY)

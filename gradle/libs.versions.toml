@@ -29,7 +29,6 @@ camera = "1.1.0-beta02"
 nav = "2.4.2"
 glide = "4.12.0"
 composeViewPager = "0.20.1"
-composeUiViewBinding = "1.5.4"
 compose = '1.5.0'
 composeWebView = "0.24.13-rc"
 constraintlayoutCompose = "1.0.1"

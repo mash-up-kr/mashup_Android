@@ -23,7 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 abstract class BaseBottomSheetDialogFragment<V : ViewDataBinding> : BottomSheetDialogFragment() {
-    private var _rootViewBinding: DialogBaseBottomSheetBinding? = null
+    protected var _rootViewBinding: DialogBaseBottomSheetBinding? = null
     private val rootViewBinding: DialogBaseBottomSheetBinding
         get() = _rootViewBinding!!
 

@@ -20,7 +20,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.BindingAdapter
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mashup.core.common.R
 import com.mashup.core.common.databinding.ViewTextLayoutBinding
@@ -264,29 +263,6 @@ class TextFieldView @JvmOverloads constructor(
     companion object {
         private const val SIZE_TEXT_COLLAPSE = 20
         private const val SIZE_TEXT_EXPEND = 13
-
-        @JvmStatic
-        @BindingAdapter(value = ["text_field_hint", "text_field_description"], requireAll = false)
-        fun TextFieldView.bindText(hint: String?, description: String?) {
-            hint?.run {
-                setHintText(this)
-            }
-            description?.run {
-                setDescriptionText(this)
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("text_field_input_type")
-        fun TextFieldView.bindInputType(inputType: TextFieldInputType) {
-            setInputType(inputType)
-        }
-
-        @JvmStatic
-        @BindingAdapter("text_field_length")
-        fun TextFieldView.bindLength(length: Int) {
-            setMaxLength(length)
-        }
     }
 
     enum class TextFieldInputType {

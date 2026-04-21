@@ -5,22 +5,26 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_LOGIN_TYPE
 import com.mashup.constant.EXTRA_MAIN_TAB
 import com.mashup.core.common.extensions.onThrottleFirstClick
-import com.mashup.core.common.extensions.setStatusBarColorRes
-import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.model.ActivityEnterType
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.common.utils.PermissionHelper
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
 import com.mashup.core.common.utils.safeShow
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivityMainBinding
@@ -32,13 +36,14 @@ import com.mashup.ui.main.model.MainTab
 import com.mashup.ui.main.popup.MainBottomPopup
 import com.mashup.ui.qrscan.CongratsAttendanceScreen
 import com.mashup.ui.qrscan.QRScanActivity
+import com.mashup.ui.webview.birthday.BirthdayActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-    override val layoutId = R.layout.activity_main
+class MainActivity : BaseViewBindingActivity<ActivityMainBinding>() {
+    override val viewBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -60,10 +65,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.confirmAttendance()
                 viewModel.successAttendance()
             }
+
             QRScanActivity.RESULT_CONFIRM_QR -> {
                 viewModel.confirmAttendance()
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this)
     }
 
     override fun initViews() {
@@ -72,6 +83,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         initComposeView()
         initTabButtons()
         requestNotificationPermission()
+    }
+
+    override fun initWindowInset() {
+        super.initWindowInset()
+
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsetsCompat.Type.statusBars(),
+            deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        )
+
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { view, insets ->
+            // 바텀 탭에 navigation bar padding 적용
+            val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            viewBinding.layoutMainTab.root.setPadding(0, 0, 0, navBarInsets.bottom)
+
+            deferringInsetsListener.onApplyWindowInsets(view, insets)
+        }
     }
 
     private fun initComposeView() {
@@ -103,7 +131,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 viewModel.mainTab.collectLatest { tab ->
                     navigationTab(tab)
                     setUIOfTab(tab)
-                    updateStatusBarColor(tab)
                 }
             }
 
@@ -134,6 +161,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 )
                             )
                         }
+
+                        MainPopupType.BIRTHDAY_CELEBRATION -> {
+                            viewModel.disablePopup(popupType)
+                            startActivity(
+                                BirthdayActivity.newIntent(
+                                    context = this@MainActivity,
+                                    urlKey = "birthday/event"
+                                )
+                            )
+                        }
+
                         else -> {
                         }
                     }
@@ -143,18 +181,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun navigationTab(toDestination: MainTab) {
-        val currentNavigationId = navController.currentDestination?.id
         val newNavigationId = when (toDestination) {
             MainTab.EVENT -> {
                 R.id.eventFragment
             }
+
             MainTab.MY_PAGE -> {
                 R.id.myPageFragment
             }
         }
-        if (currentNavigationId != newNavigationId) {
-            navController.navigate(newNavigationId)
+        val navOptions = navOptions {
+            popUpTo(newNavigationId) {
+                saveState = true
+            }
+            launchSingleTop = true
         }
+        navController.navigate(newNavigationId, null, navOptions)
     }
 
     private fun setUIOfTab(tab: MainTab) = with(viewBinding.layoutMainTab) {
@@ -179,24 +221,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 tvMyPage.setTextColor(unSelectedColor)
                 imgMyPage.imageTintList = unSelectedColorList
             }
+
             MainTab.MY_PAGE -> {
                 tvEvent.setTextColor(unSelectedColor)
                 imgEvent.imageTintList = unSelectedColorList
                 tvMyPage.setTextColor(selectedColor)
                 imgMyPage.imageTintList = selectedColorList
-            }
-        }
-    }
-
-    private fun updateStatusBarColor(tab: MainTab) {
-        when (tab) {
-            MainTab.EVENT -> {
-                setStatusBarColorRes(com.mashup.core.common.R.color.gray50)
-                setStatusBarDarkTextColor(true)
-            }
-            MainTab.MY_PAGE -> {
-                setStatusBarColorRes(com.mashup.core.common.R.color.gray950)
-                setStatusBarDarkTextColor(false)
             }
         }
     }

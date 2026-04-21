@@ -5,12 +5,15 @@ import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.mashup.BuildConfig.DEBUG_MODE
 import com.mashup.core.model.Platform
 import com.mashup.core.network.adapter.PlatformJsonAdapter
+import com.mashup.core.network.dao.MetaDao
 import com.mashup.core.network.dao.PopupDao
+import com.mashup.core.network.dao.PushHistoryDao
 import com.mashup.core.network.dao.StorageDao
 import com.mashup.data.network.API_HOST
 import com.mashup.network.CustomDateAdapter
 import com.mashup.network.dao.AttendanceDao
 import com.mashup.network.dao.MemberDao
+import com.mashup.network.dao.MemberProfileDao
 import com.mashup.network.dao.ScheduleDao
 import com.mashup.network.dao.ScoreDao
 import com.mashup.network.interceptor.AuthInterceptor
@@ -134,6 +137,30 @@ class NetworkModule {
     fun providePopupDao(
         retrofit: Retrofit
     ): PopupDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMemberProfileDao(
+        retrofit: Retrofit
+    ): MemberProfileDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMetaDao(
+        retrofit: Retrofit
+    ): MetaDao {
+        return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun providePushHistoryDao(
+        retrofit: Retrofit
+    ): PushHistoryDao {
         return retrofit.create()
     }
 }

@@ -1,19 +1,27 @@
 package com.mashup.ui.danggn
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mashup.core.common.utils.keyboard.RootViewDeferringInsetsCallback
+import com.mashup.core.common.widget.EdgeToEdgeBottomSheetDialog
+import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.feature.danggn.ranking.DanggnRankingViewModel
 import com.mashup.feature.danggn.round.DanggnRoundScreen
@@ -21,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
+    private var _composeView: ComposeView? = null
 
     private val danggnRankingViewModel: DanggnRankingViewModel by activityViewModels()
 
@@ -37,24 +46,38 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
             }
         }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        EdgeToEdgeBottomSheetDialog(
+            context = requireContext(),
+            theme = theme
+        )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
+        _composeView = ComposeView(requireContext())
+        return _composeView!!.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
             setContent {
                 MashUpTheme {
                     DanggnRoundScreen(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .background(color = White)
+                            .navigationBarsPadding(),
                         viewModel = danggnRankingViewModel,
                         onDismiss = this@DanggnRoundSelectorDialog::dismissAllowingStateLoss
                     )
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _composeView = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,7 +93,21 @@ class DanggnRoundSelectorDialog : BottomSheetDialogFragment() {
                 )
             }
 
+        initWindowInset()
+
         addGlobalLayoutListener(view)
+    }
+
+    private fun initWindowInset() {
+        _composeView?.let { composeView: ComposeView ->
+            val deferringInsetsListener = RootViewDeferringInsetsCallback(
+                persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
+                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+            )
+
+            ViewCompat.setWindowInsetsAnimationCallback(composeView, deferringInsetsListener)
+            ViewCompat.setOnApplyWindowInsetsListener(composeView, deferringInsetsListener)
+        }
     }
 
     private fun addGlobalLayoutListener(view: View) {

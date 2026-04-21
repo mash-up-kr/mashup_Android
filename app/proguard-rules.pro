@@ -21,3 +21,9 @@
 #-renamesourcefileattribute SourceFile
 
 -keep enum * { *; }
+
+-dontwarn com.facebook.proguard.annotations.DoNotStrip
+-dontwarn com.sun.jna.**
+-dontwarn net.bytebuddy.**
+-dontwarn edu.umd.cs.findbugs.annotations.**
+-dontwarn java.lang.instrument.**

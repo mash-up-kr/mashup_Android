@@ -1,0 +1,77 @@
+name: Create AAB File
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [ closed ]
+
+jobs:
+  generate-aab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: add local.properties
+        run: |
+          echo api.key= ${{secrets.API_KEY}} > local.properties
+          echo naver.client.id= ${{secrets.NAVER_CLIENT_ID}} > local.properties
+
+      - name: Putting Google Json
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          mkdir -p /home/runner/work/mashup_Android/mashup_Android/app
+          echo "$GOOGLE_SERVICES_JSON" > /home/runner/work/mashup_Android/mashup_Android/app/google-services.json
+
+      - name: Putting keystore
+        run: |
+          echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > /home/runner/work/mashup_Android/mashup_Android/app/mashupKey
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build Release AAB
+        run: ./gradlew bundleRelease
+
+      - name: Sign AAB
+        id: sign_app
+        uses: r0adkll/sign-android-release@v1.0.4
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload Signed AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Get artifact ID for AAB
+        id: get-artifact-id-aab
+        run: |
+          artifact_id=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" | \
+            jq -r '.artifacts[] | select(.name == "app-release.aab") | .id')
+          echo "artifact_id_aab=${artifact_id}" >> $GITHUB_ENV
+
+      - name: post aab files to github
+        uses: actions/github-script@v7.0.1
+        with:
+          script: |
+            const artifact_url_aab = `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}/artifacts/${process.env.artifact_id_aab}`;
+            const comment_body = `* AAB 파일 생성 완료! [AAB Downloads Link](${artifact_url_aab}) *`;
+            const pull_request_number = context.issue.number;
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: pull_request_number,
+              body: comment_body
+            });

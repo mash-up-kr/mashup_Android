@@ -1,21 +1,33 @@
 package com.mashup.ui.mypage
 
-import android.view.View
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mashup.R
 import com.mashup.base.BaseFragment
+import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.databinding.FragmentMyPageBinding
+import com.mashup.feature.mypage.profile.model.ProfileCardData
 import com.mashup.ui.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import com.mashup.core.common.R as CR
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
+    override val layoutId: Int = R.layout.fragment_my_page
 
     private val viewModel: MyPageViewModel by viewModels()
+
+    private val myProfileEditLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) viewModel.getMyPageData()
+    }
 
     private val attendanceAdapter by lazy {
         AttendanceListAdapter().apply {
@@ -25,7 +37,26 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
                 }
 
                 override fun onStartSettingActivity() {
-                    context?.let { startActivity(SettingActivity.newIntent(it)) }
+                    startActivity(SettingActivity.newIntent(requireContext()))
+                }
+
+                override fun onStartEditProfileActivity() {
+                    val intent = MyProfileEditActivity.newIntent(requireContext())
+                    myProfileEditLauncher.launch(intent)
+                }
+
+                override fun onStartEditProfileCardActivity(card: ProfileCardData) {
+                    val intent = MyProfileCardDetailActivity.newIntent(requireContext(), card)
+                    myProfileEditLauncher.launch(intent)
+                }
+
+                override fun onStartExternalLink(link: String) {
+                    kotlin.runCatching {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+                    }.onFailure {
+                        // FIXME: 링크 열리지 않을 때 메시지
+                        Toast.makeText(requireContext(), "올바르지 않은 링크입니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             })
         }
@@ -33,13 +64,18 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
 
     override fun initViews() {
         super.initViews()
-        initRecyclerView()
+        initStatusBar()
         initSwipeRefresh()
+        initRecyclerView()
+    }
+
+    private fun initStatusBar() {
+        requireActivity().setStatusBarColorRes(CR.color.gray50)
     }
 
     private fun initSwipeRefresh() {
         viewBinding.layoutSwipe.apply {
-            setOnRefreshListener { viewModel.getMember() }
+            setOnRefreshListener { viewModel.getMyPageData() }
             setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), com.mashup.core.common.R.color.brand500)
             )
@@ -47,35 +83,14 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     }
 
     private fun initRecyclerView() {
-        viewBinding.rvMypage.apply {
-            adapter = attendanceAdapter
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    // 현재 뷰에서 최상단에 보이는 아이템의 위치 (조금이라도 보여도 인식됨)
-                    val firstVisibleItemPosition =
-                        (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if (firstVisibleItemPosition == 0) {
-                        viewBinding.layoutTitle.visibility = View.GONE
-                    } else {
-                        viewBinding.layoutTitle.visibility = View.VISIBLE
-                        viewBinding.layoutTitle.setOnClickListener {
-                            showAttendanceInfoDialog()
-                        }
-                    }
-                }
-            })
-        }
+        viewBinding.rvMypage.adapter = attendanceAdapter
     }
 
     override fun initObserves() {
-        viewModel.attendanceList.observe(viewLifecycleOwner) { it ->
-            viewBinding.layoutSwipe.isRefreshing = false
-            attendanceAdapter.submitList(it)
-            it.firstOrNull()?.profile?.let {
-                viewBinding.tvTitle.text = it.name
-                viewBinding.tvNum.text = it.getAttendanceScore()
+        flowViewLifecycleScope {
+            viewModel.myPageData.collectLatest {
+                viewBinding.layoutSwipe.isRefreshing = false
+                attendanceAdapter.submitList(it)
             }
         }
 
@@ -88,15 +103,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>() {
     }
 
     private fun showAttendanceInfoDialog() {
-        AttendanceExplainDialog().show(
-            childFragmentManager,
-            null
-        )
+        AttendanceExplainDialog().show(childFragmentManager, AttendanceExplainDialog::class.simpleName)
     }
 
     companion object {
         fun newInstance() = MyPageFragment()
     }
-
-    override val layoutId: Int = R.layout.fragment_my_page
 }

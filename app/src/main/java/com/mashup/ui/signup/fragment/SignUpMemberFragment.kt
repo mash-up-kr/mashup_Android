@@ -33,6 +33,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
     }
 
     override fun initViews() {
+        initTextSelectionView()
         initTextField()
         initButton()
     }
@@ -45,11 +46,17 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
         }
     }
 
+    private fun initTextSelectionView() {
+        viewBinding.textFieldPlatform.setHintText(getString(R.string.platform))
+    }
+
     private fun initTextField() {
         viewBinding.textFieldName.addOnTextChangedListener {
             viewModel.setUserName(it)
         }
         viewBinding.textFieldName.setFocus()
+        viewBinding.textFieldName.setHintText(getString(R.string.name))
+        viewBinding.textFieldName.setDescriptionText(getString(R.string.name_description))
 
         viewBinding.textFieldPlatform.setSelectionThrottleFirstClickListener(viewLifecycleOwner) {
             viewBinding.textFieldName.clearTextFieldFocus()
@@ -77,6 +84,9 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
             Validation.FAILED -> {
                 textFieldName.setFailedUiOfTextField()
             }
+            Validation.NONE -> {
+                textFieldName.setFailedUiOfTextField()
+            }
         }
     }
 
@@ -89,6 +99,7 @@ class SignUpMemberFragment : BaseFragment<FragmentSignUpMemberBinding>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
+        viewBinding.btnSignUp.setButtonText(getString(R.string.next))
         viewBinding.btnSignUp.setOnButtonClickListener {
             findNavController().navigate(R.id.action_signUpMemberFragment_to_termsAgreementDialog)
         }

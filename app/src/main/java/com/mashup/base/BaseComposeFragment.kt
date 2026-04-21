@@ -1,0 +1,158 @@
+package com.mashup.base
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.mashup.core.common.constant.BAD_REQUEST
+import com.mashup.core.common.constant.DISCONNECT_NETWORK
+import com.mashup.core.common.constant.INTERNAL_SERVER_ERROR
+import com.mashup.core.common.constant.UNAUTHORIZED
+import com.mashup.core.common.utils.ProgressDialogContainer
+import com.mashup.core.common.utils.ToastUtil
+import com.mashup.core.common.widget.CommonDialog
+import com.mashup.core.ui.theme.MashUpTheme
+import com.mashup.network.NetworkStatusState
+import com.mashup.network.data.NetworkStatusDetector
+import com.mashup.ui.error.NetworkDisconnectActivity
+import com.mashup.ui.login.LoginActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
+open class BaseComposeFragment : Fragment() {
+    private val networkStateDetector: NetworkStatusDetector by lazy {
+        NetworkStatusDetector(
+            context = requireContext(),
+            coroutineScope = lifecycleScope
+        )
+    }
+
+    val isConnectedNetwork: Boolean
+        get() = networkStateDetector.hasNetworkConnection()
+
+    private val loadingDialogContainer = ProgressDialogContainer()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            setContent {
+                MashUpTheme {
+                    MainContainer(
+                        modifier = Modifier.fillMaxSize()
+                            .statusBarsPadding()
+                            .navigationBarsPadding()
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    open fun MainContainer(modifier: Modifier) {
+        /* explicitly empty */
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initObserves()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        loadingDialogContainer.clear()
+    }
+
+    open fun initView() {
+        /* explicitly empty */
+    }
+
+    open fun initObserves() {
+        flowViewLifecycleScope {
+            networkStateDetector.state.collectLatest { networkState ->
+                when (networkState) {
+                    is NetworkStatusState.NetworkConnected -> {
+                        onNetworkConnected()
+                    }
+
+                    is NetworkStatusState.NetworkDisconnected -> {
+                        onNetworkDisConnected()
+                    }
+                }
+            }
+        }
+    }
+
+    protected fun flowViewLifecycleScope(
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(state) {
+                block.invoke(this)
+            }
+        }
+    }
+
+    open fun onNetworkConnected() {
+    }
+
+    open fun onNetworkDisConnected() {
+    }
+
+    protected fun handleCommonError(code: String) {
+        when (code) {
+            BAD_REQUEST, INTERNAL_SERVER_ERROR -> {
+                showToast("잠시 후 다시 시도해주세요.")
+            }
+
+            UNAUTHORIZED -> {
+                CommonDialog(requireContext()).apply {
+                    setTitle(text = "주의")
+                    setMessage(text = "인증정보가 초기화되어 재로그인이 필요합니다")
+                    setPositiveButton {
+                        requireActivity().run {
+                            startActivity(
+                                LoginActivity.newIntent(this)
+                            )
+                            finish()
+                        }
+                    }
+                    show()
+                }
+            }
+
+            DISCONNECT_NETWORK -> {
+                requireActivity().startActivity(
+                    NetworkDisconnectActivity.newIntent(requireContext())
+                )
+            }
+        }
+    }
+
+    protected fun showToast(text: String) {
+        ToastUtil.showToast(requireContext(), text)
+    }
+
+    fun showLoading() = loadingDialogContainer.showLoading(requireContext())
+
+    fun hideLoading() = loadingDialogContainer.hideLoading()
+}

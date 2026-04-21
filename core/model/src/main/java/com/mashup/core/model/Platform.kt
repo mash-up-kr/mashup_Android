@@ -1,6 +1,8 @@
 package com.mashup.core.model
 
-enum class Platform(val detailName: String) {
+enum class Platform(
+    val detailName: String
+) {
     DESIGN("Product Design"),
     ANDROID("Android"),
     IOS("iOS"),
@@ -11,7 +13,7 @@ enum class Platform(val detailName: String) {
 
     companion object {
         fun getPlatform(platformName: String?): Platform {
-            return values().find { it.name == platformName?.uppercase() } ?: UNKNOWN
+            return values().find { it.name == platformName?.uppercase() } ?: if (platformName == "Product Design") DESIGN else UNKNOWN
         }
     }
 }

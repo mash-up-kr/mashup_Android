@@ -56,17 +56,23 @@
     <color name="gray100">#EBEFF9</color>
     <color name="gray50">#F8F7FC</color>
 
-    <color name="teamProductDesign">#4D8176FB</color>
-    <color name="teamProductDesign200">#BAB5FF</color>
-    <color name="teamAndroid">#4D58AE56</color>
-    <color name="teamAndroid200">#A9DBA8</color>
-    <color name="teamWeb">#4D5A88FF</color>
-    <color name="teamWeb200">#AFC5FF</color>
-    <color name="teamNode">#4DFFCD4C</color>
-    <color name="teamNode200">#FFE6A7</color>
-    <color name="teamSpring">#4D259688</color>
-    <color name="teamSpring200">#92D9D0</color>
-    <color name="teamIos">#4DD35C5C</color>
-    <color name="teamIos200">#FFB2B2</color>
+    <color name="teamProductDesign300">#6457F1</color>
+    <color name="teamProductDesign200">#8176FB</color>
+    <color name="teamProductDesign100">#BAB5FF</color>
+    <color name="teamAndroid300">#339931</color>
+    <color name="teamAndroid200">#58AE56</color>
+    <color name="teamAndroid100">#A9DBA8</color>
+    <color name="teamWeb300">#4475F4</color>
+    <color name="teamWeb200">#5A88FF</color>
+    <color name="teamWeb100">#AFC5FF</color>
+    <color name="teamNode300">#F5B611</color>
+    <color name="teamNode200">#FFCD4C</color>
+    <color name="teamNode100">#FFE6A7</color>
+    <color name="teamSpring300">#157E71</color>
+    <color name="teamSpring200">#259688</color>
+    <color name="teamSpring100">#92D9D0</color>
+    <color name="teamIos300">#C31336</color>
+    <color name="teamIos200">#DD3355</color>
+    <color name="teamIos100">#FFB2B2</color>
 
 </resources>

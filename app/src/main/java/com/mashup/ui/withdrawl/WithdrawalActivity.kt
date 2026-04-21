@@ -6,9 +6,9 @@ import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
-import com.mashup.constant.log.LOG_DELETE_SUCCESS_USER
+import com.mashup.constant.log.LOG_DELETE_USER_SUCCESS
 import com.mashup.core.common.extensions.setEmptyUIOfTextField
 import com.mashup.core.common.extensions.setFailedUiOfTextField
 import com.mashup.core.common.extensions.setSuccessUiOfTextField
@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
+class WithdrawalActivity : BaseViewBindingActivity<ActivityWithdrawalBinding>() {
 
     private val viewModel: WithdrawalViewModel by viewModels()
 
@@ -38,6 +38,9 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         viewBinding.toolbar.setOnBackButtonClickListener {
             finish()
         }
+        viewBinding.toolbar.setTitle(getString(R.string.withdrawal_member))
+        viewBinding.toolbar.setVisibleBackButton(true)
+        viewBinding.toolbar.setVisibleCloseButton(false)
     }
 
     private fun initButton() {
@@ -53,6 +56,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         viewBinding.btnWithdrawal.setOnButtonThrottleFirstClickListener(this) {
             viewModel.deleteMember()
         }
+        viewBinding.btnWithdrawal.setButtonText(getString(R.string.withdrawal))
     }
 
     private fun initTextField() {
@@ -61,6 +65,8 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                 viewModel.setCode(text)
             }
         }
+        viewBinding.textFieldCode.setDescriptionText(getString(R.string.withdrawal_description))
+        viewBinding.textFieldCode.setHintText(getString(R.string.withdrawal_hint))
     }
 
     private fun initDescription() {
@@ -86,7 +92,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                     }
                     is WithdrawalState.Success -> {
                         hideLoading()
-                        AnalyticsManager.addEvent(LOG_DELETE_SUCCESS_USER)
+                        AnalyticsManager.addEvent(LOG_DELETE_USER_SUCCESS)
                         finish()
                         startActivity(
                             LoginActivity.newIntent(
@@ -115,6 +121,10 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
                     setDescriptionText("위 문구를 입력해주세요.")
                     setEmptyUIOfTextField()
                 }
+                Validation.NONE -> {
+                    setDescriptionText("")
+                    setEmptyUIOfTextField()
+                }
             }
         }
         viewBinding.btnWithdrawal.setButtonEnabled(codeState.isValidationState)
@@ -127,5 +137,5 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
             }
     }
 
-    override val layoutId: Int = R.layout.activity_withdrawal
+    override val viewBinding by lazy { ActivityWithdrawalBinding.inflate(layoutInflater) }
 }

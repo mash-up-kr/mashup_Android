@@ -1,7 +1,6 @@
 package com.mashup.feature.danggn.round
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray500
 import com.mashup.core.ui.colors.Gray800
-import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.extenstions.noRippleClickable
 import com.mashup.core.ui.typography.Body3
 import com.mashup.core.ui.typography.Body5
@@ -60,16 +58,20 @@ fun DanggnRoundContent(
     onRoundSelected: (roundId: Int) -> Unit = {}
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .clip(
-                RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+                shape = RoundedCornerShape(
+                    topStart = 20.dp,
+                    topEnd = 20.dp
+                )
             )
-            .background(color = White)
+            .then(modifier)
     ) {
         BottomSheetHandler()
         BottomSheetTitle(title = "랭킹 회차")
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
+                .weight(1f)
         ) {
             itemsIndexed(rounds, key = { _, round -> round.id }) { index, round ->
                 DnaggnRoundItem(

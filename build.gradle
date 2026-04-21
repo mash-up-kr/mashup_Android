@@ -1,27 +1,25 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    apply from: 'dependencies.gradle'
 
     repositories {
         google()
         mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:$androidBuildToolsVersion"
-        classpath "com.google.gms:google-services:$gmsVersion"
-        classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsVersion"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        maven { url 'https://repository.map.naver.com/archive/maven/' }
     }
 }
-
 plugins {
-    id "com.diffplug.spotless" version "6.11.0" apply false
-    id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlinVersion" apply false
-    id 'org.jetbrains.kotlin.android' version "$kotlinVersion" apply false
-    id 'com.google.dagger.hilt.android' version "$hiltVersion" apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.spotless) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.hilt.android) apply false
+    alias(libs.plugins.kotlin.compose) apply false
 }
-
 subprojects {
     apply plugin: 'com.diffplug.spotless'
     spotless {

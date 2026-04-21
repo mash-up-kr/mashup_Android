@@ -9,6 +9,10 @@ import java.util.Locale
 
 @JsonClass(generateAdapter = true)
 data class ScheduleResponse(
+    @field:Json(name = "scheduleType")
+    val scheduleType: String,
+    @field:Json(name = "notice")
+    val notice: String?,
     @field:Json(name = "scheduleId")
     val scheduleId: Int,
     @field:Json(name = "dateCount")
@@ -22,8 +26,22 @@ data class ScheduleResponse(
     @field:Json(name = "startedAt")
     val startedAt: Date,
     @field:Json(name = "endedAt")
-    val endedAt: Date
+    val endedAt: Date,
+    @field:Json(name = "location")
+    val location: Location?
 ) {
+
+    @JsonClass(generateAdapter = true)
+    data class Location(
+        @field:Json(name = "latitude")
+        val latitude: Double?,
+        @field:Json(name = "longitude")
+        val longitude: Double?,
+        @field:Json(name = "roadAddress")
+        val roadAddress: String?,
+        @field:Json(name = "detailAddress")
+        val detailAddress: String?
+    )
 
     @SuppressLint("SimpleDateFormat")
     fun getDate(): String {
@@ -40,9 +58,11 @@ data class ScheduleResponse(
             dateCount == 0 -> {
                 "D-Day"
             }
+
             dateCount > 0 -> {
                 "D-$dateCount"
             }
+
             else -> {
                 "D+${-dateCount}"
             }

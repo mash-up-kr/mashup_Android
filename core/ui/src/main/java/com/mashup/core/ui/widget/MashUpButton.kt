@@ -41,14 +41,19 @@ import com.mashup.core.ui.colors.Brand300
 import com.mashup.core.ui.colors.Brand500
 import com.mashup.core.ui.colors.Gray100
 import com.mashup.core.ui.colors.Gray600
+import com.mashup.core.ui.colors.Gray800
 import com.mashup.core.ui.colors.White
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.core.ui.typography.Body1
 
-enum class ButtonStyle(val backgroundColor: Color, val textColor: Color) {
+enum class ButtonStyle(
+    val backgroundColor: Color,
+    val textColor: Color
+) {
     PRIMARY(backgroundColor = Brand500, textColor = White),
     INVERSE(backgroundColor = Brand100, textColor = Brand500),
     DISABLE(backgroundColor = Brand300, textColor = White),
+    DARK(backgroundColor = Gray800, textColor = White),
     DEFAULT(backgroundColor = Gray100, textColor = Gray600)
 }
 
@@ -70,7 +75,7 @@ fun MashUpButton(
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-                enabled = isEnabled,
+                enabled = isEnabled || showLoading,
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
@@ -114,7 +119,8 @@ fun ButtonCircularProgressbar(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = keyframes {
+            animation =
+            keyframes {
                 durationMillis = progressDuration
             }
         )

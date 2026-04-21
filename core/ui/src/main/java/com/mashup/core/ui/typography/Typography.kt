@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.mashup.core.common.R
 import com.mashup.core.ui.colors.White
 
-private val mashupFontFamily = FontFamily(
+val mashupFontFamily = FontFamily(
     Font(R.font.pretendard_regular),
     Font(R.font.pretendard_medium, FontWeight.Medium),
     Font(R.font.pretendard_semibold, FontWeight.SemiBold),
@@ -151,7 +151,7 @@ fun MashTextView(
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
-    fontFamily: FontFamily? = mashupFontFamily,
+    fontFamily: FontFamily? = null,
     letterSpacing: TextUnit = TextUnit.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
@@ -159,7 +159,8 @@ fun MashTextView(
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
-    onTextLayout: (TextLayoutResult) -> Unit = {},
+    minLines: Int = 1,
+    onTextLayout: ((TextLayoutResult) -> Unit)? = null,
     style: TextStyle = LocalTextStyle.current
 ) {
     Text(
@@ -173,7 +174,7 @@ fun MashTextView(
         letterSpacing,
         textDecoration,
         textAlign,
-        lineHeight, overflow, softWrap, maxLines, onTextLayout, style
+        lineHeight, overflow, softWrap, maxLines, minLines, onTextLayout, style
     )
 }
 

@@ -1,106 +1,134 @@
 package com.mashup.ui.mypage
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mashup.core.common.base.BaseViewModel
-import com.mashup.data.dto.ScoreHistoryResponse
 import com.mashup.data.repository.MyPageRepository
 import com.mashup.datastore.data.repository.UserPreferenceRepository
+import com.mashup.datastore.model.UserPreference
+import com.mashup.feature.mypage.profile.data.MyProfileRepository
+import com.mashup.feature.mypage.profile.data.dto.MemberProfileResponse
+import com.mashup.feature.mypage.profile.model.ProfileCardData
+import com.mashup.feature.mypage.profile.model.ProfileData
 import com.mashup.ui.model.ActivityHistory
 import com.mashup.ui.model.AttendanceModel
-import com.mashup.ui.model.Profile
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userPreferenceRepository: UserPreferenceRepository,
-    private val myPageRepository: MyPageRepository
+    private val myPageRepository: MyPageRepository,
+    private val profileRepository: MyProfileRepository,
+    private val mapper: MyProfileMapper
 ) : BaseViewModel() {
 
-    private val _attendanceList = MutableLiveData<List<AttendanceModel>>()
-    val attendanceList: LiveData<List<AttendanceModel>> = _attendanceList
+    private var userData: UserPreference? = null
+    private val userDataFlow = MutableSharedFlow<UserPreference>(replay = 1)
+    private val profileDataFlow = MutableSharedFlow<ProfileData>(replay = 1)
+    private val profileCardDataFlow = MutableSharedFlow<List<ProfileCardData>>(replay = 1)
+    private val scoreHistoryDataFlow = MutableSharedFlow<Pair<Double, List<ActivityHistory>>>(replay = 1)
+
+    val myPageData: SharedFlow<List<AttendanceModel>> = combine(
+        userDataFlow,
+        profileDataFlow,
+        profileCardDataFlow,
+        scoreHistoryDataFlow
+    ) { userData, profileData, profileCardData, scoreHistoryData ->
+        combineMyPageData(userData, profileData, profileCardData, scoreHistoryData)
+    }.shareIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5_000)
+    )
 
     init {
-        getMember()
+        getMyPageData()
     }
 
-    fun getMember() = mashUpScope {
-        val userPreference = userPreferenceRepository.getUserPreference().first()
-        getScore(
-            Profile(
-                platform = userPreference.platform,
-                name = userPreference.name,
-                score = 0.0,
-                generationNumber = userPreference.generationNumbers.last()
-            )
-        )
+    fun getMyPageData() {
+        getUserAndScoreData()
+        getProfileData()
+        getProfileCardData()
     }
 
-    private fun getScore(profile: Profile) = mashUpScope {
-        val response = myPageRepository.getScoreHistory()
-        if (response.isSuccess()) {
-            // 현재 기수만 사용(필터링)
-            val filterItem = response.data?.scoreHistoryResponseList?.filter {
-                it.generationNumber == profile.generationNumber
-            }
+    private fun getUserAndScoreData() = mashUpScope {
+        userPreferenceRepository.getUserPreference().first().let { userPreference ->
+            userData = userPreference
+            userData?.let { userDataFlow.emit(it) }
 
-            val attendanceItem =
-                if (filterItem?.isNotEmpty() == true) {
-                    attendanceScoreList(
-                        profile.copy(score = filterItem.first().totalScore),
-                        filterItem
-                    )
-                } else {
-                    attendanceEmpty(profile)
-                }
-            _attendanceList.postValue(attendanceItem)
-        } else {
-            handleErrorCode(response.code)
+            getScoreHistoryData(userPreference.generationNumbers.last())
         }
     }
 
-    private fun attendanceScoreList(
-        profile: Profile,
-        filterItem: List<ScoreHistoryResponse>
-    ): MutableList<AttendanceModel> {
-        val attendanceItem = mutableListOf<AttendanceModel>()
-        attendanceItem.addAll(myPageHeader(profile))
+    private fun getProfileData() = mashUpScope {
+        val response: MemberProfileResponse = profileRepository.getMyProfile().data ?: return@mashUpScope
+        profileDataFlow.emit(mapper.mapToProfileData(response))
+    }
 
-        filterItem.forEach {
-            attendanceItem += AttendanceModel(
-                id = attendanceItem.size,
-                myPageType = MyPageAdapterType.LIST_LEVEL,
-                generationNum = it.generationNumber
-            )
-            attendanceItem += it.scoreDetails.map { score ->
-                AttendanceModel(
-                    id = attendanceItem.size,
-                    myPageType = MyPageAdapterType.LIST_ITEM,
-                    generationNum = it.generationNumber,
-                    activityHistory = ActivityHistory(
-                        scoreName = score.scoreName,
-                        attendanceType = AttendanceType.getAttendanceType(score.scoreType),
-                        cumulativeScore = score.cumulativeScore,
-                        score = score.score,
-                        detail = score.scheduleName,
-                        date = score.date
+    private fun getProfileCardData() = mashUpScope {
+        val response = profileRepository.getMemberGenerations().data ?: return@mashUpScope
+        userData?.let { user ->
+            val profileCardData = response.memberGenerations.map {
+                mapper.mapToProfileCardData(user.name, it)
+            }
+
+            profileCardDataFlow.emit(profileCardData)
+        }
+    }
+
+    private fun getScoreHistoryData(currentGenerationNum: Int) = mashUpScope {
+        val response =
+            myPageRepository.getScoreHistory().data?.scoreHistoryResponseList ?: return@mashUpScope
+        val historyList = mutableListOf<ActivityHistory>()
+
+        // 현재 기수만 사용(필터링)
+        val filteredList = response.filter { it.generationNumber == currentGenerationNum }
+        val totalScore = filteredList.first().totalScore
+        filteredList.forEach {
+            it.scoreDetails.forEach { score ->
+                historyList.add(mapper.mapToActivityHistory(score))
+            }
+        }
+
+        scoreHistoryDataFlow.emit(Pair(totalScore, historyList.toList()))
+    }
+
+    private fun combineMyPageData(
+        userData: UserPreference,
+        profileData: ProfileData,
+        generationData: List<ProfileCardData>,
+        scoreHistoryData: Pair<Double, List<ActivityHistory>>
+    ): List<AttendanceModel> {
+        val attendanceModelList = mutableListOf<AttendanceModel>()
+
+        attendanceModelList.add(AttendanceModel.Title(0, userData.name))
+        attendanceModelList.add(AttendanceModel.MyProfile(1, profileData))
+        attendanceModelList.add(AttendanceModel.Score(2, scoreHistoryData.first))
+
+        // 활동 카드
+        attendanceModelList.add(AttendanceModel.ProfileCard(3, generationData))
+
+        // 활동 히스토리
+        attendanceModelList.add(AttendanceModel.HistoryLevel(4, userData.generationNumbers.last()))
+        if (scoreHistoryData.second.isEmpty()) {
+            attendanceModelList.add(AttendanceModel.None(5))
+        } else {
+            scoreHistoryData.second.forEach { activityHistory ->
+                attendanceModelList.add(
+                    AttendanceModel.HistoryItem(
+                        attendanceModelList.size,
+                        activityHistory
                     )
                 )
             }
         }
-        return attendanceItem
-    }
 
-    private fun myPageHeader(profile: Profile) = listOf(
-        AttendanceModel(id = 0, MyPageAdapterType.TITLE, profile),
-        AttendanceModel(id = 1, MyPageAdapterType.SCORE, profile)
-    )
-
-    private fun attendanceEmpty(profile: Profile): List<AttendanceModel> {
-        val headers = myPageHeader(profile)
-        return headers + AttendanceModel(headers.size, MyPageAdapterType.LIST_NONE)
+        return attendanceModelList
     }
 
     override fun handleErrorCode(code: String) {

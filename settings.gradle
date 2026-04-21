@@ -1,9 +1,18 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        maven {
+            url 'https://repository.map.naver.com/archive/maven'
+        }
     }
 }
 rootProject.name = "MashUp"
@@ -18,3 +27,6 @@ include ':core:network'
 include ':feature:setting'
 include ':feature:danggn'
 include ':core:data'
+include ':feature:myPage'
+include ':feature:moreMenu'
+include ':feature:moreMenu:notice'

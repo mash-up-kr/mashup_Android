@@ -1,30 +1,29 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    compileSdk compileVersion
+    namespace "com.mashup.core.ui"
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk minVersion
-        targetSdk targetVersion
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
         compose true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
         freeCompilerArgs += [
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion composeCompiler
     }
     packagingOptions {
         resources {
@@ -34,15 +33,19 @@ android {
 }
 
 dependencies {
+    implementation platform(libs.androidx.compose.bom)
+    androidTestImplementation libs.bundles.androidx.compose
+
     implementation project(":core:common")
 
-    api "androidx.compose.ui:ui:$composeVersion"
-    api "androidx.compose.material:material:$composeVersion"
-    api 'androidx.compose.material3:material3:1.0.0-alpha14'
-    api "androidx.compose.ui:ui-tooling-preview:$composeVersion"
-    api 'androidx.activity:activity-compose:1.4.0'
-    api 'androidx.compose.ui:ui-util:1.2.0'
-    debugApi "androidx.compose.ui:ui-tooling:$composeVersion"
-    api "com.google.accompanist:accompanist-pager:$composeViewPagerVersion"
-    api "com.google.accompanist:accompanist-pager-indicators:$composeViewPagerVersion"
+    api libs.androidx.compose.ui
+    api libs.androidx.compose.foundation
+    api libs.androidx.compose.material
+    api libs.androidx.compose.material3
+    api libs.androidx.compose.ui.tooling.preview
+    api libs.androidx.activity.compose
+    api libs.androidx.compose.ui.util
+
+    debugApi libs.androidx.compose.ui.tooling
+    api libs.bundles.composeViewPager
 }

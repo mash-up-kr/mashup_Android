@@ -17,7 +17,6 @@ import java.util.concurrent.Executors
 
 class CameraManager<T>(
     private val context: Context,
-    private val finderView: PreviewView,
     private val lifecycleOwner: LifecycleOwner,
     private val baseImageAnalyzer: BaseImageAnalyzer<T>
 ) {
@@ -49,7 +48,8 @@ class CameraManager<T>(
 
     private fun setCameraConfig(
         cameraProvider: ProcessCameraProvider?,
-        cameraSelector: CameraSelector
+        cameraSelector: CameraSelector,
+        finderView: PreviewView
     ) {
         try {
             cameraProvider?.unbindAll()
@@ -68,7 +68,7 @@ class CameraManager<T>(
         }
     }
 
-    private fun setUpPinchToZoom() {
+    private fun setUpPinchToZoom(finderView: PreviewView) {
         val listener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
                 val currentZoomRatio: Float = camera?.cameraInfo?.zoomState?.value?.zoomRatio ?: 1F
@@ -87,7 +87,7 @@ class CameraManager<T>(
         }
     }
 
-    fun startCamera() {
+    fun startCamera(finderView: PreviewView) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
         cameraProviderFuture.addListener(
             {
@@ -109,8 +109,8 @@ class CameraManager<T>(
                     ImageCapture.Builder()
                         .build()
 
-                setUpPinchToZoom()
-                setCameraConfig(cameraProvider, cameraSelector)
+                setUpPinchToZoom(finderView)
+                setCameraConfig(cameraProvider, cameraSelector, finderView)
             },
             ContextCompat.getMainExecutor(context)
         )

@@ -49,6 +49,7 @@ class TermsAgreementDialog : BaseBottomSheetDialogFragment<DialogTermsAgreementB
                 )
             }
         }
+        viewBinding.btnConfirm.setButtonText(getString(R.string.confirm))
     }
 
     private fun initDetailTextView() {

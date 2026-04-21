@@ -1,30 +1,56 @@
 package com.mashup.ui.schedule.detail
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_SCHEDULE_ID
+import com.mashup.constant.EXTRA_SCHEDULE_TYPE
+import com.mashup.constant.log.LOG_EVENT_LIST_DETAIL_COPY
 import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
+import com.mashup.core.common.extensions.setStatusBarColorRes
+import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityScheduleDetailBinding
+import com.mashup.ui.attendance.platform.PlatformAttendanceActivity
+import com.mashup.util.AnalyticsManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import com.mashup.core.common.R as CR
 
 @AndroidEntryPoint
-class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
-    override val layoutId = R.layout.activity_schedule_detail
+class ScheduleDetailActivity : BaseViewBindingActivity<ActivityScheduleDetailBinding>() {
+    override val viewBinding by lazy { ActivityScheduleDetailBinding.inflate(layoutInflater) }
 
     private val viewModel: ScheduleDetailViewModel by viewModels()
 
-    private val eventDetailAdapter by lazy {
-        EventDetailAdapter()
-    }
-
     override fun initViews() {
-        initButton()
-        viewBinding.rvEvent.apply {
-            adapter = eventDetailAdapter
+        super.initViews()
+
+        setStatusBarColorRes(CR.color.white)
+        viewBinding.composeView.setContent {
+            val state by viewModel.scheduleState.collectAsState()
+
+            MashUpTheme {
+                ScheduleDetailScreen(
+                    state = state,
+                    isPlatformSeminar = viewModel.scheduleType != "ALL",
+                    copyToClipboard = ::copyToClipboard,
+                    moveToPlatformAttendance = ::moveToPlatformAttendance,
+                    onBackPressed = { finish() },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding()
+                )
+            }
         }
     }
 
@@ -36,15 +62,17 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
                     ScheduleState.Loading -> {
                         showLoading()
                     }
+
                     is ScheduleState.Success -> {
                         hideLoading()
-                        eventDetailAdapter.submitList(state.eventDetailList)
                     }
+
                     is ScheduleState.Error -> {
                         hideLoading()
                         handleCommonError(state.code)
                         handleScheduleDetailErrorCode(state)
                     }
+
                     else -> {
                         hideLoading()
                     }
@@ -65,16 +93,24 @@ class ScheduleDetailActivity : BaseActivity<ActivityScheduleDetailBinding>() {
         codeMessage?.run { showToast(this) }
     }
 
-    private fun initButton() {
-        viewBinding.btnReturn.setOnClickListener {
-            onBackPressed()
+    private fun copyToClipboard(text: String) {
+        AnalyticsManager.addEvent(eventName = LOG_EVENT_LIST_DETAIL_COPY)
+        (getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager)?.let { clipboardManager ->
+            val clip = ClipData.newPlainText("location", text)
+            clipboardManager.setPrimaryClip(clip)
         }
     }
 
+    private fun moveToPlatformAttendance() {
+        val intent = PlatformAttendanceActivity.newIntent(this, viewModel.scheduleId)
+        startActivity(intent)
+    }
+
     companion object {
-        fun newIntent(context: Context, scheduleId: Int) =
+        fun newIntent(context: Context, scheduleId: Int, scheduleType: String) =
             Intent(context, ScheduleDetailActivity::class.java).apply {
                 putExtra(EXTRA_SCHEDULE_ID, scheduleId)
+                putExtra(EXTRA_SCHEDULE_TYPE, scheduleType)
             }
     }
 }

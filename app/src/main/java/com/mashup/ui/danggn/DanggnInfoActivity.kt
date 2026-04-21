@@ -3,17 +3,20 @@ package com.mashup.ui.danggn
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.databinding.ActivityDanggnInfoBinding
 import com.mashup.feature.danggn.DanggnInfoScreen
+import dagger.hilt.android.AndroidEntryPoint
 
-class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
-    override val layoutId: Int = R.layout.activity_danggn_info
+@AndroidEntryPoint
+class DanggnInfoActivity : BaseViewBindingActivity<ActivityDanggnInfoBinding>() {
+    override val viewBinding by lazy { ActivityDanggnInfoBinding.inflate(layoutInflater) }
 
     override fun initViews() {
         super.initViews()
@@ -21,7 +24,9 @@ class DanggnInfoActivity : BaseActivity<ActivityDanggnInfoBinding>() {
         viewBinding.shakeDanggnScreen.setContent {
             MashUpTheme {
                 DanggnInfoScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     onClickBackButton = { onBackPressed() }
                 )
             }

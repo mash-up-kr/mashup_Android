@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="com.mashup.core.common.widget.ButtonView.ButtonStyle" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_common_dialog"
         tools:layout_width="300dp">
@@ -53,8 +51,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_positive"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_message"
-            app:style_button="@{ButtonStyle.DEFAULT}" />
+            app:layout_constraintTop_toBottomOf="@id/tv_message" />
 
         <com.mashup.core.common.widget.ButtonView
             android:id="@+id/btn_positive"
@@ -68,8 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_negative"
             app:layout_constraintTop_toBottomOf="@id/tv_message"
-            app:layout_goneMarginStart="20dp"
-            app:style_button="@{ButtonStyle.PRIMARY}" />
+            app:layout_goneMarginStart="20dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</FrameLayout>

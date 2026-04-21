@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.core.common.constant.SCHEDULE_NOT_FOUND
 import com.mashup.core.common.extensions.setStatusBarColorRes
@@ -18,11 +20,12 @@ import com.mashup.data.model.PlatformInfo
 import com.mashup.databinding.ActivityCrewAttendanceBinding
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_PLATFORM_KEY
 import com.mashup.ui.attendance.crew.CrewAttendanceViewModel.Companion.EXTRA_SCHEDULE_ID
+import com.mashup.ui.attendance.member.MemberInfoDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
+class CrewAttendanceActivity : BaseViewBindingActivity<ActivityCrewAttendanceBinding>() {
     private val viewModel: CrewAttendanceViewModel by viewModels()
 
     override fun initViews() {
@@ -38,11 +41,12 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
                     CrewAttendanceState.Empty
                 )
                 CrewScreen(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
                     crewAttendanceState = crewState,
-                    onClickBackButton = {
-                        finish()
-                    }
+                    onClickBackButton = ::finish,
+                    showMemberInfoDialog = ::showMemberInfoDialog
                 )
             }
         }
@@ -81,8 +85,12 @@ class CrewAttendanceActivity : BaseActivity<ActivityCrewAttendanceBinding>() {
         codeMessage?.run { showToast(codeMessage) }
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_crew_attendance
+    private fun showMemberInfoDialog(name: String, memberId: String) {
+        MemberInfoDialog.newInstance(name, memberId)
+            .show(supportFragmentManager, "MemberInfoDialog")
+    }
+
+    override val viewBinding by lazy { ActivityCrewAttendanceBinding.inflate(layoutInflater) }
 
     companion object {
         fun newIntent(

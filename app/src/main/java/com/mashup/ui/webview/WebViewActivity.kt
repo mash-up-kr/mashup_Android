@@ -4,21 +4,25 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_ANIMATION
 import com.mashup.constant.EXTRA_TITLE_KEY
 import com.mashup.constant.EXTRA_URL_KEY
+import com.mashup.core.common.bridge.MashupBridge
 import com.mashup.core.common.extensions.setStatusBarColorRes
 import com.mashup.core.common.model.NavigationAnimationType
 import com.mashup.databinding.ActivityWebViewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
+class WebViewActivity : BaseViewBindingActivity<ActivityWebViewBinding>() {
 
     private val viewModel: WebViewViewModel by viewModels()
 
@@ -26,27 +30,29 @@ class WebViewActivity : BaseActivity<ActivityWebViewBinding>() {
         super.initViews()
         setStatusBarColorRes(com.mashup.core.common.R.color.white)
         initWindowInset()
-
         initCompose()
     }
 
     private fun initCompose() {
         viewBinding.webView.setContent {
             val webViewUiState by viewModel.webViewUiState.collectAsState(WebViewUiState.Loading)
+            val context = LocalContext.current
 
             WebViewScreen(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .statusBarsPadding()
+                    .navigationBarsPadding(),
                 webViewUiState = webViewUiState,
                 onBackPressed = { finish() },
                 isScrollTop = {
                     viewModel.onWebViewScroll(it)
-                }
+                },
+                mashupBridge = MashupBridge(context)
             )
         }
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_web_view
+    override val viewBinding by lazy { ActivityWebViewBinding.inflate(layoutInflater) }
 
     companion object {
 

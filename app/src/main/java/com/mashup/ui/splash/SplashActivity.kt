@@ -8,11 +8,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mashup.R
-import com.mashup.base.BaseActivity
+import com.mashup.base.BaseViewBindingActivity
 import com.mashup.constant.EXTRA_LINK
-import com.mashup.core.common.extensions.setStatusBarColorRes
-import com.mashup.core.common.extensions.setStatusBarDarkTextColor
 import com.mashup.core.common.widget.CommonDialog
 import com.mashup.databinding.ActivitySplashBinding
 import com.mashup.datastore.data.repository.UserPreferenceRepository
@@ -30,7 +27,7 @@ import javax.inject.Inject
  */
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseViewBindingActivity<ActivitySplashBinding>() {
 
     @Inject
     lateinit var userPreferenceRepository: UserPreferenceRepository
@@ -40,14 +37,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setUi()
         observeViewModel()
         initAnalyticsManager()
-    }
-
-    private fun setUi() {
-        setStatusBarColorRes(com.mashup.core.common.R.color.brand500)
-        setStatusBarDarkTextColor(false)
     }
 
     private fun observeViewModel() {
@@ -111,5 +102,5 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         }
     }
 
-    override val layoutId: Int = R.layout.activity_splash
+    override val viewBinding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
 }

@@ -4,12 +4,16 @@ MashUp Official App
 
 > 🏆 명예 멤버
 >
+> [~13기]
 > [김유정](https://github.com/YuChocopie)
+> [양민욱](https://github.com/jaeryo2357)
+> [안석주](https://github.com/Ahn-seokjoo)
+>
+> [14기]
+> [정민지](https://github.com/JungMinji08)
+> [김현국](https://github.com/014967)
 
-
-양민욱
-정민지
-안석주
+[문설빈](https://github.com/moonsbsb) [채윤지](https://github.com/kateteDeveloper) [전계원](https://github.com/JeonK1) [전희훈](https://github.com/citytexi)
 
 ## Commit Rule
 - 🛠refactor : 새로운 기능이 아닌 코드를 재정비 하였을 때 (변수 이름 바꾸기)

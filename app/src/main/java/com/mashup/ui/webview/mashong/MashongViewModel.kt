@@ -3,6 +3,7 @@ package com.mashup.ui.webview.mashong
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mashup.constant.EXTRA_TITLE_KEY
+import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.base.BaseViewModel
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.webview.WebViewUiState
@@ -23,7 +24,7 @@ class MashongViewModel @Inject constructor(
 
     val webViewUiState = combine(
         savedStateHandle.getStateFlow(EXTRA_TITLE_KEY, ""),
-        savedStateHandle.getStateFlow(EXTRA_MASHONG_BASE_URL_KEY, ""),
+        savedStateHandle.getStateFlow(EXTRA_URL_KEY, ""),
         showDividerFlow,
         userPreferenceRepository.getUserPreference()
     ) { title, baseUrl, showDivider, prefs ->
@@ -40,8 +41,4 @@ class MashongViewModel @Inject constructor(
     )
 
     override fun handleErrorCode(code: String) {}
-
-    companion object {
-        const val EXTRA_MASHONG_BASE_URL_KEY = "extra_mashong_base_url_key"
-    }
 }

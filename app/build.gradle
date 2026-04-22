@@ -143,12 +143,9 @@ dependencies {
 
     // lifecycle viewmodel compose
     implementation libs.bundles.lifecycle
+
     // coroutine test
     testImplementation libs.kotlinx.coroutine.test
-
-    // flipper
-    implementation libs.bundles.flipper
-    implementation libs.facebook.soloader
 
     // Naver Map
     implementation libs.github.fornewid

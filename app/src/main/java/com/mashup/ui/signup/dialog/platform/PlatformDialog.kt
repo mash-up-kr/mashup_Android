@@ -18,7 +18,7 @@ class PlatformDialog : BaseBottomSheetDialogFragment<DialogPlatformBinding>() {
             persistentInsetTypes = WindowInsetsCompat.Type.navigationBars(),
             deferredInsetTypes = 0 // IME 처리 안 함
         )
-        _rootViewBinding?.let { binding ->
+        rootViewBinding.let { binding ->
             ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
             ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
         }

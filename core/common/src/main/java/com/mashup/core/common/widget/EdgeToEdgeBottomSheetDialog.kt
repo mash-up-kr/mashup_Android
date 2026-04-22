@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.core.view.WindowCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
+
 class EdgeToEdgeBottomSheetDialog(
     context: Context,
     theme: Int

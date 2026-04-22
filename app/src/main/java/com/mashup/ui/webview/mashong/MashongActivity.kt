@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mashup.constant.EXTRA_TITLE_KEY
+import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.bridge.MashupBridge
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.data.network.WEB_HOST
@@ -66,7 +67,7 @@ class MashongActivity : ComponentActivity() {
         fun newIntent(context: Context): Intent =
             Intent(context, MashongActivity::class.java).apply {
                 putExtra(EXTRA_TITLE_KEY, "mashong")
-                putExtra(MashongViewModel.EXTRA_MASHONG_BASE_URL_KEY, WEB_HOST + "mashong/")
+                putExtra(EXTRA_URL_KEY, WEB_HOST + "mashong/")
             }
     }
 }

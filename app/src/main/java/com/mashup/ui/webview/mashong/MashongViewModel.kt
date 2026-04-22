@@ -1,10 +1,8 @@
 package com.mashup.ui.webview.mashong
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.mashup.constant.EXTRA_TITLE_KEY
-import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.base.BaseViewModel
+import com.mashup.data.network.WEB_HOST
 import com.mashup.datastore.data.repository.UserPreferenceRepository
 import com.mashup.ui.webview.WebViewUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,21 +14,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MashongViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     userPreferenceRepository: UserPreferenceRepository
 ) : BaseViewModel() {
 
     private val showDividerFlow = MutableStateFlow(false)
 
     val webViewUiState = combine(
-        savedStateHandle.getStateFlow(EXTRA_TITLE_KEY, ""),
-        savedStateHandle.getStateFlow(EXTRA_URL_KEY, ""),
         showDividerFlow,
         userPreferenceRepository.getUserPreference()
-    ) { title, baseUrl, showDivider, prefs ->
+    ) { showDivider, prefs ->
         WebViewUiState.Success(
-            title = title,
-            webViewUrl = baseUrl + prefs.platform,
+            title = MASHONG_TITLE,
+            webViewUrl = MASHONG_BASE_URL + prefs.platform,
             showToolbarDivider = showDivider,
             additionalHttpHeaders = mapOf("authorization" to prefs.token)
         )
@@ -41,4 +36,9 @@ class MashongViewModel @Inject constructor(
     )
 
     override fun handleErrorCode(code: String) {}
+
+    companion object {
+        private const val MASHONG_TITLE = "mashong"
+        private const val MASHONG_BASE_URL = WEB_HOST + "mashong/"
+    }
 }

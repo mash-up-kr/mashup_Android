@@ -12,42 +12,43 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.mashup.constant.EXTRA_TITLE_KEY
-import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.bridge.MashupBridge
 import com.mashup.core.ui.theme.MashUpTheme
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.webview.WebViewScreen
 import com.mashup.ui.webview.WebViewUiState
-import com.mashup.ui.webview.WebViewViewModel
 import com.mashup.util.setFullScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MashongActivity : ComponentActivity() {
 
-    private val webViewViewModel by viewModels<WebViewViewModel>()
+    private val mashongViewModel by viewModels<MashongViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             MashUpTheme {
-                val webViewUiState by webViewViewModel.webViewUiState.collectAsState(WebViewUiState.Loading)
+                val webViewUiState by mashongViewModel.webViewUiState.collectAsState(
+                    WebViewUiState.Loading
+                )
                 WebViewScreen(
                     modifier = Modifier.fillMaxSize(),
                     webViewUiState = webViewUiState,
                     mashupBridge = MashupBridge(
-                        this,
+                        this@MashongActivity,
                         onBackPressed = ::finish,
                         onNavigateDanggn = {
-                            startActivity(ShakeDanggnActivity.newIntent(this))
+                            startActivity(ShakeDanggnActivity.newIntent(this@MashongActivity))
                         }
                     ),
                     isShowMashUpToolbar = false
                 )
             }
         }
+
         setFullScreen()
     }
 
@@ -61,9 +62,6 @@ class MashongActivity : ComponentActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent =
-            Intent(context, MashongActivity::class.java).apply {
-                putExtra(EXTRA_TITLE_KEY, "mashong")
-                putExtra(EXTRA_URL_KEY, "mashong/")
-            }
+            Intent(context, MashongActivity::class.java)
     }
 }

@@ -12,11 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.mashup.constant.EXTRA_TITLE_KEY
-import com.mashup.constant.EXTRA_URL_KEY
 import com.mashup.core.common.bridge.MashupBridge
 import com.mashup.core.ui.theme.MashUpTheme
-import com.mashup.data.network.WEB_HOST
 import com.mashup.ui.danggn.ShakeDanggnActivity
 import com.mashup.ui.webview.WebViewScreen
 import com.mashup.ui.webview.WebViewUiState
@@ -65,9 +62,6 @@ class MashongActivity : ComponentActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent =
-            Intent(context, MashongActivity::class.java).apply {
-                putExtra(EXTRA_TITLE_KEY, "mashong")
-                putExtra(EXTRA_URL_KEY, WEB_HOST + "mashong/")
-            }
+            Intent(context, MashongActivity::class.java)
     }
 }

@@ -12,8 +12,11 @@ MashUp Official App
 > [14기]
 > [정민지](https://github.com/JungMinji08)
 > [김현국](https://github.com/014967)
+>
+> [16기] 
+> [문설빈](https://github.com/moonsbsb)
 
-[문설빈](https://github.com/moonsbsb) [채윤지](https://github.com/kateteDeveloper) [전계원](https://github.com/JeonK1) [전희훈](https://github.com/citytexi)
+[전계원](https://github.com/JeonK1) [전희훈](https://github.com/citytexi) [채윤지](https://github.com/kateteDeveloper)
 
 ## Commit Rule
 - 🛠refactor : 새로운 기능이 아닌 코드를 재정비 하였을 때 (변수 이름 바꾸기)

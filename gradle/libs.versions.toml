@@ -24,20 +24,17 @@ retrofit = "2.12.0"
 okhttpInterceptor = "4.12.0"
 moshi = "1.15.2"
 dataStore = "1.2.1"
-barcodeSacnner = "17.0.2"
-camera = "1.1.0-beta02"
+barcodeSacnner = "17.3.0"
+camera = "1.6.0"
 nav = "2.4.2"
 glide = "4.12.0"
 composeViewPager = "0.20.1"
-composeUiViewBinding = "1.5.4"
 compose = '1.5.0'
 composeWebView = "0.24.13-rc"
 constraintlayoutCompose = "1.0.1"
-flipper = "0.190.0"
-soLoader = "0.10.5"
 spotless = "6.11.0"
 ksp = "2.1.0-1.0.29"
-naverMapCompose = "1.4.0"
+naverMapCompose = "1.9.0"
 threetenabp = "1.3.1"
 
 junit4 = "4.13.2"
@@ -59,10 +56,6 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-ktx" }
-
-facebook-flipper = {group = "com.facebook.flipper", name = "flipper", version.ref = "flipper"}
-facebook-soloader = {group = "com.facebook.soloader", name = "soloader", version.ref = "soLoader" }
-face-book-flipper-network = {group="com.facebook.flipper", name="flipper-network-plugin", version.ref = "flipper"}
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity-ktx" }
@@ -136,7 +129,6 @@ camera = ["androidx-camera-camera2", "androidx-camera-lifecycle", "androidx-came
 retrofit = ["squareup-retrofit2", "squareup-retrofit2-converter-moshi", "retrofit-converter-gson"]
 moshi = ["squareup-moshi-kotlin", "squareup-moshi-adapters"]
 navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
-flipper = ["facebook-flipper", "face-book-flipper-network"]
 composeViewPager = ["google-accompanist-pager", "google-accompanist-pager-indicators"]
 androidx-compose = ["androidx-compose-ui", "androidx-compose-ui-viewBinding", "androidx-compose-foundation",
     "androidx-compose-material", "androidx-compose-material3", "androidx-compose-ui-tooling-preview",

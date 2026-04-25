@@ -114,6 +114,7 @@ class QRScanActivity : BaseComposeActivity(), LocationListener {
 
         AnalyticsManager.addEvent(LOG_QR)
 
+        collectPermissionState()
         createCardAnalyzer()
         createCameraManager()
     }

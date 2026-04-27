@@ -24,7 +24,7 @@ android {
         applicationId "com.mashup"
         minSdkVersion libs.versions.minSdk.get().toInteger()
         targetSdkVersion libs.versions.targetSdk.get().toInteger()
-        versionCode 37
+        versionCode 38
         versionName "1.7.3"
 
         testInstrumentationRunner "com.mashup.core.testing.MashUpTestRunner"

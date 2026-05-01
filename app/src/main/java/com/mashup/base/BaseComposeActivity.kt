@@ -1,9 +1,14 @@
 package com.mashup.base
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -51,8 +56,44 @@ open class BaseComposeActivity : ComponentActivity() {
     private val loadingDialogContainer = ProgressDialogContainer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                Color.TRANSPARENT,
+                Color.TRANSPARENT
+            ),
+            navigationBarStyle = SystemBarStyle.auto(
+                Color.TRANSPARENT,
+                Color.TRANSPARENT
+            )
+        )
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                window.insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                )
+            }
+
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
+
+            else -> {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            window.navigationBarColor = Color.TRANSPARENT
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
 
         initView()
         initAnimationType()

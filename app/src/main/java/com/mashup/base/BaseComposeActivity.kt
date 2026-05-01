@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.content.IntentCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -71,15 +70,15 @@ open class BaseComposeActivity : ComponentActivity() {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
                 window.insetsController?.setSystemBarsAppearance(
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
-                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
-                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                        WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                 )
             }
 
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
-                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             }
 
             else -> {

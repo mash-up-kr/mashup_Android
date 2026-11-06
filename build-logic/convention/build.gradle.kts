@@ -24,6 +24,9 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.hilt.gradlePlugin)
     compileOnly(libs.spotless.gradlePlugin)
+    // convention plugin에서 type-safe `libs` accessor(LibrariesForLibs)를 쓰기 위한 workaround
+    // https://github.com/gradle/gradle/issues/15383
+    compileOnly(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
 
 tasks.validatePlugins {

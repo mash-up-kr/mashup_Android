@@ -14,7 +14,6 @@ internal fun Project.configureAndroidCompose(
     }
 
     dependencies {
-        val bom = libs.findLibrary("androidx-compose-bom").get()
-        add("implementation", platform(bom))
+        add("implementation", platform(libs.androidx.compose.bom))
     }
 }

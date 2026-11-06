@@ -16,7 +16,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                val targetSdkVersion = libs.findVersion("targetSdk").get().toString().toInt()
+                val targetSdkVersion = libs.versions.targetSdk.get().toInt()
                 testOptions.targetSdk = targetSdkVersion
                 lint.targetSdk = targetSdkVersion
             }

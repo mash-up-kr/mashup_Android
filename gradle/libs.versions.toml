@@ -157,10 +157,10 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 # convention plugins (build-logic)
-mashup-android-application = { id = "mashup.android.application", version = "unspecified" }
-mashup-android-application-compose = { id = "mashup.android.application.compose", version = "unspecified" }
-mashup-android-library = { id = "mashup.android.library", version = "unspecified" }
-mashup-android-library-compose = { id = "mashup.android.library.compose", version = "unspecified" }
-mashup-android-hilt = { id = "mashup.android.hilt", version = "unspecified" }
-mashup-android-feature = { id = "mashup.android.feature", version = "unspecified" }
-mashup-spotless = { id = "mashup.spotless", version = "unspecified" }
+mashup-android-application = { id = "mashup.android.application" }
+mashup-android-application-compose = { id = "mashup.android.application.compose" }
+mashup-android-library = { id = "mashup.android.library" }
+mashup-android-library-compose = { id = "mashup.android.library.compose" }
+mashup-android-hilt = { id = "mashup.android.hilt" }
+mashup-android-feature = { id = "mashup.android.feature" }
+mashup-spotless = { id = "mashup.spotless" }

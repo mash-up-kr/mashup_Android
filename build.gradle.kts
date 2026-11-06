@@ -11,10 +11,4 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
-    alias(libs.plugins.mashup.spotless) apply false
-}
-
-// TODO: Task 6에서 삭제 (모듈이 mashup.android.* 플러그인으로 spotless를 적용하게 되면 불필요)
-subprojects {
-    apply(plugin = "mashup.spotless")
 }

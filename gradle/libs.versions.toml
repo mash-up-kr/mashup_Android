@@ -122,6 +122,14 @@ hiltTest = {group = "com.google.dagger", name = "hilt-android-testing", version.
 mockito = {group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito"}
 mockitoInline = {group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInline"}
 
+# build-logic (compileOnly)
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidBuildTool" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
 [bundles]
 lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"]
 firebase = ["google-firebase-analytics", "google-firebase-crashlytics", "google-firebase-messaging", "google-firebase-firestore"]
@@ -147,3 +155,12 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+# convention plugins (build-logic)
+mashup-android-application = { id = "mashup.android.application", version = "unspecified" }
+mashup-android-application-compose = { id = "mashup.android.application.compose", version = "unspecified" }
+mashup-android-library = { id = "mashup.android.library", version = "unspecified" }
+mashup-android-library-compose = { id = "mashup.android.library.compose", version = "unspecified" }
+mashup-android-hilt = { id = "mashup.android.hilt", version = "unspecified" }
+mashup-android-feature = { id = "mashup.android.feature", version = "unspecified" }
+mashup-spotless = { id = "mashup.spotless", version = "unspecified" }

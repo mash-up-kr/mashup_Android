@@ -1,0 +1,33 @@
+pluginManagement {
+    includeBuild("build-logic")
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://repository.map.naver.com/archive/maven")
+        }
+    }
+}
+rootProject.name = "MashUp"
+include(":app")
+include(":core:ui")
+include(":core:common")
+include(":core:testing")
+include(":core:model")
+include(":core:datastore")
+include(":core:firebase")
+include(":core:network")
+include(":feature:setting")
+include(":feature:danggn")
+include(":core:data")
+include(":feature:myPage")
+include(":feature:moreMenu")
+include(":feature:moreMenu:notice")

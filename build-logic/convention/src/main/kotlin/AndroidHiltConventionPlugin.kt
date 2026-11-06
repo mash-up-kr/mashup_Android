@@ -1,3 +1,5 @@
+import com.mashup.convention.implementation
+import com.mashup.convention.ksp
 import com.mashup.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -12,8 +14,8 @@ class AndroidHiltConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("implementation", libs.google.dagger.hilt.android)
-                add("ksp", libs.google.dagger.hilt.compiler)
+                implementation(libs.google.dagger.hilt.android)
+                ksp(libs.google.dagger.hilt.compiler)
             }
         }
     }

@@ -1,3 +1,5 @@
+import com.mashup.convention.debugImplementation
+import com.mashup.convention.implementation
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -12,9 +14,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add("implementation", project(":core:common"))
-                add("implementation", project(":core:ui"))
-                add("debugImplementation", project(":core:testing"))
+                implementation(project(":core:common"))
+                implementation(project(":core:ui"))
+                debugImplementation(project(":core:testing"))
             }
         }
     }

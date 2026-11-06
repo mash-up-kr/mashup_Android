@@ -14,6 +14,6 @@ internal fun Project.configureAndroidCompose(
     }
 
     dependencies {
-        add("implementation", platform(libs.androidx.compose.bom))
+        implementation(platform(libs.androidx.compose.bom))
     }
 }
